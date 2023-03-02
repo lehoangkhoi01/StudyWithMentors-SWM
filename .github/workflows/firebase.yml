@@ -13,13 +13,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./study-with-mentor
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -29,7 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: study-with-mentor/package-lock.json
+        cache-dependency-path: package-lock.json
     - run: npm install -g yarn
     - name: yarn install, build and test
       run: |
@@ -39,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with: 
         name: build
-        path: study-with-mentor/build
+        path: build
   deploy:
     name: Deploy
     needs: build
@@ -50,7 +47,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-          path: study-with-mentor/build
+          path: build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with: 
