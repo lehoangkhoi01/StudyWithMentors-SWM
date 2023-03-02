@@ -36,7 +36,7 @@ jobs:
         yarn install
         yarn build
     - name: Archive Build
-      uses: actions/upload-artifact@v3.0.2
+      uses: actions/upload-artifact@v2
       with: 
         name: build
         path: study-with-mentor/build
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download Build
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v2
         with:
           name: build
           path: study-with-mentor/build
