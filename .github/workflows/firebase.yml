@@ -36,10 +36,10 @@ jobs:
         yarn install
         yarn build
     - name: Archive Build
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3.0.2
       with: 
         name: build
-        path: build
+        path: study-with-mentor/build
   deploy:
     name: Deploy
     needs: build
@@ -47,10 +47,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download Build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3.0.2
         with:
           name: build
-          path: build
+          path: study-with-mentor/build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with: 
