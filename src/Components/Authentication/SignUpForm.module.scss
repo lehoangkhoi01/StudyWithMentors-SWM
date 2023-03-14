@@ -1,0 +1,12 @@
+.signUp {
+  &__container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+  }
+
+  &__button {
+    margin-top: 2vh;
+  }
+}
