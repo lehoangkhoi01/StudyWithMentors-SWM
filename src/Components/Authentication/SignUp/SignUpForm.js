@@ -2,15 +2,12 @@ import { Button, TextField } from "@mui/material";
 import style from "./SignUpForm.module.scss";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-const STAGE = {
-  signUP: "Sign up",
-  sentEmail: "Sent email",
-};
+import { SIGN_UP_STAGE, SIGN_UP_TEXT, TITLE } from "../../../shared/constants";
+import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
-  const [stage, setStage] = useState(STAGE.signUP);
+  const [stage, setStage] = useState(SIGN_UP_STAGE.SIGN_UP);
   const [signUpForm, setSignUpForm] = useState({
     fullName: "",
     email: "",
@@ -22,7 +19,7 @@ const SignUp = () => {
   const onSubmit = (data) => {
     console.log(data);
     setSignUpForm(data);
-    setStage(STAGE.sentEmail);
+    setStage(SIGN_UP_STAGE.SENT_EMAIL);
   };
 
   const changeTempEmailHandler = (event) => {
@@ -39,20 +36,24 @@ const SignUp = () => {
       onSubmit={handleSubmit(onSubmit)}
       className={`${style.signUp__container}`}
     >
-      <h1>Growth Me</h1>
-      <h2>Đăng ký</h2>
-      {stage === STAGE.signUP && (
+      <h1>{TITLE.GROWTH_ME}</h1>
+      <h2>{TITLE.SIGN_UP}</h2>
+      {stage === SIGN_UP_STAGE.SIGN_UP && (
         <>
           <TextField id="email" label="Email" {...register("email")} />
           <TextField
             id="fullname"
-            label="Họ và tên"
+            label={TITLE.FULL_NAME}
             {...register("fullName")}
           />
-          <TextField id="password" label="Mật khẩu" {...register("password")} />
+          <TextField
+            id="password"
+            label={TITLE.PASSWORD}
+            {...register("password")}
+          />
           <TextField
             id="confirmPassword"
-            label="Nhập lại mật khẩu"
+            label={TITLE.CONFIRM_PASSWORD}
             {...register("confirmPassword")}
           />
           <Button
@@ -60,34 +61,27 @@ const SignUp = () => {
             className={`${style.signUp__button}`}
             variant="contained"
           >
-            Đăng ký
+            {TITLE.SIGN_UP}
           </Button>
 
-          <Button className={`${style.signUp__button}`} variant="outlined">
-            Đăng ký bằng Gmail
-          </Button>
+          <GoogleSignInButton />
           <p>
-            Bạn đã có tài khoản? <a href={"#"}>Đăng nhập ngay!</a>
+            {SIGN_UP_TEXT.HAD_PASSWORD}?{" "}
+            <a href={"#"}>{SIGN_UP_TEXT.SIGN_IN_NOW}!</a>
           </p>
         </>
       )}
-      {stage === STAGE.sentEmail && (
+      {stage === SIGN_UP_STAGE.SENT_EMAIL && (
         <>
-          <p>Email xác nhận tài khoản đã được gửi đến bạn.</p>
+          <p>{SIGN_UP_TEXT.EMAIL_WAS_SENT}.</p>
           <p>
-            Vui lòng kiểm tra và kích hoạt tài khoản bằng cách nhấp vào liên kết
-            Growth Me đã gửi đến địa chỉ email {signUpForm.email}
+            {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL} {signUpForm.email}
           </p>
           <div>
-            <p>Chưa nhận được email?</p>
-            <Button className={`${style.signUp__button}`} variant="outlined">
-              Đăng ký bằng Gmail
-            </Button>
+            <p>{SIGN_UP_TEXT.DID_NOT_RECEIVED_EMAIL}?</p>
+            <GoogleSignInButton />
           </div>
-          <p>
-            Trường hợp email chưa chính xác, vui lòng cập nhật lại email bên
-            duối và bấm &quot;Cập nhật&quot; để được gửi lại.
-          </p>
+          <p>{SIGN_UP_TEXT.CHANGE_EMAIL}</p>
 
           <TextField
             id="email"
@@ -101,7 +95,7 @@ const SignUp = () => {
             variant="contained"
             onClick={updateEmail}
           >
-            Cập nhật
+            {TITLE.UPDATE}
           </Button>
         </>
       )}

@@ -10,7 +10,7 @@ const SignInForm = () => {
 
   return (
     <div className={`${style.signIn__container}`}>
-      <h1>Growth Me</h1>
+      <h1>{TITLE.GROWTH_ME}</h1>
       <h2>{TITLE.SIGN_IN}</h2>
       <TextField
         fullWidth
