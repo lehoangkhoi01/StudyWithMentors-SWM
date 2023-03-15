@@ -9,6 +9,7 @@ const CustomizedTextField = (props) => {
         {props.name}
       </label>
       <TextField
+        className={style.textField__input}
         id={props.inputId}
         placeholder={props.placeholder}
         {...props.options}
