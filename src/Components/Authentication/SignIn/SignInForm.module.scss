@@ -2,16 +2,17 @@
 
 .signIn {
   &__container {
+    background: $primaryBackground;
     img {
       width: 100%;
     }
   }
 
   &__formContainer {
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: $primaryBackground;
   }
 
   &__formSection {
@@ -23,12 +24,6 @@
 
   &__textField {
     margin: 1em 0;
-  }
-
-  &__title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: $primary600;
   }
 
   &__button {
@@ -43,10 +38,7 @@
   &__form {
     width: 100%;
     text-align: center;
-    // display: flex;
-    // flex-direction: column;
     gap: 2vh;
-    //padding-inline: 13vw;
   }
 }
 
@@ -54,7 +46,6 @@
   &__container {
     width: 100%;
     text-align: right;
-    margin-top: 1em;
   }
   &__link {
     text-decoration: none;
@@ -64,21 +55,6 @@
   &__link:hover {
     text-decoration: underline;
   }
-}
-
-.divider {
-  color: $primary900;
-  font-weight: 500;
-  font-size: 16px;
-  margin: 1em 0;
-
-  &__container {
-    width: 50%;
-  }
-}
-
-.divider::after, .divider::before {
-  border-top: thin solid $primary900;
 }
 
 .registerSuggestion {

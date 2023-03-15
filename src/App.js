@@ -1,13 +1,13 @@
-import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SignInPage from "./Pages/Authentication/SignInPage";
 import SignUpPage from "./Pages/Authentication/SignUpPage";
 import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
+import style from "./App.module.scss";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className={`${style.app}`}>
         <NavigationBar />
         <Switch>
           <Route exact path="/" component={SignInPage} />

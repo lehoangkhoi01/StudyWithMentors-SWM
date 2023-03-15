@@ -1,11 +1,18 @@
 import React from "react";
 import style from "./SignInForm.module.scss";
-import { Button, Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useForm } from "react-hook-form";
-import { BUTTON_LABEL, PLACE_HOLDER, TITLE } from "../../../shared/constants";
+import {
+  BUTTON_LABEL,
+  PLACE_HOLDER,
+  SIGN_UP_TEXT,
+  TITLE,
+} from "../../../shared/constants";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
+import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
+import CustomDivider from "../CustomDivider/CustomDivider";
 
 const SignInForm = () => {
   const { register, handleSubmit } = useForm();
@@ -22,7 +29,7 @@ const SignInForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             className={`${style.signIn__form}`}
           >
-            <h1 className={`${style.signIn__title}`}>{TITLE.SIGN_IN}</h1>
+            <CustomTopTitle title={TITLE.SIGN_IN} />
             <CustomizedTextField
               inputId="email"
               name="Email"
@@ -52,23 +59,17 @@ const SignInForm = () => {
             {BUTTON_LABEL.LOGIN}
           </Button>
 
-          <div className={`${style.divider__container}`}>
-            <Divider
-              className={`${style.divider}`}
-              textAlign="center"
-              sx={{ width: "100%" }}
-              flexItem
-            >
-              {TITLE.OR}
-            </Divider>
-          </div>
+          <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton />
 
           <div className={`${style.registerSuggestion__container}`}>
             <span>
-              Bạn chưa có tài khoản?{" "}
-              <a href="#" className={`${style.registerSuggestion__signUpLink}`}>
-                Hãy đăng ký tại đây!
+              {SIGN_UP_TEXT.HAD_NO_ACCOUNT}{" "}
+              <a
+                href="/sign-up"
+                className={`${style.registerSuggestion__signUpLink}`}
+              >
+                {SIGN_UP_TEXT.SIGN_UP_SUGGEST}
               </a>
             </span>
           </div>

@@ -1,0 +1,16 @@
+@import "../../../shared/theme";
+
+.divider {
+  color: $primary900;
+  font-weight: 500;
+  font-size: 16px;
+  margin: 1em 0;
+
+  &__container {
+    width: 50%;
+  }
+}
+
+.divider::after, .divider::before {
+  border-top: thin solid $primary900;
+}

@@ -22,8 +22,9 @@ export const SIGN_UP_STAGE = {
 };
 
 export const SIGN_UP_TEXT = {
-  HAD_PASSWORD: "Bạn đã có tài khoản",
-  SIGN_IN_NOW: "Đăng nhập ngay",
+  HAD_ACCOUNT: "Bạn đã có tài khoản?",
+  HAD_NO_ACCOUNT: "Bạn chưa có tài khoản?",
+  SIGN_IN_NOW: "Đăng nhập ngay!",
   EMAIL_WAS_SENT: "Email xác nhận tài khoản đã được gửi đến bạn.",
   PLEASE_CHECK_EMAIL:
     "Vui lòng kiểm tra và kích hoạt tài khoản bằng cách nhấp vào liên kết Growth Me đã gửi đến địa chỉ email",
