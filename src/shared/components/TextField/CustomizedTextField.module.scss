@@ -1,3 +1,5 @@
+@import "/src/shared/theme";
+
 .textField {
   &__container {
     display: flex;
@@ -6,18 +8,18 @@
     label {
       align-self: flex-start;
       font-size: 1.1rem;
-      color: #1a237e;
+      color: $primary900;
       font-weight: 600;
       margin-bottom: 1vh;
     }
 
     input {
-        padding-block: 0.7rem;
+      padding-block: 0.7rem;
     }
   }
 
   &__required {
-    color: #ff5252;
+    color: $systemRed;
     margin-right: 0.2vw;
   }
 }

@@ -31,6 +31,13 @@ export const SIGN_UP_TEXT = {
   CHANGE_EMAIL: `Trường hợp email chưa chính xác, vui lòng cập nhật lại email bên duối và bấm "Cập nhật" để được gửi lại`,
 };
 
+export const SIGN_UP_PLACEHOLDER = {
+  EMAIL: "Hãy nhập email của bạn",
+  FULL_NAME: "Hãy nhập họ và tên của bạn",
+  PASSWORD: "Hãy nhập mật khẩu của bạn",
+  CONFIRM_PASSWORD: "Hãy nhập mật khẩu của bạn",
+};
+
 export const APP_NAME = "Growth Me";
 
 export const NAVIGATION_TITLE = [
