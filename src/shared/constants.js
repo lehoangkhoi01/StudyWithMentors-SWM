@@ -1,13 +1,13 @@
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
-  GOOGLE_LOGIN: "Đăng nhập bằng Gmail",
+  GOOGLE_LOGIN: "Đăng nhập với tài khoản Google",
 };
 
 export const TITLE = {
   SIGN_IN: "Đăng nhập",
   SIGN_UP: "Đăng ký",
-  FORGOT_PASSWORD: "Quên mật khẩu",
-  OR: "hoặc",
+  FORGOT_PASSWORD: "Quên mật khẩu?",
+  OR: "Hoặc",
   PASSWORD: "Mật khẩu",
   CONFIRM_PASSWORD: "Nhập lại mật khẩu",
   EMAIL: "Email",
@@ -29,6 +29,7 @@ export const SIGN_UP_TEXT = {
     "Vui lòng kiểm tra và kích hoạt tài khoản bằng cách nhấp vào liên kết Growth Me đã gửi đến địa chỉ email",
   DID_NOT_RECEIVED_EMAIL: "Chưa nhận được email",
   CHANGE_EMAIL: `Trường hợp email chưa chính xác, vui lòng cập nhật lại email bên duối và bấm "Cập nhật" để được gửi lại`,
+  SIGN_UP_SUGGEST: "Đăng ký tại đây!",
 };
 
 export const SIGN_UP_PLACEHOLDER = {
@@ -51,3 +52,8 @@ export const NAVIGATION_TITLE = [
     TITLE: "Tìm Mentor",
   },
 ];
+
+export const PLACE_HOLDER = {
+  LOGIN_EMAIL: "Nhập Email",
+  LOGIN_PASSWORD: "Nhập mật khẩu",
+};
