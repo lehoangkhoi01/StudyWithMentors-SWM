@@ -1,0 +1,22 @@
+@import "../../theme";
+
+.navigation {
+    &__appBar {
+        background-color: $primary900;
+    }
+
+    &__titleContainer {
+        justify-content: center;
+    }
+
+    &__title {
+        color: $primary200;
+        font-weight: 600;
+    }
+
+    &__title:hover {
+        color: $black000;
+    }
+}
+
+

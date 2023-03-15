@@ -1,0 +1,27 @@
+@import "../../theme";
+
+.textField {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2vh;
+
+    label {
+      align-self: flex-start;
+      font-size: 1.1rem;
+      color: $primary900;
+      font-weight: 600;
+      margin-bottom: 1vh;
+    }
+
+    input {
+        padding-block: 0.7rem;
+        background-color: $black000;
+    }
+  }
+
+  &__required {
+    color: $systemRed;
+    margin-right: 0.2vw;
+  }
+}
