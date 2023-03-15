@@ -12,6 +12,8 @@ const CustomizedTextField = (props) => {
         className={style.textField__input}
         id={props.inputId}
         placeholder={props.placeholder}
+        required={props.required}
+        type={props.type}
         {...props.options}
       />
     </div>

@@ -4,11 +4,12 @@
   &__container {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2vh;
 
     label {
       align-self: flex-start;
       font-size: 1.1rem;
-      color: #1a237e;
+      color: $primary900;
       font-weight: 600;
       margin-bottom: 1vh;
     }
@@ -20,7 +21,7 @@
   }
 
   &__required {
-    color: #ff5252;
+    color: $systemRed;
     margin-right: 0.2vw;
   }
 }

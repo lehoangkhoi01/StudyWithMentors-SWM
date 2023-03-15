@@ -32,6 +32,13 @@ export const SIGN_UP_TEXT = {
   SIGN_UP_SUGGEST: "Đăng ký tại đây!",
 };
 
+export const SIGN_UP_PLACEHOLDER = {
+  EMAIL: "Hãy nhập email của bạn",
+  FULL_NAME: "Hãy nhập họ và tên của bạn",
+  PASSWORD: "Hãy nhập mật khẩu của bạn",
+  CONFIRM_PASSWORD: "Hãy nhập mật khẩu của bạn",
+};
+
 export const APP_NAME = "Growth Me";
 
 export const NAVIGATION_TITLE = [

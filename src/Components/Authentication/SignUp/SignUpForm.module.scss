@@ -1,3 +1,5 @@
+@import "/src/shared/theme";
+
 .signUp {
   &__container {
     img {
@@ -15,5 +17,8 @@
 
   &__button {
     margin-top: 2vh;
+    padding-block: 0.75rem;
+    font-weight: 600;
+    background-color: $primary600;
   }
 }

@@ -1,8 +1,14 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 import style from "./SignUpForm.module.scss";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { SIGN_UP_STAGE, SIGN_UP_TEXT, TITLE } from "../../../shared/constants";
+import {
+  APP_NAME,
+  SIGN_UP_PLACEHOLDER,
+  SIGN_UP_STAGE,
+  SIGN_UP_TEXT,
+  TITLE,
+} from "../../../shared/constants";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
@@ -43,30 +49,40 @@ const SignUp = () => {
           onSubmit={handleSubmit(onSubmit)}
           className={`${style.signUp__form}`}
         >
-          <h1>{TITLE.GROWTH_ME}</h1>
+          <h1>{APP_NAME}</h1>
           <h2>{TITLE.SIGN_UP}</h2>
           {stage === SIGN_UP_STAGE.SIGN_UP && (
             <>
               <CustomizedTextField
                 inputId="email"
-                name="Email"
-                placeholder="Hãy nhập email của bạn"
+                name={TITLE.EMAIL}
+                placeholder={SIGN_UP_PLACEHOLDER.EMAIL}
+                required={true}
+                type={"email"}
                 options={{ ...register("email") }}
               />
-              <TextField
-                id="fullname"
-                label={TITLE.FULL_NAME}
-                {...register("fullName")}
+              <CustomizedTextField
+                inputId="fullname"
+                name={TITLE.FULL_NAME}
+                placeholder={SIGN_UP_PLACEHOLDER.FULL_NAME}
+                required={true}
+                options={{ ...register("fullName") }}
               />
-              <TextField
-                id="password"
-                label={TITLE.PASSWORD}
-                {...register("password")}
+              <CustomizedTextField
+                inputId="password"
+                name={TITLE.PASSWORD}
+                placeholder={SIGN_UP_PLACEHOLDER.PASSWORD}
+                required={true}
+                type={"password"}
+                options={{ ...register("password") }}
               />
-              <TextField
-                id="confirmPassword"
-                label={TITLE.CONFIRM_PASSWORD}
-                {...register("confirmPassword")}
+              <CustomizedTextField
+                inputId="confirmPassword"
+                name={TITLE.CONFIRM_PASSWORD}
+                placeholder={SIGN_UP_PLACEHOLDER.CONFIRM_PASSWORD}
+                required={true}
+                type={"password"}
+                options={{ ...register("confirmPassword") }}
               />
               <Button
                 type="submit"
@@ -75,7 +91,11 @@ const SignUp = () => {
               >
                 {TITLE.SIGN_UP}
               </Button>
-
+              <div className={`${style.divider__container}`}>
+                <Divider textAlign="center" sx={{ width: "100%" }} flexItem>
+                  {TITLE.OR}
+                </Divider>
+              </div>
               <GoogleSignInButton />
               <p>
                 {SIGN_UP_TEXT.HAD_PASSWORD}?{" "}
