@@ -1,9 +1,16 @@
 .signUp {
   &__container {
+    img {
+      width: 100%;
+    }
+  }
+
+  &__form {
     text-align: center;
     display: flex;
     flex-direction: column;
     gap: 2vh;
+    padding-inline: 13vw;
   }
 
   &__button {
