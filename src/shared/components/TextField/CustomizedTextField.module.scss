@@ -1,3 +1,5 @@
+@import "../../theme";
+
 .textField {
   &__container {
     display: flex;
@@ -13,6 +15,7 @@
 
     input {
         padding-block: 0.7rem;
+        background-color: $black000;
     }
   }
 
