@@ -28,6 +28,19 @@ export const SIGN_UP_TEXT = {
   PLEASE_CHECK_EMAIL:
     "Vui lòng kiểm tra và kích hoạt tài khoản bằng cách nhấp vào liên kết Growth Me đã gửi đến địa chỉ email",
   DID_NOT_RECEIVED_EMAIL: "Chưa nhận được email",
-  CHANGE_EMAIL:
-    `Trường hợp email chưa chính xác, vui lòng cập nhật lại email bên duối và bấm "Cập nhật" để được gửi lại`,
+  CHANGE_EMAIL: `Trường hợp email chưa chính xác, vui lòng cập nhật lại email bên duối và bấm "Cập nhật" để được gửi lại`,
 };
+
+export const APP_NAME = "Growth Me";
+
+export const NAVIGATION_TITLE = [
+  {
+    TITLE: "Trang chủ",
+  },
+  {
+    TITLE: "Về Growth Me",
+  },
+  {
+    TITLE: "Tìm Mentor",
+  },
+];
