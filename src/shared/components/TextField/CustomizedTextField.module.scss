@@ -1,0 +1,23 @@
+.textField {
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      align-self: flex-start;
+      font-size: 1.1rem;
+      color: #1a237e;
+      font-weight: 600;
+      margin-bottom: 1vh;
+    }
+
+    input {
+        padding-block: 0.7rem;
+    }
+  }
+
+  &__required {
+    color: #ff5252;
+    margin-right: 0.2vw;
+  }
+}
