@@ -18,3 +18,14 @@
 .divider_without_text {
   background-color: $primary900;
 }
+
+@media (max-width: 899px) {
+  .divider {
+    font-size: $SMALL_NORMAL_FONT_SIZE;
+    margin: .5em 0;
+
+    &__container {
+    width: 70%;
+  }
+  }
+}

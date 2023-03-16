@@ -9,14 +9,14 @@ import CustomPattern from "../CustomPattern/CustomPattern";
 const SignUpConfirmation = () => {
   return (
     <Grid2 container className={style.container}>
-      <Grid2 md={6} maxWidth={"50%"}>
+      <Grid2 className={style.imageSide} md={6} maxWidth={"50%"}>
         <img
           width={"100%"}
           alt="background"
           src={require("../../../assets/image1.png")}
         />
       </Grid2>
-      <Grid2 md={6} className={style.rightSide}>
+      <Grid2 xs={12} md={6} className={style.rightSide}>
         <CustomPattern />
         <div className={`${style.rightSide__container}`}>
           <img alt="image" src={require("../../../assets/envelope.png")} />
@@ -30,18 +30,18 @@ const SignUpConfirmation = () => {
           <CustomDivider />
           <div className={`${style.paragraphText}`}>
             <span>{SIGN_UP_TEXT.DID_NOT_RECEIVED_EMAIL}</span>{" "}
-            <a href="#" className={`${style.link}`}>
+            <a href="/sign-in" className={`${style.link}`}>
               {SIGN_UP_TEXT.RESENT_EMAIL}
             </a>
           </div>
           <div className={`${style.bottomSide}`}>
-            <p>
+            <div>
               {SIGN_UP_TEXT.EMAIL_INCORRECT_1}{" "}
-              <a href="#" className={`${style.link}`}>
+              <a href="/sign-up" className={`${style.link}`}>
                 {SIGN_UP_TEXT.SIGN_UP_PAGE}
               </a>{" "}
               {SIGN_UP_TEXT.EMAIL_INCORRECT_2}
-            </p>
+            </div>
           </div>
         </div>
       </Grid2>

@@ -25,3 +25,14 @@
     margin-right: 0.2vw;
   }
 }
+
+@media (max-width: 899px) {
+  .textField {
+    &__container {
+      label {
+      font-size: $SMALL_LABEL_SIZE;
+    }
+  }
+    
+  }
+}

@@ -1,7 +1,5 @@
 @import "../../../shared/theme";
 
-
-
 .signIn {
   &__container {
     background: $primaryBackground;
@@ -9,23 +7,6 @@
       width: 100%;
     } 
   }
-
-  &__leftPattern {
-    z-index: 0;
-    position: absolute;
-    width: 50% !important;
-    top: 0vh;
-    left: -1vw;
-  }
-  &__rightPattern {
-    z-index: 0;
-    position: absolute;
-    width: 50% !important;
-    top: -3vh;
-    right: 0vw;
-  }
-
-  
 
   &__formContainer {
     position: relative;
@@ -93,5 +74,37 @@
 
   &__signUpLink:hover {
     text-decoration: underline;
+  }
+}
+
+//***
+@media (max-width: 899px) {
+  .imageSide {
+    display: none;
+  }
+
+  .signIn {
+    &__container {
+      height: 100vh;
+    }
+    &__button {
+     font-size: $SMALL_BUTTON_TEXT_SIZE;
+   }
+
+    &__formSection {
+      margin-top: 10vh;
+    }
+  }
+  
+  .forgotPassword {
+    &__link {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
+  }
+
+  .registerSuggestion {
+    &__signUpLink, &__container {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
   }
 }
