@@ -85,35 +85,6 @@ const SignUp = () => {
                 </Button>
               </>
             )}
-
-            {/* {stage === SIGN_UP_STAGE.SENT_EMAIL && (
-              <>
-                <p>{SIGN_UP_TEXT.EMAIL_WAS_SENT}.</p>
-                <p>
-                  {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL} {signUpForm.email}
-                </p>
-                <div>
-                  <p>{SIGN_UP_TEXT.DID_NOT_RECEIVED_EMAIL}?</p>
-                  <GoogleSignInButton />
-                </div>
-                <p>{SIGN_UP_TEXT.CHANGE_EMAIL}</p>
-
-                <TextField
-                  id="email"
-                  label="Email"
-                  value={tempEmail}
-                  onChange={changeTempEmailHandler}
-                />
-
-                <Button
-                  className={`${style.signUp__button}`}
-                  variant="contained"
-                  onClick={updateEmail}
-                >
-                  {TITLE.UPDATE}
-                </Button>
-              </>
-            )} */}
           </form>
           <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton />

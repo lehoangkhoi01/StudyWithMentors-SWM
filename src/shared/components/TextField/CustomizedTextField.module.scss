@@ -4,11 +4,11 @@
   &__container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
 
     label {
       align-self: flex-start;
-      font-size: 1.1rem;
+      font-size: $LABEL_SIZE;
       color: $primary900;
       font-weight: 600;
       margin-bottom: 1vh;

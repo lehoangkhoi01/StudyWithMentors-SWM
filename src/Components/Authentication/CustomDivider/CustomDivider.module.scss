@@ -3,7 +3,7 @@
 .divider {
   color: $primary900;
   font-weight: 500;
-  font-size: 16px;
+  font-size: $NORMAL_FONT_SIZE;
   margin: 1em 0;
 
   &__container {
@@ -13,4 +13,8 @@
 
 .divider::after, .divider::before {
   border-top: thin solid $primary900;
+}
+
+.divider_without_text {
+  background-color: $primary900;
 }

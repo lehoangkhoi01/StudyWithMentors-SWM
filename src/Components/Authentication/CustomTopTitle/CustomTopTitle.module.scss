@@ -1,7 +1,8 @@
 @import "../../../shared/theme";
 
 .title {
-    font-size: 3rem;
+    font-size: $TOP_TITLE_SIZE;
     font-weight: 700;
     color: $primary600;
+    margin: 1vh 0;
 }

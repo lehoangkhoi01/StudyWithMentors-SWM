@@ -1,4 +1,7 @@
+@import "./shared/theme";
+
 .app {
     height: 100vh;
     overflow: hidden;
+    font-size: $NORMAL_FONT_SIZE;
 }
