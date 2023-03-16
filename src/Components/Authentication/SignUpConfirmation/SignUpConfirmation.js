@@ -4,6 +4,7 @@ import { SIGN_UP_TEXT, TITLE } from "../../../shared/constants";
 import style from "./SignUpConfirmation.module.scss";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../CustomPattern/CustomPattern";
 
 const SignUpConfirmation = () => {
   return (
@@ -16,6 +17,7 @@ const SignUpConfirmation = () => {
         />
       </Grid2>
       <Grid2 md={6} className={style.rightSide}>
+        <CustomPattern />
         <div className={`${style.rightSide__container}`}>
           <img alt="image" src={require("../../../assets/envelope.png")} />
           <CustomTopTitle title={TITLE.SIGN_UP_CONFIRMATION} />

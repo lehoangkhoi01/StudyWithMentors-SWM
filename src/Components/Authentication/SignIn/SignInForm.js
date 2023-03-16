@@ -13,6 +13,7 @@ import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/Go
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../CustomPattern/CustomPattern";
 
 const SignInForm = () => {
   const { register, handleSubmit } = useForm();
@@ -24,6 +25,17 @@ const SignInForm = () => {
   return (
     <Grid2 container className={`${style.signIn__container}`}>
       <Grid2 md={6} className={`${style.signIn__formContainer}`}>
+        {/* <img
+          className={`${style.signIn__leftPattern}`}
+          alt="left-pattern"
+          src={require("../../../assets/auth-pattern-left.png")}
+        />
+        <img
+          className={`${style.signIn__rightPattern}`}
+          alt="right-pattern"
+          src={require("../../../assets/auth-pattern-right.png")}
+        /> */}
+        <CustomPattern />
         <div className={`${style.signIn__formSection}`}>
           <form
             onSubmit={handleSubmit(onSubmit)}

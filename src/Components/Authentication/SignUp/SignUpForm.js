@@ -13,6 +13,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../CustomPattern/CustomPattern";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -36,6 +37,7 @@ const SignUp = () => {
         <img alt="background" src={require("../../../assets/image1.png")} />
       </Grid2>
       <Grid2 md={6} className={style.signUp__rightSide}>
+        <CustomPattern />
         <div className={style.signUp__formSection}>
           <form
             onSubmit={handleSubmit(onSubmit)}
