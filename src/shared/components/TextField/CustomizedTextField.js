@@ -4,10 +4,7 @@ import style from "./CustomizedTextField.module.scss";
 const CustomizedTextField = (props) => {
   return (
     <div className={style.textField__container}>
-      <label htmlFor={props.inputId}>
-        <span className={style.textField__required}>*</span>
-        {props.name}
-      </label>
+      <label htmlFor={props.inputId}>{props.name}</label>
       <TextField
         className={style.textField__input}
         id={props.inputId}
