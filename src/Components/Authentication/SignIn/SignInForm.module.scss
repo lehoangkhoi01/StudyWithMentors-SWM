@@ -5,17 +5,19 @@
     background: $primaryBackground;
     img {
       width: 100%;
-    }
+    } 
   }
 
   &__formContainer {
-    margin-top: 5vh;
+    position: relative;
+    margin-top: 3vh;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   &__formSection {
+    z-index: 999;
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -29,7 +31,7 @@
   &__button {
     margin-top: 2vh;
     background-color: $primary600;
-    font-size: 16px;
+    font-size: $BUTTON_TEXT_SIZE;
     font-weight: 600;
     text-transform: none;
     margin: 1em 0;
@@ -72,5 +74,37 @@
 
   &__signUpLink:hover {
     text-decoration: underline;
+  }
+}
+
+//***
+@media (max-width: 899px) {
+  .imageSide {
+    display: none;
+  }
+
+  .signIn {
+    &__container {
+      height: 100vh;
+    }
+    &__button {
+     font-size: $SMALL_BUTTON_TEXT_SIZE;
+   }
+
+    &__formSection {
+      margin-top: 10vh;
+    }
+  }
+  
+  .forgotPassword {
+    &__link {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
+  }
+
+  .registerSuggestion {
+    &__signUpLink, &__container {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
   }
 }

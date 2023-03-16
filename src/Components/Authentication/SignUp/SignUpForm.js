@@ -13,6 +13,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../CustomPattern/CustomPattern";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -32,10 +33,11 @@ const SignUp = () => {
 
   return (
     <Grid2 container className={style.signUp__container}>
-      <Grid2 md={6} maxWidth={"50%"}>
+      <Grid2 className={style.signUp__imageSide} md={6} maxWidth={"50%"}>
         <img alt="background" src={require("../../../assets/image1.png")} />
       </Grid2>
-      <Grid2 md={6} className={style.signUp__rightSide}>
+      <Grid2 xs={12} md={6} className={style.signUp__rightSide}>
+        <CustomPattern />
         <div className={style.signUp__formSection}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -85,35 +87,6 @@ const SignUp = () => {
                 </Button>
               </>
             )}
-
-            {/* {stage === SIGN_UP_STAGE.SENT_EMAIL && (
-              <>
-                <p>{SIGN_UP_TEXT.EMAIL_WAS_SENT}.</p>
-                <p>
-                  {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL} {signUpForm.email}
-                </p>
-                <div>
-                  <p>{SIGN_UP_TEXT.DID_NOT_RECEIVED_EMAIL}?</p>
-                  <GoogleSignInButton />
-                </div>
-                <p>{SIGN_UP_TEXT.CHANGE_EMAIL}</p>
-
-                <TextField
-                  id="email"
-                  label="Email"
-                  value={tempEmail}
-                  onChange={changeTempEmailHandler}
-                />
-
-                <Button
-                  className={`${style.signUp__button}`}
-                  variant="contained"
-                  onClick={updateEmail}
-                >
-                  {TITLE.UPDATE}
-                </Button>
-              </>
-            )} */}
           </form>
           <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton />

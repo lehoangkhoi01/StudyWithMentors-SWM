@@ -13,6 +13,7 @@ import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/Go
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../CustomPattern/CustomPattern";
 
 const SignInForm = () => {
   const { register, handleSubmit } = useForm();
@@ -23,7 +24,8 @@ const SignInForm = () => {
 
   return (
     <Grid2 container className={`${style.signIn__container}`}>
-      <Grid2 md={6} className={`${style.signIn__formContainer}`}>
+      <Grid2 xs={12} md={6} className={`${style.signIn__formContainer}`}>
+        <CustomPattern />
         <div className={`${style.signIn__formSection}`}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -53,7 +55,7 @@ const SignInForm = () => {
           <Button
             fullWidth
             type="submit"
-            className={`${style.signIn__button}`}
+            className={`${style.signIn__button} ${style.button}`}
             variant="contained"
           >
             {BUTTON_LABEL.LOGIN}
@@ -76,7 +78,7 @@ const SignInForm = () => {
         </div>
       </Grid2>
 
-      <Grid2 md={6} maxWidth={"50%"}>
+      <Grid2 md={6} maxWidth={"50%"} className={`${style.imageSide}`}>
         <img alt="background" src={require("../../../assets/image1.png")} />
       </Grid2>
     </Grid2>
