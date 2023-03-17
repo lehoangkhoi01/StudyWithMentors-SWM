@@ -11,13 +11,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { StyledMenu } from "./StyledMenu";
 import style from "./NavigationBar.module.scss";
 import { APP_NAME } from "../../constants";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
 import { NAVIGATION_TITLE } from "../../constants";
 
-//const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavigationBar() {
@@ -74,7 +74,7 @@ function NavigationBar() {
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none" } }}>
-              <Menu
+              <StyledMenu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
@@ -93,16 +93,15 @@ function NavigationBar() {
                 }}
               >
                 {NAVIGATION_TITLE.map((item) => (
-                  <MenuItem key={item.TITLE} onClick={handleCloseNavMenu}>
-                    <Typography
-                      className={`${style.navigation__title}`}
-                      textAlign="center"
-                    >
-                      {item.TITLE}
-                    </Typography>
+                  <MenuItem
+                    className={`${style.navigation__menuItem}`}
+                    key={item.TITLE}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography textAlign="center">{item.TITLE}</Typography>
                   </MenuItem>
                 ))}
-              </Menu>
+              </StyledMenu>
             </Box>
             <Logo
               src={logoPath}
