@@ -12,11 +12,41 @@
     &__title {
         color: $primary200;
         font-weight: 600;
+        border-radius: 0;
+        transition: ease-in 300ms;
     }
 
     &__title:hover {
         color: $black000;
+        &::before {
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 1px;
+            bottom: 0;
+            left: 25%;
+            border-bottom: 3px solid $black000;
+        }
     }
+
+    &__menuItem {
+        background-color: $primary700;
+        margin: 10px;
+        border-radius: 5px;
+        & p {
+            color: $primary200;
+            font-weight: 700;
+            font-size: $SMALL_LABEL_SIZE;
+        }
+    }
+    &__menuItem:hover {
+        background-color: $primary500;
+        & p {
+            color: white;
+        }
+        
+    }
+    
 }
 
 
