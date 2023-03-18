@@ -14,12 +14,11 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedDatePicker from "../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomPattern from "../CustomPattern/CustomPattern";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-import { DatePicker } from "@mui/x-date-pickers";
 
 const GENDERS = [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER];
 
 const FillInformation = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -61,17 +60,17 @@ const FillInformation = () => {
           type={"text"}
           options={{ ...register("phone") }}
         />
-        <DatePicker {...register("dob2")} />
         <Grid2
           container
           className={`${style.fillInformation__input} ${style.fillInformation__grid}`}
         >
           <Grid2 xs={6}>
             <CustomizedDatePicker
-              inputId="dob"
               name={TITLE.DOB}
               placeholder={PLACE_HOLDER.DEFAULT_DOB}
               options={{ ...register("dob") }}
+              formName={"dob"}
+              setValue={setValue}
             />
           </Grid2>
           <Grid2 xs={6}>
