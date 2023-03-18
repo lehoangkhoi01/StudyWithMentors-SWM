@@ -3,6 +3,8 @@
 .navigation {
     &__appBar {
         background-color: $primary900;
+        z-index: 9999;
+        position: relative;
     }
 
     &__titleContainer {

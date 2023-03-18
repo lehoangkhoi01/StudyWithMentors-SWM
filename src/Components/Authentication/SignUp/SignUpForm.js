@@ -33,7 +33,7 @@ const SignUp = () => {
 
   return (
     <Grid2 container className={style.signUp__container}>
-      <Grid2 className={style.signUp__imageSide} md={6} maxWidth={"50%"}>
+      <Grid2 className={style.signUp__imageSide} md={6}>
         <img alt="background" src={require("../../../assets/image1.png")} />
       </Grid2>
       <Grid2 xs={12} md={6} className={style.signUp__rightSide}>

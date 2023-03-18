@@ -1,6 +1,8 @@
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
   GOOGLE_LOGIN: "Đăng nhập với tài khoản Google",
+  SAVE: "Lưu",
+  LATER: "Để sau",
 };
 
 export const TITLE = {
@@ -15,6 +17,9 @@ export const TITLE = {
   GROWTH_ME: "Growth Me",
   FULL_NAME: "Họ và tên",
   UPDATE: "Cập nhật",
+  PHONE: "Số điện thoại",
+  GENDER: "Giới tính",
+  DOB: "Ngày sinh",
 };
 
 export const SIGN_UP_STAGE = {
@@ -62,4 +67,22 @@ export const NAVIGATION_TITLE = [
 export const PLACE_HOLDER = {
   LOGIN_EMAIL: "Nhập Email",
   LOGIN_PASSWORD: "Nhập mật khẩu",
+  DEFAULT_EMAIL: "Example@gmail.com",
+  DEFAULT_NAME: "Nguyễn Văn A",
+  DEFAULT_PHONE: "0982 123 456",
+  DEFAULT_DOB: "01/01/2001",
+};
+
+export const FILL_INFORMATION = {
+  WELCOME: "Chào mừng bạn đến với Growth Me",
+  PLEASE_FILL_INFORMATION:
+    "Vui lòng cập nhật thông tin cá nhân để có thể đặt lịch với mentor",
+};
+
+export const OPTIONAL = "optional";
+
+export const GENDER = {
+  MALE: "Nam",
+  FEMALE: "Nữ",
+  OTHER: "Khác",
 };

@@ -1,10 +1,11 @@
 @import "../../theme";
 
-.textField {
+.datePicker {
   &__container {
     display: flex;
     flex-direction: column;
     margin-bottom: 2.3vh;
+    overflow: hidden;
 
     label {
       align-self: flex-start;
@@ -13,17 +14,22 @@
       font-weight: 600;
       margin-bottom: 0.8vh;
     }
+  }
 
-    input {
-      padding-block: 0.7rem;
+  &__input {
+    div {
+      border: none;
       background-color: $black000;
-      border-radius: 5px;
+
+      input {
+        padding-block: 0.7rem;
+      }
     }
   }
 }
 
 @media (max-width: 899px) {
-  .textField {
+  .datePicker {
     &__container {
       label {
         font-size: $SMALL_LABEL_SIZE;

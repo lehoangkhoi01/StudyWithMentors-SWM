@@ -1,10 +1,11 @@
 @import "../../theme";
 
-.textField {
+.select {
   &__container {
     display: flex;
     flex-direction: column;
     margin-bottom: 2.3vh;
+    overflow: hidden;
 
     label {
       align-self: flex-start;
@@ -13,17 +14,18 @@
       font-weight: 600;
       margin-bottom: 0.8vh;
     }
+  }
 
-    input {
+  &__input {
+    div {
       padding-block: 0.7rem;
       background-color: $black000;
-      border-radius: 5px;
     }
   }
 }
 
 @media (max-width: 899px) {
-  .textField {
+  .select {
     &__container {
       label {
         font-size: $SMALL_LABEL_SIZE;
