@@ -4,6 +4,7 @@ import SignUpPage from "./Pages/Authentication/SignUpPage";
 import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
 import style from "./App.module.scss";
 import SignUpConfirmationPage from "./Pages/Authentication/SignUpConfirmationPage";
+import FillInformationPage from "./Pages/Profile/FillInformationPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/sign-up" component={SignUpPage} />
           <Route path="/sign-in" component={SignInPage} />
           <Route path="/confirmation" component={SignUpConfirmationPage} />
+          <Route path="/fill-information" component={FillInformationPage} />
         </Switch>
       </div>
     </BrowserRouter>

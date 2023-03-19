@@ -36,11 +36,13 @@ const SignInForm = () => {
               inputId="email"
               name="Email"
               placeholder={PLACE_HOLDER.LOGIN_EMAIL}
+              required={true}
               options={{ ...register("password") }}
             />
             <CustomizedTextField
               inputId="password"
               name="Password"
+              required={true}
               placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
               options={{ ...register("email") }}
             />

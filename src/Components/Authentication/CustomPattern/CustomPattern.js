@@ -3,7 +3,7 @@ import style from "./CustomPattern.module.scss";
 
 const CustomPattern = () => {
   return (
-    <div>
+    <>
       <img
         className={`${style.leftPattern}`}
         alt="left-pattern"
@@ -14,7 +14,7 @@ const CustomPattern = () => {
         alt="right-pattern"
         src={require("../../../assets/auth-pattern-right.png")}
       />
-    </div>
+    </>
   );
 };
 
