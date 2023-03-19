@@ -12,7 +12,7 @@ import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect
 import style from "./FillInformation.module.scss";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedDatePicker from "../../../shared/components/DatePicker/CustomizedDatePicker";
-import CustomPattern from "../../Authentication/CustomPattern/CustomPattern";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const GENDERS = [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER];
@@ -26,7 +26,7 @@ const FillInformation = () => {
 
   return (
     <div className={style.fillInformation__container}>
-      <CustomPattern />
+      <CustomPattern height={"95%"} />
       <form
         className={style.fillInformation__formSection}
         onSubmit={handleSubmit(onSubmit)}

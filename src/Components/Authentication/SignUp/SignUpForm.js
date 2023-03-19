@@ -3,6 +3,7 @@ import style from "./SignUpForm.module.scss";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import {
+  ROUTES,
   SIGN_UP_PLACEHOLDER,
   SIGN_UP_STAGE,
   SIGN_UP_TEXT,
@@ -13,7 +14,8 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
-import CustomPattern from "../CustomPattern/CustomPattern";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -33,11 +35,9 @@ const SignUp = () => {
 
   return (
     <Grid2 container className={style.signUp__container}>
-      <Grid2 className={style.signUp__imageSide} md={6}>
-        <img alt="background" src={require("../../../assets/image1.png")} />
-      </Grid2>
+      <ImageSideContainer />
       <Grid2 xs={12} md={6} className={style.signUp__rightSide}>
-        <CustomPattern />
+        <CustomPattern width={"50%"} />
         <div className={style.signUp__formSection}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -93,7 +93,10 @@ const SignUp = () => {
           <div className={`${style.smallText__container}`}>
             <span>
               {SIGN_UP_TEXT.HAD_ACCOUNT}{" "}
-              <a href="/sign-in" className={`${style.smallText__signUpLink}`}>
+              <a
+                href={ROUTES.SIGN_IN}
+                className={`${style.smallText__signUpLink}`}
+              >
                 {SIGN_UP_TEXT.SIGN_IN_NOW}
               </a>
             </span>

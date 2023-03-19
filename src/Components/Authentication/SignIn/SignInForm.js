@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   BUTTON_LABEL,
   PLACE_HOLDER,
+  ROUTES,
   SIGN_UP_TEXT,
   TITLE,
 } from "../../../shared/constants";
@@ -13,7 +14,8 @@ import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/Go
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
-import CustomPattern from "../CustomPattern/CustomPattern";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 
 const SignInForm = () => {
   const { register, handleSubmit } = useForm();
@@ -25,7 +27,7 @@ const SignInForm = () => {
   return (
     <Grid2 container className={`${style.signIn__container}`}>
       <Grid2 xs={12} md={6} className={`${style.signIn__formContainer}`}>
-        <CustomPattern />
+        <CustomPattern width={"50%"} height={"95%"} />
         <div className={`${style.signIn__formSection}`}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -70,7 +72,7 @@ const SignInForm = () => {
             <span>
               {SIGN_UP_TEXT.HAD_NO_ACCOUNT}{" "}
               <a
-                href="/sign-up"
+                href={ROUTES.SIGN_UP}
                 className={`${style.registerSuggestion__signUpLink}`}
               >
                 {SIGN_UP_TEXT.SIGN_UP_SUGGEST}
@@ -79,10 +81,7 @@ const SignInForm = () => {
           </div>
         </div>
       </Grid2>
-
-      <Grid2 md={6} maxWidth={"50%"} className={`${style.imageSide}`}>
-        <img alt="background" src={require("../../../assets/image1.png")} />
-      </Grid2>
+      <ImageSideContainer />
     </Grid2>
   );
 };

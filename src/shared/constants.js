@@ -1,3 +1,10 @@
+export const ROUTES = {
+  SIGN_IN: "/sign-in",
+  SIGN_UP: "/sign-up",
+  SIGN_UP_CONFIRMATION: "/confirmation",
+  FILL_INFORMATION: "/fill-information",
+};
+
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
   GOOGLE_LOGIN: "Đăng nhập với tài khoản Google",

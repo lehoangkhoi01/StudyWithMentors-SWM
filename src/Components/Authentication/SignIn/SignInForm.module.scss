@@ -1,9 +1,11 @@
 @import "../../../shared/theme";
+@import "../../../shared//break-point";
 
 .signIn {
   &__container {
     background: $primaryBackground;
-    img {
+    height: 100%;
+    &__background {
       width: 100%;
     } 
   }
@@ -49,6 +51,12 @@
   }
 }
 
+.imageSide {
+  background-image: url("../../../assets/image1.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .forgotPassword {
   &__container {
     width: 100%;
@@ -83,6 +91,12 @@
 }
 
 //***
+@media (max-width: $bp-xl) {
+  .imageSide {
+    background-size: cover;
+  }
+}
+
 @media (max-width: 899px) {
   .imageSide {
     display: none;

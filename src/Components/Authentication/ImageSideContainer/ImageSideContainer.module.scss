@@ -1,0 +1,19 @@
+@import "../../../shared/break-point";
+
+.imageSide {
+    background-image: url("../../../assets/image1.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+@media (max-width: $bp-xl) {
+    .imageSide {
+        background-size: cover;
+    }
+}
+
+@media (max-width: $bp-md) {
+    .imageSide {
+        display: none;
+    }
+}

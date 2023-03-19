@@ -3,9 +3,7 @@
 .signUp {
   &__container {
     background: $primaryBackground;
-    img {
-      width: 100%;
-    }
+    height: 100%;
   }
 
   &__rightSide {
@@ -63,9 +61,6 @@
 
 /* --- Responsive for mobile --- */
 @media (max-width: 899px) {
-  .signUp__imageSide {
-    display: none;
-  } 
   .signUp__rightSide {
     height: 100vh;
   }
