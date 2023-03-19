@@ -65,7 +65,6 @@ function NavigationBar() {
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontWeight: 700,
-                letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
@@ -124,7 +123,6 @@ function NavigationBar() {
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontWeight: 700,
-                letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
               }}

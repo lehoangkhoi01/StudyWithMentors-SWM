@@ -4,7 +4,7 @@ import { SIGN_UP_TEXT, TITLE } from "../../../shared/constants";
 import style from "./SignUpConfirmation.module.scss";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
-import CustomPattern from "../CustomPattern/CustomPattern";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 
 const SignUpConfirmation = () => {
   return (

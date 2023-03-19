@@ -11,13 +11,15 @@ function App() {
     <BrowserRouter>
       <div className={`${style.app}`}>
         <NavigationBar />
-        <Switch>
-          <Route exact path="/" component={SignInPage} />
-          <Route path="/sign-up" component={SignUpPage} />
-          <Route path="/sign-in" component={SignInPage} />
-          <Route path="/confirmation" component={SignUpConfirmationPage} />
-          <Route path="/fill-information" component={FillInformationPage} />
-        </Switch>
+        <div className={`${style.content}`}>
+          <Switch className={`${style.switchContainer}`}>
+            <Route exact path="/" component={SignInPage} />
+            <Route path="/sign-up" component={SignUpPage} />
+            <Route path="/sign-in" component={SignInPage} />
+            <Route path="/confirmation" component={SignUpConfirmationPage} />
+            <Route path="/fill-information" component={FillInformationPage} />
+          </Switch>
+        </div>
       </div>
     </BrowserRouter>
   );

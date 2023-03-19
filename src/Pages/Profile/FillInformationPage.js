@@ -1,4 +1,4 @@
-import FillInformation from "../../Components/Authentication/Profile/FillInformation";
+import FillInformation from "../../Components/Profile/FillInformation/FillInformation";
 
 const FillInformationPage = () => {
   return <FillInformation />;
