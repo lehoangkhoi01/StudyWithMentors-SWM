@@ -26,7 +26,6 @@ jobs:
         cache: 'npm'
         cache-dependency-path: package-lock.json
     - run: npm install -g yarn
-    - run: CI="" npm run build
     - name: yarn install, build and test
       run: |
         yarn install
