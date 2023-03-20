@@ -52,7 +52,7 @@ function NavigationBar() {
               sx={{
                 display: { xs: "none", md: "flex" },
                 mr: 2,
-                width: "2em",
+                width: "2.5em",
                 height: "2em",
               }}
             />
@@ -109,7 +109,7 @@ function NavigationBar() {
               sx={{
                 display: { xs: "flex", md: "none" },
                 mr: 2,
-                width: "1.5em",
+                width: "2em",
                 height: "1.5em",
               }}
             />
