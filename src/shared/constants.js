@@ -7,7 +7,7 @@ export const ROUTES = {
 
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
-  GOOGLE_LOGIN: "Đăng nhập với tài khoản Google",
+  GOOGLE_LOGIN: "Đăng ký với tài khoản Google",
   SAVE: "Lưu",
   LATER: "Để sau",
 };

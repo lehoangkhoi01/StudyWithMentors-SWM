@@ -5,19 +5,14 @@ import style from "./SignUpConfirmation.module.scss";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 
 const SignUpConfirmation = () => {
   return (
     <Grid2 container className={style.container}>
-      <Grid2 className={style.imageSide} md={6} maxWidth={"50%"}>
-        <img
-          width={"100%"}
-          alt="background"
-          src={require("../../../assets/image1.png")}
-        />
-      </Grid2>
+      <ImageSideContainer />
       <Grid2 xs={12} md={6} className={style.rightSide}>
-        <CustomPattern />
+        <CustomPattern width={"50%"} height={"95%"} />
         <div className={`${style.rightSide__container}`}>
           <img alt="image" src={require("../../../assets/envelope.png")} />
           <CustomTopTitle title={TITLE.SIGN_UP_CONFIRMATION} />
