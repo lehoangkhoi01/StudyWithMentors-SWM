@@ -46,6 +46,7 @@ const SignInForm = () => {
               name="Password"
               required={true}
               placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
+              type={"password"}
               options={{ ...register("email") }}
             />
           </form>

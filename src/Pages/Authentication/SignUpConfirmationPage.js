@@ -4,7 +4,7 @@ import SignUpConfirmation from "../../Components/Authentication/SignUpConfirmati
 const SignUpConfirmationPage = () => {
   return (
     <div>
-      <SignUpConfirmation />
+      <CustomPattern width={"50%"} height={"95%"} />
     </div>
   );
 };
