@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./SignInForm.module.scss";
 import { Button } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -9,7 +9,7 @@ import {
   ROUTES,
   SIGN_UP_TEXT,
   TITLE,
-} from "../../../shared/constants";
+} from "../../../shared/constants/common";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
@@ -17,13 +17,23 @@ import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
+import { emailValidationRules } from "../../../shared/constants/validationRules";
 
 const SignInForm = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
+    console.log("submit!");
     console.log(data);
   };
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
   const handleSignInWithGoogle = () => {
     SignInWithGoogle();
@@ -43,33 +53,34 @@ const SignInForm = () => {
               inputId="email"
               name="Email"
               placeholder={PLACE_HOLDER.LOGIN_EMAIL}
-              required={true}
-              options={{ ...register("password") }}
+              options={{
+                ...register("email", emailValidationRules),
+              }}
+              error={errors.email ? true : false}
+              helperText={errors?.email?.message}
             />
             <CustomizedTextField
               inputId="password"
               name="Password"
-              required={true}
               placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
               type={"password"}
-              options={{ ...register("email") }}
+              options={{ ...register("password") }}
             />
+            <div className={`${style.forgotPassword__container}`}>
+              <a href="#" className={`${style.forgotPassword__link}`}>
+                {TITLE.FORGOT_PASSWORD}
+              </a>
+            </div>
+
+            <Button
+              fullWidth
+              type="submit"
+              className={`${style.signIn__button} ${style.button}`}
+              variant="contained"
+            >
+              {BUTTON_LABEL.LOGIN}
+            </Button>
           </form>
-
-          <div className={`${style.forgotPassword__container}`}>
-            <a href="#" className={`${style.forgotPassword__link}`}>
-              {TITLE.FORGOT_PASSWORD}
-            </a>
-          </div>
-
-          <Button
-            fullWidth
-            type="submit"
-            className={`${style.signIn__button} ${style.button}`}
-            variant="contained"
-          >
-            {BUTTON_LABEL.LOGIN}
-          </Button>
 
           <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton onClick={handleSignInWithGoogle} />

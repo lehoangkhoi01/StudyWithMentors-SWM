@@ -6,7 +6,7 @@ import {
   GENDER,
   PLACE_HOLDER,
   TITLE,
-} from "../../../shared/constants";
+} from "../../../shared/constants/common";
 import CustomTopTitle from "../../Authentication/CustomTopTitle/CustomTopTitle";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import style from "./FillInformation.module.scss";

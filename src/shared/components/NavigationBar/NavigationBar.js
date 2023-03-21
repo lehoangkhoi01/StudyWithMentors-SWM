@@ -13,10 +13,9 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { StyledMenu } from "./StyledMenu";
 import style from "./NavigationBar.module.scss";
-import { APP_NAME } from "../../constants";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
-import { NAVIGATION_TITLE } from "../../constants";
+import { NAVIGATION_TITLE, APP_NAME } from "../../constants/common";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
