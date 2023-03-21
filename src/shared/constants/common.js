@@ -93,3 +93,13 @@ export const GENDER = {
   FEMALE: "Nữ",
   OTHER: "Khác",
 };
+
+export const MAX_LENGTH = {
+  EMAIL: 10,
+};
+
+export const ERROR_MESSAGES = {
+  EMPTY_EMAIL_FIELD: "Email không được để trống.",
+  EMPTY_PASSWORD_FIELD: "Password không được để trống.",
+  MAX_LENGTH_EMAIL: "Độ dài tối đa " + MAX_LENGTH.EMAIL + " kí tự.",
+};

@@ -1,6 +1,6 @@
 import { DatePicker } from "@mui/x-date-pickers";
 import style from "./CustomizedDatePicker.module.scss";
-import { OPTIONAL } from "../../constants";
+import { OPTIONAL } from "../../constants/common";
 
 const CustomizedDatePicker = (props) => {
   console.log({ ...props.options });

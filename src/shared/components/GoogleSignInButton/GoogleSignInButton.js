@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { BUTTON_LABEL } from "../../constants";
+import { BUTTON_LABEL } from "../../constants/common";
 import style from "./GoogleSignInButton.module.scss";
 
 const GoogleSignInButton = ({ onClick }) => {

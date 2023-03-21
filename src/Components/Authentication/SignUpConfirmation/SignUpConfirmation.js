@@ -1,6 +1,6 @@
 import React from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { SIGN_UP_TEXT, TITLE } from "../../../shared/constants";
+import { SIGN_UP_TEXT, TITLE } from "../../../shared/constants/common";
 import style from "./SignUpConfirmation.module.scss";
 import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";

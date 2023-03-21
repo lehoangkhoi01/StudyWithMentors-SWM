@@ -1,4 +1,4 @@
-import { OPTIONAL } from "../../constants";
+import { OPTIONAL } from "../../constants/common";
 import style from "./CustomizedSelect.module.scss";
 
 import { MenuItem, Select } from "@mui/material";

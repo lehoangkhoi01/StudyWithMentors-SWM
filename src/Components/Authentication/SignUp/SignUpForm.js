@@ -8,7 +8,7 @@ import {
   SIGN_UP_STAGE,
   SIGN_UP_TEXT,
   TITLE,
-} from "../../../shared/constants";
+} from "../../../shared/constants/common";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";

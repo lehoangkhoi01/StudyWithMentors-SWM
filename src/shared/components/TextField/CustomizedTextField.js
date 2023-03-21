@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import style from "./CustomizedTextField.module.scss";
-import { OPTIONAL } from "../../constants";
+import { OPTIONAL } from "../../constants/common";
 
 const CustomizedTextField = (props) => {
   return (
@@ -8,6 +8,8 @@ const CustomizedTextField = (props) => {
       <label htmlFor={props.inputId}>{`${props.name} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
       <TextField
+        error={props.error}
+        helperText={props.helperText}
         id={props.inputId}
         placeholder={props.placeholder}
         required={props.required}
