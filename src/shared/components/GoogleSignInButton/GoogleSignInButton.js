@@ -3,9 +3,9 @@ import React from "react";
 import { BUTTON_LABEL } from "../../constants";
 import style from "./GoogleSignInButton.module.scss";
 
-const GoogleSignInButton = () => {
+const GoogleSignInButton = ({ onClick }) => {
   return (
-    <Button className={`${style.googleButton}`}>
+    <Button className={`${style.googleButton}`} onClick={onClick}>
       {BUTTON_LABEL.GOOGLE_LOGIN}
     </Button>
   );
