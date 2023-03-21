@@ -5,7 +5,7 @@ import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
 import style from "./App.module.scss";
 import SignUpConfirmationPage from "./Pages/Authentication/SignUpConfirmationPage";
 import FillInformationPage from "./Pages/Profile/FillInformationPage";
-import LoadingProvider from "./Helpers/Loading/LoadingProvider";
+import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 
 function App() {
   return (
