@@ -16,12 +16,17 @@ import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 
 const SignInForm = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
+  };
+
+  const handleSignInWithGoogle = () => {
+    SignInWithGoogle();
   };
 
   return (
@@ -67,7 +72,7 @@ const SignInForm = () => {
           </Button>
 
           <CustomDivider text={TITLE.OR} />
-          <GoogleSignInButton />
+          <GoogleSignInButton onClick={handleSignInWithGoogle} />
 
           <div className={`${style.registerSuggestion__container}`}>
             <span>
