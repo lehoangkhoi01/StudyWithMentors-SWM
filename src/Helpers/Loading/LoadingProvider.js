@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import style from "./LoadingProvider.module.scss";
 
 const LoadingProvider = (props) => {
-  const isLoading = useSelector((state) => !state.helper.isLoading);
+  const isLoading = useSelector((state) => state.helper.isLoading);
 
   return (
     <>
