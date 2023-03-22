@@ -94,12 +94,31 @@ export const GENDER = {
   OTHER: "Khác",
 };
 
-export const MAX_LENGTH = {
-  EMAIL: 10,
+export const LENGTH = {
+  PASSWORD_MAX: 100,
+  PASSWORD_MIN: 8,
+  EMAIL_MAX: 254,
 };
 
 export const ERROR_MESSAGES = {
+  REQUIRED_FIELD: "Vui lòng điền thông tin này.",
+  DUPLICATED_EMAIL: "Email này đã được đăng ký.",
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
   EMPTY_PASSWORD_FIELD: "Password không được để trống.",
-  MAX_LENGTH_EMAIL: "Độ dài tối đa " + MAX_LENGTH.EMAIL + " kí tự.",
+  MAX_LENGTH_EMAIL: "Độ dài tối đa cho email là " + LENGTH.EMAIL_MAX + " kí tự",
+  INVALID_PASSWORD_LENGTH:
+    "Chọn mật khẩu có độ dài từ " +
+    LENGTH.PASSWORD_MIN +
+    " đến " +
+    LENGTH.PASSWORD_MAX +
+    " kí tự.",
+  WRONG_EMAIL_OR_PASSWORD: "Email hoặc mật khẩu không chính xác.",
+  CONFIRM_PASSWORD_NOT_MATCH: "Mật khẩu không trùng khớp.",
+  WRONG_PASSWORD_FORMAT:
+    "Chọn một mật khẩu ít nhất 8 kí tự, có chứa chữ cái, số và ký tự đặc biệt.",
+  WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
+};
+
+export const COLOR = {
+  SYSTEM_RED: "#FF5252",
 };
