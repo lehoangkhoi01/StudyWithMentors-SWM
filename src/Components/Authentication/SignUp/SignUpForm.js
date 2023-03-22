@@ -1,11 +1,11 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import style from "./SignUpForm.module.scss";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import {
+  COLOR,
+  ERROR_MESSAGES,
   ROUTES,
   SIGN_UP_PLACEHOLDER,
-  SIGN_UP_STAGE,
   SIGN_UP_TEXT,
   TITLE,
 } from "../../../shared/constants/common";
@@ -16,10 +16,19 @@ import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import {
+  emailValidationRules,
+  passwordValidation,
+  registerFullNameValidation,
+} from "../../../shared/constants/validationRules";
 
 const SignUp = () => {
-  const { register, handleSubmit } = useForm();
-  const [stage, setStage] = useState(SIGN_UP_STAGE.SIGN_UP);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
   // const [signUpForm, setSignUpForm] = useState({
   //   fullName: "",
   //   email: "",
@@ -30,7 +39,15 @@ const SignUp = () => {
   const onSubmit = (data) => {
     console.log(data);
     //setSignUpForm(data);
-    setStage(SIGN_UP_STAGE.SENT_EMAIL);
+  };
+
+  const validationConfirmPassword = (val) => {
+    if (!val || val.length == 0) {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+    if (watch("password") != val) {
+      return ERROR_MESSAGES.CONFIRM_PASSWORD_NOT_MATCH;
+    }
   };
 
   return (
@@ -44,49 +61,59 @@ const SignUp = () => {
             className={`${style.signUp__form}`}
           >
             <CustomTopTitle title={TITLE.SIGN_UP} />
-            {stage === SIGN_UP_STAGE.SIGN_UP && (
-              <>
-                <CustomizedTextField
-                  inputId="email"
-                  name={TITLE.EMAIL}
-                  placeholder={SIGN_UP_PLACEHOLDER.EMAIL}
-                  required={true}
-                  type={"email"}
-                  options={{ ...register("email") }}
-                />
-                <CustomizedTextField
-                  inputId="fullname"
-                  name={TITLE.FULL_NAME}
-                  placeholder={SIGN_UP_PLACEHOLDER.FULL_NAME}
-                  required={true}
-                  options={{ ...register("fullName") }}
-                />
-                <CustomizedTextField
-                  inputId="password"
-                  name={TITLE.PASSWORD}
-                  placeholder={SIGN_UP_PLACEHOLDER.PASSWORD}
-                  required={true}
-                  type={"password"}
-                  options={{ ...register("password") }}
-                />
-                <CustomizedTextField
-                  inputId="confirmPassword"
-                  name={TITLE.CONFIRM_PASSWORD}
-                  placeholder={SIGN_UP_PLACEHOLDER.CONFIRM_PASSWORD}
-                  required={true}
-                  type={"password"}
-                  options={{ ...register("confirmPassword") }}
-                />
-                <Button
-                  fullWidth
-                  type="submit"
-                  className={`${style.signUp__button}`}
-                  variant="contained"
-                >
-                  {TITLE.SIGN_UP}
-                </Button>
-              </>
-            )}
+            <CustomizedTextField
+              inputId="email"
+              name={TITLE.EMAIL}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.EMAIL}
+              options={{ ...register("email", emailValidationRules) }}
+              error={errors.email ? true : false}
+              helperText={errors?.email?.message}
+            />
+            <CustomizedTextField
+              inputId="fullname"
+              name={TITLE.FULL_NAME}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.FULL_NAME}
+              options={{ ...register("fullName", registerFullNameValidation) }}
+              error={errors.fullName ? true : false}
+              helperText={errors?.fullName?.message}
+            />
+            <CustomizedTextField
+              inputId="password"
+              name={TITLE.PASSWORD}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.PASSWORD}
+              type={"password"}
+              options={{ ...register("password", passwordValidation) }}
+              error={errors.password ? true : false}
+              helperText={errors?.password?.message}
+            />
+            <CustomizedTextField
+              inputId="confirmPassword"
+              name={TITLE.CONFIRM_PASSWORD}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.CONFIRM_PASSWORD}
+              type={"password"}
+              options={{
+                ...register("confirmPassword", {
+                  validate: (val) => validationConfirmPassword(val),
+                }),
+              }}
+              error={errors.confirmPassword ? true : false}
+              helperText={errors?.confirmPassword?.message}
+            />
+            <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+              {ERROR_MESSAGES.DUPLICATED_EMAIL}
+            </Typography>
+            <Button
+              fullWidth
+              type="submit"
+              className={`${style.signUp__button}`}
+              variant="contained"
+            >
+              {TITLE.SIGN_UP}
+            </Button>
           </form>
           <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton />

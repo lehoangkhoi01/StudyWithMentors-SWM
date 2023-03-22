@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import style from "./SignInForm.module.scss";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useForm } from "react-hook-form";
 import {
   BUTTON_LABEL,
+  COLOR,
+  ERROR_MESSAGES,
   PLACE_HOLDER,
   ROUTES,
   SIGN_UP_TEXT,
@@ -52,6 +54,7 @@ const SignInForm = () => {
             <CustomizedTextField
               inputId="email"
               name="Email"
+              required={true}
               placeholder={PLACE_HOLDER.LOGIN_EMAIL}
               options={{
                 ...register("email", emailValidationRules),
@@ -62,6 +65,7 @@ const SignInForm = () => {
             <CustomizedTextField
               inputId="password"
               name="Password"
+              required={true}
               placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
               type={"password"}
               options={{ ...register("password") }}
@@ -71,6 +75,9 @@ const SignInForm = () => {
                 {TITLE.FORGOT_PASSWORD}
               </a>
             </div>
+            <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+              {ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD}
+            </Typography>
 
             <Button
               fullWidth
