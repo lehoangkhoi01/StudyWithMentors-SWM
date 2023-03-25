@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import style from "./SignInForm.module.scss";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useForm } from "react-hook-form";
 import {
@@ -20,6 +20,7 @@ import CustomPattern from "../../../shared/components/CustomPattern/CustomPatter
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 import { emailValidationRules } from "../../../shared/constants/validationRules";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const SignInForm = () => {
   const {
@@ -78,15 +79,9 @@ const SignInForm = () => {
             <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
               {ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD}
             </Typography>
-
-            <Button
-              fullWidth
-              type="submit"
-              className={`${style.signIn__button} ${style.button}`}
-              variant="contained"
-            >
-              {BUTTON_LABEL.LOGIN}
-            </Button>
+            <CustomizedButton type="submit" variant="contained" color="primary600">
+            {BUTTON_LABEL.LOGIN}
+          </CustomizedButton>
           </form>
 
           <CustomDivider text={TITLE.OR} />

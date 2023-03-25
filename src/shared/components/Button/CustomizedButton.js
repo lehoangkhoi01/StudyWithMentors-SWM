@@ -7,7 +7,7 @@ const CustomizedButton = (props) => {
       fullWidth
       type={props.type}
       variant={props.variant}
-      className={`btn ${style[`${props.color}__${props.variant}`]} ${
+      className={`${style.btn} ${style[`${props.color}__${props.variant}`]} ${
         props.className
       }`}
     >

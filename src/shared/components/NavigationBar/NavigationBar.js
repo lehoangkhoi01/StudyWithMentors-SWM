@@ -42,7 +42,7 @@ function NavigationBar() {
   return (
     <>
       <AppBar position="static" className={`${style.navigation__appBar}`}>
-        <Container maxWidth="xl">
+        <Container className={`${style.navigation__container}`}>
           <Toolbar disableGutters>
             <Logo
               src={logoPath}
@@ -50,9 +50,10 @@ function NavigationBar() {
               width="100%"
               sx={{
                 display: { xs: "none", md: "flex" },
-                mr: 2,
+                mr: 0.5,
                 width: "2.5em",
                 height: "2em",
+                transform: "scale(0.8)",
               }}
             />
             <Typography
@@ -152,7 +153,7 @@ function NavigationBar() {
                   className={`${style.navigation__title}`}
                   key={item.TITLE}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, mx: 2, color: "white", display: "block" }}
+                  sx={{ mx: 2, color: "white", display: "block" }}
                 >
                   {item.TITLE}
                 </Button>
