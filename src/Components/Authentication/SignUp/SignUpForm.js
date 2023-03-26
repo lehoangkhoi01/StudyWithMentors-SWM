@@ -21,6 +21,7 @@ import {
   passwordValidation,
   registerFullNameValidation,
 } from "../../../shared/constants/validationRules";
+import { authenticationService } from "../../../Services/authenticationService";
 
 const SignUp = () => {
   const {
@@ -37,6 +38,12 @@ const SignUp = () => {
   // });
 
   const onSubmit = (data) => {
+    authenticationService
+      .signUp(data)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
     console.log(data);
     //setSignUpForm(data);
   };
