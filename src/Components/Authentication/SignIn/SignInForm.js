@@ -14,7 +14,7 @@ import {
 } from "../../../shared/constants/common";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
-import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
@@ -72,16 +72,23 @@ const SignInForm = () => {
               options={{ ...register("password") }}
             />
             <div className={`${style.forgotPassword__container}`}>
-              <a href="#" className={`${style.forgotPassword__link}`}>
+              <a
+                href={ROUTES.FORGOT_PASSWORD}
+                className={`${style.forgotPassword__link}`}
+              >
                 {TITLE.FORGOT_PASSWORD}
               </a>
             </div>
             <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
               {ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD}
             </Typography>
-            <CustomizedButton type="submit" variant="contained" color="primary600">
-            {BUTTON_LABEL.LOGIN}
-          </CustomizedButton>
+            <CustomizedButton
+              type="submit"
+              variant="contained"
+              color="primary600"
+            >
+              {BUTTON_LABEL.LOGIN}
+            </CustomizedButton>
           </form>
 
           <CustomDivider text={TITLE.OR} />

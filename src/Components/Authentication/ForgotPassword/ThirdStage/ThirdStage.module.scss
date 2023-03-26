@@ -1,0 +1,14 @@
+@import "../../../../shared/theme";
+
+.form {
+    width: 50%;
+}
+
+.text {
+    color: $primary900;
+}
+.instruction {
+    width: 50%;
+    text-align: center;
+    margin: 1em 0;
+}
