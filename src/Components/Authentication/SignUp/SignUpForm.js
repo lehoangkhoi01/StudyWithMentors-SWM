@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import style from "./SignUpForm.module.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -22,6 +22,7 @@ import {
   registerFullNameValidation,
 } from "../../../shared/constants/validationRules";
 import { authenticationService } from "../../../Services/authenticationService";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const SignUp = () => {
   const {
@@ -113,14 +114,13 @@ const SignUp = () => {
             <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
               {ERROR_MESSAGES.DUPLICATED_EMAIL}
             </Typography>
-            <Button
-              fullWidth
+            <CustomizedButton
               type="submit"
-              className={`${style.signUp__button}`}
               variant="contained"
+              color="primary600"
             >
               {TITLE.SIGN_UP}
-            </Button>
+            </CustomizedButton>
           </form>
           <CustomDivider text={TITLE.OR} />
           <GoogleSignInButton />
