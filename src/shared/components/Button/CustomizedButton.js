@@ -10,6 +10,7 @@ const CustomizedButton = (props) => {
       className={`${style.btn} ${style[`${props.color}__${props.variant}`]} ${
         props.className
       }`}
+      onClick={props.onClick}
     >
       {props.children}
     </Button>
