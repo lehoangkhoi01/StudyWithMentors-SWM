@@ -23,30 +23,29 @@ import {
 } from "../../../shared/constants/validationRules";
 import { authenticationService } from "../../../Services/authenticationService";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
+  const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
-  // const [signUpForm, setSignUpForm] = useState({
-  //   fullName: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-
   const onSubmit = (data) => {
+    const body = {
+      email: data.email,
+      password: data.password,
+      fullName: data.fullName,
+    };
     authenticationService
-      .signUp(data)
+      .signUp(body)
       .then((result) => {
         console.log(result);
+        history.push("/confirmation", result);
       })
       .catch((err) => console.log(err));
-    console.log(data);
-    //setSignUpForm(data);
   };
 
   const validationConfirmPassword = (val) => {

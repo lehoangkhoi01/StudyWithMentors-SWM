@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import style from "./SignInForm.module.scss";
 import { Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -21,6 +21,7 @@ import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 import { emailValidationRules } from "../../../shared/constants/validationRules";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { authenticationService } from "../../../Services/authenticationService";
 
 const SignInForm = () => {
   const {
@@ -28,18 +29,44 @@ const SignInForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [signInError, setSignInError] = useState("");
 
   const onSubmit = (data) => {
-    console.log("submit!");
-    console.log(data);
+    authenticationService
+      .signInWithPassword(data)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        if (error.status == 409) {
+          setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
+        }
+      });
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   const handleSignInWithGoogle = () => {
-    SignInWithGoogle();
+    const firebaseData = SignInWithGoogle()
+      .then((result) => {
+        const data = {
+          idToken: result.user.accessToken,
+          localId: result.user.uid,
+          email: result.user.email,
+          fullName: result.user.displayName,
+          avatarUrl: result.user.photoURL,
+        };
+        authenticationService
+          .signInGoogle(data)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(firebaseData);
   };
 
   return (
@@ -79,9 +106,11 @@ const SignInForm = () => {
                 {TITLE.FORGOT_PASSWORD}
               </a>
             </div>
-            <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
-              {ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD}
-            </Typography>
+            {signInError && (
+              <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+                {signInError}
+              </Typography>
+            )}
             <CustomizedButton
               type="submit"
               variant="contained"

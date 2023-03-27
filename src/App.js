@@ -10,7 +10,7 @@ import ForgotPasswordPage from "./Pages/Authentication/ForgotPasswordPage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
       <div className={`${style.app}`}>
         <NavigationBar />
         <LoadingProvider>
