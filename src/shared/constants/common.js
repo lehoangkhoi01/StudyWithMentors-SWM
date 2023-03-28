@@ -143,6 +143,21 @@ export const COLOR = {
   SYSTEM_RED: "#FF5252",
 };
 
+export const PROFILE_TITLES = {
+  INTRODUCION: "Giới thiệu",
+  EXPERIENCE: "Kinh nghiệm làm việc",
+  STUDY_PROGRESS: "Quá trình học tập",
+  ACTIVITIES: "Hoạt động ngoại khóa",
+  ACHIEVEMENT: "Giải thưởng",
+  CERTIFICATES: "Chứng chỉ",
+  SKILLS: "Kỹ năng",
+};
+
+export const PROGRESS_INFORMATION_TEXT = {
+  NEED_UPDATE_INFORMATION: "Cần cập nhật thông tin để hồ sơ của bạn trở nên",
+  MORE_COMPLETE: "hoàn thiện hơn",
+  PROGRESS: "Quá trình hoàn thiện",
+};
 export const FORGOT_PASSWORD_STEPS = [
   "Nhập email",
   "Chờ email xác nhận",

@@ -8,7 +8,7 @@
   text-transform: none;
   transition: ease-in 200ms;
   border-radius: 50px;
-  padding-block: 1.4vh;
+  padding-block: 0.5rem;
 
   @media (max-width: $bp-sm) {
     font-size: $SMALL_BUTTON_TEXT_SIZE;

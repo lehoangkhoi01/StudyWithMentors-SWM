@@ -51,4 +51,11 @@
       color: white;
     }
   }
+
+  &__menuItem_active {
+    background-color: $primary500;
+    & p {
+      color: white;
+    }
+  }
 }
