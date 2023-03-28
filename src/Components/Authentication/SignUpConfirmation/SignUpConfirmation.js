@@ -2,12 +2,16 @@ import React from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { SIGN_UP_TEXT, TITLE } from "../../../shared/constants/common";
 import style from "./SignUpConfirmation.module.scss";
-import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import { useHistory } from "react-router-dom";
 
 const SignUpConfirmation = () => {
+  const history = useHistory();
+  const tempSignUpEmail = history.location?.state;
+
   return (
     <Grid2 container className={style.container}>
       <ImageSideContainer />
@@ -20,7 +24,8 @@ const SignUpConfirmation = () => {
             {SIGN_UP_TEXT.EMAIL_WAS_SENT}
           </span>
           <span className={`${style.textCenter}`}>
-            {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL}
+            {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL}{" "}
+            <span className={`${style.email}`}>{tempSignUpEmail}</span>
           </span>
           <CustomDivider />
           <div className={`${style.paragraphText}`}>

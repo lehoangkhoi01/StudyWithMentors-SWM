@@ -7,6 +7,8 @@ import SignUpConfirmationPage from "./Pages/Authentication/SignUpConfirmationPag
 import FillInformationPage from "./Pages/Profile/FillInformationPage";
 import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 import CVPage from "./Pages/CV/CVPage";
+import ForgotPasswordPage from "./Pages/Authentication/ForgotPasswordPage";
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
@@ -17,11 +19,13 @@ function App() {
           <div className={`${style.content}`}>
             <Switch className={`${style.switchContainer}`}>
               <Route exact path="/" component={SignInPage} />
+              <Route path="/home" component={HomePage} />
               <Route path="/sign-up" component={SignUpPage} />
               <Route path="/sign-in" component={SignInPage} />
               <Route path="/confirmation" component={SignUpConfirmationPage} />
               <Route path="/fill-information" component={FillInformationPage} />
               <Route path="/cv" component={CVPage} />
+              <Route path="/forgot-password" component={ForgotPasswordPage} />
             </Switch>
           </div>
         </LoadingProvider>

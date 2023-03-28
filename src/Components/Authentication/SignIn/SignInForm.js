@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import style from "./SignInForm.module.scss";
 import { Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -14,32 +15,59 @@ import {
 } from "../../../shared/constants/common";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
-import CustomTopTitle from "../CustomTopTitle/CustomTopTitle";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomDivider from "../CustomDivider/CustomDivider";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 import { emailValidationRules } from "../../../shared/constants/validationRules";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { authenticationService } from "../../../Services/authenticationService";
+import { useHistory } from "react-router-dom";
+import { userAction } from "../../../Store/slices/userSlice";
 
 const SignInForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [signInError, setSignInError] = useState("");
 
   const onSubmit = (data) => {
-    console.log("submit!");
-    console.log(data);
+    authenticationService
+      .signInWithPassword(data)
+      .then((result) => {
+        localStorage.setItem("TOKEN", result.accessToken);
+        dispatch(userAction.loginSuccess(result));
+        history.push("/home");
+      })
+      .catch((error) => {
+        if (error.status == 409) {
+          setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
+        }
+      });
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   const handleSignInWithGoogle = () => {
-    SignInWithGoogle();
+    SignInWithGoogle()
+      .then((result) => {
+        authenticationService
+          .signInGoogle(result)
+          .then((response) => {
+            localStorage.setItem("TOKEN", response.accessToken);
+            dispatch(userAction.loginSuccess(response));
+            history.push("/home");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -72,16 +100,25 @@ const SignInForm = () => {
               options={{ ...register("password") }}
             />
             <div className={`${style.forgotPassword__container}`}>
-              <a href="#" className={`${style.forgotPassword__link}`}>
+              <a
+                href={ROUTES.FORGOT_PASSWORD}
+                className={`${style.forgotPassword__link}`}
+              >
                 {TITLE.FORGOT_PASSWORD}
               </a>
             </div>
-            <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
-              {ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD}
-            </Typography>
-            <CustomizedButton type="submit" variant="contained" color="primary600">
-            {BUTTON_LABEL.LOGIN}
-          </CustomizedButton>
+            {signInError && (
+              <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+                {signInError}
+              </Typography>
+            )}
+            <CustomizedButton
+              type="submit"
+              variant="contained"
+              color="primary600"
+            >
+              {BUTTON_LABEL.LOGIN}
+            </CustomizedButton>
           </form>
 
           <CustomDivider text={TITLE.OR} />

@@ -3,6 +3,7 @@ export const ROUTES = {
   SIGN_UP: "/sign-up",
   SIGN_UP_CONFIRMATION: "/confirmation",
   FILL_INFORMATION: "/fill-information",
+  FORGOT_PASSWORD: "/forgot-password",
 };
 
 export const BUTTON_LABEL = {
@@ -10,6 +11,12 @@ export const BUTTON_LABEL = {
   GOOGLE_LOGIN: "Tiếp tục với Google",
   SAVE: "Lưu",
   LATER: "Để sau",
+  RESET_PASSWORD: "Lấy lại tài khoản",
+  RE_SEND: "Gửi lại",
+};
+
+export const TEXTFIELD_LABEL = {
+  YOUR_EMAIL: "Email của bạn",
 };
 
 export const TITLE = {
@@ -27,6 +34,18 @@ export const TITLE = {
   PHONE: "Số điện thoại",
   GENDER: "Giới tính",
   DOB: "Ngày sinh",
+  LOGIN_TROUBLE: "Gặp rắc rối trong việc đăng nhập?",
+};
+
+export const COMMON_MESSAGE = {
+  ENTER_EMAIL_FOR_INSTRUCTIONS:
+    "Hãy nhập email tài khoản của bạn để nhận được chỉ dẫn thay đổi mật khẩu mới.",
+  EMAIL_WAS_SENT: "Email đã được gửi đến",
+  EMAIL_RE_SEND: "Trường hợp sau 5 phút email vẫn không đến, hãy nhấn gửi lại.",
+  EMAIl_RE_ENTER:
+    "Trường hợp email không đúng, vui lòng quay lại bước 1 để được gửi lại email xác nhận.",
+  CONFIRM_EMAIL_SUCCESS:
+    "Email đã được xác nhận thành công. Mong bạn vui lòng đăng nhập lại để tiếp tục đồng hành cùng Growth Me.",
 };
 
 export const SIGN_UP_STAGE = {
@@ -78,6 +97,7 @@ export const PLACE_HOLDER = {
   DEFAULT_NAME: "Nguyễn Văn A",
   DEFAULT_PHONE: "0982 123 456",
   DEFAULT_DOB: "01/01/2001",
+  ENTER_EMAIL: "Hãy nhập email của bạn",
 };
 
 export const FILL_INFORMATION = {
@@ -138,3 +158,8 @@ export const PROGRESS_INFORMATION_TEXT = {
   MORE_COMPLETE: "hoàn thiện hơn",
   PROGRESS: "Quá trình hoàn thiện",
 };
+export const FORGOT_PASSWORD_STEPS = [
+  "Nhập email",
+  "Chờ email xác nhận",
+  "Đăng nhập lại",
+];

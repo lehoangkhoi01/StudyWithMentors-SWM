@@ -3,8 +3,6 @@ import style from "./CustomizedDatePicker.module.scss";
 import { OPTIONAL } from "../../constants/common";
 
 const CustomizedDatePicker = (props) => {
-  console.log({ ...props.options });
-
   return (
     <div className={`${style.datePicker__container} ${props.className}`}>
       <label htmlFor={props.inputId}>{`${props.name} 

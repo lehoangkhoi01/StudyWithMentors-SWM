@@ -8,7 +8,7 @@ import { StyledEngineProvider, createTheme } from "@mui/material";
 
 import { ThemeProvider } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const muiTheme = createTheme({
@@ -20,15 +20,13 @@ const muiTheme = createTheme({
 });
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={muiTheme}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <App />
-          </LocalizationProvider>
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={muiTheme}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <App />
+        </LocalizationProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  </Provider>
 );

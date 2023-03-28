@@ -6,12 +6,13 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAEIxfffZW7STQEtSGmNKq8z5MKqcXjGUw",
-  authDomain: "studywithmentor-swm.firebaseapp.com",
-  projectId: "studywithmentor-swm",
-  storageBucket: "studywithmentor-swm.appspot.com",
-  messagingSenderId: "586394298235",
-  appId: "1:586394298235:web:d9a7cc0affd70de496ffde",
+  apiKey: "AIzaSyDt0U5OB0F0vlX35CLhi_o6vnOXFtdZZVQ",
+  authDomain: "study-with-mentors.firebaseapp.com",
+  projectId: "study-with-mentors",
+  storageBucket: "study-with-mentors.appspot.com",
+  messagingSenderId: "551646869653",
+  appId: "1:551646869653:web:275debb5c8ba3c06eb839c",
+  measurementId: "G-L6WDFMYMCS",
 };
 
 // Initialize Firebase

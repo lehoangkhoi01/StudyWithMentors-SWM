@@ -7,7 +7,7 @@ import {
   PLACE_HOLDER,
   TITLE,
 } from "../../../shared/constants/common";
-import CustomTopTitle from "../../Authentication/CustomTopTitle/CustomTopTitle";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import style from "./FillInformation.module.scss";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
