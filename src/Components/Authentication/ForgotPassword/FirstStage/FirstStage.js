@@ -19,8 +19,7 @@ const FirstStage = ({ moveNext }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmitFirstStage = (data) => {
-    console.log(data);
+  const onSubmitFirstStage = () => {
     moveNext();
   };
 
