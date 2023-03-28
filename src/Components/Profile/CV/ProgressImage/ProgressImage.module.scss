@@ -1,0 +1,39 @@
+@import "../../../../shared/theme";
+
+.progress {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6%;
+
+    padding: 1rem 2rem;
+    margin-top: 12vh;
+    margin-bottom: 2vh;
+
+    background-color: $secondary200;
+
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba($black900, 0.25),
+      0px 1px 2px rgba($black900, 0.3), 0px 1px 3px 1px rgba($black900, 0.15);
+  }
+
+  &__image {
+    width: 12rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__text {
+    text-align: center;
+    color: $primary900;
+    font-weight: 600;
+    line-height: 2rem;
+
+    span {
+        display: block;
+    }
+  }
+}

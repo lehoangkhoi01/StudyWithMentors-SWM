@@ -88,7 +88,7 @@ function NavigationBar() {
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { my: 5, xs: "block", md: "none" },
                 }}
               >
                 {NAVIGATION_TITLE.map((item) => (

@@ -6,6 +6,7 @@ import style from "./App.module.scss";
 import SignUpConfirmationPage from "./Pages/Authentication/SignUpConfirmationPage";
 import FillInformationPage from "./Pages/Profile/FillInformationPage";
 import LoadingProvider from "./shared/components/Loading/LoadingProvider";
+import CVPage from "./Pages/CV/CVPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/sign-in" component={SignInPage} />
               <Route path="/confirmation" component={SignUpConfirmationPage} />
               <Route path="/fill-information" component={FillInformationPage} />
+              <Route path="/cv" component={CVPage} />
             </Switch>
           </div>
         </LoadingProvider>
