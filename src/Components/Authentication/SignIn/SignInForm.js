@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import style from "./SignInForm.module.scss";
 import { Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -22,8 +23,12 @@ import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 import { emailValidationRules } from "../../../shared/constants/validationRules";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { authenticationService } from "../../../Services/authenticationService";
+import { useHistory } from "react-router-dom";
+import { userAction } from "../../../Store/slices/userSlice";
 
 const SignInForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -35,7 +40,9 @@ const SignInForm = () => {
     authenticationService
       .signInWithPassword(data)
       .then((result) => {
-        console.log(result);
+        localStorage.setItem("TOKEN", result.accessToken);
+        dispatch(userAction.loginSuccess(result));
+        history.push("/home");
       })
       .catch((error) => {
         if (error.status == 409) {
@@ -45,19 +52,14 @@ const SignInForm = () => {
   };
 
   const handleSignInWithGoogle = () => {
-    const firebaseData = SignInWithGoogle()
+    SignInWithGoogle()
       .then((result) => {
-        const data = {
-          idToken: result.user.accessToken,
-          localId: result.user.uid,
-          email: result.user.email,
-          fullName: result.user.displayName,
-          avatarUrl: result.user.photoURL,
-        };
         authenticationService
-          .signInGoogle(data)
-          .then((result) => {
-            console.log(result);
+          .signInGoogle(result)
+          .then((response) => {
+            localStorage.setItem("TOKEN", response.accessToken);
+            dispatch(userAction.loginSuccess(response));
+            history.push("/home");
           })
           .catch((error) => {
             console.log(error);
@@ -66,7 +68,6 @@ const SignInForm = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log(firebaseData);
   };
 
   return (

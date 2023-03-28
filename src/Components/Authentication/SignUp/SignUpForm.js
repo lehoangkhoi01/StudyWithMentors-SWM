@@ -1,6 +1,22 @@
-import { Typography } from "@mui/material";
-import style from "./SignUpForm.module.scss";
+//import hooks ...
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
+//import style and custom components
+import style from "./SignUpForm.module.scss";
+import { Typography } from "@mui/material";
+import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
+import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+
+//Others
 import {
   COLOR,
   ERROR_MESSAGES,
@@ -9,30 +25,27 @@ import {
   SIGN_UP_TEXT,
   TITLE,
 } from "../../../shared/constants/common";
-import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
-import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
-import CustomDivider from "../CustomDivider/CustomDivider";
-import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
-import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
 import {
   emailValidationRules,
   passwordValidation,
   registerFullNameValidation,
 } from "../../../shared/constants/validationRules";
 import { authenticationService } from "../../../Services/authenticationService";
-import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-import { useHistory } from "react-router-dom";
+import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
+import { userAction } from "../../../Store/slices/userSlice";
 
 const SignUp = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
+
+  const [signUpError, setSignUpError] = useState("");
+
   const onSubmit = (data) => {
     const body = {
       email: data.email,
@@ -45,7 +58,31 @@ const SignUp = () => {
         console.log(result);
         history.push("/confirmation", result);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.status == 409) {
+          setSignUpError(ERROR_MESSAGES.DUPLICATED_EMAIL);
+        }
+      });
+  };
+
+  const handleSignInWithGoogle = () => {
+    SignInWithGoogle()
+      .then((result) => {
+        authenticationService
+          .signInGoogle(result)
+          .then((response) => {
+            localStorage.setItem("TOKEN", response.accessToken);
+            dispatch(userAction.loginSuccess(response));
+            history.push("/home");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const validationConfirmPassword = (val) => {
@@ -110,9 +147,12 @@ const SignUp = () => {
               error={errors.confirmPassword ? true : false}
               helperText={errors?.confirmPassword?.message}
             />
-            <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
-              {ERROR_MESSAGES.DUPLICATED_EMAIL}
-            </Typography>
+            {signUpError && (
+              <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+                {signUpError}
+              </Typography>
+            )}
+
             <CustomizedButton
               type="submit"
               variant="contained"
@@ -122,7 +162,7 @@ const SignUp = () => {
             </CustomizedButton>
           </form>
           <CustomDivider text={TITLE.OR} />
-          <GoogleSignInButton />
+          <GoogleSignInButton onClick={handleSignInWithGoogle} />
           <div className={`${style.smallText__container}`}>
             <span>
               {SIGN_UP_TEXT.HAD_ACCOUNT}{" "}
