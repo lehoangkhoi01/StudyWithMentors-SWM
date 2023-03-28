@@ -16,12 +16,21 @@ import style from "./NavigationBar.module.scss";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
 import { NAVIGATION_TITLE, APP_NAME } from "../../constants/common";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [currentRouter, setCurrentRoute] = useState("/");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setCurrentRoute(location.pathname);
+  }, [location]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -93,11 +102,17 @@ function NavigationBar() {
               >
                 {NAVIGATION_TITLE.map((item) => (
                   <MenuItem
-                    className={`${style.navigation__menuItem}`}
+                    className={`${style.navigation__menuItem} ${
+                      currentRouter === item.ROUTE
+                        ? style.navigation__menuItem_active
+                        : ""
+                    }`}
                     key={item.TITLE}
                     onClick={handleCloseNavMenu}
                   >
-                    <Typography textAlign="center">{item.TITLE}</Typography>
+                    <Typography textAlign="center">
+                      <Link to={item.ROUTE}>{item.TITLE}</Link>
+                    </Typography>
                   </MenuItem>
                 ))}
               </StyledMenu>
@@ -150,12 +165,16 @@ function NavigationBar() {
             >
               {NAVIGATION_TITLE.map((item) => (
                 <Button
-                  className={`${style.navigation__title}`}
+                  className={`${style.navigation__title} ${
+                    currentRouter === item.ROUTE
+                      ? style.navigation__title_active
+                      : ""
+                  }`}
                   key={item.TITLE}
                   onClick={handleCloseNavMenu}
                   sx={{ mx: 2, color: "white", display: "block" }}
                 >
-                  {item.TITLE}
+                  <Link to={item.ROUTE}>{item.TITLE}</Link>
                 </Button>
               ))}
             </Box>

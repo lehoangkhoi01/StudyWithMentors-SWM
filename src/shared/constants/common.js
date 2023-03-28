@@ -4,6 +4,8 @@ export const ROUTES = {
   SIGN_UP_CONFIRMATION: "/confirmation",
   FILL_INFORMATION: "/fill-information",
   FORGOT_PASSWORD: "/forgot-password",
+  CV: "/cv",
+  HOME: "/home",
 };
 
 export const BUTTON_LABEL = {
@@ -81,12 +83,17 @@ export const APP_NAME = "Growth Me";
 export const NAVIGATION_TITLE = [
   {
     TITLE: "Trang chủ",
+    ROUTE: ROUTES.HOME,
   },
   {
     TITLE: "Về Growth Me",
   },
   {
     TITLE: "Tìm Mentor",
+  },
+  {
+    TITLE: "Hồ sơ của tôi",
+    ROUTE: ROUTES.CV,
   },
 ];
 

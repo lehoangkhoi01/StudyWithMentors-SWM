@@ -16,13 +16,17 @@
   }
 
   &__title {
-    color: $primary200;
-    font-weight: 600;
-    border-radius: 0;
-    transition: ease-in 300ms;
+    a {
+      color: $primary200;
+      font-weight: 600;
+      border-radius: 0;
+      transition: ease-in 300ms;
+      text-decoration: none;
+    }
   }
 
-  &__title:hover {
+  &__title:hover,
+  &__title_active {
     color: $black000;
     &::before {
       content: "";
@@ -39,19 +43,16 @@
     background-color: $primary700;
     margin: 10px;
     border-radius: 5px;
-    & p {
+
+    & p,
+    a {
       color: $primary200;
       font-weight: 700;
       font-size: $SMALL_LABEL_SIZE;
+      text-decoration: none;
     }
   }
-  &__menuItem:hover {
-    background-color: $primary500;
-    & p {
-      color: white;
-    }
-  }
-
+  &__menuItem:hover,
   &__menuItem_active {
     background-color: $primary500;
     & p {
