@@ -7,11 +7,18 @@ import SecondStage from "./SecondStage/SecondStage";
 import ThirdStage from "./ThirdStage/ThirdStage";
 
 import { FORGOT_PASSWORD_STEPS, TITLE } from "../../../shared/constants/common";
+import { useLocation, useParams } from "react-router-dom";
 
 const steps = FORGOT_PASSWORD_STEPS;
 
 const ForgotPassword = () => {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const location = useLocation();
+  const search = location.search;
+  const { page } = useParams();
+
+  console.log(new URLSearchParams(search).get("stage"));
+  console.log(page);
 
   const moveNextStage = () => {
     setActiveStep((prev) => prev + 1);

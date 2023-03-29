@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
+import { Route } from "react-router";
 import SignInPage from "./Pages/Authentication/SignInPage";
 import SignUpPage from "./Pages/Authentication/SignUpPage";
 import NavigationBar from "./shared/components/NavigationBar/NavigationBar";

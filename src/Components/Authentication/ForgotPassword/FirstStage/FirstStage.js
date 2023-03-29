@@ -11,6 +11,7 @@ import {
 import { emailValidationRules } from "../../../../shared/constants/validationRules";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";
+import { authenticationService } from "../../../../Services/authenticationService";
 
 const FirstStage = ({ moveNext }) => {
   const {
@@ -19,8 +20,16 @@ const FirstStage = ({ moveNext }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmitFirstStage = () => {
-    moveNext();
+  const onSubmitFirstStage = (data) => {
+    authenticationService
+      .sendResetPasswordEmail(data)
+      .then((result) => {
+        console.log(result);
+        moveNext();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

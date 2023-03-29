@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -32,6 +32,7 @@ function NavigationBar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
+  const [isAuthenticated, setAuthenticated] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -51,12 +52,17 @@ function NavigationBar() {
     if (action && action == "LOG_OUT") {
       localStorage.removeItem("TOKEN");
       dispatch(userAction.clearUserData());
+      setAuthenticated(false);
     }
     setAnchorElUser(null);
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useEffect(() => {
+    setAuthenticated(userInfo.isAuthenticated);
+  }, [userInfo.isAuthenticated]);
 
   return (
     <>
@@ -179,7 +185,7 @@ function NavigationBar() {
               ))}
             </Box>
 
-            {userInfo.isAuthenticated && (
+            {isAuthenticated && (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton
