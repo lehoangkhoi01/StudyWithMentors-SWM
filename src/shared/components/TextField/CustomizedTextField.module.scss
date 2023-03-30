@@ -20,6 +20,13 @@
       border-radius: 5px;
     }
   }
+
+  &__limit {
+    text-align: right;
+    margin-top: 0.2rem;
+
+    font-size: $EXTRA_SMALL_SIZE;
+  }
 }
 
 @media (max-width: 899px) {

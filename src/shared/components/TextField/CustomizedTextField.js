@@ -8,6 +8,8 @@ const CustomizedTextField = (props) => {
       <label htmlFor={props.inputId}>{`${props.name} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
       <TextField
+        multiline={props.multiline}
+        rows={6}
         error={props.error}
         helperText={props.helperText}
         id={props.inputId}
@@ -15,6 +17,11 @@ const CustomizedTextField = (props) => {
         type={props.type ?? "text"}
         {...props.options}
       />
+      {props.multiline && (
+        <span className={`${style.textField__limit}`}>
+          {props.watch?.length ?? 0} / 2000
+        </span>
+      )}
     </div>
   );
 };

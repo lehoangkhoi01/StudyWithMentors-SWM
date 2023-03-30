@@ -1,9 +1,28 @@
+@import "../../../../shared/theme";
+
 .modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  z-index: 99999;
 
-  border: 2px solid #000;
+  background-color: $black000;
+  min-height: 50vh;
+  width: 40vw;
+  border-radius: 10px;
+  outline: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__buttons {
+    display: flex;
+    width: max-content;
+
+    button {
+      width: 100%;
+    }
+  }
 }

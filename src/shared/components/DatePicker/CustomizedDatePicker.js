@@ -8,6 +8,7 @@ const CustomizedDatePicker = (props) => {
       <label htmlFor={props.inputId}>{`${props.name} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
       <DatePicker
+        views={["year", "month", "day"]}
         className={style.datePicker__input}
         {...props.options}
         onChange={(e) => {

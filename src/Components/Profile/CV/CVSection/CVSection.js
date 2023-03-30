@@ -22,7 +22,12 @@ const CVSection = (props) => {
           src={require("../../../../assets/icons/Vector.png")}
         />
       </div>
-      <CVModal openModal={openModal} onCloseModal={onCloseModal} />
+      <CVModal
+        textFields={props.textFields}
+        openModal={openModal}
+        onCloseModal={onCloseModal}
+        title={props.title}
+      />
     </>
   );
 };
