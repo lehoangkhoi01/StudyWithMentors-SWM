@@ -11,10 +11,11 @@ import {
   TITLE,
   BUTTON_LABEL,
 } from "../../../../shared/constants/common";
-import { emailValidationRules } from "../../../../shared/constants/validationRules";
+import { passwordValidation } from "../../../../shared/constants/validationRules";
 import style from "./ThirdStage.module.scss";
+import { authenticationService } from "../../../../Services/authenticationService";
 
-const ThirdStage = () => {
+const ThirdStage = (props) => {
   const {
     register,
     handleSubmit,
@@ -31,9 +32,22 @@ const ThirdStage = () => {
     }
   };
 
-  const onSubmitFirstStage = (data) => {
-    console.log("submit!");
-    console.log(data);
+  const handleSubmitPasswordChange = (data) => {
+    if (props.oobCode) {
+      const requestBody = {
+        oobCode: props?.oobCode,
+        password: data.password,
+      };
+      console.log(requestBody);
+      authenticationService
+        .applyPasswordChange(requestBody)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -43,26 +57,17 @@ const ThirdStage = () => {
       </Typography>
       <form
         className={`${style.form}`}
-        onSubmit={handleSubmit(onSubmitFirstStage)}
+        onSubmit={handleSubmit(handleSubmitPasswordChange)}
       >
         <CustomizedTextField
-          inputId="email"
-          name="Email"
-          required={true}
-          placeholder={PLACE_HOLDER.LOGIN_EMAIL}
-          options={{
-            ...register("email", emailValidationRules),
-          }}
-          error={errors.email ? true : false}
-          helperText={errors?.email?.message}
-        />
-        <CustomizedTextField
           inputId="password"
-          name="Password"
+          name={TITLE.PASSWORD}
           required={true}
           placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
           type={"password"}
-          options={{ ...register("password") }}
+          options={{ ...register("password", passwordValidation) }}
+          error={errors.password ? true : false}
+          helperText={errors?.password?.message}
         />
         <CustomizedTextField
           inputId="confirmPassword"

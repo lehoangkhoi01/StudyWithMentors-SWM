@@ -18,4 +18,8 @@ export const authenticationService = {
     const url = AuthenticationEndpoints.SEND_RESET_EMAIL;
     return axiosClient.post(url, data);
   },
+  applyPasswordChange: (data) => {
+    const url = AuthenticationEndpoints.APPLY_PASSWORD_CHANGE;
+    return axiosClient.post(url, data);
+  },
 };

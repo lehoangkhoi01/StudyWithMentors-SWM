@@ -25,7 +25,7 @@ const FirstStage = ({ moveNext }) => {
       .sendResetPasswordEmail(data)
       .then((result) => {
         console.log(result);
-        moveNext();
+        moveNext(data);
       })
       .catch((error) => {
         console.log(error);
