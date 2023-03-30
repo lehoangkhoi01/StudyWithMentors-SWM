@@ -16,11 +16,6 @@ import { StyledMenu } from "./StyledMenu";
 import style from "./NavigationBar.module.scss";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
-<<<<<<< HEAD
-import { NAVIGATION_TITLE, APP_NAME } from "../../constants/common";
-import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-=======
 import {
   NAVIGATION_TITLE,
   APP_NAME,
@@ -29,7 +24,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { userAction } from "../../../Store/slices/userSlice";
->>>>>>> 8f45b5907fcbd0f91cfe81374627e34cfacd78cd
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const settings = ACCOUNT_MENU;
 

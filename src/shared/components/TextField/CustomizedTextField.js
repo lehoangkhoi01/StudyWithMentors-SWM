@@ -5,8 +5,10 @@ import { OPTIONAL } from "../../constants/common";
 const CustomizedTextField = (props) => {
   return (
     <div className={`${style.textField__container} ${props.className}`}>
-      <label htmlFor={props.inputId}>{`${props.name} 
-      ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
+      <label htmlFor={props.inputId}>
+        {props.name}
+        {!props.required ? <span>({OPTIONAL})</span> : ""}
+      </label>
       <TextField
         multiline={props.multiline}
         rows={6}
