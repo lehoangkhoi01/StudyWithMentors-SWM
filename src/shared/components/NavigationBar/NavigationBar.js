@@ -5,21 +5,33 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Menu,
   Container,
   Button,
   MenuItem,
+  Tooltip,
+  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { StyledMenu } from "./StyledMenu";
 import style from "./NavigationBar.module.scss";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
+<<<<<<< HEAD
 import { NAVIGATION_TITLE, APP_NAME } from "../../constants/common";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+=======
+import {
+  NAVIGATION_TITLE,
+  APP_NAME,
+  ACCOUNT_MENU,
+} from "../../constants/common";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { userAction } from "../../../Store/slices/userSlice";
+>>>>>>> 8f45b5907fcbd0f91cfe81374627e34cfacd78cd
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ACCOUNT_MENU;
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -31,19 +43,31 @@ function NavigationBar() {
   useEffect(() => {
     setCurrentRoute(location.pathname);
   }, [location]);
+  
+  const userInfo = useSelector(selectUserInfo);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
+  const handleMenuAction = (menuItem) => {
+    const action = menuItem.ACTION;
+    console.log(action);
+    if (action && action == "LOG_OUT") {
+      localStorage.removeItem("TOKEN");
+      dispatch(userAction.clearUserData());
+    }
+    setAnchorElUser(null);
+  };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -179,38 +203,49 @@ function NavigationBar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              {/* <Tooltip title="Open settings">
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0, display: { xs: "none", md: "block" } }}
+            {userInfo.isAuthenticated && (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0, display: { xs: "none", md: "block" } }}
+                  >
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <StyledMenu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip> */}
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting.TITLE}
+                      onClick={() => handleMenuAction(setting)}
+                      className={`${style.navigation__menuItem}`}
+                    >
+                      <Typography textAlign="center">
+                        {setting.TITLE}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </StyledMenu>
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>

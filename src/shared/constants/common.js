@@ -115,6 +115,16 @@ export const NAVIGATION_TITLE = [
     ROUTE: ROUTES.CV,
   },
 ];
+export const MOBILE_MENU = [];
+export const ACCOUNT_MENU = [
+  {
+    TITLE: "Tài khoản",
+  },
+  {
+    TITLE: "Đăng xuất",
+    ACTION: "LOG_OUT",
+  },
+];
 
 export const PLACE_HOLDER = {
   LOGIN_EMAIL: "Nhập Email",

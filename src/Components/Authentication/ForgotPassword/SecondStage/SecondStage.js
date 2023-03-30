@@ -1,5 +1,6 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
+import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
@@ -7,7 +8,7 @@ import {
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
 
-const SecondStage = ({ moveNext }) => {
+const SecondStage = ({ moveNext, moveBack }) => {
   return (
     <>
       <Typography variant="h5" className={`${style.text}`}>
@@ -18,6 +19,12 @@ const SecondStage = ({ moveNext }) => {
         {COMMON_MESSAGE.EMAIL_RE_SEND}
       </Typography>
       <img alt="pic3" src={require("../../../../assets/image3.png")} />
+      <IconButton className={`${style.iconButton}`} onClick={moveBack}>
+        <ArrowBackIosNewOutlined
+          fontSize="large"
+          className={`${style.iconButton__icon}`}
+        />
+      </IconButton>
       <div className={`${style.buttonContainer}`}>
         <CustomizedButton
           variant="contained"

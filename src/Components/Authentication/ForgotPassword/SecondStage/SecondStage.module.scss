@@ -10,3 +10,11 @@
     margin: 1em 0;
     width: 50%;
 }
+.iconButton {
+    position: absolute;
+    left: 2em;
+    top: 50%;
+    &__icon {
+        color: $primary600;
+    }
+}
