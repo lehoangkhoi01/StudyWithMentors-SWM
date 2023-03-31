@@ -4,6 +4,8 @@ export const ROUTES = {
   SIGN_UP_CONFIRMATION: "/confirmation",
   FILL_INFORMATION: "/fill-information",
   FORGOT_PASSWORD: "/forgot-password",
+  CV: "/cv",
+  HOME: "/home",
 };
 
 export const BUTTON_LABEL = {
@@ -13,10 +15,29 @@ export const BUTTON_LABEL = {
   LATER: "Để sau",
   RESET_PASSWORD: "Lấy lại tài khoản",
   RE_SEND: "Gửi lại",
+  ADD: "Thêm vào",
+  CANCEL: "Hủy lưu",
 };
 
 export const TEXTFIELD_LABEL = {
   YOUR_EMAIL: "Email của bạn",
+  DESCRIPION: "Mô tả",
+  POSITION: "Vị trí",
+  COMPANY: "Công ty",
+  IS_WORKING_AT_THIS_POSITION: "Tôi đang làm việc ở vị trí này",
+  START_DATE: "Thời gian bắt đầu",
+  END_DATE: "Thời gian kết thúc",
+  COMPLETE_DATE: "Thời gian hoàn thành (dự kiến)",
+  SCHOOL: "Trường",
+  MAJORS: "Chuyên ngành",
+  IS_DOING_THIS_ACTIVITY: "Tôi đang tham gia tại đây",
+  ACHIEVEMENT_NAME: "Tên giải thưởng",
+  ORGANIZATION_NAME: "Tên tổ chức",
+  RECEIVED_DATE: "Thời gian nhận",
+  CERTIFICATE_NAME: "Tên chứng chỉ",
+  ISSUED_DATE: "Ngày cấp",
+  DUE_DATE: "Thời hạn đến",
+  SKILL: "Kỹ năng",
 };
 
 export const TITLE = {
@@ -81,12 +102,17 @@ export const APP_NAME = "Growth Me";
 export const NAVIGATION_TITLE = [
   {
     TITLE: "Trang chủ",
+    ROUTE: ROUTES.HOME,
   },
   {
     TITLE: "Về Growth Me",
   },
   {
     TITLE: "Tìm Mentor",
+  },
+  {
+    TITLE: "Hồ sơ của tôi",
+    ROUTE: ROUTES.CV,
   },
 ];
 export const MOBILE_MENU = [];
@@ -174,3 +200,10 @@ export const FORGOT_PASSWORD_STEPS = [
   "Chờ email xác nhận",
   "Đăng nhập lại",
 ];
+
+export const INPUT_TYPES = {
+  TEXT_AREA: "textArea",
+  TEXT: "text",
+  DATE: "date",
+  CHECK_BOX: "checkBox",
+};

@@ -1,0 +1,49 @@
+@import "../../../../shared/theme";
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+
+  background-color: $black000;
+  border-radius: 15px;
+  outline: none;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 35vw;
+  padding: 3rem 2.5rem;
+
+  &__buttons {
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    gap: 5%;
+
+    button {
+      width: 23%;
+    }
+  }
+
+  &__cancel {
+    position: absolute;
+    right: 2.5rem;
+    top: 5%;
+
+    cursor: pointer;
+
+    transition: transform 0.1s;
+
+    &:active {
+      transform: scale(1.05);
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+}

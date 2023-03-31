@@ -12,6 +12,12 @@
       color: $primary900;
       font-weight: 600;
       margin-bottom: 0.8vh;
+
+      span {
+        margin-left: 0.3rem;
+        color: $black400;
+        font-weight: 500;
+      }
     }
 
     input {
@@ -19,6 +25,13 @@
       background-color: $black000;
       border-radius: 5px;
     }
+  }
+
+  &__limit {
+    text-align: right;
+    margin-top: 0.2rem;
+
+    font-size: $EXTRA_SMALL_SIZE;
   }
 }
 

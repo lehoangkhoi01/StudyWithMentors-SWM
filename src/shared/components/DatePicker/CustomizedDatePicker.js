@@ -5,9 +5,12 @@ import { OPTIONAL } from "../../constants/common";
 const CustomizedDatePicker = (props) => {
   return (
     <div className={`${style.datePicker__container} ${props.className}`}>
-      <label htmlFor={props.inputId}>{`${props.name} 
-      ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
+      <label htmlFor={props.inputId}>
+        {props.name}
+        {!props.required ? <span>({OPTIONAL})</span> : ""}
+      </label>
       <DatePicker
+        views={["year", "month", "day"]}
         className={style.datePicker__input}
         {...props.options}
         onChange={(e) => {
