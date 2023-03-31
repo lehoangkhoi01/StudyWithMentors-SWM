@@ -46,43 +46,37 @@ const SignUp = () => {
 
   const [signUpError, setSignUpError] = useState("");
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const body = {
       email: data.email,
       password: data.password,
       fullName: data.fullName,
     };
-    authenticationService
-      .signUp(body)
-      .then((result) => {
-        console.log(result);
-        history.push("/confirmation", result);
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.status == 409) {
-          setSignUpError(ERROR_MESSAGES.DUPLICATED_EMAIL);
-        }
-      });
+    try {
+      const response = await authenticationService.signUp(body);
+      history.push("/confirmation", response);
+    } catch (error) {
+      if (error.status == 409) {
+        setSignUpError(ERROR_MESSAGES.DUPLICATED_EMAIL);
+      } else {
+        setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
+      }
+    }
   };
 
-  const handleSignInWithGoogle = () => {
-    SignInWithGoogle()
-      .then((result) => {
-        authenticationService
-          .signInGoogle(result)
-          .then((response) => {
-            localStorage.setItem("TOKEN", response.accessToken);
-            dispatch(userAction.loginSuccess(response));
-            history.push("/home");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSignInWithGoogle = async () => {
+    try {
+      const googleSignInResult = await SignInWithGoogle();
+      const response = await authenticationService.signInGoogle(
+        googleSignInResult
+      );
+      localStorage.setItem("TOKEN", response.accessToken);
+      dispatch(userAction.loginSuccess(response));
+      history.push("/home");
+    } catch (error) {
+      console.log(error);
+      setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
+    }
   };
 
   const validationConfirmPassword = (val) => {
