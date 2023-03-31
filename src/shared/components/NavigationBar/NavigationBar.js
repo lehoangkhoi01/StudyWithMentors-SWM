@@ -39,7 +39,7 @@ function NavigationBar() {
   useEffect(() => {
     setCurrentRoute(location.pathname);
   }, [location]);
-  
+
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
@@ -184,18 +184,23 @@ function NavigationBar() {
               className={`${style.navigation__titleContainer}`}
             >
               {NAVIGATION_TITLE.map((item) => (
-                <Button
-                  className={`${style.navigation__title} ${
-                    currentRouter === item.ROUTE
-                      ? style.navigation__title_active
-                      : ""
-                  }`}
+                <Link
+                  className={`${style.navigation__link}`}
                   key={item.TITLE}
-                  onClick={handleCloseNavMenu}
-                  sx={{ mx: 2, color: "white", display: "block" }}
+                  to={item.ROUTE}
                 >
-                  <Link to={item.ROUTE}>{item.TITLE}</Link>
-                </Button>
+                  <Button
+                    className={`${style.navigation__title} ${
+                      currentRouter === item.ROUTE
+                        ? style.navigation__title_active
+                        : ""
+                    }`}
+                    onClick={handleCloseNavMenu}
+                    sx={{ mx: 2, color: "white", display: "block" }}
+                  >
+                    {item.TITLE}
+                  </Button>
+                </Link>
               ))}
             </Box>
 

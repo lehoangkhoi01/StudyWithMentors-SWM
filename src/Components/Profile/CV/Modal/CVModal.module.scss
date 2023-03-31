@@ -8,31 +8,31 @@
   z-index: 99999;
 
   background-color: $black000;
-  border-radius: 10px;
+  border-radius: 15px;
   outline: none;
   
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  width: 40vw;
+  width: 35vw;
   padding: 3rem 2.5rem;
 
   &__buttons {
     justify-content: flex-end;
     display: flex;
     width: 100%;
-    gap: 10%;
+    gap: 5%;
 
     button {
-      width: 25%;
+      width: 23%;
     }
   }
 
   &__cancel {
     position: absolute;
     right: 2.5rem;
-    top: 4%;
+    top: 5%;
 
     cursor: pointer;
 

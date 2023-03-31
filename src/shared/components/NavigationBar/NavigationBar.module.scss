@@ -15,13 +15,11 @@
     justify-content: center;
   }
 
-  &__title {
-    a {
-      color: $primary200;
-      font-weight: 600;
-      border-radius: 0;
-      text-decoration: none;
-    }
+  &__link {
+    color: $primary200;
+    font-weight: 600;
+    border-radius: 0;
+    text-decoration: none;
   }
 
   &__title:hover,

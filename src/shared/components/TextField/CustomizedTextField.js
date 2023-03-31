@@ -11,7 +11,7 @@ const CustomizedTextField = (props) => {
       </label>
       <TextField
         multiline={props.multiline}
-        rows={6}
+        rows={8}
         error={props.error}
         helperText={props.helperText}
         id={props.inputId}
