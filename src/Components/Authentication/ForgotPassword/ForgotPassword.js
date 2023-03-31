@@ -7,13 +7,17 @@ import SecondStage from "./SecondStage/SecondStage";
 import ThirdStage from "./ThirdStage/ThirdStage";
 
 import { FORGOT_PASSWORD_STEPS, TITLE } from "../../../shared/constants/common";
+import { useLocation } from "react-router-dom";
 
 const steps = FORGOT_PASSWORD_STEPS;
 
 const ForgotPassword = () => {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const oobCode = new URLSearchParams(useLocation().search).get("oobCode");
+  const [activeStep, setActiveStep] = React.useState(oobCode ? 2 : 0);
+  const [resetEmail, setResetEmail] = React.useState("");
 
-  const moveNextStage = () => {
+  const moveToSecondStage = (data) => {
+    setResetEmail(data.email);
     setActiveStep((prev) => prev + 1);
   };
 
@@ -22,14 +26,14 @@ const ForgotPassword = () => {
   };
 
   const renderFirstStage = () => {
-    return <FirstStage moveNext={moveNextStage} />;
+    return <FirstStage moveNext={moveToSecondStage} />;
   };
 
-  const renderSecondStage = () => {
-    return <SecondStage moveNext={moveNextStage} moveBack={moveBackStage} />;
+  const renderSecondStage = (email) => {
+    return <SecondStage email={email} moveBack={moveBackStage} />;
   };
   const renderThirdStage = () => {
-    return <ThirdStage />;
+    return <ThirdStage oobCode={oobCode} />;
   };
 
   return (
@@ -52,7 +56,7 @@ const ForgotPassword = () => {
             })}
           </Stepper>
           {activeStep == 0 && renderFirstStage()}
-          {activeStep == 1 && renderSecondStage()}
+          {activeStep == 1 && renderSecondStage(resetEmail)}
           {activeStep == 2 && renderThirdStage()}
         </Paper>
       </div>

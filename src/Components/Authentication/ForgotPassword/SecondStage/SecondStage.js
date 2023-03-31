@@ -7,13 +7,30 @@ import {
 } from "../../../../shared/constants/common";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
+import { authenticationService } from "../../../../Services/authenticationService";
 
-const SecondStage = ({ moveNext, moveBack }) => {
+const SecondStage = ({ moveBack, email }) => {
+  const handleResendEmail = async () => {
+    if (email) {
+      const requestBody = {
+        email: email,
+      };
+      try {
+        const response = await authenticationService.sendResetPasswordEmail(
+          requestBody
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <>
       <Typography variant="h5" className={`${style.text}`}>
         {COMMON_MESSAGE.EMAIL_WAS_SENT}{" "}
-        <span className={`${style.email}`}>khoileit01@gmail.com</span>.
+        <span className={`${style.email}`}>{email}</span>.
       </Typography>
       <Typography variant="h5" className={`${style.text}`}>
         {COMMON_MESSAGE.EMAIL_RE_SEND}
@@ -29,7 +46,7 @@ const SecondStage = ({ moveNext, moveBack }) => {
         <CustomizedButton
           variant="contained"
           color="primary600"
-          onClick={moveNext}
+          onClick={handleResendEmail}
         >
           {BUTTON_LABEL.RE_SEND}
         </CustomizedButton>
