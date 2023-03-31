@@ -36,38 +36,32 @@ const SignInForm = () => {
   } = useForm();
   const [signInError, setSignInError] = useState("");
 
-  const onSubmit = (data) => {
-    authenticationService
-      .signInWithPassword(data)
-      .then((result) => {
-        localStorage.setItem("TOKEN", result.accessToken);
-        dispatch(userAction.loginSuccess(result));
-        history.push("/home");
-      })
-      .catch((error) => {
-        if (error.status == 409) {
-          setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
-        }
-      });
+  const onSubmit = async (data) => {
+    try {
+      var result = await authenticationService.signInWithPassword(data);
+      localStorage.setItem("TOKEN", result.accessToken);
+      dispatch(userAction.loginSuccess(result));
+      history.push("/home");
+    } catch (error) {
+      console.log(error);
+      if (error.status == 409) {
+        setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
+      }
+    }
   };
 
-  const handleSignInWithGoogle = () => {
-    SignInWithGoogle()
-      .then((result) => {
-        authenticationService
-          .signInGoogle(result)
-          .then((response) => {
-            localStorage.setItem("TOKEN", response.accessToken);
-            dispatch(userAction.loginSuccess(response));
-            history.push("/home");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSignInWithGoogle = async () => {
+    try {
+      const googleSignInResult = await SignInWithGoogle();
+      const response = await authenticationService.signInGoogle(
+        googleSignInResult
+      );
+      localStorage.setItem("TOKEN", response.accessToken);
+      dispatch(userAction.loginSuccess(response));
+      history.push("/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

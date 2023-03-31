@@ -48,7 +48,6 @@ function NavigationBar() {
 
   const handleMenuAction = (menuItem) => {
     const action = menuItem.ACTION;
-    console.log(action);
     if (action && action == "LOG_OUT") {
       localStorage.removeItem("TOKEN");
       dispatch(userAction.clearUserData());

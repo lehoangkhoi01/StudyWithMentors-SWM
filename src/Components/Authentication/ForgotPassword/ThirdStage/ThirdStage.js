@@ -32,21 +32,21 @@ const ThirdStage = (props) => {
     }
   };
 
-  const handleSubmitPasswordChange = (data) => {
+  const handleSubmitPasswordChange = async (data) => {
     if (props.oobCode) {
       const requestBody = {
         oobCode: props?.oobCode,
         password: data.password,
       };
       console.log(requestBody);
-      authenticationService
-        .applyPasswordChange(requestBody)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try {
+        const response = await authenticationService.applyPasswordChange(
+          requestBody
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

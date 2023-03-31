@@ -10,19 +10,19 @@ import style from "./SecondStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";
 
 const SecondStage = ({ moveBack, email }) => {
-  const handleResendEmail = () => {
+  const handleResendEmail = async () => {
     if (email) {
       const requestBody = {
         email: email,
       };
-      authenticationService
-        .sendResetPasswordEmail(requestBody)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try {
+        const response = await authenticationService.sendResetPasswordEmail(
+          requestBody
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

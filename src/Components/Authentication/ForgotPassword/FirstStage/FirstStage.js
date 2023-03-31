@@ -20,16 +20,13 @@ const FirstStage = ({ moveNext }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmitFirstStage = (data) => {
-    authenticationService
-      .sendResetPasswordEmail(data)
-      .then((result) => {
-        console.log(result);
-        moveNext(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const onSubmitFirstStage = async (data) => {
+    try {
+      await authenticationService.sendResetPasswordEmail(data);
+      moveNext(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
