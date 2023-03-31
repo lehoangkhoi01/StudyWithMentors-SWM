@@ -8,6 +8,7 @@ import CustomizedDatePicker from "../../../../shared/components/DatePicker/Custo
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
 
 const CVModal = (props) => {
+  const { register, setValue, watch } = props;
   return (
     <>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
@@ -26,9 +27,9 @@ const CVModal = (props) => {
                   className={style.modal__input}
                   name={textField.name}
                   required={!textField.optional}
-                  // options={{ ...register("dob") }}
-                  // formName={"dob"}
-                  // setValue={setValue}
+                  options={{ ...register(textField.name) }}
+                  formName={textField.name}
+                  setValue={setValue}
                 />
               );
             } else if (textField.type === INPUT_TYPES.CHECK_BOX) {
@@ -47,7 +48,9 @@ const CVModal = (props) => {
                   name={textField.name}
                   required={!textField.optional}
                   multiline={textField.type === INPUT_TYPES.TEXT_AREA}
+                  options={{ ...register(textField.name) }}
                   type={"text"}
+                  watch={watch(textField.name)}
                 />
               );
             }

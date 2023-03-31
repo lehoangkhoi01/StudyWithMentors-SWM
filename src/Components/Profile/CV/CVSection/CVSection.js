@@ -23,6 +23,9 @@ const CVSection = (props) => {
         />
       </div>
       <CVModal
+        register={props.register}
+        setValue={props.setValue}
+        watch={props.watch}
         textFields={props.textFields}
         openModal={openModal}
         onCloseModal={onCloseModal}

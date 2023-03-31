@@ -25,7 +25,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { userAction } from "../../../Store/slices/userSlice";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 const settings = ACCOUNT_MENU;
 
