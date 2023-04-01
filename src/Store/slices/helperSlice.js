@@ -5,7 +5,7 @@ const DEFAULT_STATE = {
 };
 
 const helperSlice = createSlice({
-  name: "helpder",
+  name: "helper",
   initialState: DEFAULT_STATE,
 
   reducers: {
@@ -13,14 +13,10 @@ const helperSlice = createSlice({
       const status = action.payload;
       state.isLoading = status;
     },
-    resetHelper(state) {
-      state = DEFAULT_STATE;
-
-      return state;
-    },
   },
 });
 
 export const helperAction = helperSlice.actions;
+export const selectLoadingStatus = (state) => state.helper.isLoading;
 
 export default helperSlice;

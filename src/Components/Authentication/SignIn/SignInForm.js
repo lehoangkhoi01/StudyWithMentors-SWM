@@ -25,10 +25,13 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import { authenticationService } from "../../../Services/authenticationService";
 import { useHistory } from "react-router-dom";
 import { userAction } from "../../../Store/slices/userSlice";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SignInForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { setLoading } = useCustomLoading();
+
   const {
     register,
     handleSubmit,
@@ -37,6 +40,7 @@ const SignInForm = () => {
   const [signInError, setSignInError] = useState("");
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       var result = await authenticationService.signInWithPassword(data);
       localStorage.setItem("TOKEN", result.accessToken);
@@ -47,10 +51,13 @@ const SignInForm = () => {
       if (error.status == 409) {
         setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSignInWithGoogle = async () => {
+    setLoading(true);
     try {
       const googleSignInResult = await SignInWithGoogle();
       const response = await authenticationService.signInGoogle(
@@ -61,6 +68,8 @@ const SignInForm = () => {
       history.push("/home");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -12,6 +12,7 @@ import { emailValidationRules } from "../../../../shared/constants/validationRul
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";
 import { authenticationService } from "../../../../Services/authenticationService";
+import { useCustomLoading } from "../../../../Helpers/generalHelper";
 
 const FirstStage = ({ moveNext }) => {
   const {
@@ -19,13 +20,17 @@ const FirstStage = ({ moveNext }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { setLoading } = useCustomLoading();
 
   const onSubmitFirstStage = async (data) => {
+    setLoading(true);
     try {
       await authenticationService.sendResetPasswordEmail(data);
       moveNext(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
