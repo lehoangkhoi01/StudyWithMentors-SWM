@@ -184,6 +184,7 @@ export const ERROR_MESSAGES = {
   WRONG_PASSWORD_FORMAT:
     "Chọn một mật khẩu ít nhất 8 kí tự, có chứa chữ cái, số và ký tự đặc biệt.",
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
+  EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
 };
 
 export const COLOR = {
