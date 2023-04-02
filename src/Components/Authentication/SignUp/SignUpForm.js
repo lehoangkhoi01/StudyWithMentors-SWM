@@ -33,6 +33,7 @@ import {
 import { authenticationService } from "../../../Services/authenticationService";
 import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
 import { userAction } from "../../../Store/slices/userSlice";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SignUp = () => {
   const history = useHistory();
@@ -43,10 +44,12 @@ const SignUp = () => {
     formState: { errors },
     watch,
   } = useForm();
+  const { setLoading } = useCustomLoading();
 
   const [signUpError, setSignUpError] = useState("");
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const body = {
       email: data.email,
       password: data.password,
@@ -61,10 +64,13 @@ const SignUp = () => {
       } else {
         setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSignInWithGoogle = async () => {
+    setLoading(true);
     try {
       const googleSignInResult = await SignInWithGoogle();
       const response = await authenticationService.signInGoogle(
@@ -76,6 +82,8 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
+    } finally {
+      setLoading(false);
     }
   };
 

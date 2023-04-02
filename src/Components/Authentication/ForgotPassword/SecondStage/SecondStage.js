@@ -8,10 +8,14 @@ import {
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";
+import { useCustomLoading } from "../../../../Helpers/generalHelper";
 
 const SecondStage = ({ moveBack, email }) => {
+  const { setLoading } = useCustomLoading();
+
   const handleResendEmail = async () => {
     if (email) {
+      setLoading(true);
       const requestBody = {
         email: email,
       };
@@ -22,6 +26,8 @@ const SecondStage = ({ moveBack, email }) => {
         console.log(response);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
   };

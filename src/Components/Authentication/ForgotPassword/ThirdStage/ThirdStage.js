@@ -14,6 +14,7 @@ import {
 import { passwordValidation } from "../../../../shared/constants/validationRules";
 import style from "./ThirdStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";
+import { useCustomLoading } from "../.././../../Helpers/generalHelper";
 
 const ThirdStage = (props) => {
   const {
@@ -22,6 +23,7 @@ const ThirdStage = (props) => {
     watch,
     formState: { errors },
   } = useForm();
+  const { setLoading } = useCustomLoading();
 
   const validationConfirmPassword = (val) => {
     if (!val || val.length == 0) {
@@ -34,6 +36,7 @@ const ThirdStage = (props) => {
 
   const handleSubmitPasswordChange = async (data) => {
     if (props.oobCode) {
+      setLoading(true);
       const requestBody = {
         oobCode: props?.oobCode,
         password: data.password,
@@ -46,6 +49,8 @@ const ThirdStage = (props) => {
         console.log(response);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
   };

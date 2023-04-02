@@ -17,29 +17,28 @@ function App() {
     <BrowserRouter>
       <div className={`${style.app}`}>
         <NavigationBar />
-        <LoadingProvider>
-          <div className={`${style.content}`}>
-            <Switch className={`${style.switchContainer}`}>
-              <Route exact path="/" component={SignInPage} />
-              <Route path={ROUTES.HOME} component={HomePage} />
-              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-              <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-              <Route
-                path={ROUTES.SIGN_UP_CONFIRMATION}
-                component={SignUpConfirmationPage}
-              />
-              <Route
-                path={ROUTES.FILL_INFORMATION}
-                component={FillInformationPage}
-              />
-              <Route path={ROUTES.CV} component={CVPage} />
-              <Route
-                path={ROUTES.FORGOT_PASSWORD}
-                component={ForgotPasswordPage}
-              />
-            </Switch>
-          </div>
-        </LoadingProvider>
+        <div className={`${style.content}`}>
+          <Switch className={`${style.switchContainer}`}>
+            <Route exact path="/" component={SignInPage} />
+            <Route path={ROUTES.HOME} component={HomePage} />
+            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+            <Route
+              path={ROUTES.SIGN_UP_CONFIRMATION}
+              component={SignUpConfirmationPage}
+            />
+            <Route
+              path={ROUTES.FILL_INFORMATION}
+              component={FillInformationPage}
+            />
+            <Route path={ROUTES.CV} component={CVPage} />
+            <Route
+              path={ROUTES.FORGOT_PASSWORD}
+              component={ForgotPasswordPage}
+            />
+          </Switch>
+        </div>
+        <LoadingProvider />
       </div>
     </BrowserRouter>
   );
