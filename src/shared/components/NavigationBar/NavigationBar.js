@@ -20,6 +20,7 @@ import {
   NAVIGATION_TITLE,
   APP_NAME,
   ACCOUNT_MENU,
+  AUTHENTICATION_MENU,
 } from "../../constants/common";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
@@ -105,6 +106,7 @@ function NavigationBar() {
               {APP_NAME}
             </Typography>
 
+            {/* Mobile screen menu */}
             <Box sx={{ flexGrow: 1, display: { xs: "none" } }}>
               <StyledMenu
                 id="menu-appbar"
@@ -141,6 +143,7 @@ function NavigationBar() {
                 ))}
               </StyledMenu>
             </Box>
+
             <Logo
               src={logoPath}
               height="100%"
@@ -180,6 +183,7 @@ function NavigationBar() {
               <MenuIcon />
             </IconButton>
 
+            {/* Large screen */}
             <Box
               sx={{
                 flexGrow: 1,
@@ -208,7 +212,7 @@ function NavigationBar() {
               ))}
             </Box>
 
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton
@@ -249,6 +253,33 @@ function NavigationBar() {
                     </MenuItem>
                   ))}
                 </StyledMenu>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+                className={`${style.navigation__titleContainer}`}
+              >
+                {AUTHENTICATION_MENU.map((item) => (
+                  <Link
+                    className={`${style.navigation__link}`}
+                    key={item.TITLE}
+                    to={item.ROUTE}
+                  >
+                    <Button
+                      className={`${style.navigation__title} ${
+                        currentRouter === item.ROUTE
+                          ? style.navigation__title_active
+                          : ""
+                      }`}
+                      sx={{ mx: 2, color: "white", display: "block" }}
+                    >
+                      {item.TITLE}
+                    </Button>
+                  </Link>
+                ))}
               </Box>
             )}
           </Toolbar>
