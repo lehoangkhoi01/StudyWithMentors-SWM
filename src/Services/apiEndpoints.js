@@ -5,3 +5,7 @@ export const AuthenticationEndpoints = {
   SEND_RESET_EMAIL: "sign-in/send-reset-email",
   APPLY_PASSWORD_CHANGE: "sign-in/apply-password-change",
 };
+
+export const UserAccountEndpoints = {
+  GET_USER_INFO: "user-profile/current",
+};

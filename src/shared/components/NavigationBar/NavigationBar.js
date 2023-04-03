@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -21,11 +23,12 @@ import {
   APP_NAME,
   ACCOUNT_MENU,
   AUTHENTICATION_MENU,
+  ROUTES,
 } from "../../constants/common";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUserInfo } from "../../../Store/slices/userSlice";
+
+import { selectUser } from "../../../Store/slices/userSlice";
 import { userAction } from "../../../Store/slices/userSlice";
-import { Link, useLocation } from "react-router-dom";
+import { useFetchUserInfo } from "../../../Helpers/generalHelper";
 
 const settings = ACCOUNT_MENU;
 
@@ -35,14 +38,17 @@ function NavigationBar() {
   const [currentRouter, setCurrentRoute] = useState("/");
 
   const location = useLocation();
+  const { getUserInfo } = useFetchUserInfo();
 
   useEffect(() => {
     setCurrentRoute(location.pathname);
   }, [location]);
 
-  const userInfo = useSelector(selectUserInfo);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -70,8 +76,14 @@ function NavigationBar() {
   };
 
   useEffect(() => {
-    setAuthenticated(userInfo.isAuthenticated);
-  }, [userInfo.isAuthenticated]);
+    const userInfo = getUserInfo();
+    setAuthenticated(user.isAuthenticated);
+    setUserInfo(userInfo);
+  }, [user]);
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
     <>
@@ -93,8 +105,8 @@ function NavigationBar() {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={Link}
+              to={ROUTES.HOME}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -212,7 +224,7 @@ function NavigationBar() {
               ))}
             </Box>
 
-            {isAuthenticated ? (
+            {isAuthenticated && userInfo ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton
