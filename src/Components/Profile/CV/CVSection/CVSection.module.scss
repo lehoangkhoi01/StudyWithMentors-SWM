@@ -11,8 +11,12 @@
     white-space: pre-line;
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 3%;
+
+    h3 {
+      margin-right: auto;
+    }
 
     img {
       width: 20px;
@@ -25,6 +29,15 @@
       &:active {
         transform: scale(1.1);
       }
+    }
+  }
+
+  &__body {
+    width: 95%;
+    margin-inline: auto;
+
+    h4 {
+      margin-block: 0;
     }
   }
 }

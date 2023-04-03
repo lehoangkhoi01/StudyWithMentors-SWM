@@ -175,7 +175,7 @@ const TEXT_FIELDS = [
 ];
 
 const CV = () => {
-  const { register, setValue, watch } = useForm();
+  const { register, setValue, watch, reset } = useForm();
 
   return (
     <div className={style.cv__container}>
@@ -209,6 +209,7 @@ const CV = () => {
               register={register}
               setValue={setValue}
               watch={watch}
+              reset={reset}
               textFields={textField.fields}
               title={textField.title}
             />
