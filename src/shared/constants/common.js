@@ -6,6 +6,9 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
+  ACCOUNT: "/account",
+  NOT_FOUND: "/not-found",
+  SERVER_ERROR: "/server-error",
 };
 
 export const BUTTON_LABEL = {
