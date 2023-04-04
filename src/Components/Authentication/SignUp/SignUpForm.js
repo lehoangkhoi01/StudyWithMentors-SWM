@@ -59,7 +59,7 @@ const SignUp = () => {
       const response = await authenticationService.signUp(body);
       history.push("/confirmation", response);
     } catch (error) {
-      if (error.status == 409) {
+      if (error.status === 409) {
         setSignUpError(ERROR_MESSAGES.DUPLICATED_EMAIL);
       } else {
         setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
@@ -88,7 +88,7 @@ const SignUp = () => {
   };
 
   const validationConfirmPassword = (val) => {
-    if (!val || val.length == 0) {
+    if (!val || val.length === 0) {
       return ERROR_MESSAGES.REQUIRED_FIELD;
     }
     if (watch("password") != val) {

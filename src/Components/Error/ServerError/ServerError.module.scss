@@ -1,0 +1,13 @@
+@import "../../../shared/theme";
+.container {
+    height: 100%;
+    background: url("../../../assets/DarkBackground.png") no-repeat;
+    align-items: center;   
+    justify-content: center;
+}
+
+.message {
+    text-align: center;
+    color: $black000;
+    margin: 1em 0;
+}

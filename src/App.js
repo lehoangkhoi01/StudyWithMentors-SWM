@@ -10,7 +10,10 @@ import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 import CVPage from "./Pages/CV/CVPage";
 import ForgotPasswordPage from "./Pages/Authentication/ForgotPasswordPage";
 import HomePage from "./Pages/HomePage";
+import AccountPage from "./Pages/Authentication/AccountPage";
 import { ROUTES } from "./shared/constants/common";
+import NotFound from "./Pages/NotFound";
+import ServerError from "./Pages/ServerError";
 
 function App() {
   return (
@@ -19,7 +22,7 @@ function App() {
         <NavigationBar />
         <div className={`${style.content}`}>
           <Switch className={`${style.switchContainer}`}>
-            <Route exact path="/" component={SignInPage} />
+            <Route exact path="/" component={HomePage} />
             <Route path={ROUTES.HOME} component={HomePage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
             <Route path={ROUTES.SIGN_IN} component={SignInPage} />
@@ -36,6 +39,9 @@ function App() {
               path={ROUTES.FORGOT_PASSWORD}
               component={ForgotPasswordPage}
             />
+            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+            <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
         </div>
         <LoadingProvider />

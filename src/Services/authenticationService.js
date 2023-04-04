@@ -22,4 +22,8 @@ export const authenticationService = {
     const url = AuthenticationEndpoints.APPLY_PASSWORD_CHANGE;
     return axiosClient.post(url, data);
   },
+  verifyEmail: (data) => {
+    const url = AuthenticationEndpoints.VERIFY_EMAIL + "?oobCode=" + data;
+    return axiosClient.get(url);
+  },
 };

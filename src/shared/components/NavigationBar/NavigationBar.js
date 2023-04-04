@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -20,11 +22,13 @@ import {
   NAVIGATION_TITLE,
   APP_NAME,
   ACCOUNT_MENU,
+  AUTHENTICATION_MENU,
+  ROUTES,
 } from "../../constants/common";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUserInfo } from "../../../Store/slices/userSlice";
+
+import { selectUser } from "../../../Store/slices/userSlice";
 import { userAction } from "../../../Store/slices/userSlice";
-import { Link, useLocation } from "react-router-dom";
+import { useFetchUserInfo } from "../../../Helpers/generalHelper";
 
 const settings = ACCOUNT_MENU;
 
@@ -34,14 +38,17 @@ function NavigationBar() {
   const [currentRouter, setCurrentRoute] = useState("/");
 
   const location = useLocation();
+  const { getUserInfo } = useFetchUserInfo();
 
   useEffect(() => {
     setCurrentRoute(location.pathname);
   }, [location]);
 
-  const userInfo = useSelector(selectUserInfo);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,7 +64,7 @@ function NavigationBar() {
 
   const handleMenuAction = (menuItem) => {
     const action = menuItem.ACTION;
-    if (action && action == "LOG_OUT") {
+    if (action && action === "LOG_OUT") {
       localStorage.removeItem("TOKEN");
       dispatch(userAction.clearUserData());
       setAuthenticated(false);
@@ -69,8 +76,10 @@ function NavigationBar() {
   };
 
   useEffect(() => {
-    setAuthenticated(userInfo.isAuthenticated);
-  }, [userInfo.isAuthenticated]);
+    const userInfo = getUserInfo();
+    setAuthenticated(user.isAuthenticated);
+    setUserInfo(userInfo);
+  }, [user]);
 
   return (
     <>
@@ -92,8 +101,8 @@ function NavigationBar() {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={Link}
+              to={ROUTES.HOME}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -105,6 +114,7 @@ function NavigationBar() {
               {APP_NAME}
             </Typography>
 
+            {/* Mobile screen menu */}
             <Box sx={{ flexGrow: 1, display: { xs: "none" } }}>
               <StyledMenu
                 id="menu-appbar"
@@ -141,6 +151,7 @@ function NavigationBar() {
                 ))}
               </StyledMenu>
             </Box>
+
             <Logo
               src={logoPath}
               height="100%"
@@ -180,6 +191,7 @@ function NavigationBar() {
               <MenuIcon />
             </IconButton>
 
+            {/* Large screen */}
             <Box
               sx={{
                 flexGrow: 1,
@@ -208,7 +220,7 @@ function NavigationBar() {
               ))}
             </Box>
 
-            {isAuthenticated && (
+            {isAuthenticated && userInfo ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton
@@ -249,6 +261,33 @@ function NavigationBar() {
                     </MenuItem>
                   ))}
                 </StyledMenu>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+                className={`${style.navigation__titleContainer}`}
+              >
+                {AUTHENTICATION_MENU.map((item) => (
+                  <Link
+                    className={`${style.navigation__link}`}
+                    key={item.TITLE}
+                    to={item.ROUTE}
+                  >
+                    <Button
+                      className={`${style.navigation__title} ${
+                        currentRouter === item.ROUTE
+                          ? style.navigation__title_active
+                          : ""
+                      }`}
+                      sx={{ mx: 2, color: "white", display: "block" }}
+                    >
+                      {item.TITLE}
+                    </Button>
+                  </Link>
+                ))}
               </Box>
             )}
           </Toolbar>
