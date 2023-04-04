@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import ResetPassword from "../ResetPassword/ResetPassword";
-import SignUpSuccess from "../SignUpSuccess/SignUpSuccess";
 import { authenticationService } from "../../../Services/authenticationService";
 import { ROUTES } from "../../../shared/constants/common";
+import SignUpSuccess from "../SignUpSuccess/SignUpSuccess";
 
 const Account = () => {
   const history = useHistory();
