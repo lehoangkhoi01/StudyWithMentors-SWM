@@ -1,3 +1,5 @@
+@import "../../../../shared/theme";
+
 .detail {
   &__title {
     color: $primary900;
@@ -27,7 +29,7 @@
   }
 
   &__body {
-    width: 95%;
+    width: 90%;
     margin-inline: auto;
 
     h4 {

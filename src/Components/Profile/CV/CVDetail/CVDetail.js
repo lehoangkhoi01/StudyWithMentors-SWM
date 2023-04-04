@@ -14,7 +14,7 @@ const DUMMY_DATA = [
 
 const CVDetail = (props) => {
   return (
-    <>
+    <div className={style.detail__container}>
       <div className={style.detail__title}>
         <img
           src={require("../../../../assets/icons/Back.png")}
@@ -34,7 +34,7 @@ const CVDetail = (props) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
