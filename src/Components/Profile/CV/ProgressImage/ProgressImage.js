@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PROGRESS_INFORMATION_TEXT } from "../../../../shared/constants/common";
 import style from "./ProgressImage.module.scss";
 
-const STAGE = 4;
+const STAGE = 1;
 
 const ProgressImage = () => {
   const [progressImageNumber, setProgressImageNumber] = useState(1);

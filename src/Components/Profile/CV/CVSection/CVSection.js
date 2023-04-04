@@ -17,9 +17,17 @@ const DUMMY_DATA = [
 
 const CVSection = (props) => {
   const [openModal, setOpenModal] = useState(false);
+  const [existedData, setExistedData] = useState(null);
 
-  const onOpenModal = () => {
+  const onOpenModal = (_, data) => {
     props.reset();
+
+    console.log(data);
+
+    if (data) {
+      setExistedData(data);
+    }
+
     setOpenModal(true);
   };
 
@@ -33,10 +41,7 @@ const CVSection = (props) => {
         <h3>{props.title}</h3>
         {props.title !== PROFILE_TITLES.INTRODUCION && (
           <>
-            <img
-              onClick={onOpenModal}
-              src={require("../../../../assets/icons/Edit.png")}
-            />
+            <img src={require("../../../../assets/icons/Edit.png")} />
             <img
               onClick={onOpenModal}
               src={require("../../../../assets/icons/Add.png")}
@@ -47,7 +52,7 @@ const CVSection = (props) => {
           <>
             {DUMMY_DATA.length > 0 && (
               <img
-                onClick={onOpenModal}
+                onClick={(e) => onOpenModal(e, DUMMY_DATA[0])}
                 src={require("../../../../assets/icons/Edit.png")}
               />
             )}
@@ -61,21 +66,24 @@ const CVSection = (props) => {
         )}
       </div>
       <div className={style.section__body}>
-        {DUMMY_DATA.map((data) => (
-          <>
+        {DUMMY_DATA.map((data, index) => (
+          <div key={`CV_DETAIL_${index}`}>
             {data.title && <h4>{data.title}</h4>}
             <p>{data.detail}</p>
-          </>
+          </div>
         ))}
       </div>
       <CVModal
+        existedData={existedData}
         register={props.register}
         setValue={props.setValue}
+        getValues={props.getValues}
         watch={props.watch}
         textFields={props.textFields}
         openModal={openModal}
         onCloseModal={onCloseModal}
         title={props.title}
+        handleSubmit={props.handleSubmit}
       />
     </>
   );
