@@ -7,6 +7,8 @@ import {
   COMMON_MESSAGE,
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
+  ERROR_MESSAGES,
+  COLOR,
 } from "../../../../shared/constants/common";
 import { emailValidationRules } from "../../../../shared/constants/validationRules";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
@@ -20,6 +22,7 @@ const FirstStage = ({ moveNext }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [resetPasswordError, setResetPasswordError] = React.useState("");
   const { setLoading } = useCustomLoading();
 
   const onSubmitFirstStage = async (data) => {
@@ -29,6 +32,9 @@ const FirstStage = ({ moveNext }) => {
       moveNext(data);
     } catch (error) {
       console.log(error);
+      if (error.status == 409) {
+        setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
+      }
     } finally {
       setLoading(false);
     }
@@ -59,6 +65,11 @@ const FirstStage = ({ moveNext }) => {
           error={errors.email ? true : false}
           helperText={errors?.email?.message}
         />
+        {resetPasswordError && (
+          <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+            {resetPasswordError}
+          </Typography>
+        )}
         <CustomizedButton type="submit" variant="contained" color="primary600">
           {BUTTON_LABEL.RESET_PASSWORD}
         </CustomizedButton>

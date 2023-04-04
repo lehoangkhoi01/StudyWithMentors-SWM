@@ -6,6 +6,9 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
+  ACCOUNT: "/account",
+  NOT_FOUND: "/not-found",
+  SERVER_ERROR: "/server-error",
 };
 
 export const BUTTON_LABEL = {
@@ -115,6 +118,16 @@ export const NAVIGATION_TITLE = [
     ROUTE: ROUTES.CV,
   },
 ];
+export const AUTHENTICATION_MENU = [
+  {
+    TITLE: "Đăng nhập",
+    ROUTE: ROUTES.SIGN_IN,
+  },
+  {
+    TITLE: "Đăng ký",
+    ROUTE: ROUTES.SIGN_UP,
+  },
+];
 export const MOBILE_MENU = [];
 export const ACCOUNT_MENU = [
   {
@@ -174,6 +187,7 @@ export const ERROR_MESSAGES = {
   WRONG_PASSWORD_FORMAT:
     "Chọn một mật khẩu ít nhất 8 kí tự, có chứa chữ cái, số và ký tự đặc biệt.",
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
+  EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
 };
 
 export const COLOR = {
