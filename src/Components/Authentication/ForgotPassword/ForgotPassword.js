@@ -22,14 +22,6 @@ const ForgotPassword = () => {
     setActiveStep((prev) => prev - 1);
   };
 
-  const renderFirstStage = () => {
-    return <FirstStage moveNext={moveToSecondStage} />;
-  };
-
-  const renderSecondStage = (email) => {
-    return <SecondStage email={email} moveBack={moveBackStage} />;
-  };
-
   return (
     <div className={`${style.container}`}>
       <div className={`${style.paper__container}`}>
@@ -49,8 +41,10 @@ const ForgotPassword = () => {
               );
             })}
           </Stepper>
-          {activeStep == 0 && renderFirstStage()}
-          {activeStep == 1 && renderSecondStage(resetEmail)}
+          {activeStep === 0 && <FirstStage moveNext={moveToSecondStage} />}
+          {activeStep === 1 && (
+            <SecondStage email={resetEmail} moveBack={moveBackStage} />
+          )}
         </Paper>
       </div>
     </div>
