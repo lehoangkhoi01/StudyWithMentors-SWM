@@ -1,7 +1,8 @@
 import React from "react";
+import ServerErrorPage from "../Components/Error/ServerError/ServerErrorPage";
 
 const ServerError = () => {
-  return <div>ServerError</div>;
+  return <ServerErrorPage />;
 };
 
 export default ServerError;

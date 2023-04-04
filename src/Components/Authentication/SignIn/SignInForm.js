@@ -48,7 +48,7 @@ const SignInForm = () => {
       history.push("/home");
     } catch (error) {
       console.log(error);
-      if (error.status == 409) {
+      if (error.status === 409) {
         setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
       }
     } finally {

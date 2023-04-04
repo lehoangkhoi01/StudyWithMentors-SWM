@@ -4,6 +4,7 @@ export const AuthenticationEndpoints = {
   SIGN_IN_WITH_GOOGLE: "sign-in/with-google",
   SEND_RESET_EMAIL: "sign-in/send-reset-email",
   APPLY_PASSWORD_CHANGE: "sign-in/apply-password-change",
+  VERIFY_EMAIL: "sign-up/email-verification",
 };
 
 export const UserAccountEndpoints = {

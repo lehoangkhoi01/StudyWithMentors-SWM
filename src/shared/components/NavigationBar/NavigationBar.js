@@ -64,7 +64,7 @@ function NavigationBar() {
 
   const handleMenuAction = (menuItem) => {
     const action = menuItem.ACTION;
-    if (action && action == "LOG_OUT") {
+    if (action && action === "LOG_OUT") {
       localStorage.removeItem("TOKEN");
       dispatch(userAction.clearUserData());
       setAuthenticated(false);
@@ -80,10 +80,6 @@ function NavigationBar() {
     setAuthenticated(user.isAuthenticated);
     setUserInfo(userInfo);
   }, [user]);
-
-  useEffect(() => {
-    console.log(isAuthenticated);
-  }, [isAuthenticated]);
 
   return (
     <>

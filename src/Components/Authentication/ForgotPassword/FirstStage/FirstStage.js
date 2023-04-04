@@ -32,7 +32,7 @@ const FirstStage = ({ moveNext }) => {
       moveNext(data);
     } catch (error) {
       console.log(error);
-      if (error.status == 409) {
+      if (error.status === 409) {
         setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
       }
     } finally {

@@ -23,7 +23,6 @@ export const useFetchUserInfo = () => {
   const getUserInfo = async () => {
     if (!userInfo && token) {
       try {
-        console.log("Fetch again");
         userInfo = await userAccountService.getUserInfo();
         dispatch(userAction.setUserInfo(userInfo));
       } catch (error) {

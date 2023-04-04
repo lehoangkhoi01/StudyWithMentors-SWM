@@ -20,6 +20,7 @@ export const BUTTON_LABEL = {
   RE_SEND: "Gửi lại",
   ADD: "Thêm vào",
   CANCEL: "Hủy lưu",
+  BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -70,6 +71,8 @@ export const COMMON_MESSAGE = {
     "Trường hợp email không đúng, vui lòng quay lại bước 1 để được gửi lại email xác nhận.",
   CONFIRM_EMAIL_SUCCESS:
     "Email đã được xác nhận thành công. Mong bạn vui lòng đăng nhập lại để tiếp tục đồng hành cùng Growth Me.",
+  SERVER_ERROR: "Máy chủ hiện không ổn định. Vui lòng thử lại sau.",
+  NOT_FOUND: "Không tìm thấy trang bạn yêu cầu.",
 };
 
 export const SIGN_UP_STAGE = {
