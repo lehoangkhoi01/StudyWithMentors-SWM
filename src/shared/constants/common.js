@@ -21,6 +21,7 @@ export const BUTTON_LABEL = {
   ADD: "Thêm vào",
   CANCEL: "Hủy lưu",
   BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
+  SAVE_EDIT: "Lưu lại",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -158,7 +159,7 @@ export const FILL_INFORMATION = {
     "Vui lòng cập nhật thông tin cá nhân để có thể đặt lịch với mentor",
 };
 
-export const OPTIONAL = "optional";
+export const OPTIONAL = "không bắt buộc";
 
 export const GENDER = {
   MALE: "Nam",
@@ -223,4 +224,55 @@ export const INPUT_TYPES = {
   TEXT: "text",
   DATE: "date",
   CHECK_BOX: "checkBox",
+};
+
+export const MODAL_TYPE = {
+  ADD: "add",
+  EDIT: "edit",
+};
+
+export const REGISTER_FIELD = {
+  INTRODUCION: {
+    DESCRIPTION: "introduction_description",
+  },
+  EXPERIENCE: {
+    POSITION: "experience_position",
+    COMPANY: "experience_company",
+    IS_WORKING: "experience_is_working",
+    START_TIME: "experience_start_time",
+    END_TIME: "experience_end_time",
+    DESCRIPTION: "experience_description",
+  },
+  STUDY_PROGRESS: {
+    SCHOOL: "study_progress_school",
+    MAJORS: "study_progress_majors",
+    START_TIME: "study_progress_start_time",
+    COMPLETED_TIME: "study_progress_completed_time",
+    DESCRIPTION: "study_progress_description",
+  },
+  ACTIVITIES: {
+    ORGANIZATION_NAME: "activites_organization_name",
+    POSITION: "activites_position",
+    IS_DOING: "activites_is_doing",
+    START_TIME: "activites_start_time",
+    END_TIME: "activites_end_time",
+    DESCRIPTION: "activites_description",
+  },
+  ACHIEVEMENT: {
+    NAME: "achievement_name",
+    ORGANIZATION_NAME: "achievement_organization_name",
+    RECEIVED_TIME: "achievement_received_time",
+    DESCRIPTION: "achievement_description",
+  },
+  CERTIFICATES: {
+    NAME: "certificates_name",
+    ORGANIZATION_NAME: "certificates_organization_name",
+    ISSUED_DATE: "certificates_issued_date",
+    DUE_DATE: "certificates_due_date",
+    DESCRIPTION: "certificates_description",
+  },
+  SKILLS: {
+    NAME: "skills_name",
+    DESCRIPTION: "skills_description",
+  },
 };
