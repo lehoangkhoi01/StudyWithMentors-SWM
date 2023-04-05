@@ -35,6 +35,7 @@ const CVDetail = (props) => {
             onClick={props.onBackToList}
             src={require("../../../../assets/icons/Back.png")}
             alt="back-icon"
+            className={`${style.detail__img}`}
           />
         </div>
         <div>
@@ -43,6 +44,7 @@ const CVDetail = (props) => {
             <img
               src={require("../../../../assets/icons/Add.png")}
               alt="back-icon"
+              className={`${style.detail__img}`}
             />
           </div>
           <div className={style.detail__body}>
@@ -56,11 +58,13 @@ const CVDetail = (props) => {
                     }}
                     src={require("../../../../assets/icons/Edit.png")}
                     alt="back-icon"
+                    className={`${style.detail__img}`}
                   />
                   <img
                     onClick={props.onBackToList}
                     src={require("../../../../assets/icons/Delete.png")}
                     alt="back-icon"
+                    className={`${style.detail__img}`}
                   />
                 </div>
                 <p>{data.detail}</p>
