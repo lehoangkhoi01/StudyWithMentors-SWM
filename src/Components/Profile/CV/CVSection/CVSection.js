@@ -35,13 +35,22 @@ const CVSection = (props) => {
     setOpenModal(false);
   };
 
+  const onEditData = (data, title) => {
+    props.editDetailData(data, title);
+  };
+
   return (
     <>
       <div className={style.section__title}>
         <h3>{props.title}</h3>
         {props.title !== PROFILE_TITLES.INTRODUCION && (
           <>
-            <img src={require("../../../../assets/icons/Edit.png")} />
+            <img
+              onClick={() => {
+                onEditData(DUMMY_DATA, props.title);
+              }}
+              src={require("../../../../assets/icons/Edit.png")}
+            />
             <img
               onClick={onOpenModal}
               src={require("../../../../assets/icons/Add.png")}

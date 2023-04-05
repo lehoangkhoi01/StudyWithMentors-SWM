@@ -21,6 +21,7 @@ export const BUTTON_LABEL = {
   ADD: "Thêm vào",
   CANCEL: "Hủy lưu",
   BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
+  SAVE_EDIT: "Lưu lại",
 };
 
 export const TEXTFIELD_LABEL = {
