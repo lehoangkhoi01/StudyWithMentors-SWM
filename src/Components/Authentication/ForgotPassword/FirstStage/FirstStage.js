@@ -16,7 +16,7 @@ import CustomizedTextField from "../../../../shared/components/TextField/Customi
 import { authenticationService } from "../../../../Services/authenticationService";
 import { useCustomLoading } from "../../../../Helpers/generalHelper";
 
-const FirstStage = ({ moveNext }) => {
+const FirstStage = ({ moveNext, handleEmailNotFound }) => {
   const {
     register,
     handleSubmit,
@@ -34,6 +34,7 @@ const FirstStage = ({ moveNext }) => {
       console.log(error);
       if (error.status === 409) {
         setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
+        handleEmailNotFound(data);
       }
     } finally {
       setLoading(false);

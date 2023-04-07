@@ -22,6 +22,7 @@ export const BUTTON_LABEL = {
   CANCEL: "Hủy lưu",
   BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
   SAVE_EDIT: "Lưu lại",
+  SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -74,6 +75,8 @@ export const COMMON_MESSAGE = {
     "Email đã được xác nhận thành công. Mong bạn vui lòng đăng nhập lại để tiếp tục đồng hành cùng Growth Me.",
   SERVER_ERROR: "Máy chủ hiện không ổn định. Vui lòng thử lại sau.",
   NOT_FOUND: "Không tìm thấy trang bạn yêu cầu.",
+  SIGN_UP_WITH_EMAIL: "Đăng ký tài khoản mới với email này.",
+  IS_NOT_EXIST: "không tồn tại.",
 };
 
 export const SIGN_UP_STAGE = {

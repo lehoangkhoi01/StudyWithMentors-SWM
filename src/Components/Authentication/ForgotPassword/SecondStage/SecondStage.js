@@ -9,8 +9,9 @@ import CustomizedButton from "../../../../shared/components/Button/CustomizedBut
 import style from "./SecondStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";
 import { useCustomLoading } from "../../../../Helpers/generalHelper";
+import { Link } from "react-router-dom";
 
-const SecondStage = ({ moveBack, email }) => {
+const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
   const { setLoading } = useCustomLoading();
 
   const handleResendEmail = async () => {
@@ -34,14 +35,26 @@ const SecondStage = ({ moveBack, email }) => {
 
   return (
     <>
-      <Typography variant="h5" className={`${style.text}`}>
-        {COMMON_MESSAGE.EMAIL_WAS_SENT}{" "}
-        <span className={`${style.email}`}>{email}</span>.
-      </Typography>
-      <Typography variant="h5" className={`${style.text}`}>
-        {COMMON_MESSAGE.EMAIL_RE_SEND}
-      </Typography>
-      <img alt="pic3" src={require("../../../../assets/image3.png")} />
+      {isEmailNotFound ? (
+        <>
+          <Typography variant="h5" className={`${style.text}`}>
+            Email <span className={`${style.email}`}>{email}</span>{" "}
+            {COMMON_MESSAGE.IS_NOT_EXIST} {COMMON_MESSAGE.SIGN_UP_WITH_EMAIL}
+          </Typography>
+          <img alt="pic3" src={require("../../../../assets/image4.png")} />
+        </>
+      ) : (
+        <>
+          <Typography variant="h5" className={`${style.text}`}>
+            {COMMON_MESSAGE.EMAIL_WAS_SENT}{" "}
+            <span className={`${style.email}`}>{email}</span>.
+          </Typography>
+          <Typography variant="h5" className={`${style.text}`}>
+            {COMMON_MESSAGE.EMAIL_RE_SEND}
+          </Typography>
+          <img alt="pic3" src={require("../../../../assets/image3.png")} />
+        </>
+      )}
       <IconButton className={`${style.iconButton}`} onClick={moveBack}>
         <ArrowBackIosNewOutlined
           fontSize="large"
@@ -49,13 +62,21 @@ const SecondStage = ({ moveBack, email }) => {
         />
       </IconButton>
       <div className={`${style.buttonContainer}`}>
-        <CustomizedButton
-          variant="contained"
-          color="primary600"
-          onClick={handleResendEmail}
-        >
-          {BUTTON_LABEL.RE_SEND}
-        </CustomizedButton>
+        {isEmailNotFound ? (
+          <Link to="/sign-up" unselectable="on">
+            <CustomizedButton variant="contained" color="primary600">
+              {BUTTON_LABEL.SIGN_UP_ACCOUNT}
+            </CustomizedButton>
+          </Link>
+        ) : (
+          <CustomizedButton
+            variant="contained"
+            color="primary600"
+            onClick={handleResendEmail}
+          >
+            {BUTTON_LABEL.RE_SEND}
+          </CustomizedButton>
+        )}
       </div>
       <Typography variant="h5" className={`${style.text}`}>
         {COMMON_MESSAGE.EMAIl_RE_ENTER}
