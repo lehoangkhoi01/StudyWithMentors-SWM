@@ -4,6 +4,7 @@ import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
+  ROUTES,
 } from "../../../../shared/constants/common";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
@@ -37,22 +38,42 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
     <>
       {isEmailNotFound ? (
         <>
-          <Typography variant="h5" className={`${style.text}`}>
+          <Typography
+            variant="h5"
+            className={`${style.forgotpassword__stage2__text}`}
+          >
             Email <span className={`${style.email}`}>{email}</span>{" "}
             {COMMON_MESSAGE.IS_NOT_EXIST} {COMMON_MESSAGE.SIGN_UP_WITH_EMAIL}
           </Typography>
-          <img alt="pic3" src={require("../../../../assets/image4.png")} />
+          <img
+            alt="pic3"
+            src={require("../../../../assets/image4.png")}
+            className={`${style.forgotpassword__img}`}
+          />
         </>
       ) : (
         <>
-          <Typography variant="h5" className={`${style.text}`}>
-            {COMMON_MESSAGE.EMAIL_WAS_SENT}{" "}
-            <span className={`${style.email}`}>{email}</span>.
-          </Typography>
-          <Typography variant="h5" className={`${style.text}`}>
-            {COMMON_MESSAGE.EMAIL_RE_SEND}
-          </Typography>
-          <img alt="pic3" src={require("../../../../assets/image3.png")} />
+          <div className={`${style.forgotpassword__stage2}`}>
+            <Typography
+              variant="h5"
+              className={`${style.forgotpassword__stage2__text}`}
+            >
+              {COMMON_MESSAGE.EMAIL_WAS_SENT}{" "}
+              <span className={`${style.email}`}>{email}</span>.
+            </Typography>
+            <Typography
+              variant="h5"
+              className={`${style.forgotpassword__stage2__text}`}
+            >
+              {COMMON_MESSAGE.EMAIL_RE_SEND}
+            </Typography>
+          </div>
+
+          <img
+            alt="pic3"
+            src={require("../../../../assets/image3.png")}
+            className={`${style.forgotpassword__img}`}
+          />
         </>
       )}
       <IconButton className={`${style.iconButton}`} onClick={moveBack}>
@@ -63,7 +84,7 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
       </IconButton>
       <div className={`${style.buttonContainer}`}>
         {isEmailNotFound ? (
-          <Link to="/sign-up" unselectable="on">
+          <Link to={ROUTES.SIGN_UP} className={`${style.navigation}`}>
             <CustomizedButton variant="contained" color="primary600">
               {BUTTON_LABEL.SIGN_UP_ACCOUNT}
             </CustomizedButton>
@@ -78,7 +99,10 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
           </CustomizedButton>
         )}
       </div>
-      <Typography variant="h5" className={`${style.text}`}>
+      <Typography
+        variant="h5"
+        className={`${style.forgotpassword__stage2__text}`}
+      >
         {COMMON_MESSAGE.EMAIl_RE_ENTER}
       </Typography>
     </>

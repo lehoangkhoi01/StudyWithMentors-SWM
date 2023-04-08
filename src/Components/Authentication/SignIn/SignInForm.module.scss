@@ -98,7 +98,7 @@
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: $bp-md) {
   .imageSide {
     display: none;
   }

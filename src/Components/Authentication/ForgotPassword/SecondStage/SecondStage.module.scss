@@ -1,20 +1,48 @@
 @import "../../../../shared/theme";
+@import "../../../../shared/break-point";
 
-.text {
+.forgotpassword__stage2 {
+  &__text {
     color: $primary900;
+  }
 }
+
 .email {
-    font-weight: 700;
+  font-weight: 700;
 }
 .buttonContainer {
-    margin: 1em 0;
-    width: 50%;
+  margin: 1em 0;
+  width: 50%;
 }
 .iconButton {
-    position: absolute;
-    left: 2em;
-    top: 50%;
-    &__icon {
-        color: $primary600;
+  position: absolute;
+  left: 2em;
+  top: 50%;
+  &__icon {
+    color: $primary600;
+  }
+}
+.navigation {
+  text-decoration: none;
+}
+
+@media (max-width: $bp-md) {
+  .forgotpassword__stage2 {
+    margin: 1rem 0;
+    &__text {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
     }
+  }
+
+  .forgotpassword__img {
+    width: 60%;
+  }
+  .buttonContainer {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  .iconButton {
+    left: 0px;
+    top: 55%;
+  }
 }

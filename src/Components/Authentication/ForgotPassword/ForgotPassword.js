@@ -10,7 +10,7 @@ import { FORGOT_PASSWORD_STEPS, TITLE } from "../../../shared/constants/common";
 const steps = FORGOT_PASSWORD_STEPS;
 
 const ForgotPassword = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [resetEmail, setResetEmail] = React.useState("");
   const [isEmailNotFound, setEmailNotFound] = React.useState(false);
 
@@ -33,10 +33,7 @@ const ForgotPassword = () => {
       <div className={`${style.paper__container}`}>
         <Paper elevation={3} className={`${style.paper__content}`}>
           <CustomTopTitle title={TITLE.LOGIN_TROUBLE} />
-          <Stepper
-            activeStep={activeStep}
-            sx={{ width: "70%", margin: "1em 0" }}
-          >
+          <Stepper activeStep={activeStep} className={`${style.stepper}`}>
             {steps.map((label) => {
               const stepProps = {};
               const labelProps = {};
