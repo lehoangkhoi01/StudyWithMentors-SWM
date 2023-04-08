@@ -19,7 +19,7 @@ import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopT
 import { passwordValidation } from "../../../shared/constants/validationRules";
 import { authenticationService } from "../../../Services/authenticationService";
 import { useCustomLoading } from "../.././../Helpers/generalHelper";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const steps = FORGOT_PASSWORD_STEPS;
 const ResetPassword = (props) => {
@@ -29,6 +29,7 @@ const ResetPassword = (props) => {
     watch,
     formState: { errors },
   } = useForm();
+  const history = useHistory();
   const { setLoading } = useCustomLoading();
   const [isResetSuccess, setResetSuccess] = React.useState(true);
 
@@ -55,6 +56,7 @@ const ResetPassword = (props) => {
       setResetSuccess(true);
     } catch (error) {
       console.log(error);
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }

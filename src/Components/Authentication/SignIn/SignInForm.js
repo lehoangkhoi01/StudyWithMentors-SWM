@@ -45,12 +45,13 @@ const SignInForm = () => {
       var result = await authenticationService.signInWithPassword(data);
       localStorage.setItem("TOKEN", result.accessToken);
       dispatch(userAction.loginSuccess(result));
-      history.push("/home");
+      history.push(ROUTES.HOME);
     } catch (error) {
       console.log(error);
       if (error.status === 409) {
         setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
       }
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }
@@ -65,9 +66,9 @@ const SignInForm = () => {
       );
       localStorage.setItem("TOKEN", response.accessToken);
       dispatch(userAction.loginSuccess(response));
-      history.push("/home");
+      history.push(ROUTES.HOME);
     } catch (error) {
-      console.log(error);
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }
