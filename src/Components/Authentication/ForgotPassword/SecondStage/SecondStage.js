@@ -10,10 +10,11 @@ import CustomizedButton from "../../../../shared/components/Button/CustomizedBut
 import style from "./SecondStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";
 import { useCustomLoading } from "../../../../Helpers/generalHelper";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
   const { setLoading } = useCustomLoading();
+  const history = useHistory();
 
   const handleResendEmail = async () => {
     if (email) {
@@ -28,6 +29,7 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
         console.log(response);
       } catch (error) {
         console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       } finally {
         setLoading(false);
       }
