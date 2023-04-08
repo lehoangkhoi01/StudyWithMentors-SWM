@@ -10,6 +10,7 @@ import {
   BUTTON_LABEL,
   ERROR_MESSAGES,
   SIGN_UP_PLACEHOLDER,
+  ROUTES,
 } from "../../../shared/constants/common";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -18,6 +19,7 @@ import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopT
 import { passwordValidation } from "../../../shared/constants/validationRules";
 import { authenticationService } from "../../../Services/authenticationService";
 import { useCustomLoading } from "../.././../Helpers/generalHelper";
+import { Link } from "react-router-dom";
 
 const steps = FORGOT_PASSWORD_STEPS;
 const ResetPassword = (props) => {
@@ -28,7 +30,7 @@ const ResetPassword = (props) => {
     formState: { errors },
   } = useForm();
   const { setLoading } = useCustomLoading();
-  const [isResetSuccess, setResetSuccess] = React.useState(false);
+  const [isResetSuccess, setResetSuccess] = React.useState(true);
 
   const validationConfirmPassword = (val) => {
     if (!val || val.length == 0) {
@@ -79,7 +81,19 @@ const ResetPassword = (props) => {
             })}
           </Stepper>
           {isResetSuccess ? (
-            <div>Success</div>
+            <>
+              <Typography
+                variant="h5"
+                className={`${style.text} ${style.instruction}`}
+              >
+                {COMMON_MESSAGE.APPLY_RESET_PASSWORD_SUCCESS}
+              </Typography>
+              <Link to={ROUTES.SIGN_IN} className={`${style.navigation}`}>
+                <CustomizedButton variant="contained" color="primary600">
+                  {BUTTON_LABEL.BACK_TO_LOG_IN}
+                </CustomizedButton>
+              </Link>
+            </>
           ) : (
             <>
               <Typography

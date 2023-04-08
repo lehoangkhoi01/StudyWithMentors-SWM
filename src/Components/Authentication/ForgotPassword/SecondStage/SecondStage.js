@@ -4,6 +4,7 @@ import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
+  ROUTES,
 } from "../../../../shared/constants/common";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
@@ -83,7 +84,7 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
       </IconButton>
       <div className={`${style.buttonContainer}`}>
         {isEmailNotFound ? (
-          <Link to="/sign-up" unselectable="on">
+          <Link to={ROUTES.SIGN_UP} className={`${style.navigation}`}>
             <CustomizedButton variant="contained" color="primary600">
               {BUTTON_LABEL.SIGN_UP_ACCOUNT}
             </CustomizedButton>

@@ -22,6 +22,9 @@
     color: $primary600;
   }
 }
+.navigation {
+  text-decoration: none;
+}
 
 @media (max-width: $bp-md) {
   .forgotpassword__stage2 {
