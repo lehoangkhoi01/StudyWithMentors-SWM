@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import {
+  DATE_FORMAT,
   INPUT_TYPES,
+  OTHERS,
   PROFILE_TITLES,
   REGISTER_FIELD,
   TEXTFIELD_LABEL,
@@ -9,7 +11,8 @@ import style from "./CV.module.scss";
 import CVSection from "./CVSection/CVSection";
 import ProgressImage from "./ProgressImage/ProgressImage";
 import CVDetail from "./CVDetail/CVDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { convetDateFormat } from "../../../Helpers/dateHelper";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -206,11 +209,83 @@ const TEXT_FIELDS = [
   },
 ];
 
+const DUMMY_CV = {
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+  workingExps: [
+    {
+      position: "string",
+      company: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+      workingHere: false,
+    },
+  ],
+  learningExps: [
+    {
+      school: "string",
+      major: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  socialActivities: [
+    {
+      organization: "string",
+      position: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+      attendingThis: false,
+    },
+  ],
+  achievements: [
+    {
+      name: "string",
+      organization: "string",
+      achievingDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  certificates: [
+    {
+      name: "string",
+      organization: "string",
+      achievingDate: "2020-02-13",
+      expiryDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  skills: [
+    {
+      name: "string",
+      description: "string",
+    },
+  ],
+};
+
+const INDEX_OF_CV_PROPERTY = {
+  DESCRIPTION: 0,
+  WORKING_EXP: 1,
+  LEARNING_EXPL: 2,
+  SOCIAL_ACT: 3,
+  ACHIEVEMENT: 4,
+  CERT: 5,
+  SKILL: 6,
+};
+
 const CV = () => {
   const { register, setValue, watch, reset, getValues } = useForm();
   const [detailData, setDetailData] = useState(null);
   const [detailTitle, setDetailTitle] = useState("");
   const [selectedTextFields, setSelectedTextFields] = useState();
+  const [cvData, setCVData] = useState({});
+
+  useEffect(() => {
+    setCVData(DUMMY_CV);
+  }, []);
 
   const upsertHandler = (type) => {
     console.log(getValues());
@@ -220,12 +295,45 @@ const CV = () => {
   const editDetailData = (data, title) => {
     setDetailData(data);
     setDetailTitle(title);
-    setSelectedTextFields(TEXT_FIELDS.find((field) => field.title === title).fields);
+    setSelectedTextFields(
+      TEXT_FIELDS.find((field) => field.title === title).fields
+    );
   };
 
   const onBackToList = () => {
     setDetailData(null);
     setDetailTitle("");
+  };
+
+  const mapCVSection = (data, indexOfProperty) => {
+    switch (indexOfProperty) {
+      case INDEX_OF_CV_PROPERTY.DESCRIPTION: {
+        return [{ detail: data }];
+      }
+
+      case INDEX_OF_CV_PROPERTY.WORKING_EXP: {
+        return data.map((section) => ({
+          title: `${section.position} ${OTHERS.AT} ${
+            section.company
+          } (${convetDateFormat(
+            section.startDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${
+            section.workingHere
+              ? OTHERS.CURRENT
+              : convetDateFormat(
+                  section.endDate,
+                  DATE_FORMAT.YYYY_MM_DD,
+                  DATE_FORMAT.MM_YYYY
+                )
+          })`,
+        }));
+      }
+
+      default:
+        return null;
+    }
   };
 
   return (
@@ -255,9 +363,10 @@ const CV = () => {
         <div className={style.cv__detail__profile}>
           {!detailData && (
             <>
-              <ProgressImage />
+              <ProgressImage cvData={cvData} />
               {TEXT_FIELDS.map((textField, index) => (
                 <CVSection
+                  cvData={cvData}
                   editDetailData={editDetailData}
                   key={`CV_SECTION_${index}`}
                   register={register}

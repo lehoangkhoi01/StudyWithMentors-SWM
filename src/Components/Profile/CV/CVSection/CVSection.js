@@ -39,6 +39,25 @@ const CVSection = (props) => {
     props.editDetailData(data, title);
   };
 
+  const mapCVSection = (data, indexOfProperty) => {
+    switch (indexOfProperty) {
+      case INDEX_OF_CV_PROPERTY.DESCRIPTION: {
+        return {
+          detail: data,
+        };
+      }
+
+      case INDEX_OF_CV_PROPERTY.WORKING_EXP: {
+        return {
+          detail: data,
+        };
+      }
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <div className={style.section__title}>
@@ -75,12 +94,14 @@ const CVSection = (props) => {
         )}
       </div>
       <div className={style.section__body}>
-        {DUMMY_DATA.map((data, index) => (
-          <div key={`CV_DETAIL_${index}`}>
-            {data.title && <h4>{data.title}</h4>}
-            <p>{data.detail}</p>
-          </div>
-        ))}
+        {Object.keys(props.cvData).map((key, index) => {
+          return (
+            <div key={`CV_DETAIL_${index}`}>
+              {props.cvData[key].title && <h4>{props.cvData[key].title}</h4>}
+              <p>{props.cvData[key].detail}</p>
+            </div>
+          );
+        })}
       </div>
       <CVModal
         existedData={existedData}

@@ -281,3 +281,13 @@ export const REGISTER_FIELD = {
     DESCRIPTION: "skills_description",
   },
 };
+
+export const OTHERS = {
+  AT: "Tại",
+  CURRENT: "Hiện tại",
+};
+
+export const DATE_FORMAT = {
+  YYYY_MM_DD: "yyyy-MM-dd",
+  MM_YYYY: "MM-yy",
+};
