@@ -10,8 +10,9 @@ import { FORGOT_PASSWORD_STEPS, TITLE } from "../../../shared/constants/common";
 const steps = FORGOT_PASSWORD_STEPS;
 
 const ForgotPassword = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [resetEmail, setResetEmail] = React.useState("");
+  const [isEmailNotFound, setEmailNotFound] = React.useState(false);
 
   const moveToSecondStage = (data) => {
     setResetEmail(data.email);
@@ -21,16 +22,18 @@ const ForgotPassword = () => {
   const moveBackStage = () => {
     setActiveStep((prev) => prev - 1);
   };
+  const handleEmailNotFound = (data) => {
+    setEmailNotFound(true);
+    setResetEmail(data.email);
+    setActiveStep((prev) => prev + 1);
+  };
 
   return (
     <div className={`${style.container}`}>
       <div className={`${style.paper__container}`}>
         <Paper elevation={3} className={`${style.paper__content}`}>
           <CustomTopTitle title={TITLE.LOGIN_TROUBLE} />
-          <Stepper
-            activeStep={activeStep}
-            sx={{ width: "70%", margin: "1em 0" }}
-          >
+          <Stepper activeStep={activeStep} className={`${style.stepper}`}>
             {steps.map((label) => {
               const stepProps = {};
               const labelProps = {};
@@ -41,9 +44,18 @@ const ForgotPassword = () => {
               );
             })}
           </Stepper>
-          {activeStep === 0 && <FirstStage moveNext={moveToSecondStage} />}
+          {activeStep === 0 && (
+            <FirstStage
+              moveNext={moveToSecondStage}
+              handleEmailNotFound={handleEmailNotFound}
+            />
+          )}
           {activeStep === 1 && (
-            <SecondStage email={resetEmail} moveBack={moveBackStage} />
+            <SecondStage
+              email={resetEmail}
+              moveBack={moveBackStage}
+              isEmailNotFound={isEmailNotFound}
+            />
           )}
         </Paper>
       </div>

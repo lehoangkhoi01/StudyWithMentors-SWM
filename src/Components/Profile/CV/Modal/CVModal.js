@@ -93,7 +93,9 @@ const CVModal = (props) => {
                 handleSubmit(props.title);
               }}
             >
-              {BUTTON_LABEL.ADD}
+              {type === MODAL_TYPE.EDIT
+                ? BUTTON_LABEL.SAVE_EDIT
+                : BUTTON_LABEL.ADD}
             </CustomizedButton>
           </div>
         </div>

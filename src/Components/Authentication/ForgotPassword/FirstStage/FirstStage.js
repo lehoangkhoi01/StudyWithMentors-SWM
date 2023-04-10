@@ -9,19 +9,22 @@ import {
   TEXTFIELD_LABEL,
   ERROR_MESSAGES,
   COLOR,
+  ROUTES,
 } from "../../../../shared/constants/common";
 import { emailValidationRules } from "../../../../shared/constants/validationRules";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";
 import { authenticationService } from "../../../../Services/authenticationService";
 import { useCustomLoading } from "../../../../Helpers/generalHelper";
+import { useHistory } from "react-router-dom";
 
-const FirstStage = ({ moveNext }) => {
+const FirstStage = ({ moveNext, handleEmailNotFound }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const history = useHistory();
   const [resetPasswordError, setResetPasswordError] = React.useState("");
   const { setLoading } = useCustomLoading();
 
@@ -34,7 +37,9 @@ const FirstStage = ({ moveNext }) => {
       console.log(error);
       if (error.status === 409) {
         setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
+        handleEmailNotFound(data);
       }
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }

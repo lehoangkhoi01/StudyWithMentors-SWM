@@ -1,4 +1,5 @@
 @import "../../../../shared/theme";
+@import "../../../../shared/break-point";
 
 .form {
     width: 50%;
@@ -10,4 +11,15 @@
 .instructions {
     width: 50%;
     text-align: center;
+}
+
+@media (max-width: $bp-md) {
+    .form {
+        width: 100%;
+    }
+
+    .instructions {
+        width: unset;
+        font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
 }
