@@ -50,8 +50,9 @@ const SignInForm = () => {
       console.log(error);
       if (error.status === 409) {
         setSignInError(ERROR_MESSAGES.WRONG_EMAIL_OR_PASSWORD);
+      } else {
+        history.push(ROUTES.SERVER_ERROR);
       }
-      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }

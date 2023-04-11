@@ -9,8 +9,9 @@ const userSlice = createSlice({
   name: "user",
   initialState: DEFAULT_STATE,
   reducers: {
-    clearUserData(state) {
-      state = DEFAULT_STATE;
+    logout(state) {
+      state.isAuthenticated = false;
+      state.userInfo = null;
       return state;
     },
     loginSuccess(state, action) {
