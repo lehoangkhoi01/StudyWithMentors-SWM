@@ -36,6 +36,7 @@ function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [currentRouter, setCurrentRoute] = useState("/");
+  //const [avatarUrl, setAvatarUrl] = useState();
 
   const location = useLocation();
   const { getUserInfo } = useFetchUserInfo();
@@ -66,7 +67,7 @@ function NavigationBar() {
     const action = menuItem.ACTION;
     if (action && action === "LOG_OUT") {
       localStorage.removeItem("TOKEN");
-      dispatch(userAction.clearUserData());
+      dispatch(userAction.logout());
       setAuthenticated(false);
     }
     setAnchorElUser(null);
@@ -76,9 +77,10 @@ function NavigationBar() {
   };
 
   useEffect(() => {
-    const userInfo = getUserInfo();
+    const userInfoResponse = getUserInfo();
     setAuthenticated(user.isAuthenticated);
-    setUserInfo(userInfo);
+    setUserInfo(userInfoResponse);
+    //setAvatarUrl(userInfo.avatarUrl);
   }, [user]);
 
   return (
@@ -228,8 +230,8 @@ function NavigationBar() {
                     sx={{ p: 0, display: { xs: "none", md: "block" } }}
                   >
                     <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      src={user.userInfo?.avatarUrl}
+                      alt={user.userInfo?.fullName}
                     />
                   </IconButton>
                 </Tooltip>

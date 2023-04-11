@@ -49,13 +49,9 @@ const ResetPassword = (props) => {
       password: data.password,
     };
     try {
-      const response = await authenticationService.applyPasswordChange(
-        requestBody
-      );
-      console.log(response);
+      await authenticationService.applyPasswordChange(requestBody);
       setResetSuccess(true);
     } catch (error) {
-      console.log(error);
       history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);

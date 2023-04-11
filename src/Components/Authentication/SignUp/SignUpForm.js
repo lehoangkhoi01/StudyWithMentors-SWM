@@ -80,7 +80,6 @@ const SignUp = () => {
       dispatch(userAction.loginSuccess(response));
       history.push("/home");
     } catch (error) {
-      console.log(error);
       setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
     } finally {
       setLoading(false);

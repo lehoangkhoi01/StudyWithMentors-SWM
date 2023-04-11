@@ -34,7 +34,6 @@ const FirstStage = ({ moveNext, handleEmailNotFound }) => {
       await authenticationService.sendResetPasswordEmail(data);
       moveNext(data);
     } catch (error) {
-      console.log(error);
       if (error.status === 409) {
         setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
         handleEmailNotFound(data);

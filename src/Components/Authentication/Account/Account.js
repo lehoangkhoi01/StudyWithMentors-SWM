@@ -14,7 +14,6 @@ const Account = () => {
     try {
       await authenticationService.verifyEmail(oobCode);
     } catch (error) {
-      console.log(error);
       history.push(ROUTES.SERVER_ERROR);
     }
   };
