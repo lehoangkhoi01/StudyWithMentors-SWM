@@ -8,13 +8,19 @@ const ProgressImage = (props) => {
   useEffect(() => {
     let numberOfNullCVData = 0;
 
-    Promise.all(
-      Object.keys(props.cvData).forEach((key) => {
-        if (props.cvData[key] !== null) numberOfNullCVData++;
-      })
-    ).then(() => {
-      setProgressImageNumber(numberOfNullCVData);
+    Object.keys(props.cvData).forEach((key) => {
+      if (props.cvData[key] !== null) numberOfNullCVData++;
     });
+
+    if (numberOfNullCVData < 4) {
+      setProgressImageNumber(1);
+    } else if (numberOfNullCVData < 6) {
+      setProgressImageNumber(2);
+    } else if (numberOfNullCVData === 6) {
+      setProgressImageNumber(3);
+    } else {
+      setProgressImageNumber(4);
+    }
   }, [props.cvData]);
 
   return (

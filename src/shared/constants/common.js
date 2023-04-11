@@ -283,11 +283,12 @@ export const REGISTER_FIELD = {
 };
 
 export const OTHERS = {
-  AT: "Tại",
-  CURRENT: "Hiện tại",
+  AT: "tại",
+  CURRENT: "hiện tại",
+  BELONG: "thuộc",
 };
 
 export const DATE_FORMAT = {
   YYYY_MM_DD: "yyyy-MM-dd",
-  MM_YYYY: "MM-yy",
+  MM_YYYY: "MM/yy",
 };

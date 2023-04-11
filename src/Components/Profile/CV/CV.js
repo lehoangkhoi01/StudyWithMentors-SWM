@@ -328,6 +328,78 @@ const CV = () => {
                   DATE_FORMAT.MM_YYYY
                 )
           })`,
+          description: section.description,
+        }));
+      }
+
+      case INDEX_OF_CV_PROPERTY.LEARNING_EXPL: {
+        return data.map((section) => ({
+          title: `${section.major} ${OTHERS.AT} ${
+            section.school
+          } (${convetDateFormat(
+            section.startDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${convetDateFormat(
+            section.endDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
+          description: section.description,
+        }));
+      }
+
+      case INDEX_OF_CV_PROPERTY.SOCIAL_ACT: {
+        return data.map((section) => ({
+          title: `${section.position} ${OTHERS.AT} ${
+            section.organization
+          } (${convetDateFormat(
+            section.startDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${
+            section.attendingThis
+              ? OTHERS.CURRENT
+              : convetDateFormat(
+                  section.endDate,
+                  DATE_FORMAT.YYYY_MM_DD,
+                  DATE_FORMAT.MM_YYYY
+                )
+          })`,
+          description: section.description,
+        }));
+      }
+
+      case INDEX_OF_CV_PROPERTY.ACHIEVEMENT: {
+        return data.map((section) => ({
+          title: `${section.name} ${OTHERS.BELONG} ${
+            section.organization
+          } (${convetDateFormat(
+            section.achievingDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
+          description: section.description,
+        }));
+      }
+
+      case INDEX_OF_CV_PROPERTY.CERT: {
+        return data.map((section) => ({
+          title: `${section.name} ${OTHERS.BELONG} ${
+            section.organization
+          } (${convetDateFormat(
+            section.achievingDate,
+            DATE_FORMAT.YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
+          description: section.description,
+        }));
+      }
+
+      case INDEX_OF_CV_PROPERTY.SKILL: {
+        return data.map((section) => ({
+          title: section.name,
+          description: section.description,
         }));
       }
 
@@ -364,21 +436,24 @@ const CV = () => {
           {!detailData && (
             <>
               <ProgressImage cvData={cvData} />
-              {TEXT_FIELDS.map((textField, index) => (
-                <CVSection
-                  cvData={cvData}
-                  editDetailData={editDetailData}
-                  key={`CV_SECTION_${index}`}
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  watch={watch}
-                  reset={reset}
-                  textFields={textField.fields}
-                  title={textField.title}
-                  handleSubmit={upsertHandler}
-                />
-              ))}
+              {Object.keys(cvData).map(function (key, index) {
+                return (
+                  <CVSection
+                    cvData={cvData[key]}
+                    viewData={mapCVSection(cvData[key], index)}
+                    editDetailData={editDetailData}
+                    key={`CV_SECTION_${index}`}
+                    register={register}
+                    setValue={setValue}
+                    getValues={getValues}
+                    watch={watch}
+                    reset={reset}
+                    textFields={TEXT_FIELDS[index].fields}
+                    title={TEXT_FIELDS[index].title}
+                    handleSubmit={upsertHandler}
+                  />
+                );
+              })}
             </>
           )}
           {detailData && (
