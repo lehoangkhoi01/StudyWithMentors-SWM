@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
 import {
-  DATE_FORMAT,
   INPUT_TYPES,
-  OTHERS,
   PROFILE_TITLES,
   REGISTER_FIELD,
   TEXTFIELD_LABEL,
@@ -12,7 +10,7 @@ import CVSection from "./CVSection/CVSection";
 import ProgressImage from "./ProgressImage/ProgressImage";
 import CVDetail from "./CVDetail/CVDetail";
 import { useEffect, useState } from "react";
-import { convetDateFormat } from "../../../Helpers/dateHelper";
+import { mapCVSection } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -266,20 +264,11 @@ const DUMMY_CV = {
   ],
 };
 
-const INDEX_OF_CV_PROPERTY = {
-  DESCRIPTION: 0,
-  WORKING_EXP: 1,
-  LEARNING_EXPL: 2,
-  SOCIAL_ACT: 3,
-  ACHIEVEMENT: 4,
-  CERT: 5,
-  SKILL: 6,
-};
-
 const CV = () => {
   const { register, setValue, watch, reset, getValues } = useForm();
   const [detailData, setDetailData] = useState(null);
   const [detailTitle, setDetailTitle] = useState("");
+  const [detailViewData, setDetailViewData] = useState(null);
   const [selectedTextFields, setSelectedTextFields] = useState();
   const [cvData, setCVData] = useState({});
 
@@ -292,9 +281,10 @@ const CV = () => {
     console.log(type);
   };
 
-  const editDetailData = (data, title) => {
+  const editDetailData = (data, title, viewData) => {
     setDetailData(data);
     setDetailTitle(title);
+    setDetailViewData(viewData);
     setSelectedTextFields(
       TEXT_FIELDS.find((field) => field.title === title).fields
     );
@@ -303,109 +293,6 @@ const CV = () => {
   const onBackToList = () => {
     setDetailData(null);
     setDetailTitle("");
-  };
-
-  const mapCVSection = (data, indexOfProperty) => {
-    switch (indexOfProperty) {
-      case INDEX_OF_CV_PROPERTY.DESCRIPTION: {
-        return [{ detail: data }];
-      }
-
-      case INDEX_OF_CV_PROPERTY.WORKING_EXP: {
-        return data.map((section) => ({
-          title: `${section.position} ${OTHERS.AT} ${
-            section.company
-          } (${convetDateFormat(
-            section.startDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )} - ${
-            section.workingHere
-              ? OTHERS.CURRENT
-              : convetDateFormat(
-                  section.endDate,
-                  DATE_FORMAT.YYYY_MM_DD,
-                  DATE_FORMAT.MM_YYYY
-                )
-          })`,
-          description: section.description,
-        }));
-      }
-
-      case INDEX_OF_CV_PROPERTY.LEARNING_EXPL: {
-        return data.map((section) => ({
-          title: `${section.major} ${OTHERS.AT} ${
-            section.school
-          } (${convetDateFormat(
-            section.startDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )} - ${convetDateFormat(
-            section.endDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )})`,
-          description: section.description,
-        }));
-      }
-
-      case INDEX_OF_CV_PROPERTY.SOCIAL_ACT: {
-        return data.map((section) => ({
-          title: `${section.position} ${OTHERS.AT} ${
-            section.organization
-          } (${convetDateFormat(
-            section.startDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )} - ${
-            section.attendingThis
-              ? OTHERS.CURRENT
-              : convetDateFormat(
-                  section.endDate,
-                  DATE_FORMAT.YYYY_MM_DD,
-                  DATE_FORMAT.MM_YYYY
-                )
-          })`,
-          description: section.description,
-        }));
-      }
-
-      case INDEX_OF_CV_PROPERTY.ACHIEVEMENT: {
-        return data.map((section) => ({
-          title: `${section.name} ${OTHERS.BELONG} ${
-            section.organization
-          } (${convetDateFormat(
-            section.achievingDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )})`,
-          description: section.description,
-        }));
-      }
-
-      case INDEX_OF_CV_PROPERTY.CERT: {
-        return data.map((section) => ({
-          title: `${section.name} ${OTHERS.BELONG} ${
-            section.organization
-          } (${convetDateFormat(
-            section.achievingDate,
-            DATE_FORMAT.YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )})`,
-          description: section.description,
-        }));
-      }
-
-      case INDEX_OF_CV_PROPERTY.SKILL: {
-        return data.map((section) => ({
-          title: section.name,
-          description: section.description,
-        }));
-      }
-
-      default:
-        return null;
-    }
   };
 
   return (
@@ -466,6 +353,7 @@ const CV = () => {
               reset={reset}
               onBackToList={onBackToList}
               data={detailData}
+              viewData={detailViewData}
               title={detailTitle}
               selectedTextFields={selectedTextFields}
             />

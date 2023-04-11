@@ -20,8 +20,7 @@ const CVModal = (props) => {
     if (!props.openModal) return;
 
     setType(props.existedData ? MODAL_TYPE.EDIT : MODAL_TYPE.ADD);
-    console.log(type);
-    console.log(props.textFields);
+    console.log(props.existedData)
     props.getValues();
   }, [props.openModal]);
 

@@ -23,8 +23,8 @@ const CVSection = (props) => {
     setOpenModal(false);
   };
 
-  const onEditData = (data, title) => {
-    props.editDetailData(data, title);
+  const onEditData = (data, title, viewData) => {
+    props.editDetailData(data, title, viewData);
   };
 
   return (
@@ -35,7 +35,7 @@ const CVSection = (props) => {
           <>
             <img
               onClick={() => {
-                onEditData(props.viewData, props.title);
+                onEditData(props.cvData, props.title, props.viewData);
               }}
               src={require("../../../../assets/icons/Edit.png")}
             />
@@ -49,7 +49,7 @@ const CVSection = (props) => {
           <>
             {props.viewData.length > 0 && (
               <img
-                onClick={(e) => onOpenModal(e, props.viewData[0])}
+                onClick={(e) => onOpenModal(e, props.cvData)}
                 src={require("../../../../assets/icons/Edit.png")}
               />
             )}
