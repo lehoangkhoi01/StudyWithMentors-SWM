@@ -37,8 +37,9 @@ const FirstStage = ({ moveNext, handleEmailNotFound }) => {
       if (error.status === 409) {
         setResetPasswordError(ERROR_MESSAGES.EMAIL_NOT_FOUND);
         handleEmailNotFound(data);
+      } else {
+        history.push(ROUTES.SERVER_ERROR);
       }
-      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }
