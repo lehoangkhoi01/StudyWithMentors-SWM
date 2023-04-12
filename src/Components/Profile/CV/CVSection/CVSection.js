@@ -8,10 +8,6 @@ const CVSection = (props) => {
   const [existedData, setExistedData] = useState(null);
 
   const onOpenModal = (_, data) => {
-    props.reset();
-
-    console.log(data);
-
     if (data) {
       setExistedData(data);
     }
@@ -83,6 +79,7 @@ const CVSection = (props) => {
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
+        reset={props.reset}
       />
     </>
   );

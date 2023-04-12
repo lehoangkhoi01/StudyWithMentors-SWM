@@ -2,7 +2,7 @@
 
 .modal {
   position: fixed;
-  top: 50%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
@@ -16,7 +16,7 @@
   align-items: center;
 
   width: 35vw;
-  padding: 3rem 2.5rem;
+  padding: 0rem 2.5rem 1rem;
 
   &__buttons {
     justify-content: flex-end;
@@ -25,7 +25,8 @@
     gap: 5%;
 
     button {
-      width: 23%;
+      width: max-content;
+      padding-inline: 2rem
     }
   }
 

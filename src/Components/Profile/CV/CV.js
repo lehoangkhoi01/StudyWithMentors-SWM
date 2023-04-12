@@ -217,7 +217,7 @@ const DUMMY_CV = {
       startDate: "2020-02-13",
       endDate: "2020-02-13",
       description: "string",
-      workingHere: false,
+      workingHere: true,
     },
   ],
   learningExps: [
@@ -277,7 +277,12 @@ const CV = () => {
   }, []);
 
   const upsertHandler = (type) => {
-    console.log(getValues());
+    const fullForm = { ...getValues() };
+
+    // eslint-disable-next-line no-unused-vars
+    const specificForm = Object.fromEntries(Object.entries(fullForm).filter(([_, v]) => v != null))
+
+    console.log(specificForm);
     console.log(type);
   };
 
@@ -356,6 +361,7 @@ const CV = () => {
               viewData={detailViewData}
               title={detailTitle}
               selectedTextFields={selectedTextFields}
+              handleSubmit={upsertHandler}
             />
           )}
         </div>

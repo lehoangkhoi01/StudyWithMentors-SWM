@@ -23,6 +23,7 @@ export const BUTTON_LABEL = {
   BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
   SAVE_EDIT: "Lưu lại",
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
+  CANCEL_EDIT: "Hủy chỉnh sửa",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -156,6 +157,7 @@ export const PLACE_HOLDER = {
   DEFAULT_PHONE: "0982 123 456",
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
+  DEFAULT_DATE: "09/2020",
 };
 
 export const FILL_INFORMATION = {
@@ -243,37 +245,37 @@ export const REGISTER_FIELD = {
   EXPERIENCE: {
     POSITION: "experience_position",
     COMPANY: "experience_company",
-    IS_WORKING: "experience_is_working",
-    START_TIME: "experience_start_time",
-    END_TIME: "experience_end_time",
+    IS_WORKING: "experience_workingHere",
+    START_TIME: "experience_startDate",
+    END_TIME: "experience_endDate",
     DESCRIPTION: "experience_description",
   },
   STUDY_PROGRESS: {
-    SCHOOL: "study_progress_school",
-    MAJORS: "study_progress_majors",
-    START_TIME: "study_progress_start_time",
-    COMPLETED_TIME: "study_progress_completed_time",
-    DESCRIPTION: "study_progress_description",
+    SCHOOL: "studyProgress_school",
+    MAJORS: "studyProgress_major",
+    START_TIME: "studyProgress_startDate",
+    COMPLETED_TIME: "studyProgress_endDate",
+    DESCRIPTION: "studyProgress_description",
   },
   ACTIVITIES: {
-    ORGANIZATION_NAME: "activites_organization_name",
+    ORGANIZATION_NAME: "activites_organization",
     POSITION: "activites_position",
-    IS_DOING: "activites_is_doing",
-    START_TIME: "activites_start_time",
-    END_TIME: "activites_end_time",
+    IS_DOING: "activites_attendingThis",
+    START_TIME: "activites_startDate",
+    END_TIME: "activites_endDate",
     DESCRIPTION: "activites_description",
   },
   ACHIEVEMENT: {
     NAME: "achievement_name",
-    ORGANIZATION_NAME: "achievement_organization_name",
-    RECEIVED_TIME: "achievement_received_time",
+    ORGANIZATION_NAME: "achievement_organization",
+    RECEIVED_TIME: "achievement_achievingDate",
     DESCRIPTION: "achievement_description",
   },
   CERTIFICATES: {
     NAME: "certificates_name",
-    ORGANIZATION_NAME: "certificates_organization_name",
-    ISSUED_DATE: "certificates_issued_date",
-    DUE_DATE: "certificates_due_date",
+    ORGANIZATION_NAME: "certificates_organization",
+    ISSUED_DATE: "certificates_achievingDate",
+    DUE_DATE: "certificates_expiryDate",
     DESCRIPTION: "certificates_description",
   },
   SKILLS: {
@@ -290,5 +292,15 @@ export const OTHERS = {
 
 export const DATE_FORMAT = {
   YYYY_MM_DD: "yyyy-MM-dd",
-  MM_YYYY: "MM/yy",
+  MM_YYYY: "MM/yyyy",
+};
+
+export const CV_REGISTER_NAME_PREFIX = {
+  INTRODUCION: "introduction",
+  EXPERIENCE: "experience",
+  STUDY_PROGRESS: "studyProgress",
+  ACTIVITIES: "activites",
+  ACHIEVEMENT: "achievement",
+  CERTIFICATES: "certificates",
+  SKILLS: "skills",
 };

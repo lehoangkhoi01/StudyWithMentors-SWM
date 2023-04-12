@@ -72,6 +72,7 @@ const CVDetail = (props) => {
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
+        reset={props.reset}
       />
     </>
   );

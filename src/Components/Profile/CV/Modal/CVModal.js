@@ -4,6 +4,8 @@ import style from "./CVModal.module.scss";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import {
   BUTTON_LABEL,
+  CV_REGISTER_NAME_PREFIX,
+  DATE_FORMAT,
   INPUT_TYPES,
   MODAL_TYPE,
 } from "../../../../shared/constants/common";
@@ -11,22 +13,41 @@ import CustomizedTextField from "../../../../shared/components/TextField/Customi
 import CustomizedDatePicker from "../../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
 import { useEffect, useState } from "react";
+import { getRegisterNamePrefixFromTitle } from "../../../../Helpers/SpecificComponentHelper/CVHelper";
+import { CovertToISODate } from "../../../../Helpers/dateHelper";
 
 const CVModal = (props) => {
-  const { register, setValue, watch } = props;
+  const { register, setValue, watch, getValues } = props;
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
   useEffect(() => {
+    props.reset();
+
     if (!props.openModal) return;
 
-    setType(props.existedData ? MODAL_TYPE.EDIT : MODAL_TYPE.ADD);
-    console.log(props.existedData)
-    props.getValues();
+    if (props.existedData) {
+      const registerNamePrefix = getRegisterNamePrefixFromTitle(props.title);
+
+      if (registerNamePrefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
+        setValue(`${registerNamePrefix}_description`, props.existedData);
+      } else {
+        Object.keys(props.existedData).map((key) => {
+          setValue(`${registerNamePrefix}_${key}`, props.existedData[key]);
+        });
+      }
+
+      setType(MODAL_TYPE.EDIT);
+      console.log(getValues());
+    } else {
+      setType(MODAL_TYPE.ADD);
+      console.log(getValues());
+    }
   }, [props.openModal]);
 
   const handleSubmit = (type) => {
     props.handleSubmit(type);
   };
+  
   return (
     <>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
@@ -48,6 +69,10 @@ const CVModal = (props) => {
                   options={{ ...register(textField.registerName) }}
                   formName={textField.registerName}
                   setValue={setValue}
+                  value={CovertToISODate(
+                    DATE_FORMAT.YYYY_MM_DD,
+                    getValues(textField.registerName)
+                  )}
                 />
               );
             } else if (textField.type === INPUT_TYPES.CHECK_BOX) {
@@ -57,6 +82,7 @@ const CVModal = (props) => {
                   className={style.modal__input}
                   name={textField.name}
                   options={{ ...register(textField.registerName) }}
+                  value={getValues(textField.registerName)}
                 />
               );
             } else {
@@ -82,7 +108,9 @@ const CVModal = (props) => {
               color="primary600"
               onClick={props.onCloseModal}
             >
-              {BUTTON_LABEL.CANCEL}
+              {type === MODAL_TYPE.EDIT
+                ? BUTTON_LABEL.CANCEL_EDIT
+                : BUTTON_LABEL.CANCEL}
             </CustomizedButton>
             <CustomizedButton
               type="submit"

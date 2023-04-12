@@ -1,5 +1,10 @@
-import { DATE_FORMAT, OTHERS } from "../../shared/constants/common";
-import { convetDateFormat } from "../dateHelper";
+import {
+  CV_REGISTER_NAME_PREFIX,
+  DATE_FORMAT,
+  OTHERS,
+  PROFILE_TITLES,
+} from "../../shared/constants/common";
+import { convertDateFormat } from "../dateHelper";
 
 const INDEX_OF_CV_PROPERTY = {
   DESCRIPTION: 0,
@@ -21,14 +26,14 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.position} ${OTHERS.AT} ${
           section.company
-        } (${convetDateFormat(
+        } (${convertDateFormat(
           section.startDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )} - ${
           section.workingHere
             ? OTHERS.CURRENT
-            : convetDateFormat(
+            : convertDateFormat(
                 section.endDate,
                 DATE_FORMAT.YYYY_MM_DD,
                 DATE_FORMAT.MM_YYYY
@@ -42,11 +47,11 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.major} ${OTHERS.AT} ${
           section.school
-        } (${convetDateFormat(
+        } (${convertDateFormat(
           section.startDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
-        )} - ${convetDateFormat(
+        )} - ${convertDateFormat(
           section.endDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
@@ -59,14 +64,14 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.position} ${OTHERS.AT} ${
           section.organization
-        } (${convetDateFormat(
+        } (${convertDateFormat(
           section.startDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )} - ${
           section.attendingThis
             ? OTHERS.CURRENT
-            : convetDateFormat(
+            : convertDateFormat(
                 section.endDate,
                 DATE_FORMAT.YYYY_MM_DD,
                 DATE_FORMAT.MM_YYYY
@@ -80,7 +85,7 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.name} ${OTHERS.BELONG} ${
           section.organization
-        } (${convetDateFormat(
+        } (${convertDateFormat(
           section.achievingDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
@@ -93,7 +98,7 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.name} ${OTHERS.BELONG} ${
           section.organization
-        } (${convetDateFormat(
+        } (${convertDateFormat(
           section.achievingDate,
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
@@ -111,5 +116,26 @@ export const mapCVSection = (data, indexOfProperty) => {
 
     default:
       return null;
+  }
+};
+
+export const getRegisterNamePrefixFromTitle = (title) => {
+  switch (title) {
+    case PROFILE_TITLES.INTRODUCION:
+      return CV_REGISTER_NAME_PREFIX.INTRODUCION;
+    case PROFILE_TITLES.EXPERIENCE:
+      return CV_REGISTER_NAME_PREFIX.EXPERIENCE;
+    case PROFILE_TITLES.STUDY_PROGRESS:
+      return CV_REGISTER_NAME_PREFIX.STUDY_PROGRESS;
+    case PROFILE_TITLES.ACTIVITIES:
+      return CV_REGISTER_NAME_PREFIX.ACTIVITIES;
+    case PROFILE_TITLES.ACHIEVEMENT:
+      return CV_REGISTER_NAME_PREFIX.ACHIEVEMENT;
+    case PROFILE_TITLES.CERTIFICATES:
+      return CV_REGISTER_NAME_PREFIX.CERTIFICATES;
+    case PROFILE_TITLES.SKILLS:
+      return CV_REGISTER_NAME_PREFIX.SKILLS;
+    default:
+      return CV_REGISTER_NAME_PREFIX.INTRODUCION;
   }
 };
