@@ -14,6 +14,7 @@ import AccountPage from "./Pages/Authentication/AccountPage";
 import { ROUTES } from "./shared/constants/common";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
+import Footer from "./shared/components/Footer/Footer";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
         </div>
+        <Footer />
         <LoadingProvider />
       </div>
     </BrowserRouter>
