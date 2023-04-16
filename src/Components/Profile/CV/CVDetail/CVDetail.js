@@ -2,28 +2,20 @@ import { useState } from "react";
 import style from "./CVDetail.module.scss";
 import CVModal from "../Modal/CVModal";
 
-const DUMMY_DATA = [
-  {
-    title: "Business Analyst tại CodeStringers (09/2010 - Hiện tại)",
-    detail:
-      "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-  },
-  {
-    detail:
-      "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-  },
-];
-
 const CVDetail = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [existedData, setExistedData] = useState(null);
 
-  const openEditModalHandler = (data) => {
-    setExistedData(data);
+  const openModalHandler = (_, data) => {
+    if (data) {
+      setExistedData(data);
+    }
+
     setOpenModal(true);
   };
 
   const onCloseModal = () => {
+    setExistedData(null);
     setOpenModal(false);
   };
 
@@ -38,23 +30,24 @@ const CVDetail = (props) => {
             className={`${style.detail__img}`}
           />
         </div>
-        <div>
+        <div className={style.detail__data}>
           <div className={style.detail__title}>
             <h3>{props.title}</h3>
             <img
+              onClick={openModalHandler}
               src={require("../../../../assets/icons/Add.png")}
               alt="back-icon"
               className={`${style.detail__img}`}
             />
           </div>
           <div className={style.detail__body}>
-            {DUMMY_DATA.map((data, index) => (
+            {props.viewData.map((data, index) => (
               <div key={`CV_DETAIL_${index}`}>
                 <div className={style.detail__body_header}>
                   <h4>{data.title}</h4>
                   <img
                     onClick={(e) => {
-                      openEditModalHandler(e, data);
+                      openModalHandler(e, props.data[index]);
                     }}
                     src={require("../../../../assets/icons/Edit.png")}
                     alt="back-icon"
@@ -84,6 +77,7 @@ const CVDetail = (props) => {
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
+        reset={props.reset}
       />
     </>
   );

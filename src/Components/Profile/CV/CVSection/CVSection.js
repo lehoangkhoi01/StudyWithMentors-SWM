@@ -2,28 +2,13 @@ import { useState } from "react";
 import style from "./CVSection.module.scss";
 import CVModal from "../Modal/CVModal";
 import { PROFILE_TITLES } from "../../../../shared/constants/common";
-
-const DUMMY_DATA = [
-  {
-    title: "Business Analyst tại CodeStringers (09/2010 - Hiện tại)",
-    detail:
-      "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-  },
-  {
-    detail:
-      "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-  },
-];
+import { Grid } from "@mui/material";
 
 const CVSection = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [existedData, setExistedData] = useState(null);
 
   const onOpenModal = (_, data) => {
-    props.reset();
-
-    console.log(data);
-
     if (data) {
       setExistedData(data);
     }
@@ -32,11 +17,12 @@ const CVSection = (props) => {
   };
 
   const onCloseModal = () => {
+    setExistedData(null);
     setOpenModal(false);
   };
 
-  const onEditData = (data, title) => {
-    props.editDetailData(data, title);
+  const onEditData = () => {
+    props.editDetailData(props.keyProperty, props.title, props.indexOfProperty);
   };
 
   return (
@@ -46,9 +32,7 @@ const CVSection = (props) => {
         {props.title !== PROFILE_TITLES.INTRODUCION && (
           <>
             <img
-              onClick={() => {
-                onEditData(DUMMY_DATA, props.title);
-              }}
+              onClick={onEditData}
               src={require("../../../../assets/icons/Edit.png")}
             />
             <img
@@ -59,13 +43,13 @@ const CVSection = (props) => {
         )}
         {props.title === PROFILE_TITLES.INTRODUCION && (
           <>
-            {DUMMY_DATA.length > 0 && (
+            {props.viewData.length > 0 && (
               <img
-                onClick={(e) => onOpenModal(e, DUMMY_DATA[0])}
+                onClick={(e) => onOpenModal(e, props.cvData)}
                 src={require("../../../../assets/icons/Edit.png")}
               />
             )}
-            {!DUMMY_DATA.length && (
+            {!props.viewData.length && (
               <img
                 onClick={onOpenModal}
                 src={require("../../../../assets/icons/Add.png")}
@@ -75,12 +59,32 @@ const CVSection = (props) => {
         )}
       </div>
       <div className={style.section__body}>
-        {DUMMY_DATA.map((data, index) => (
-          <div key={`CV_DETAIL_${index}`}>
-            {data.title && <h4>{data.title}</h4>}
-            <p>{data.detail}</p>
-          </div>
-        ))}
+        {props.title !== PROFILE_TITLES.SKILLS &&
+          props.viewData.map((data, index) => {
+            console.log(data)
+            return (
+              <div key={`CV_DETAIL_${index}`}>
+                {data.title && <h4>{data.title}</h4>}
+                <p>{data.detail}</p>
+              </div>
+            );
+          })}
+
+        {props.title === PROFILE_TITLES.SKILLS && (
+          <Grid container spacing={2}>
+            {props.viewData.map((data, index) => {
+              console.log(data)
+              return (
+                <Grid key={`CV_DETAIL_${index}`} item xs={6}>
+                  <div>
+                    {data.title && <h4>{data.title}</h4>}
+                    <p>{data.detail}</p>
+                  </div>
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
       </div>
       <CVModal
         existedData={existedData}
@@ -93,6 +97,7 @@ const CVSection = (props) => {
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
+        reset={props.reset}
       />
     </>
   );

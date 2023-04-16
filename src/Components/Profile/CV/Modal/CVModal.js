@@ -4,6 +4,8 @@ import style from "./CVModal.module.scss";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import {
   BUTTON_LABEL,
+  CV_REGISTER_NAME_PREFIX,
+  DATE_FORMAT,
   INPUT_TYPES,
   MODAL_TYPE,
 } from "../../../../shared/constants/common";
@@ -11,25 +13,44 @@ import CustomizedTextField from "../../../../shared/components/TextField/Customi
 import CustomizedDatePicker from "../../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
 import { useEffect, useState } from "react";
+import { getRegisterNamePrefixFromTitle } from "../../../../Helpers/SpecificComponentHelper/CVHelper";
+import { covertToISODate } from "../../../../Helpers/dateHelper";
 
 const CVModal = (props) => {
-  const { register, setValue, watch } = props;
+  const { register, setValue, watch, getValues } = props;
+  const [registerNamePrefix, setRegisterNamePrefix] = useState();
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
   useEffect(() => {
-    if (!props.openModal) return;
+    props.reset();
 
-    setType(props.existedData ? MODAL_TYPE.EDIT : MODAL_TYPE.ADD);
-    console.log(type);
-    console.log(props.textFields);
-    props.getValues();
+    if (!props.openModal) return;
+    const registerNamePrefixRaw = getRegisterNamePrefixFromTitle(props.title);
+    setRegisterNamePrefix(registerNamePrefixRaw);
+
+    if (props.existedData) {
+      if (registerNamePrefixRaw === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
+        setValue(`${registerNamePrefixRaw}_description`, props.existedData);
+      } else {
+        Object.keys(props.existedData).map((key) => {
+          setValue(`${registerNamePrefixRaw}_${key}`, props.existedData[key]);
+        });
+      }
+
+      setType(MODAL_TYPE.EDIT);
+      console.log(getValues());
+    } else {
+      setType(MODAL_TYPE.ADD);
+      console.log(getValues());
+    }
   }, [props.openModal]);
 
-  const handleSubmit = (type) => {
-    props.handleSubmit(type);
+  const handleSubmit = () => {
+    props.handleSubmit(registerNamePrefix);
   };
+
   return (
-    <>
+    <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
         <div className={style.modal}>
           <img
@@ -49,6 +70,10 @@ const CVModal = (props) => {
                   options={{ ...register(textField.registerName) }}
                   formName={textField.registerName}
                   setValue={setValue}
+                  value={covertToISODate(
+                    DATE_FORMAT.YYYY_MM_DD,
+                    getValues(textField.registerName)
+                  )}
                 />
               );
             } else if (textField.type === INPUT_TYPES.CHECK_BOX) {
@@ -58,6 +83,7 @@ const CVModal = (props) => {
                   className={style.modal__input}
                   name={textField.name}
                   options={{ ...register(textField.registerName) }}
+                  value={getValues(textField.registerName)}
                 />
               );
             } else {
@@ -83,15 +109,15 @@ const CVModal = (props) => {
               color="primary600"
               onClick={props.onCloseModal}
             >
-              {BUTTON_LABEL.CANCEL}
+              {type === MODAL_TYPE.EDIT
+                ? BUTTON_LABEL.CANCEL_EDIT
+                : BUTTON_LABEL.CANCEL}
             </CustomizedButton>
             <CustomizedButton
               type="submit"
               variant="contained"
               color="primary600"
-              onClick={() => {
-                handleSubmit(props.title);
-              }}
+              onClick={handleSubmit}
             >
               {type === MODAL_TYPE.EDIT
                 ? BUTTON_LABEL.SAVE_EDIT
@@ -100,7 +126,7 @@ const CVModal = (props) => {
           </div>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 

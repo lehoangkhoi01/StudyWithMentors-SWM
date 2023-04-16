@@ -14,6 +14,10 @@
     margin-top: 0.2rem;
   }
 
+  &__data {
+    flex-grow: 1;
+  }
+
   &__title {
     color: $primary900;
     font-weight: 700;

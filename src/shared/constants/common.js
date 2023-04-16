@@ -23,6 +23,7 @@ export const BUTTON_LABEL = {
   BACK_TO_LOG_IN: "Quay lại trang đăng nhập",
   SAVE_EDIT: "Lưu lại",
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
+  CANCEL_EDIT: "Hủy chỉnh sửa",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -156,6 +157,7 @@ export const PLACE_HOLDER = {
   DEFAULT_PHONE: "0982 123 456",
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
+  DEFAULT_DATE: "09/2020",
 };
 
 export const FILL_INFORMATION = {
@@ -238,46 +240,67 @@ export const MODAL_TYPE = {
 
 export const REGISTER_FIELD = {
   INTRODUCION: {
-    DESCRIPTION: "introduction_description",
+    DESCRIPTION: "description_description",
   },
   EXPERIENCE: {
-    POSITION: "experience_position",
-    COMPANY: "experience_company",
-    IS_WORKING: "experience_is_working",
-    START_TIME: "experience_start_time",
-    END_TIME: "experience_end_time",
-    DESCRIPTION: "experience_description",
+    POSITION: "workingExps_position",
+    COMPANY: "workingExps_company",
+    IS_WORKING: "workingExps_workingHere",
+    START_TIME: "workingExps_startDate",
+    END_TIME: "workingExps_endDate",
+    DESCRIPTION: "workingExps_description",
   },
   STUDY_PROGRESS: {
-    SCHOOL: "study_progress_school",
-    MAJORS: "study_progress_majors",
-    START_TIME: "study_progress_start_time",
-    COMPLETED_TIME: "study_progress_completed_time",
-    DESCRIPTION: "study_progress_description",
+    SCHOOL: "learningExps_school",
+    MAJORS: "learningExps_major",
+    START_TIME: "learningExps_startDate",
+    COMPLETED_TIME: "learningExps_endDate",
+    DESCRIPTION: "learningExps_description",
   },
   ACTIVITIES: {
-    ORGANIZATION_NAME: "activites_organization_name",
-    POSITION: "activites_position",
-    IS_DOING: "activites_is_doing",
-    START_TIME: "activites_start_time",
-    END_TIME: "activites_end_time",
-    DESCRIPTION: "activites_description",
+    ORGANIZATION_NAME: "socialActivities_organization",
+    POSITION: "socialActivities_position",
+    IS_DOING: "socialActivities_attendingThis",
+    START_TIME: "socialActivities_startDate",
+    END_TIME: "socialActivities_endDate",
+    DESCRIPTION: "socialActivities_description",
   },
   ACHIEVEMENT: {
-    NAME: "achievement_name",
-    ORGANIZATION_NAME: "achievement_organization_name",
-    RECEIVED_TIME: "achievement_received_time",
-    DESCRIPTION: "achievement_description",
+    NAME: "achievements_name",
+    ORGANIZATION_NAME: "achievements_organization",
+    RECEIVED_TIME: "achievements_achievingDate",
+    DESCRIPTION: "achievements_description",
   },
   CERTIFICATES: {
     NAME: "certificates_name",
-    ORGANIZATION_NAME: "certificates_organization_name",
-    ISSUED_DATE: "certificates_issued_date",
-    DUE_DATE: "certificates_due_date",
+    ORGANIZATION_NAME: "certificates_organization",
+    ISSUED_DATE: "certificates_achievingDate",
+    DUE_DATE: "certificates_expiryDate",
     DESCRIPTION: "certificates_description",
   },
   SKILLS: {
     NAME: "skills_name",
     DESCRIPTION: "skills_description",
   },
+};
+
+export const OTHERS = {
+  AT: "tại",
+  CURRENT: "hiện tại",
+  BELONG: "thuộc",
+};
+
+export const DATE_FORMAT = {
+  YYYY_MM_DD: "yyyy-MM-dd",
+  MM_YYYY: "MM/yyyy",
+};
+
+export const CV_REGISTER_NAME_PREFIX = {
+  INTRODUCION: "description",
+  EXPERIENCE: "workingExps",
+  STUDY_PROGRESS: "learningExps",
+  ACTIVITIES: "socialActivities",
+  ACHIEVEMENT: "achievements",
+  CERTIFICATES: "certificates",
+  SKILLS: "skills",
 };

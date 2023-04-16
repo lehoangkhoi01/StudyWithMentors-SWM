@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import {
+  CV_REGISTER_NAME_PREFIX,
   INPUT_TYPES,
   PROFILE_TITLES,
   REGISTER_FIELD,
@@ -9,7 +10,11 @@ import style from "./CV.module.scss";
 import CVSection from "./CVSection/CVSection";
 import ProgressImage from "./ProgressImage/ProgressImage";
 import CVDetail from "./CVDetail/CVDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  mapCVSection,
+  removeRegisterNamePrefix,
+} from "../../../Helpers/SpecificComponentHelper/CVHelper";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -206,88 +211,219 @@ const TEXT_FIELDS = [
   },
 ];
 
+const DUMMY_CV = {
+  userProfileId: "123",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+  workingExps: [
+    {
+      index: "0",
+      position: "string",
+      company: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+      workingHere: false,
+    },
+    {
+      index: "1",
+      position: "string",
+      company: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+      workingHere: false,
+    },
+  ],
+  learningExps: [
+    {
+      index: "0",
+      school: "string",
+      major: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  socialActivities: [
+    {
+      index: "0",
+      organization: "string",
+      position: "string",
+      startDate: "2020-02-13",
+      endDate: "2020-02-13",
+      description: "string",
+      attendingThis: false,
+    },
+  ],
+  achievements: [
+    {
+      index: "0",
+      name: "string",
+      organization: "string",
+      achievingDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  certificates: [
+    {
+      index: "0",
+      name: "string",
+      organization: "string",
+      achievingDate: "2020-02-13",
+      expiryDate: "2020-02-13",
+      description: "string",
+    },
+  ],
+  skills: [
+    {
+      index: "0",
+      name: "ABC thuộc Google",
+      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+    },
+    {
+      index: "1",
+      name: "ABC thuộc Google",
+      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+    },
+    {
+      index: "2",
+      name: "ABC thuộc Google",
+      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+    },
+  ],
+};
+
 const CV = () => {
   const { register, setValue, watch, reset, getValues } = useForm();
-  const [detailData, setDetailData] = useState(null);
-  const [detailTitle, setDetailTitle] = useState("");
+  const [detail, setDetail] = useState(null);
   const [selectedTextFields, setSelectedTextFields] = useState();
+  const [cvData, setCVData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const upsertHandler = (type) => {
-    console.log(getValues());
-    console.log(type);
+  useEffect(() => {
+    delete DUMMY_CV.userProfileId;
+
+    setCVData(DUMMY_CV);
+  }, []);
+
+  const upsertHandler = (prefix) => {
+    const fullForm = { ...getValues() };
+
+    let specificForm = Object.fromEntries(
+      // eslint-disable-next-line no-unused-vars
+      Object.entries(fullForm).filter(([_, v]) => v != null)
+    );
+
+    specificForm = removeRegisterNamePrefix(specificForm, prefix);
+
+    let prevCV = cvData;
+
+    if (prefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
+      prevCV.description = specificForm.description;
+    } else if (specificForm.index) {
+      prevCV[prefix][specificForm.index] = specificForm;
+    } else {
+      prevCV[prefix].push(specificForm);
+    }
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setCVData(prevCV);
+      setIsLoading(false);
+    }, 1500);
   };
 
-  const editDetailData = (data, title) => {
-    setDetailData(data);
-    setDetailTitle(title);
-    setSelectedTextFields(TEXT_FIELDS.find((field) => field.title === title).fields);
+  const editDetailData = (key, title, indexOfProperty) => {
+    setDetail({
+      indexOfProperty,
+      key,
+      title,
+    });
+    setSelectedTextFields(
+      TEXT_FIELDS.find((field) => field.title === title).fields
+    );
   };
 
   const onBackToList = () => {
-    setDetailData(null);
-    setDetailTitle("");
+    setDetail(null);
   };
 
   return (
     <div className={style.cv__container}>
-      <div className={style.cv__detail}>
-        <div
-          className={style.cv__detail__information}
-          style={{
-            backgroundImage: IS_EXIST_BACKGROUND
-              ? `url("https://i.stack.imgur.com/XNazg.png")`
-              : null,
-          }}
-        >
-          <div className={style.cv__detail__information_brief}>
-            <div className={style.cv__detail__information_img}>
-              <img src={require("../../../assets/sbcf-default-avatar.png")} />
-              <div className={style.cv__detail__information_edit}>
-                <img src={require("../../../assets/icons/pen-icon.png")} />
+      {!isLoading && (
+        <div className={style.cv__detail}>
+          <div
+            className={style.cv__detail__information}
+            style={{
+              backgroundImage: IS_EXIST_BACKGROUND
+                ? `url("https://i.stack.imgur.com/XNazg.png")`
+                : null,
+            }}
+          >
+            <div className={style.cv__detail__information_brief}>
+              <div className={style.cv__detail__information_img}>
+                <img src={require("../../../assets/sbcf-default-avatar.png")} />
+                <div className={style.cv__detail__information_edit}>
+                  <img src={require("../../../assets/icons/pen-icon.png")} />
+                </div>
+              </div>
+              <div>
+                <h2>Nguyễn Văn A</h2>
+                <p>Business Analyst tại CodeStringers</p>
               </div>
             </div>
-            <div>
-              <h2>Nguyễn Văn A</h2>
-              <p>Business Analyst tại CodeStringers</p>
-            </div>
+          </div>
+          <div className={style.cv__detail__profile}>
+            {!detail && (
+              <>
+                <ProgressImage cvData={cvData} />
+                {Object.keys(cvData).map((key, index) => {
+                  return (
+                    <CVSection
+                      cvData={cvData[key]}
+                      keyProperty={key}
+                      indexOfProperty={index}
+                      viewData={mapCVSection(cvData[key], index)}
+                      editDetailData={editDetailData}
+                      key={`CV_SECTION_${index}`}
+                      register={register}
+                      setValue={setValue}
+                      getValues={getValues}
+                      watch={watch}
+                      reset={reset}
+                      textFields={TEXT_FIELDS[index].fields}
+                      title={TEXT_FIELDS[index].title}
+                      handleSubmit={upsertHandler}
+                    />
+                  );
+                })}
+              </>
+            )}
+            {detail && (
+              <CVDetail
+                editDetailData={editDetailData}
+                register={register}
+                setValue={setValue}
+                getValues={getValues}
+                watch={watch}
+                reset={reset}
+                onBackToList={onBackToList}
+                data={cvData[detail.key]}
+                viewData={mapCVSection(
+                  cvData[detail.key],
+                  detail.indexOfProperty
+                )}
+                title={detail.title}
+                selectedTextFields={selectedTextFields}
+                handleSubmit={upsertHandler}
+              />
+            )}
           </div>
         </div>
-        <div className={style.cv__detail__profile}>
-          {!detailData && (
-            <>
-              <ProgressImage />
-              {TEXT_FIELDS.map((textField, index) => (
-                <CVSection
-                  editDetailData={editDetailData}
-                  key={`CV_SECTION_${index}`}
-                  register={register}
-                  setValue={setValue}
-                  getValues={getValues}
-                  watch={watch}
-                  reset={reset}
-                  textFields={textField.fields}
-                  title={textField.title}
-                  handleSubmit={upsertHandler}
-                />
-              ))}
-            </>
-          )}
-          {detailData && (
-            <CVDetail
-              editDetailData={editDetailData}
-              register={register}
-              setValue={setValue}
-              getValues={getValues}
-              watch={watch}
-              reset={reset}
-              onBackToList={onBackToList}
-              data={detailData}
-              title={detailTitle}
-              selectedTextFields={selectedTextFields}
-            />
-          )}
-        </div>
-      </div>
+      )}
+
       <div className={style.cv__booking}></div>
     </div>
   );
