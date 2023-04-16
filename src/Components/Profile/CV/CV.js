@@ -12,6 +12,7 @@ import ProgressImage from "./ProgressImage/ProgressImage";
 import CVDetail from "./CVDetail/CVDetail";
 import { useEffect, useState } from "react";
 import {
+  getRegisterNamePrefixFromTitle,
   mapCVSection,
   removeRegisterNamePrefix,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
@@ -279,17 +280,20 @@ const DUMMY_CV = {
     {
       index: "0",
       name: "ABC thuộc Google",
-      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+      description:
+        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
     },
     {
       index: "1",
       name: "ABC thuộc Google",
-      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+      description:
+        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
     },
     {
       index: "2",
       name: "ABC thuộc Google",
-      description: "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+      description:
+        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
     },
   ],
 };
@@ -332,7 +336,7 @@ const CV = () => {
     setTimeout(() => {
       setCVData(prevCV);
       setIsLoading(false);
-    }, 1500);
+    }, 500);
   };
 
   const editDetailData = (key, title, indexOfProperty) => {
@@ -348,6 +352,21 @@ const CV = () => {
 
   const onBackToList = () => {
     setDetail(null);
+  };
+
+  const onDeleteProperty = (title, index) => {
+    const prefix = getRegisterNamePrefixFromTitle(title);
+
+    let prevCV = cvData;
+
+    prevCV[prefix].splice(index, 1);
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setCVData(prevCV);
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -418,6 +437,7 @@ const CV = () => {
                 title={detail.title}
                 selectedTextFields={selectedTextFields}
                 handleSubmit={upsertHandler}
+                onDeleteProperty={onDeleteProperty}
               />
             )}
           </div>
