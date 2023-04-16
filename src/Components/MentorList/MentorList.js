@@ -1,0 +1,13 @@
+import React from "react";
+import ImageSlider from "./ImageSlider/ImageSlider";
+import style from "./MentorList.module.scss";
+
+const MentorList = () => {
+  return (
+    <div className={`${style.mentorList__container}`}>
+      <ImageSlider />
+    </div>
+  );
+};
+
+export default MentorList;
