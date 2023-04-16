@@ -39,7 +39,7 @@ export const mapCVSection = (data, indexOfProperty) => {
                 DATE_FORMAT.MM_YYYY
               )
         })`,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
@@ -56,7 +56,7 @@ export const mapCVSection = (data, indexOfProperty) => {
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
@@ -77,7 +77,7 @@ export const mapCVSection = (data, indexOfProperty) => {
                 DATE_FORMAT.MM_YYYY
               )
         })`,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
@@ -90,7 +90,7 @@ export const mapCVSection = (data, indexOfProperty) => {
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
@@ -103,14 +103,14 @@ export const mapCVSection = (data, indexOfProperty) => {
           DATE_FORMAT.YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
     case INDEX_OF_CV_PROPERTY.SKILL: {
       return data.map((section) => ({
         title: section.name,
-        description: section.description,
+        detail: section.description,
       }));
     }
 
@@ -138,4 +138,14 @@ export const getRegisterNamePrefixFromTitle = (title) => {
     default:
       return CV_REGISTER_NAME_PREFIX.INTRODUCION;
   }
+};
+
+export const removeRegisterNamePrefix = (section, prefix) => {
+  let result = {};
+
+  Object.keys(section).map((key) => {
+    result[key.split(`${prefix}_`)[1]] = section[key];
+  });
+
+  return result;
 };

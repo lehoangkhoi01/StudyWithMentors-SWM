@@ -14,25 +14,26 @@ import CustomizedDatePicker from "../../../../shared/components/DatePicker/Custo
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
 import { useEffect, useState } from "react";
 import { getRegisterNamePrefixFromTitle } from "../../../../Helpers/SpecificComponentHelper/CVHelper";
-import { CovertToISODate } from "../../../../Helpers/dateHelper";
+import { covertToISODate } from "../../../../Helpers/dateHelper";
 
 const CVModal = (props) => {
   const { register, setValue, watch, getValues } = props;
+  const [registerNamePrefix, setRegisterNamePrefix] = useState();
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
   useEffect(() => {
     props.reset();
 
     if (!props.openModal) return;
+    const registerNamePrefixRaw = getRegisterNamePrefixFromTitle(props.title);
+    setRegisterNamePrefix(registerNamePrefixRaw);
 
     if (props.existedData) {
-      const registerNamePrefix = getRegisterNamePrefixFromTitle(props.title);
-
-      if (registerNamePrefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
-        setValue(`${registerNamePrefix}_description`, props.existedData);
+      if (registerNamePrefixRaw === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
+        setValue(`${registerNamePrefixRaw}_description`, props.existedData);
       } else {
         Object.keys(props.existedData).map((key) => {
-          setValue(`${registerNamePrefix}_${key}`, props.existedData[key]);
+          setValue(`${registerNamePrefixRaw}_${key}`, props.existedData[key]);
         });
       }
 
@@ -44,12 +45,12 @@ const CVModal = (props) => {
     }
   }, [props.openModal]);
 
-  const handleSubmit = (type) => {
-    props.handleSubmit(type);
+  const handleSubmit = () => {
+    props.handleSubmit(registerNamePrefix);
   };
-  
+
   return (
-    <>
+    <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
         <div className={style.modal}>
           <img
@@ -69,7 +70,7 @@ const CVModal = (props) => {
                   options={{ ...register(textField.registerName) }}
                   formName={textField.registerName}
                   setValue={setValue}
-                  value={CovertToISODate(
+                  value={covertToISODate(
                     DATE_FORMAT.YYYY_MM_DD,
                     getValues(textField.registerName)
                   )}
@@ -116,9 +117,7 @@ const CVModal = (props) => {
               type="submit"
               variant="contained"
               color="primary600"
-              onClick={() => {
-                handleSubmit(props.title);
-              }}
+              onClick={handleSubmit}
             >
               {type === MODAL_TYPE.EDIT
                 ? BUTTON_LABEL.SAVE_EDIT
@@ -127,7 +126,7 @@ const CVModal = (props) => {
           </div>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 

@@ -6,12 +6,16 @@ const CVDetail = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [existedData, setExistedData] = useState(null);
 
-  const openEditModalHandler = (_, data) => {
-    setExistedData(data);
+  const openModalHandler = (_, data) => {
+    if (data) {
+      setExistedData(data);
+    }
+
     setOpenModal(true);
   };
 
   const onCloseModal = () => {
+    setExistedData(null);
     setOpenModal(false);
   };
 
@@ -30,6 +34,7 @@ const CVDetail = (props) => {
           <div className={style.detail__title}>
             <h3>{props.title}</h3>
             <img
+              onClick={openModalHandler}
               src={require("../../../../assets/icons/Add.png")}
               alt="back-icon"
               className={`${style.detail__img}`}
@@ -42,7 +47,7 @@ const CVDetail = (props) => {
                   <h4>{data.title}</h4>
                   <img
                     onClick={(e) => {
-                      openEditModalHandler(e, props.data[index]);
+                      openModalHandler(e, props.data[index]);
                     }}
                     src={require("../../../../assets/icons/Edit.png")}
                     alt="back-icon"

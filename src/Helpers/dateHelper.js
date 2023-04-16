@@ -6,6 +6,12 @@ export const convertDateFormat = (date, from, to) => {
   return format(fromDateFormat, to);
 };
 
-export const CovertToISODate = (dateFormat, date) => {
-  return parse(date, dateFormat, new Date())
-}
+export const covertToISODate = (dateFormat, date) => {
+  return parse(date, dateFormat, new Date());
+};
+
+export const convertISOToFormat = (dateFormat, date) => {
+  const selectedDate = new Date(date);
+
+  return format(selectedDate, dateFormat);
+};

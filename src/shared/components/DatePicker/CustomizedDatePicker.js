@@ -2,9 +2,10 @@ import { DatePicker } from "@mui/x-date-pickers";
 import style from "./CustomizedDatePicker.module.scss";
 import { DATE_FORMAT, OPTIONAL } from "../../constants/common";
 import { useEffect, useState } from "react";
+import { convertISOToFormat } from "../../../Helpers/dateHelper";
 
 const CustomizedDatePicker = (props) => {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
     setValue(props.value);
@@ -22,8 +23,10 @@ const CustomizedDatePicker = (props) => {
         className={style.datePicker__input}
         {...props.options}
         onChange={(e) => {
+          const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, e);
+
           setValue(e);
-          props.setValue(props.formName, e);
+          props.setValue(props.formName, datevalue);
         }}
         value={value}
       ></DatePicker>
