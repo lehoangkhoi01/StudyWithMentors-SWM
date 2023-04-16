@@ -63,6 +63,7 @@ export const TITLE = {
   GENDER: "Giới tính",
   DOB: "Ngày sinh",
   LOGIN_TROUBLE: "Gặp rắc rối trong việc đăng nhập?",
+  FOOTER: "© 2023 Growth Me",
 };
 
 export const COMMON_MESSAGE = {
