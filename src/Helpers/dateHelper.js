@@ -9,11 +9,13 @@ export const convertDateFormat = (date, from, to) => {
 };
 
 export const covertToISODate = (dateFormat, date) => {
+  if (!date) return new Date();
+
   return parse(date, dateFormat, new Date());
 };
 
 export const convertISOToFormat = (dateFormat, date) => {
-  const selectedDate = new Date(date);
+  const selectedDate = new Date(date ?? new Date());
 
   return format(selectedDate, dateFormat);
 };

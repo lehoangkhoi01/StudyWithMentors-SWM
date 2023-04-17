@@ -18,6 +18,7 @@ const CustomizedDatePicker = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <DatePicker
+        disabled={props.disabled}
         format={DATE_FORMAT.MM_YYYY}
         views={["year", "month"]}
         className={style.datePicker__input}

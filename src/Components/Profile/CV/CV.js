@@ -16,6 +16,7 @@ import {
   mapCVSection,
   removeRegisterNamePrefix,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
+import { cvEndpoints } from "../../../Services/cvEndpoints";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -47,7 +48,7 @@ const TEXT_FIELDS = [
       {
         type: INPUT_TYPES.CHECK_BOX,
         name: TEXTFIELD_LABEL.IS_WORKING_AT_THIS_POSITION,
-        registerName: REGISTER_FIELD.EXPERIENCE.POSITION,
+        registerName: REGISTER_FIELD.EXPERIENCE.IS_WORKING,
       },
       {
         type: INPUT_TYPES.DATE,
@@ -212,106 +213,119 @@ const TEXT_FIELDS = [
   },
 ];
 
-const DUMMY_CV = {
-  userProfileId: "123",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-  workingExps: [
-    {
-      index: "0",
-      position: "string",
-      company: "string",
-      startDate: "2020-02-13",
-      endDate: "2020-02-13",
-      description: "string",
-      workingHere: false,
-    },
-    {
-      index: "1",
-      position: "string",
-      company: "string",
-      startDate: "2020-02-13",
-      endDate: "2020-02-13",
-      description: "string",
-      workingHere: false,
-    },
-  ],
-  learningExps: [
-    {
-      index: "0",
-      school: "string",
-      major: "string",
-      startDate: "2020-02-13",
-      endDate: "2020-02-13",
-      description: "string",
-    },
-  ],
-  socialActivities: [
-    {
-      index: "0",
-      organization: "string",
-      position: "string",
-      startDate: "2020-02-13",
-      endDate: "2020-02-13",
-      description: "string",
-      attendingThis: false,
-    },
-  ],
-  achievements: [
-    {
-      index: "0",
-      name: "string",
-      organization: "string",
-      achievingDate: "2020-02-13",
-      description: "string",
-    },
-  ],
-  certificates: [
-    {
-      index: "0",
-      name: "string",
-      organization: "string",
-      achievingDate: "2020-02-13",
-      expiryDate: "2020-02-13",
-      description: "string",
-    },
-  ],
-  skills: [
-    {
-      index: "0",
-      name: "ABC thuộc Google",
-      description:
-        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    },
-    {
-      index: "1",
-      name: "ABC thuộc Google",
-      description:
-        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    },
-    {
-      index: "2",
-      name: "ABC thuộc Google",
-      description:
-        "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    },
-  ],
-};
+// const DUMMY_CV = {
+//   userProfileId: "123",
+//   description:
+//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+//   workingExps: [
+//     {
+//       index: "0",
+//       position: "string",
+//       company: "string",
+//       startDate: "2020-02-13",
+//       endDate: "2020-02-13",
+//       description: "string",
+//       workingHere: false,
+//     },
+//     {
+//       index: "1",
+//       position: "string",
+//       company: "string",
+//       startDate: "2020-02-13",
+//       endDate: "2020-02-13",
+//       description: "string",
+//       workingHere: false,
+//     },
+//   ],
+//   learningExps: [
+//     {
+//       index: "0",
+//       school: "string",
+//       major: "string",
+//       startDate: "2020-02-13",
+//       endDate: "2020-02-13",
+//       description: "string",
+//     },
+//   ],
+//   socialActivities: [
+//     {
+//       index: "0",
+//       organization: "string",
+//       position: "string",
+//       startDate: "2020-02-13",
+//       endDate: "2020-02-13",
+//       description: "string",
+//       attendingThis: false,
+//     },
+//   ],
+//   achievements: [
+//     {
+//       index: "0",
+//       name: "string",
+//       organization: "string",
+//       achievingDate: "2020-02-13",
+//       description: "string",
+//     },
+//   ],
+//   certificates: [
+//     {
+//       index: "0",
+//       name: "string",
+//       organization: "string",
+//       achievingDate: "2020-02-13",
+//       expiryDate: "2020-02-13",
+//       description: "string",
+//     },
+//   ],
+//   skills: [
+//     {
+//       index: "0",
+//       name: "ABC thuộc Google",
+//       description:
+//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+//     },
+//     {
+//       index: "1",
+//       name: "ABC thuộc Google",
+//       description:
+//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+//     },
+//     {
+//       index: "2",
+//       name: "ABC thuộc Google",
+//       description:
+//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+//     },
+//   ],
+// };
 
 const CV = () => {
-  const { register, setValue, watch, reset, getValues } = useForm();
+  const {
+    register,
+    setValue,
+    watch,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const [detail, setDetail] = useState(null);
   const [selectedTextFields, setSelectedTextFields] = useState();
   const [cvData, setCVData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    delete DUMMY_CV.userProfileId;
+    const getCVData = async () => {
+      const CVDataFromBE = await cvEndpoints.getUserCV();
 
-    setCVData(DUMMY_CV);
+      delete CVDataFromBE.userProfileId;
+
+      setCVData(CVDataFromBE);
+    };
+
+    getCVData();
   }, []);
 
-  const upsertHandler = (prefix) => {
+  const upsertHandler = async (prefix) => {
     const fullForm = { ...getValues() };
 
     let specificForm = Object.fromEntries(
@@ -331,12 +345,7 @@ const CV = () => {
       prevCV[prefix].push(specificForm);
     }
 
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setCVData(prevCV);
-      setIsLoading(false);
-    }, 500);
+    updateCVToBE(prevCV);
   };
 
   const editDetailData = (key, title, indexOfProperty) => {
@@ -361,12 +370,17 @@ const CV = () => {
 
     prevCV[prefix].splice(index, 1);
 
+    updateCVToBE(prevCV);
+  };
+
+  const updateCVToBE = async (prevCV) => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setCVData(prevCV);
-      setIsLoading(false);
-    }, 500);
+    const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
+    delete CVDataFromBE.userProfileId;
+
+    setCVData(CVDataFromBE);
+    setIsLoading(false);
   };
 
   return (
@@ -415,6 +429,7 @@ const CV = () => {
                       textFields={TEXT_FIELDS[index].fields}
                       title={TEXT_FIELDS[index].title}
                       handleSubmit={upsertHandler}
+                      errors={errors}
                     />
                   );
                 })}
@@ -438,6 +453,7 @@ const CV = () => {
                 selectedTextFields={selectedTextFields}
                 handleSubmit={upsertHandler}
                 onDeleteProperty={onDeleteProperty}
+                errors={errors}
               />
             )}
           </div>

@@ -45,6 +45,13 @@ const CVModal = (props) => {
     }
   }, [props.openModal]);
 
+  useEffect(() => {
+    setValue(`${registerNamePrefix}_endDate`, "");
+  }, [
+    watch(`${registerNamePrefix}_workingHere`),
+    watch(`${registerNamePrefix}_attendingThis`),
+  ]);
+
   const handleSubmit = () => {
     props.handleSubmit(registerNamePrefix);
   };
@@ -67,13 +74,27 @@ const CVModal = (props) => {
                   className={style.modal__input}
                   name={textField.name}
                   required={!textField.optional}
-                  options={{ ...register(textField.registerName) }}
+                  options={{
+                    ...register(textField.registerName, {
+                      validate: {
+                        mustBeFuture: (value) =>
+                          covertToISODate(DATE_FORMAT.MM_YYYY, value) >
+                          new Date(),
+                      },
+                    }),
+                  }}
                   formName={textField.registerName}
                   setValue={setValue}
                   value={covertToISODate(
                     DATE_FORMAT.YYYY_MM_DD,
                     getValues(textField.registerName)
                   )}
+                  disabled={
+                    textField.registerName.includes("endDate")
+                      ? getValues(`${registerNamePrefix}_workingHere`) ||
+                        getValues(`${registerNamePrefix}_attendingThis`)
+                      : false
+                  }
                 />
               );
             } else if (textField.type === INPUT_TYPES.CHECK_BOX) {
@@ -83,7 +104,9 @@ const CVModal = (props) => {
                   className={style.modal__input}
                   name={textField.name}
                   options={{ ...register(textField.registerName) }}
-                  value={getValues(textField.registerName)}
+                  getValues={getValues}
+                  registerName={textField.registerName}
+                  watch={watch(textField.registerName)}
                 />
               );
             } else {
@@ -94,7 +117,9 @@ const CVModal = (props) => {
                   name={textField.name}
                   required={!textField.optional}
                   multiline={textField.type === INPUT_TYPES.TEXT_AREA}
-                  options={{ ...register(textField.registerName) }}
+                  options={{
+                    ...register(textField.registerName, { minLength: 5 }),
+                  }}
                   type={"text"}
                   watch={watch(textField.registerName)}
                 />

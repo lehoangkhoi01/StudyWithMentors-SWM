@@ -96,6 +96,7 @@ const CVSection = (props) => {
         title={props.title}
         handleSubmit={props.handleSubmit}
         reset={props.reset}
+        errors={props.errors}
       />
     </>
   );

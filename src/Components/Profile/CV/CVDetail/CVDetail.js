@@ -109,6 +109,7 @@ const CVDetail = (props) => {
         title={props.title}
         handleSubmit={props.handleSubmit}
         reset={props.reset}
+        errors={props.errors}
       />
       <DeletePropertyModal
         openModal={openModal.delete}
