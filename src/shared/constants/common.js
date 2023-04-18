@@ -24,6 +24,7 @@ export const BUTTON_LABEL = {
   SAVE_EDIT: "Lưu lại",
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
   CANCEL_EDIT: "Hủy chỉnh sửa",
+  SEARCH: "Tìm kiếm",
 };
 
 export const TEXTFIELD_LABEL = {
