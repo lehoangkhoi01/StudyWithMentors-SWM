@@ -299,6 +299,17 @@ const TEXT_FIELDS = [
 //   ],
 // };
 
+const INIT_CV = {
+  userProfileId: "",
+  description: "",
+  workingExps: [],
+  learningExps: [],
+  socialActivities: [],
+  achievements: [],
+  certificates: [],
+  skills: [],
+};
+
 const CV = () => {
   const {
     register,
@@ -315,9 +326,17 @@ const CV = () => {
 
   useEffect(() => {
     const getCVData = async () => {
-      const CVDataFromBE = await cvEndpoints.getUserCV();
+      let response = await cvEndpoints.getUserCV();
+
+      let CVDataFromBE = response.data;
+
+      if (!CVDataFromBE) {
+        CVDataFromBE = INIT_CV;
+      }
 
       delete CVDataFromBE.userProfileId;
+
+      convertNullToEmptyArrayProperty(CVDataFromBE);
 
       setCVData(CVDataFromBE);
     };
@@ -376,11 +395,26 @@ const CV = () => {
   const updateCVToBE = async (prevCV) => {
     setIsLoading(true);
 
-    const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
+    const response = await cvEndpoints.updateUserCV(prevCV);
+
+    let CVDataFromBE = response.data;
+
     delete CVDataFromBE.userProfileId;
+
+    convertNullToEmptyArrayProperty(CVDataFromBE);
 
     setCVData(CVDataFromBE);
     setIsLoading(false);
+  };
+
+  const convertNullToEmptyArrayProperty = (CVData) => {
+    Object.keys(CVData).map((key) => {
+      if (key === "description" && !cvData[key]) {
+        cvData[key] = "";
+      } else if (!cvData[key]) {
+        cvData[key] = [];
+      }
+    });
   };
 
   return (
