@@ -289,6 +289,7 @@ export const OTHERS = {
   AT: "tại",
   CURRENT: "hiện tại",
   BELONG: "thuộc",
+  THIS: "này",
 };
 
 export const DATE_FORMAT = {
@@ -304,4 +305,11 @@ export const CV_REGISTER_NAME_PREFIX = {
   ACHIEVEMENT: "achievements",
   CERTIFICATES: "certificates",
   SKILLS: "skills",
+};
+
+export const MODAL_DELETE_PROPERTY = {
+  CONFIRM: "Bạn có muốn xóa",
+  DETAIL: "sau khi xóa sẽ không thể khôi phục lại được",
+  BACK: "Quay lại",
+  DELETE: "Xóa",
 };

@@ -61,7 +61,6 @@ const CVSection = (props) => {
       <div className={style.section__body}>
         {props.title !== PROFILE_TITLES.SKILLS &&
           props.viewData.map((data, index) => {
-            console.log(data)
             return (
               <div key={`CV_DETAIL_${index}`}>
                 {data.title && <h4>{data.title}</h4>}
@@ -73,7 +72,6 @@ const CVSection = (props) => {
         {props.title === PROFILE_TITLES.SKILLS && (
           <Grid container spacing={2}>
             {props.viewData.map((data, index) => {
-              console.log(data)
               return (
                 <Grid key={`CV_DETAIL_${index}`} item xs={6}>
                   <div>
@@ -98,6 +96,7 @@ const CVSection = (props) => {
         title={props.title}
         handleSubmit={props.handleSubmit}
         reset={props.reset}
+        errors={props.errors}
       />
     </>
   );
