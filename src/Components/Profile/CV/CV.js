@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import {
   CV_REGISTER_NAME_PREFIX,
+  DATE_FORMAT,
   INPUT_TYPES,
   PROFILE_TITLES,
   REGISTER_FIELD,
@@ -17,6 +18,7 @@ import {
   removeRegisterNamePrefix,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
+import { convertDateFormat } from "../../../Helpers/dateHelper";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -326,9 +328,7 @@ const CV = () => {
 
   useEffect(() => {
     const getCVData = async () => {
-      let response = await cvEndpoints.getUserCV();
-
-      let CVDataFromBE = response.data;
+      let CVDataFromBE = await cvEndpoints.getUserCV();
 
       if (!CVDataFromBE) {
         CVDataFromBE = INIT_CV;
@@ -353,6 +353,16 @@ const CV = () => {
     );
 
     specificForm = removeRegisterNamePrefix(specificForm, prefix);
+
+    Object.keys(specificForm).map((key) => {
+      if (key.toLocaleLowerCase().includes("date")) {
+        specificForm[key] = convertDateFormat(
+          specificForm[key],
+          DATE_FORMAT.MM_YYYY,
+          DATE_FORMAT.YYYY_MM_DD
+        );
+      }
+    });
 
     let prevCV = cvData;
 
@@ -395,9 +405,7 @@ const CV = () => {
   const updateCVToBE = async (prevCV) => {
     setIsLoading(true);
 
-    const response = await cvEndpoints.updateUserCV(prevCV);
-
-    let CVDataFromBE = response.data;
+    const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
 
     delete CVDataFromBE.userProfileId;
 
@@ -409,10 +417,10 @@ const CV = () => {
 
   const convertNullToEmptyArrayProperty = (CVData) => {
     Object.keys(CVData).map((key) => {
-      if (key === "description" && !cvData[key]) {
-        cvData[key] = "";
-      } else if (!cvData[key]) {
-        cvData[key] = [];
+      if (key === "description" && !CVData[key]) {
+        CVData[key] = "";
+      } else if (!CVData[key]) {
+        CVData[key] = [];
       }
     });
   };

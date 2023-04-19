@@ -1,7 +1,7 @@
 import { format, parse } from "date-fns";
 
 export const convertDateFormat = (date, from, to) => {
-  if (!date) return "";
+  if (!date || !from || !to) return "";
 
   const fromDateFormat = parse(date, from, new Date());
 
@@ -9,7 +9,9 @@ export const convertDateFormat = (date, from, to) => {
 };
 
 export const covertToISODate = (dateFormat, date) => {
-  if (!date) return new Date();
+  if (!date || date === "Invalid Date") return new Date();
+
+  if (date instanceof Date) return date;
 
   return parse(date, dateFormat, new Date());
 };

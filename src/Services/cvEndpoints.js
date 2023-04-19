@@ -11,8 +11,6 @@ export const cvEndpoints = {
     if (!cv) return;
 
     const url = UserAccountEndpoints.USER_CV;
-    return axiosClient.post(url, {
-      body: cv,
-    });
+    return axiosClient.post(url, cv);
   },
 };
