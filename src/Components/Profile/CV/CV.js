@@ -330,7 +330,7 @@ const CV = () => {
     const getCVData = async () => {
       let CVDataFromBE = await cvEndpoints.getUserCV();
 
-      if (!CVDataFromBE) {
+      if (!CVDataFromBE?.data) {
         CVDataFromBE = INIT_CV;
       }
 
