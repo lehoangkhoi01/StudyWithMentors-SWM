@@ -1,4 +1,5 @@
 @import "../../theme";
+@import "../../break-point";
 
 .textField {
   &__container {
@@ -35,12 +36,48 @@
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: $bp-xl) {
+  .textField {
+    &__container {
+      input {
+        padding-block: 0.5rem;
+      }
+
+      textarea {
+        padding-block: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
   .textField {
     &__container {
       label {
         font-size: $SMALL_LABEL_SIZE;
       }
+
+      input {
+        padding-block: 0.3rem;
+      }
+    }
+
+    &__limit {
+      font-size: $SMALL_LABEL_SIZE;
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .textField {
+    &__container {
+      label {
+        font-size: $EXSMALL_LABEL_SIZE;
+      }
+    }
+
+    &__limit {
+      font-size: $EXSMALL_LABEL_SIZE;
     }
   }
 }

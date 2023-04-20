@@ -313,3 +313,10 @@ export const MODAL_DELETE_PROPERTY = {
   BACK: "Quay lại",
   DELETE: "Xóa",
 };
+
+export const BREAK_POINT = {
+  XL: 1535,
+  LG: 1199,
+  MD: 899,
+  SM: 599,
+};
