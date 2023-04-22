@@ -6,6 +6,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
+  CALENDAR: "/calendar",
   ACCOUNT: "/account",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
