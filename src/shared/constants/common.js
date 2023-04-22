@@ -25,6 +25,7 @@ export const BUTTON_LABEL = {
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
   CANCEL_EDIT: "Hủy chỉnh sửa",
   SEARCH: "Tìm kiếm",
+  DEFAULT: "Mặc định",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -160,6 +161,8 @@ export const PLACE_HOLDER = {
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",
+  SEARCH_MENTOR: "Tên kỹ năng, công ty mà bạn quan tâm",
+  DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
 };
 
 export const FILL_INFORMATION = {

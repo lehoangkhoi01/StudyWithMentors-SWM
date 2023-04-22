@@ -2,9 +2,10 @@ import React from "react";
 import { Button, FormControl, Grid, InputLabel } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "./FilterSection.module.scss";
+import { styled } from "@mui/material/styles";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
-import { BUTTON_LABEL } from "../../../shared/constants/common";
+import { BUTTON_LABEL, PLACE_HOLDER } from "../../../shared/constants/common";
 
 const names = [
   "IT - Phần mêm",
@@ -26,6 +27,12 @@ const MenuProps = {
     },
   },
 };
+
+const StyledLabelSelect = styled(InputLabel)`
+  &.Mui-focused {
+    color: #1a237e;
+  }
+`;
 
 const FilterSection = () => {
   const [personName, setPersonName] = React.useState([]);
@@ -50,13 +57,15 @@ const FilterSection = () => {
           <CustomizedTextField
             fullWidth
             inputId="search"
-            placeholder="Tên kỹ năng, công ty mà bạn quan tâm"
+            placeholder={PLACE_HOLDER.SEARCH_MENTOR}
             required={true}
           />
         </Grid>
         <Grid item xs={4}>
           <FormControl fullWidth>
-            <InputLabel>Tất cả lĩnh vực</InputLabel>
+            <StyledLabelSelect className={`${style.filterSection__label}`}>
+              Tất cả lĩnh vực
+            </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
               items={names}
@@ -64,7 +73,7 @@ const FilterSection = () => {
               isMultipleSelect={true}
               value={personName}
               onChange={handleChange}
-              placeholder="Tất cả lĩnh vực"
+              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
               required={true}
@@ -88,7 +97,7 @@ const FilterSection = () => {
               variant="text"
               className={`${style.filterSection__linkButton}`}
             >
-              Mặc định
+              {BUTTON_LABEL.DEFAULT}
             </Button>
           </FormControl>
         </Grid>

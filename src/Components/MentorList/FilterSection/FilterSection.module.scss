@@ -27,4 +27,11 @@
         background-color: transparent;
         text-decoration: underline;
     }
+
+    &__label {
+        color: $black400;
+    }
+    &__label:focus {
+        color: $primary600;
+    }
 }
