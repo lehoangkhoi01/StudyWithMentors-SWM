@@ -9,4 +9,6 @@ export const AuthenticationEndpoints = {
 
 export const UserAccountEndpoints = {
   GET_USER_INFO: "user-profile/current",
+  USER_CV: "user-profile/cv/current"
 };
+

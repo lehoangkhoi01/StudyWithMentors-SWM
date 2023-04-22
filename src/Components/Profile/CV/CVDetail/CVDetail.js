@@ -1,22 +1,51 @@
 import { useState } from "react";
 import style from "./CVDetail.module.scss";
 import CVModal from "../Modal/CVModal";
+import DeletePropertyModal from "../Modal/DeletePropertyModal";
 
 const CVDetail = (props) => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState({
+    upsert: false,
+    delete: false,
+  });
   const [existedData, setExistedData] = useState(null);
+  const [deletedIndex, setDeletedIndex] = useState(-1);
 
   const openModalHandler = (_, data) => {
     if (data) {
       setExistedData(data);
     }
 
-    setOpenModal(true);
+    setOpenModal({
+      upsert: true,
+      delete: false,
+    });
+  };
+
+  const openDeleteModalHandler = (index) => {
+    setDeletedIndex(index);
+    setOpenModal({
+      upsert: false,
+      delete: true,
+    });
   };
 
   const onCloseModal = () => {
     setExistedData(null);
-    setOpenModal(false);
+    setOpenModal({
+      upsert: false,
+      delete: false,
+    });
+    setDeletedIndex(-1);
+  };
+
+  const onDeleteProperty = () => {
+    props.onDeleteProperty(props.title, deletedIndex);
+    setOpenModal({
+      upsert: false,
+      delete: false,
+    });
+    setDeletedIndex(-1);
   };
 
   return (
@@ -54,7 +83,9 @@ const CVDetail = (props) => {
                     className={`${style.detail__img}`}
                   />
                   <img
-                    onClick={props.onBackToList}
+                    onClick={() => {
+                      openDeleteModalHandler(index);
+                    }}
                     src={require("../../../../assets/icons/Delete.png")}
                     alt="back-icon"
                     className={`${style.detail__img}`}
@@ -73,11 +104,18 @@ const CVDetail = (props) => {
         getValues={props.getValues}
         watch={props.watch}
         textFields={props.selectedTextFields}
-        openModal={openModal}
+        openModal={openModal.upsert}
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
         reset={props.reset}
+        errors={props.errors}
+      />
+      <DeletePropertyModal
+        openModal={openModal.delete}
+        onCloseModal={onCloseModal}
+        title={props.title}
+        onDeleteProperty={onDeleteProperty}
       />
     </>
   );

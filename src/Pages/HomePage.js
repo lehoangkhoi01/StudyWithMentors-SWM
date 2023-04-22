@@ -1,7 +1,7 @@
-import ComponentTemp from "../Components/ComponentTemp";
+import MentorList from "../Components/MentorList/MentorList";
 
 const HomePage = () => {
-  return <ComponentTemp />;
+  return <MentorList />;
 };
 
 export default HomePage;

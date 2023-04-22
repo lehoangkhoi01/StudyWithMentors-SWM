@@ -25,6 +25,8 @@ export const BUTTON_LABEL = {
   SAVE_EDIT: "Lưu lại",
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
   CANCEL_EDIT: "Hủy chỉnh sửa",
+  SEARCH: "Tìm kiếm",
+  DEFAULT: "Mặc định",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -160,6 +162,8 @@ export const PLACE_HOLDER = {
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",
+  SEARCH_MENTOR: "Tên kỹ năng, công ty mà bạn quan tâm",
+  DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
 };
 
 export const FILL_INFORMATION = {
@@ -290,6 +294,7 @@ export const OTHERS = {
   AT: "tại",
   CURRENT: "hiện tại",
   BELONG: "thuộc",
+  THIS: "này",
 };
 
 export const DATE_FORMAT = {
@@ -305,4 +310,18 @@ export const CV_REGISTER_NAME_PREFIX = {
   ACHIEVEMENT: "achievements",
   CERTIFICATES: "certificates",
   SKILLS: "skills",
+};
+
+export const MODAL_DELETE_PROPERTY = {
+  CONFIRM: "Bạn có muốn xóa",
+  DETAIL: "sau khi xóa sẽ không thể khôi phục lại được",
+  BACK: "Quay lại",
+  DELETE: "Xóa",
+};
+
+export const BREAK_POINT = {
+  XL: 1535,
+  LG: 1199,
+  MD: 899,
+  SM: 599,
 };
