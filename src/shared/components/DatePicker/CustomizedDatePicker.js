@@ -8,7 +8,15 @@ const CustomizedDatePicker = (props) => {
   const [value, setValue] = useState(null);
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.formName, new Date());
+
+    const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, new Date());
+
+    props.setValue(props.formName, datevalue);
+  }, []);
+
+  useEffect(() => {
+    setValue(props.value ?? new Date());
   }, [props.value]);
 
   return (
@@ -18,6 +26,7 @@ const CustomizedDatePicker = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <DatePicker
+        disabled={props.disabled}
         format={DATE_FORMAT.MM_YYYY}
         views={["year", "month"]}
         className={style.datePicker__input}
