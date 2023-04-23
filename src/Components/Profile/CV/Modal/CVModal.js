@@ -14,12 +14,16 @@ import CustomizedTextField from "../../../../shared/components/TextField/Customi
 import CustomizedDatePicker from "../../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
 import { useEffect, useState } from "react";
-import { getRegisterNamePrefixFromTitle } from "../../../../Helpers/SpecificComponentHelper/CVHelper";
-import { covertToISODate } from "../../../../Helpers/dateHelper";
-import { passwordValidation } from "../../../../shared/constants/validationRules";
+import {
+  getRegisterNamePrefixFromTitle,
+  removeRegisterNamePrefix,
+} from "../../../../Helpers/SpecificComponentHelper/CVHelper";
+import {
+  convertDateFormat,
+  covertToISODate,
+} from "../../../../Helpers/dateHelper";
 
 const CVModal = (props) => {
-  //const { register, setValue, watch, getValues, errors } = props;
   const [registerNamePrefix, setRegisterNamePrefix] = useState();
   const {
     handleSubmit,
@@ -27,12 +31,13 @@ const CVModal = (props) => {
     setValue,
     watch,
     getValues,
+    reset,
     formState: { errors },
   } = useForm();
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
   useEffect(() => {
-    props.reset();
+    reset();
 
     if (!props.openModal) return;
     const registerNamePrefixRaw = getRegisterNamePrefixFromTitle(props.title);
@@ -92,13 +97,27 @@ const CVModal = (props) => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // const startDate = Date.parse(
-    //   props.getValues()[`${registerNamePrefix}_endDate`]
-    // );
-    // console.log(startDate);
-    //props.handleSubmit(registerNamePrefix);
+  const onSubmit = () => {
+    const fullForm = { ...getValues() };
+
+    let specificForm = Object.fromEntries(
+      // eslint-disable-next-line no-unused-vars
+      Object.entries(fullForm).filter(([_, v]) => v != null)
+    );
+
+    specificForm = removeRegisterNamePrefix(specificForm, registerNamePrefix);
+
+    Object.keys(specificForm).map((key) => {
+      if (key.toLocaleLowerCase().includes("date")) {
+        specificForm[key] = convertDateFormat(
+          specificForm[key],
+          DATE_FORMAT.MM_YYYY,
+          DATE_FORMAT.YYYY_MM_DD
+        );
+      }
+    });
+
+    props.handleSubmit(specificForm, registerNamePrefix);
   };
 
   return (
@@ -161,7 +180,7 @@ const CVModal = (props) => {
                       required={!textField.optional}
                       multiline={textField.type === INPUT_TYPES.TEXT_AREA}
                       options={{
-                        ...register(textField.registerName, passwordValidation),
+                        ...register(textField.registerName),
                       }}
                       error={errors[textField.registerName] ? true : false}
                       helperText={errors[textField.registerName]?.message}

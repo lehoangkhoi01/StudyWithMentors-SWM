@@ -99,17 +99,11 @@ const CVDetail = (props) => {
       </div>
       <CVModal
         existedData={existedData}
-        register={props.register}
-        setValue={props.setValue}
-        getValues={props.getValues}
-        watch={props.watch}
         textFields={props.selectedTextFields}
         openModal={openModal.upsert}
         onCloseModal={onCloseModal}
         title={props.title}
         handleSubmit={props.handleSubmit}
-        reset={props.reset}
-        errors={props.errors}
       />
       <DeletePropertyModal
         openModal={openModal.delete}
