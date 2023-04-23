@@ -30,6 +30,12 @@ const CustomizedDatePicker = (props) => {
         format={DATE_FORMAT.MM_YYYY}
         views={["year", "month"]}
         className={style.datePicker__input}
+        onError={props.error}
+        slotProps={{
+          textField: {
+            helperText: props?.error?.message,
+          },
+        }}
         {...props.options}
         onChange={(e) => {
           const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, e);
