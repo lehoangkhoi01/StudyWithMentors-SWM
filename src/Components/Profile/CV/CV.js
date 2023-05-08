@@ -180,7 +180,7 @@ const TEXT_FIELDS = [
         optional: true,
       },
       {
-        type: INPUT_TYPES.TEXT,
+        type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.DUE_DATE,
         registerName: REGISTER_FIELD.CERTIFICATES.DUE_DATE,
         optional: true,
@@ -341,7 +341,7 @@ const CV = () => {
 
     if (prefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
       prevCV.description = data.description;
-    } else if (data.index !== null) {
+    } else if (data.index !== undefined) {
       prevCV[prefix][data.index] = data;
     } else {
       prevCV[prefix].push(data);

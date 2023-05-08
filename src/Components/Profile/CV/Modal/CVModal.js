@@ -72,13 +72,21 @@ const CVModal = (props) => {
   const validateEndDate = (val) => {
     const formValue = getValues();
     const startDateString = formValue[`${registerNamePrefix}_startDate`];
-    if (!val || val.length === 0) {
-      return ERROR_MESSAGES.REQUIRED_FIELD;
-    }
-    if (val !== startDateString) {
-      console.log("Error field");
-      console.log(val);
-      console.log(startDateString);
+
+    const endDateTimeNumber = covertToISODate(
+      DATE_FORMAT.MM_YYYY,
+      val
+    ).getTime();
+    const statDateTimeNumber = covertToISODate(
+      DATE_FORMAT.MM_YYYY,
+      startDateString
+    ).getTime();
+    const currentDate = new Date().getTime();
+
+    // if (!val || val.length === 0) {
+    //   return ERROR_MESSAGES.REQUIRED_FIELD;
+    // }
+    if (endDateTimeNumber < statDateTimeNumber || endDateTimeNumber < currentDate) {
       return ERROR_MESSAGES.INVALID_END_DATE;
     }
   };
@@ -87,7 +95,9 @@ const CVModal = (props) => {
     if (registerName.includes("endDate")) {
       return {
         ...register(registerName, {
-          validate: (val) => validateEndDate(val),
+          validate: {
+            checkEndDate: (val) => validateEndDate(val),
+          },
         }),
       };
     } else {
@@ -144,7 +154,7 @@ const CVModal = (props) => {
                       name={textField.name}
                       required={!textField.optional}
                       options={renderFormOptionForDate(textField.registerName)}
-                      //error={errors[textField.registerName]}
+                      error={errors[textField.registerName]}
                       formName={textField.registerName}
                       setValue={setValue}
                       value={covertToISODate(
@@ -169,6 +179,7 @@ const CVModal = (props) => {
                       getValues={getValues}
                       registerName={textField.registerName}
                       watch={watch(textField.registerName)}
+                      optional={textField.optional}
                     />
                   );
                 } else {
@@ -186,6 +197,7 @@ const CVModal = (props) => {
                       helperText={errors[textField.registerName]?.message}
                       type={"text"}
                       watch={watch(textField.registerName)}
+                      optional={textField.optional}
                     />
                   );
                 }
