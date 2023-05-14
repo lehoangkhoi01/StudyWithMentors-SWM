@@ -27,6 +27,8 @@ export const BUTTON_LABEL = {
   CANCEL_EDIT: "Hủy chỉnh sửa",
   SEARCH: "Tìm kiếm",
   DEFAULT: "Mặc định",
+  TODAY: "Hôm nay",
+  CREATE_SCHEDULE: "Tạo lịch",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -67,6 +69,12 @@ export const TITLE = {
   DOB: "Ngày sinh",
   LOGIN_TROUBLE: "Gặp rắc rối trong việc đăng nhập?",
   FOOTER: "© 2023 Growth Me",
+  LABEL: "Nhãn",
+};
+
+export const OTHER_TEXT = {
+  FREE_SCHEDULE: "Lịch chưa được đặt",
+  BOOKED_SCHEDULE: "Lịch đã được đặt",
 };
 
 export const COMMON_MESSAGE = {

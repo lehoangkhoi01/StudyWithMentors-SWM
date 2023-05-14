@@ -1,0 +1,18 @@
+@import "../../../shared/theme";
+
+.noteSection {
+    &__wrapper {
+        margin: 1rem 0;
+    }
+    &__label {
+        display: flex;
+        align-items: center;
+        margin: .5rem 0;
+    }
+    &__freeLabel {
+        color: $primary900;
+    }
+    &__bookedLabel {
+        color: $secondary500;
+    }
+}
