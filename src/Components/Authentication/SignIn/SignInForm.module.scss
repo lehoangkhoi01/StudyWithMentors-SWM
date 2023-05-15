@@ -12,10 +12,10 @@
 
   &__formContainer {
     position: relative;
-    margin-top: 3vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   &__formSection {

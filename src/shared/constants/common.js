@@ -137,10 +137,6 @@ export const AUTHENTICATION_MENU = [
     TITLE: "Đăng nhập",
     ROUTE: ROUTES.SIGN_IN,
   },
-  {
-    TITLE: "Đăng ký",
-    ROUTE: ROUTES.SIGN_UP,
-  },
 ];
 export const MOBILE_MENU = [];
 export const ACCOUNT_MENU = [
