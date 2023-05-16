@@ -1,7 +1,5 @@
-import { useForm } from "react-hook-form";
 import {
   CV_REGISTER_NAME_PREFIX,
-  DATE_FORMAT,
   INPUT_TYPES,
   PROFILE_TITLES,
   REGISTER_FIELD,
@@ -15,10 +13,8 @@ import { useEffect, useState } from "react";
 import {
   getRegisterNamePrefixFromTitle,
   mapCVSection,
-  removeRegisterNamePrefix,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
-import { convertDateFormat } from "../../../Helpers/dateHelper";
 
 const IS_EXIST_BACKGROUND = false;
 
@@ -184,7 +180,7 @@ const TEXT_FIELDS = [
         optional: true,
       },
       {
-        type: INPUT_TYPES.TEXT,
+        type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.DUE_DATE,
         registerName: REGISTER_FIELD.CERTIFICATES.DUE_DATE,
         optional: true,
@@ -313,14 +309,6 @@ const INIT_CV = {
 };
 
 const CV = () => {
-  const {
-    register,
-    setValue,
-    watch,
-    reset,
-    getValues,
-    formState: { errors },
-  } = useForm();
   const [detail, setDetail] = useState(null);
   const [selectedTextFields, setSelectedTextFields] = useState();
   const [cvData, setCVData] = useState({});
@@ -348,34 +336,15 @@ const CV = () => {
     getCVData();
   }, []);
 
-  const upsertHandler = async (prefix) => {
-    const fullForm = { ...getValues() };
-
-    let specificForm = Object.fromEntries(
-      // eslint-disable-next-line no-unused-vars
-      Object.entries(fullForm).filter(([_, v]) => v != null)
-    );
-
-    specificForm = removeRegisterNamePrefix(specificForm, prefix);
-
-    Object.keys(specificForm).map((key) => {
-      if (key.toLocaleLowerCase().includes("date")) {
-        specificForm[key] = convertDateFormat(
-          specificForm[key],
-          DATE_FORMAT.MM_YYYY,
-          DATE_FORMAT.YYYY_MM_DD
-        );
-      }
-    });
-
+  const upsertHandler = async (data, prefix) => {
     let prevCV = cvData;
 
     if (prefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
-      prevCV.description = specificForm.description;
-    } else if (specificForm.index) {
-      prevCV[prefix][specificForm.index] = specificForm;
+      prevCV.description = data.description;
+    } else if (data.index !== undefined) {
+      prevCV[prefix][data.index] = data;
     } else {
-      prevCV[prefix].push(specificForm);
+      prevCV[prefix].push(data);
     }
 
     updateCVToBE(prevCV);
@@ -467,15 +436,9 @@ const CV = () => {
                       viewData={mapCVSection(cvData[key], index)}
                       editDetailData={editDetailData}
                       key={`CV_SECTION_${index}`}
-                      register={register}
-                      setValue={setValue}
-                      getValues={getValues}
-                      watch={watch}
-                      reset={reset}
                       textFields={TEXT_FIELDS[index].fields}
                       title={TEXT_FIELDS[index].title}
                       handleSubmit={upsertHandler}
-                      errors={errors}
                     />
                   );
                 })}
@@ -484,11 +447,6 @@ const CV = () => {
             {detail && (
               <CVDetail
                 editDetailData={editDetailData}
-                register={register}
-                setValue={setValue}
-                getValues={getValues}
-                watch={watch}
-                reset={reset}
                 onBackToList={onBackToList}
                 data={cvData[detail.key]}
                 viewData={mapCVSection(
@@ -499,7 +457,6 @@ const CV = () => {
                 selectedTextFields={selectedTextFields}
                 handleSubmit={upsertHandler}
                 onDeleteProperty={onDeleteProperty}
-                errors={errors}
               />
             )}
           </div>

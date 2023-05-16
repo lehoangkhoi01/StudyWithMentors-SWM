@@ -201,6 +201,7 @@ export const ERROR_MESSAGES = {
     "Chọn một mật khẩu ít nhất 8 kí tự, có chứa chữ cái, số và ký tự đặc biệt.",
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
+  INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
 };
 
 export const COLOR = {

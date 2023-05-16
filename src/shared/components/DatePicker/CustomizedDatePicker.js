@@ -5,18 +5,15 @@ import { useEffect, useState } from "react";
 import { convertISOToFormat } from "../../../Helpers/dateHelper";
 
 const CustomizedDatePicker = (props) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
+  const [isMapped, setIsMapped] = useState(false);
 
   useEffect(() => {
-    setValue(props.formName, new Date());
-
-    const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, new Date());
-
-    props.setValue(props.formName, datevalue);
-  }, []);
-
-  useEffect(() => {
-    setValue(props.value ?? new Date());
+    if (!isMapped && props.value !== undefined) {
+      console.log(props.value);
+      setValue(props.value ?? "");
+      setIsMapped(true);
+    }
   }, [props.value]);
 
   return (
@@ -30,12 +27,19 @@ const CustomizedDatePicker = (props) => {
         format={DATE_FORMAT.MM_YYYY}
         views={["year", "month"]}
         className={style.datePicker__input}
-        {...props.options}
+        onError={props.error}
+        slotProps={{
+          textField: {
+            helperText: props?.error?.message,
+          },
+        }}
         onChange={(e) => {
           const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, e);
 
           setValue(e);
           props.setValue(props.formName, datevalue);
+
+          console.log(props.getValues());
         }}
         value={value}
       ></DatePicker>
