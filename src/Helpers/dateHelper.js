@@ -10,7 +10,8 @@ export const convertDateFormat = (date, from, to) => {
 };
 
 export const covertToISODate = (dateFormat, date) => {
-  if (!date || date === "Invalid Date") return new Date();
+  console.log(date)
+  if (!date || date === "Invalid Date") return "";
 
   if (date instanceof Date) return date;
 
@@ -18,6 +19,10 @@ export const covertToISODate = (dateFormat, date) => {
 };
 
 export const convertISOToFormat = (dateFormat, date) => {
+  if (!date) {
+    return "";
+  }
+
   const selectedDate = new Date(date ?? new Date());
 
   return format(selectedDate, dateFormat);

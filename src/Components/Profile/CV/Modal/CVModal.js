@@ -13,7 +13,7 @@ import {
 import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";
 import CustomizedDatePicker from "../../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import {
   getRegisterNamePrefixFromTitle,
   removeRegisterNamePrefix,
@@ -36,7 +36,7 @@ const CVModal = (props) => {
   } = useForm();
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     reset();
 
     if (!props.openModal) return;
@@ -86,7 +86,10 @@ const CVModal = (props) => {
     // if (!val || val.length === 0) {
     //   return ERROR_MESSAGES.REQUIRED_FIELD;
     // }
-    if (endDateTimeNumber < statDateTimeNumber || endDateTimeNumber < currentDate) {
+    if (
+      endDateTimeNumber < statDateTimeNumber ||
+      endDateTimeNumber < currentDate
+    ) {
       return ERROR_MESSAGES.INVALID_END_DATE;
     }
   };
@@ -158,7 +161,7 @@ const CVModal = (props) => {
                       formName={textField.registerName}
                       setValue={setValue}
                       value={covertToISODate(
-                        DATE_FORMAT.MM_YYYY,
+                        DATE_FORMAT.YYYY_MM_DD,
                         getValues(textField.registerName)
                       )}
                       disabled={
@@ -167,6 +170,7 @@ const CVModal = (props) => {
                             getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
+                      getValues={getValues}
                     />
                   );
                 } else if (textField.type === INPUT_TYPES.CHECK_BOX) {
