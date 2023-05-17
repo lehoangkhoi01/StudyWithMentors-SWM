@@ -8,14 +8,12 @@ import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect
 import { BUTTON_LABEL, PLACE_HOLDER } from "../../../shared/constants/common";
 
 const names = [
-  "IT - Phần mêm",
-  "IT - Phần cứng",
-  "Bất động sản",
-  "Thiết kế/Kiến trúc",
-  "Nhà hàng/Khách sạn",
-  "Marketing",
-  "Đầu tư chứng khoán",
-  "Ngoại ngữ",
+  { name: "IT - Phần mêm", value: "IT - Phần mêm" },
+  { name: "IT - Phần cứng", value: "IT - Phần cứng" },
+  { name: "Bất động sản", value: "Bất động sản" },
+  { name: "Thiết kế/Kiến trúc", value: "Thiết kế/Kiến trúc" },
+  { name: "Nhà hàng/Khách sạn", value: "Nhà hàng/Khách sạn" },
+  { name: "Marketing", value: "Marketing" },
 ];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,6 +35,7 @@ const StyledLabelSelect = styled(InputLabel)`
 const FilterSection = () => {
   const [personName, setPersonName] = React.useState([]);
   const handleChange = (event) => {
+    console.log(event);
     const {
       target: { value },
     } = event;

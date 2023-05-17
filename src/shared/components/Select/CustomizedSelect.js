@@ -19,16 +19,16 @@ const CustomizedSelect = (props) => {
             {...props}
           >
             {props.items.map((item, index) => (
-              <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
-                <Checkbox checked={props.value.indexOf(item) > -1} />
-                <ListItemText primary={item} />
+              <MenuItem key={`SELECT_ITEM_${index}`} value={item.value}>
+                <Checkbox checked={props.value.indexOf(item.value) > -1} />
+                <ListItemText primary={item.name} />
               </MenuItem>
             ))}
           </Select>
         </>
       ) : (
         <>
-          <label htmlFor={props.inputId}>{`${props.name} 
+          <label htmlFor={props.inputId}>{`${props.name ?? ""} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
           <Select
             className={style.select__input}
@@ -36,12 +36,12 @@ const CustomizedSelect = (props) => {
             placeholder={props.placeholder}
             required={props.required}
             type={props.type ?? "text"}
-            defaultValue={props.items ? props.items[0] : ""}
-            {...props.options}
+            defaultValue={props.items ? props.items[0].value : ""}
+            {...props}
           >
             {props.items.map((item, index) => (
-              <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
-                {item}
+              <MenuItem key={`SELECT_ITEM_${index}`} value={item.value}>
+                {item.name}
               </MenuItem>
             ))}
           </Select>
