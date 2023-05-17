@@ -36,20 +36,16 @@ function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [currentRouter, setCurrentRoute] = useState("/");
-  //const [avatarUrl, setAvatarUrl] = useState();
-
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
   const location = useLocation();
   const { getUserInfo } = useFetchUserInfo();
 
   useEffect(() => {
     setCurrentRoute(location.pathname);
   }, [location]);
-
-  const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -77,10 +73,20 @@ function NavigationBar() {
   };
 
   useEffect(() => {
-    const userInfoResponse = getUserInfo();
-    setAuthenticated(user.isAuthenticated);
-    setUserInfo(userInfoResponse);
-    //setAvatarUrl(userInfo.avatarUrl);
+    async function fetchUserData() {
+      const userInfoResponse = await getUserInfo();
+      if (userInfoResponse && userInfoResponse.status === "403") {
+        // expired token...
+        console.log("expired token");
+        localStorage.removeItem("TOKEN");
+        dispatch(userAction.logout());
+        setAuthenticated(false);
+      } else {
+        setAuthenticated(user.isAuthenticated);
+        setUserInfo(userInfoResponse);
+      }
+    }
+    fetchUserData();
   }, [user]);
 
   return (

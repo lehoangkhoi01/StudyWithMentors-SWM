@@ -10,6 +10,7 @@ const CustomizedCheckBox = (props) => {
         control={<Checkbox checked={props.watch ?? false}  />}
         label={props.name}
         {...props.options}
+        required={!props.optional}
       />
     </div>
   );

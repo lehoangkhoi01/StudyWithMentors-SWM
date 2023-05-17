@@ -145,10 +145,6 @@ export const AUTHENTICATION_MENU = [
     TITLE: "Đăng nhập",
     ROUTE: ROUTES.SIGN_IN,
   },
-  {
-    TITLE: "Đăng ký",
-    ROUTE: ROUTES.SIGN_UP,
-  },
 ];
 export const MOBILE_MENU = [];
 export const ACCOUNT_MENU = [
@@ -196,6 +192,8 @@ export const LENGTH = {
 
 export const ERROR_MESSAGES = {
   SERVER_COMMON_ERROR: "Lỗi máy chủ. Xin vui lòng thử lại sau",
+  UNAUTHORIZED_SIGNIN:
+    "Không thể đăng nhập với email này. Vui lòng thử lại với email khác.",
   REQUIRED_FIELD: "Vui lòng điền thông tin này.",
   DUPLICATED_EMAIL: "Email này đã được đăng ký.",
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
@@ -213,6 +211,7 @@ export const ERROR_MESSAGES = {
     "Chọn một mật khẩu ít nhất 8 kí tự, có chứa chữ cái, số và ký tự đặc biệt.",
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
+  INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
 };
 
 export const COLOR = {
