@@ -184,6 +184,8 @@ export const LENGTH = {
 
 export const ERROR_MESSAGES = {
   SERVER_COMMON_ERROR: "Lỗi máy chủ. Xin vui lòng thử lại sau",
+  UNAUTHORIZED_SIGNIN:
+    "Không thể đăng nhập với email này. Vui lòng thử lại với email khác.",
   REQUIRED_FIELD: "Vui lòng điền thông tin này.",
   DUPLICATED_EMAIL: "Email này đã được đăng ký.",
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
