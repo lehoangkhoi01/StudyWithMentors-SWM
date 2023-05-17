@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, FormControl, Grid, InputLabel } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "./FilterSection.module.scss";
@@ -7,13 +7,22 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { BUTTON_LABEL, PLACE_HOLDER } from "../../../shared/constants/common";
 
-const names = [
+const MAJOR_NAMES = [
   { name: "IT - Phần mêm", value: "IT - Phần mêm" },
   { name: "IT - Phần cứng", value: "IT - Phần cứng" },
   { name: "Bất động sản", value: "Bất động sản" },
   { name: "Thiết kế/Kiến trúc", value: "Thiết kế/Kiến trúc" },
   { name: "Nhà hàng/Khách sạn", value: "Nhà hàng/Khách sạn" },
   { name: "Marketing", value: "Marketing" },
+];
+
+const CATEGORY_NAMES = [
+  { name: "Kỹ năng mềm", value: "Kỹ năng mềm" },
+  { name: "Kiến thức chuyên môn", value: "Kiến thức chuyên môn" },
+  { name: "Nghề nghiệp", value: "Nghề nghiệp" },
+  { name: "Feedback và Lời khuyên", value: "eedback và Lời khuyên" },
+  { name: "Học bổng", value: "Học bổng" },
+  { name: "Các cuộc thi", value: "Các cuộc thi" },
 ];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,13 +42,24 @@ const StyledLabelSelect = styled(InputLabel)`
 `;
 
 const FilterSection = () => {
-  const [personName, setPersonName] = React.useState([]);
-  const handleChange = (event) => {
-    console.log(event);
+  const [majorName, setMajorName] = useState([]);
+  const [categoryName, setCategoryName] = useState([]);
+
+  const handleMajoreChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setMajorName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleCategoryChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCategoryName(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -52,7 +72,7 @@ const FilterSection = () => {
         container
         spacing={2}
       >
-        <Grid item xs={5}>
+        <Grid item xs={3.5}>
           <CustomizedTextField
             fullWidth
             inputId="search"
@@ -60,18 +80,18 @@ const FilterSection = () => {
             required={true}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
-              Tất cả lĩnh vực
+              {PLACE_HOLDER.ALL_MAJOR}
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
-              items={names}
+              items={MAJOR_NAMES}
               inputId="majorSelect"
               isMultipleSelect={true}
-              value={personName}
-              onChange={handleChange}
+              value={majorName}
+              onChange={handleMajoreChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
@@ -79,7 +99,26 @@ const FilterSection = () => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
+          <FormControl fullWidth>
+            <StyledLabelSelect className={`${style.filterSection__label}`}>
+              {PLACE_HOLDER.ALL_CATEGORY}
+            </StyledLabelSelect>
+            <CustomizedSelect
+              fullWidth
+              items={CATEGORY_NAMES}
+              inputId="majorSelect"
+              isMultipleSelect={true}
+              value={categoryName}
+              onChange={handleCategoryChange}
+              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
+              required={true}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={1.5}>
           <FormControl fullWidth>
             <Button
               className={`${style.filterSection__button}`}
