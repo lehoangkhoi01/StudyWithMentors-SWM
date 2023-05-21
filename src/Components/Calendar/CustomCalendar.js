@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "moment/locale/vi";
 import { Calendar as BigCalendar, Views } from "react-big-calendar";
 import "./react-big-calendar.css";
@@ -21,12 +21,23 @@ import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
+  const [eventList, setEventList] = useState([]);
   const handleCloseScheduleForm = () => {
     setOpenScheduleForm(false);
   };
   const handleOpenScheduleForm = () => {
     setOpenScheduleForm(true);
   };
+
+  const handleSubmitCreateSchedule = (newSchedule) => {
+    console.log(newSchedule);
+    setEventList((prev) => [...prev, newSchedule]);
+    console.log(eventList);
+  };
+
+  useEffect(() => {
+    setEventList(events);
+  }, []);
 
   return (
     <div className={`${style.calendar__page}`}>
@@ -45,7 +56,7 @@ const CustomCalendar = () => {
             defaultView={Views.WEEK}
             dayPropGetter={customDayPropGetter}
             eventPropGetter={eventPropGetter}
-            events={events}
+            events={eventList}
             localizer={mLocalizer}
             formats={formats}
             max={max}
@@ -61,6 +72,7 @@ const CustomCalendar = () => {
       <ScheduleDialog
         open={openScheduleForm}
         handleClose={handleCloseScheduleForm}
+        handleSubmitCreateSchedule={handleSubmitCreateSchedule}
       />
     </div>
   );

@@ -16,6 +16,7 @@ const CustomizedTimePicker = (props) => {
         disabled={props.disabled ?? false}
         views={props.views ?? ["hours", "minutes"]}
         className={style.datePicker__input}
+        {...props.options}
       />
     </div>
   );

@@ -7,6 +7,7 @@ import { convertISOToFormat } from "../../../Helpers/dateHelper";
 const CustomizedDatePicker = (props) => {
   const [value, setValue] = useState("");
   const [isMapped, setIsMapped] = useState(false);
+  const dateFormat = props.format ?? DATE_FORMAT.MM_YYYY;
 
   useEffect(() => {
     if (!isMapped && props.value !== undefined) {
@@ -24,8 +25,8 @@ const CustomizedDatePicker = (props) => {
       </label>
       <DatePicker
         disabled={props.disabled}
-        format={DATE_FORMAT.MM_YYYY}
-        views={["year", "month"]}
+        format={dateFormat}
+        views={props.views ?? ["year", "month"]}
         className={style.datePicker__input}
         onError={props.error}
         slotProps={{
@@ -34,7 +35,7 @@ const CustomizedDatePicker = (props) => {
           },
         }}
         onChange={(e) => {
-          const datevalue = convertISOToFormat(DATE_FORMAT.MM_YYYY, e);
+          const datevalue = convertISOToFormat(dateFormat, e);
 
           setValue(e);
           props.setValue(props.formName, datevalue);
