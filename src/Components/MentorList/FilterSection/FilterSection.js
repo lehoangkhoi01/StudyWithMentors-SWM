@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Button, FormControl, Grid, InputLabel } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "./FilterSection.module.scss";
@@ -41,30 +40,7 @@ const StyledLabelSelect = styled(InputLabel)`
   }
 `;
 
-const FilterSection = () => {
-  const [majorName, setMajorName] = useState([]);
-  const [categoryName, setCategoryName] = useState([]);
-
-  const handleMajoreChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setMajorName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const handleCategoryChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setCategoryName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
+const FilterSection = (props) => {
   return (
     <div className={`${style.filterSection__container}`}>
       <Grid
@@ -90,8 +66,8 @@ const FilterSection = () => {
               items={MAJOR_NAMES}
               inputId="majorSelect"
               isMultipleSelect={true}
-              value={majorName}
-              onChange={handleMajoreChange}
+              value={props.majorName}
+              onChange={props.handleMajoreChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
@@ -109,8 +85,8 @@ const FilterSection = () => {
               items={CATEGORY_NAMES}
               inputId="majorSelect"
               isMultipleSelect={true}
-              value={categoryName}
-              onChange={handleCategoryChange}
+              value={props.categoryName}
+              onChange={props.handleCategoryChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
@@ -140,6 +116,7 @@ const FilterSection = () => {
           </FormControl>
         </Grid>
       </Grid>
+      <Grid container spacing={3}></Grid>
     </div>
   );
 };

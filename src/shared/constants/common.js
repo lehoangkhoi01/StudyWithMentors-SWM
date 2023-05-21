@@ -334,3 +334,10 @@ export const BREAK_POINT = {
   MD: 899,
   SM: 599,
 };
+
+export const FOLLOW = {
+  FOLLOW: "Theo dõi",
+  IS_FOLLOWING: "Đang theo dõi",
+};
+
+
