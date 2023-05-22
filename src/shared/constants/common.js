@@ -307,7 +307,8 @@ export const OTHERS = {
 };
 
 export const DATE_FORMAT = {
-  YYYY_MM_DD: "yyyy-MM-dd",
+  YYYY_MM_DD: "yyyy/MM/dd",
+  DD_MM_YYYY: "dd/MM/yyyy",
   MM_YYYY: "MM/yyyy",
 };
 
