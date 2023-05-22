@@ -22,10 +22,13 @@ import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
   const [eventList, setEventList] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const handleCloseScheduleForm = () => {
     setOpenScheduleForm(false);
   };
   const handleOpenScheduleForm = () => {
+    setSelectedEvent(null);
     setOpenScheduleForm(true);
   };
 
@@ -35,7 +38,17 @@ const CustomCalendar = () => {
     console.log(eventList);
   };
 
+  const handleSelectEvent = (e) => {
+    setSelectedEvent(e);
+    setOpenScheduleForm(true);
+  };
+
+  const handleSelectSlot = (e) => {
+    console.log(e);
+  };
+
   useEffect(() => {
+    console.log(events);
     setEventList(events);
   }, []);
 
@@ -64,13 +77,16 @@ const CustomCalendar = () => {
             step={60}
             timeslots={1}
             views={views}
-            selectable={false}
+            selectable={true}
+            onSelectEvent={handleSelectEvent}
+            onSelectSlot={handleSelectSlot}
           />
         </Grid2>
       </Grid2>
 
       <ScheduleDialog
         open={openScheduleForm}
+        selectedEvent={selectedEvent}
         handleClose={handleCloseScheduleForm}
         handleSubmitCreateSchedule={handleSubmitCreateSchedule}
       />

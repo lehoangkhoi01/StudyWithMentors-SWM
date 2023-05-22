@@ -11,7 +11,6 @@ const CustomizedDatePicker = (props) => {
 
   useEffect(() => {
     if (!isMapped && props.value !== undefined) {
-      console.log(props.value);
       setValue(props.value ?? "");
       setIsMapped(true);
     }
@@ -35,11 +34,10 @@ const CustomizedDatePicker = (props) => {
           },
         }}
         onChange={(e) => {
+          console.log(e);
           const datevalue = convertISOToFormat(dateFormat, e);
-
           setValue(e);
           props.setValue(props.formName, datevalue);
-
           console.log(props.getValues());
         }}
         value={value}

@@ -9,12 +9,12 @@ import {
   FormControl,
   Typography,
 } from "@mui/material";
-//import dayjs from "dayjs";
 import CustomizedDatePicker from "../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedTimePicker from "../../../shared/components/TimePicker/CustomizedTimePicker";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
   { name: "Hằng ngày", value: "daily" },
@@ -35,29 +35,13 @@ const ScheduleDialog = (props) => {
     register,
     setValue,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
     const dateExtracted = data.freeTime.split("/");
-    // const fromDateTimeString =
-    //   data.freeTime.split("/")[2] +
-    //   "-" +
-    //   data.freeTime.split("/")[1] +
-    //   "-" +
-    //   data.freeTime.split("/")[0] +
-    //   "T" +
-    //   data.fromTime;
-    // const endDateTimeString =
-    //   data.freeTime.split("/")[2] +
-    //   "-" +
-    //   data.freeTime.split("/")[1] +
-    //   "-" +
-    //   data.freeTime.split("/")[0] +
-    //   "T" +
-    //   data.endTime;
-
     const newFromDate = new Date(
       dateExtracted[2],
       Number.parseInt(dateExtracted[1]) - 1,
@@ -97,7 +81,9 @@ const ScheduleDialog = (props) => {
               formName="freeTime"
               views={["year", "month", "day"]}
               format={DATE_FORMAT.DD_MM_YYYY}
+              value={props.selectedEvent?.start ?? new Date()}
               setValue={setValue}
+              getValues={getValues}
               error={errors.freeTime ? true : false}
               required={true}
             />
@@ -110,7 +96,7 @@ const ScheduleDialog = (props) => {
                   required={true}
                   options={{ ...register("fromTime") }}
                   error={errors.fromTime ? true : false}
-                  defaultValue={new Date()}
+                  defaultValue={props.selectedEvent?.start ?? new Date()}
                 />
               </Grid2>
               <Grid2 xs={6}>
@@ -122,6 +108,7 @@ const ScheduleDialog = (props) => {
                   options={{ ...register("toTime") }}
                   error={errors.toTime ? true : false}
                   defaultValue={
+                    props.selectedEvent?.end ??
                     new Date(new Date().setHours(new Date().getHours() + 1))
                   }
                 />
