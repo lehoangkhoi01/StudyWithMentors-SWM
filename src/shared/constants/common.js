@@ -168,6 +168,8 @@ export const PLACE_HOLDER = {
   DEFAULT_DATE: "09/2020",
   SEARCH_MENTOR: "Tên kỹ năng, công ty mà bạn quan tâm",
   DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
+  ALL_MAJOR: "Tất cả lĩnh vực",
+  ALL_CATEGORY: "Tất cả phân loại",
 };
 
 export const FILL_INFORMATION = {
@@ -333,3 +335,10 @@ export const BREAK_POINT = {
   MD: 899,
   SM: 599,
 };
+
+export const FOLLOW = {
+  FOLLOW: "Theo dõi",
+  IS_FOLLOWING: "Đang theo dõi",
+};
+
+

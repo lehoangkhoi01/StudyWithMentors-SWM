@@ -1,17 +1,18 @@
 import { DatePicker } from "@mui/x-date-pickers";
 import style from "./CustomizedDatePicker.module.scss";
 import { DATE_FORMAT, OPTIONAL } from "../../constants/common";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { convertISOToFormat } from "../../../Helpers/dateHelper";
 
 const CustomizedDatePicker = (props) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(null);
   const [isMapped, setIsMapped] = useState(false);
   const dateFormat = props.format ?? DATE_FORMAT.MM_YYYY;
 
-  useEffect(() => {
-    if (!isMapped && props.value !== undefined) {
-      setValue(props.value ?? "");
+  useLayoutEffect(() => {
+    console.log(props.value);
+    if (!isMapped && props.value !== undefined && props.value !== "") {
+      setValue(props.value ?? null);
       setIsMapped(true);
     }
   }, [props.value]);
