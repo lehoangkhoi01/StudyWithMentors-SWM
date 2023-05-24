@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
 import style from "./CustomizedTextField.module.scss";
-import { BREAK_POINT, OPTIONAL } from "../../constants/common";
+import { OPTIONAL } from "../../constants/common";
+import { BREAK_POINT } from "../../constants/globalStyle";
 import { useMediaQuery } from "react-responsive";
 
 const CustomizedTextField = (props) => {

@@ -8,9 +8,9 @@ import {
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
   ERROR_MESSAGES,
-  COLOR,
-  ROUTES,
 } from "../../../../shared/constants/common";
+import { COLOR } from "../../../../shared/constants/globalStyle";
+import { ROUTES } from "../../../../shared/constants/navigation";
 import { emailValidationRules } from "../../../../shared/constants/validationRules";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";

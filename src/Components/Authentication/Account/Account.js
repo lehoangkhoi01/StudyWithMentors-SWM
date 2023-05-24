@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import { authenticationService } from "../../../Services/authenticationService";
-import { ROUTES } from "../../../shared/constants/common";
+import { ROUTES } from "../../../shared/constants/navigation";
 import SignUpSuccess from "../SignUpSuccess/SignUpSuccess";
 
 const Account = () => {

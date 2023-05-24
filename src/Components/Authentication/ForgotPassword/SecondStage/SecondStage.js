@@ -4,8 +4,8 @@ import { ArrowBackIosNewOutlined } from "@mui/icons-material";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
-  ROUTES,
 } from "../../../../shared/constants/common";
+import { ROUTES } from "../../../../shared/constants/navigation";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./SecondStage.module.scss";
 import { authenticationService } from "../../../../Services/authenticationService";

@@ -74,3 +74,10 @@ export const ACCOUNT_MENU = [
     ACTION: "LOG_OUT",
   },
 ];
+
+export const AUTHENTICATION_MENU = [
+  {
+    TITLE: "Đăng nhập",
+    ROUTE: ROUTES.SIGN_IN,
+  },
+];

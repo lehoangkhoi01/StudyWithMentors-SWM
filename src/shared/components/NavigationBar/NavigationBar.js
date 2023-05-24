@@ -18,13 +18,14 @@ import { StyledMenu } from "./StyledMenu";
 import style from "./NavigationBar.module.scss";
 import logoPath from "../../../assets/logo.png";
 import Logo from "../Logo/Logo";
+import { APP_NAME } from "../../constants/common";
 import {
-  APP_NAME,
+  MENTOR_NAVBAR,
+  UNAUTHORIZED_NAVBAR,
+  ROUTES,
   ACCOUNT_MENU,
   AUTHENTICATION_MENU,
-  ROUTES,
-} from "../../constants/common";
-import { MENTOR_NAVBAR, UNAUTHORIZED_NAVBAR } from "../../constants/navbar";
+} from "../../constants/navigation";
 
 import { selectUser, userAction } from "../../../Store/slices/userSlice";
 import { useFetchUserInfo } from "../../../Helpers/generalHelper";

@@ -14,11 +14,10 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
 import { APP_NAME } from "../../constants/common";
-import { ROUTES } from "../../constants/navbar";
+import { ROUTES } from "../../constants/navigation";
 import Logo from "../Logo/Logo";
 import style from "./Sidebar.module.scss";
-
-const drawerWidth = 240;
+import { drawerWidth } from "../../constants/globalStyle";
 
 const SideBar = (props) => {
   return (

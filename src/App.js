@@ -13,7 +13,7 @@ import CVPage from "./Pages/CV/CVPage";
 import ForgotPasswordPage from "./Pages/Authentication/ForgotPasswordPage";
 import HomePage from "./Pages/HomePage";
 import AccountPage from "./Pages/Authentication/AccountPage";
-import { ROUTES } from "./shared/constants/common";
+import { ROUTES } from "./shared/constants/navigation";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
