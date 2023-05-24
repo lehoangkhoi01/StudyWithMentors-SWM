@@ -1,4 +1,6 @@
 import { BrowserRouter, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "./Store/slices/userSlice";
 import { Route } from "react-router";
 import SignInPage from "./Pages/Authentication/SignInPage";
 import SignUpPage from "./Pages/Authentication/SignUpPage";
@@ -11,16 +13,24 @@ import CVPage from "./Pages/CV/CVPage";
 import ForgotPasswordPage from "./Pages/Authentication/ForgotPasswordPage";
 import HomePage from "./Pages/HomePage";
 import AccountPage from "./Pages/Authentication/AccountPage";
-import { ROUTES } from "./shared/constants/common";
+import { ROUTES } from "./shared/constants/navigation";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
 
 function App() {
+  const user = useSelector(selectUser);
+  console.log(user);
   return (
     <BrowserRouter>
-      <div className={`${style.app}`}>
+      <div
+        className={
+          user?.userInfo?.role === "STAFF"
+            ? `${style.app} ${style.app__sidebar}`
+            : `${style.app} ${style.app__navbar}`
+        }
+      >
         <NavigationBar />
         <div className={`${style.content}`}>
           <Switch className={`${style.switchContainer}`}>
@@ -47,9 +57,9 @@ function App() {
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
         </div>
-        <Footer />
         <LoadingProvider />
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -1,9 +1,9 @@
 @import "../../shared/theme";
 
 .mentorList {
-    &__container {
-        display: flex;
-        align-items: center;
-        padding: 1rem 10%;
-    }
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2vw;
+  }
 }

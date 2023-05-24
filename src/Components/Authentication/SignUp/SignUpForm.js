@@ -18,13 +18,13 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 
 //Others
 import {
-  COLOR,
   ERROR_MESSAGES,
-  ROUTES,
   SIGN_UP_PLACEHOLDER,
   SIGN_UP_TEXT,
   TITLE,
 } from "../../../shared/constants/common";
+import { COLOR } from "../../../shared/constants/globalStyle";
+import { ROUTES } from "../../../shared/constants/navigation";
 import {
   emailValidationRules,
   passwordValidation,

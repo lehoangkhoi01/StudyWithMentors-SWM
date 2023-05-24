@@ -1,17 +1,3 @@
-export const ROUTES = {
-  SIGN_IN: "/sign-in",
-  SIGN_UP: "/sign-up",
-  SIGN_UP_CONFIRMATION: "/confirmation",
-  FILL_INFORMATION: "/fill-information",
-  FORGOT_PASSWORD: "/forgot-password",
-  CV: "/cv",
-  HOME: "/home",
-  CALENDAR: "/calendar",
-  ACCOUNT: "/account",
-  NOT_FOUND: "/not-found",
-  SERVER_ERROR: "/server-error",
-};
-
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
   GOOGLE_LOGIN: "Tiếp tục với Google",
@@ -124,39 +110,6 @@ export const SIGN_UP_PLACEHOLDER = {
 
 export const APP_NAME = "Growth Me";
 
-export const NAVIGATION_TITLE = [
-  {
-    TITLE: "Trang chủ",
-    ROUTE: ROUTES.HOME,
-  },
-  {
-    TITLE: "Về Growth Me",
-  },
-  {
-    TITLE: "Tìm Mentor",
-  },
-  {
-    TITLE: "Hồ sơ của tôi",
-    ROUTE: ROUTES.CV,
-  },
-];
-export const AUTHENTICATION_MENU = [
-  {
-    TITLE: "Đăng nhập",
-    ROUTE: ROUTES.SIGN_IN,
-  },
-];
-export const MOBILE_MENU = [];
-export const ACCOUNT_MENU = [
-  {
-    TITLE: "Tài khoản",
-  },
-  {
-    TITLE: "Đăng xuất",
-    ACTION: "LOG_OUT",
-  },
-];
-
 export const PLACE_HOLDER = {
   LOGIN_EMAIL: "Nhập Email",
   LOGIN_PASSWORD: "Nhập mật khẩu",
@@ -214,10 +167,6 @@ export const ERROR_MESSAGES = {
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
-};
-
-export const COLOR = {
-  SYSTEM_RED: "#FF5252",
 };
 
 export const PROFILE_TITLES = {
@@ -329,16 +278,7 @@ export const MODAL_DELETE_PROPERTY = {
   DELETE: "Xóa",
 };
 
-export const BREAK_POINT = {
-  XL: 1535,
-  LG: 1199,
-  MD: 899,
-  SM: 599,
-};
-
 export const FOLLOW = {
   FOLLOW: "Theo dõi",
   IS_FOLLOWING: "Đang theo dõi",
 };
-
-

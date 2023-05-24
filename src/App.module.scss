@@ -13,6 +13,13 @@
   }
 }
 
+.app__navbar {
+  flex-direction: column;
+}
+.app__sidebar {
+  flex-direction: row;
+}
+
 .content {
   flex: 1 1 auto;
   display: flex;

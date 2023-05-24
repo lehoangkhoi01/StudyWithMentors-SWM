@@ -10,8 +10,8 @@ import {
   BUTTON_LABEL,
   ERROR_MESSAGES,
   SIGN_UP_PLACEHOLDER,
-  ROUTES,
 } from "../../../shared/constants/common";
+import { ROUTES } from "../../../shared/constants/navigation";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
