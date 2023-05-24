@@ -18,6 +18,7 @@ import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
+import EventList from "./Components/Events/EventList/EventList";
 
 function App() {
   const user = useSelector(selectUser);
@@ -51,6 +52,7 @@ function App() {
               path={ROUTES.FORGOT_PASSWORD}
               component={ForgotPasswordPage}
             />
+            <Route path={ROUTES.EVENT_LIST} component={EventList} />
             <Route path={ROUTES.CALENDAR} component={CalendarPage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />

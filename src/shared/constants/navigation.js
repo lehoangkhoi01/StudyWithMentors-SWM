@@ -10,6 +10,7 @@ export const ROUTES = {
   ACCOUNT: "/account",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
+  EVENT_LIST: "/events",
 };
 
 export const UNAUTHORIZED_NAVBAR = [
@@ -42,6 +43,10 @@ export const MENTOR_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.EVENT_LIST,
   },
   {
     TITLE: "Về Growth Me",
