@@ -18,6 +18,7 @@ import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
+import EventFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -53,6 +54,7 @@ function App() {
             />
             <Route path={ROUTES.CALENDAR} component={CalendarPage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route path={ROUTES.EVENT_FEEDBACK} component={EventFeedbackPage} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
