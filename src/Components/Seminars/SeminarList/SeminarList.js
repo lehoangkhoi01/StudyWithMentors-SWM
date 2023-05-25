@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import SeminarCard from "../SeminarCard/SeminarCard";
+import { seminarService } from "../../../Services/seminarService";
 
 const DUMMY_DATA = [
   {
@@ -36,10 +38,29 @@ const DUMMY_DATA = [
 ];
 
 const SeminarList = () => {
+  const [seminars, setSeminars] = useState([]);
+
+  useEffect(() => {
+    const getSeminarList = async () => {
+      try {
+        const response = await seminarService.getSemniars();
+
+        setSeminars(response);
+
+        console.log(seminars);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getSeminarList();
+  }, []);
+
   return (
     <div>
       {DUMMY_DATA.map((data, index) => (
-         <SeminarCard key={`SEMINAR_CARD_${index}`} data={data} />
+        <SeminarCard key={`SEMINAR_CARD_${index}`} data={data} />
       ))}
     </div>
   );

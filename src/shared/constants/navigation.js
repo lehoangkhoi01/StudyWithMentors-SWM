@@ -11,7 +11,7 @@ export const ROUTES = {
   EVENT_FEEDBACK: "/event-feedback",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
-  EVENT_LIST: "/events",
+  SEMINAR_LIST: "/seminars",
 };
 
 export const UNAUTHORIZED_NAVBAR = [
@@ -47,7 +47,7 @@ export const MENTOR_NAVBAR = [
   },
   {
     TITLE: "Hội thảo",
-    ROUTE: ROUTES.EVENT_LIST,
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
