@@ -8,6 +8,7 @@ export const ROUTES = {
   HOME: "/home",
   CALENDAR: "/calendar",
   ACCOUNT: "/account",
+  EVENT_FEEDBACK: "/event-feedback",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
 };

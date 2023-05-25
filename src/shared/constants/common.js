@@ -42,6 +42,7 @@ export const TITLE = {
   SIGN_IN: "Đăng nhập",
   SIGN_UP: "Đăng ký",
   SIGN_UP_CONFIRMATION: "Xác nhận tài khoản",
+  EVENT_FEEDBACK: "Khảo sát sự kiện",
   FORGOT_PASSWORD: "Quên mật khẩu?",
   OR: "Hoặc",
   PASSWORD: "Mật khẩu",

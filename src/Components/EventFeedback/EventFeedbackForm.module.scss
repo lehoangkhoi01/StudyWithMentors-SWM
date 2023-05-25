@@ -1,0 +1,17 @@
+@import "/src/shared/theme";
+
+.eventFeedback {
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  &__form {
+    width: 80%;
+    text-align: center;
+    gap: 2vh;
+    background-color: $black000;
+    padding: 1rem;
+  }
+}
