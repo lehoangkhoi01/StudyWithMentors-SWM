@@ -1,7 +1,7 @@
-import style from "./EventCard.module.scss";
+import style from "./SeminarCard.module.scss";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
-const EventCard = (props) => {
+const SeminarCard = (props) => {
   return (
     <div className={style.card__container}>
       <img className={style.card__image} src="https://artinmindstudio.com/wp-content/uploads/2022/03/Sunflower-Hope.jpg" />
@@ -19,4 +19,4 @@ const EventCard = (props) => {
   );
 };
 
-export default EventCard;
+export default SeminarCard;

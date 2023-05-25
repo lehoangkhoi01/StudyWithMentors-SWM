@@ -1,4 +1,4 @@
-import EventCard from "../EventCard/EventCard";
+import SeminarCard from "../SeminarCard/SeminarCard";
 
 const DUMMY_DATA = [
   {
@@ -35,14 +35,14 @@ const DUMMY_DATA = [
   },
 ];
 
-const EventList = () => {
+const SeminarList = () => {
   return (
     <div>
       {DUMMY_DATA.map((data, index) => (
-         <EventCard key={`EVENT_CARD_${index}`} data={data} />
+         <SeminarCard key={`SEMINAR_CARD_${index}`} data={data} />
       ))}
     </div>
   );
 };
 
-export default EventList;
+export default SeminarList;
