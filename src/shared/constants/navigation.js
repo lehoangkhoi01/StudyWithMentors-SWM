@@ -20,6 +20,10 @@ export const UNAUTHORIZED_NAVBAR = [
     ROUTE: ROUTES.HOME,
   },
   {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
     TITLE: "Về Growth Me",
   },
   {
@@ -31,6 +35,10 @@ export const COMMON_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
@@ -62,6 +70,10 @@ export const STAFF_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",

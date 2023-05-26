@@ -258,6 +258,8 @@ export const OTHERS = {
 
 export const DATE_FORMAT = {
   YYYY_MM_DD: "yyyy/MM/dd",
+  BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
+  DOT_DD_MM_YYYY: "dd.MM.yyyy",
   DD_MM_YYYY: "dd/MM/yyyy",
   MM_YYYY: "MM/yyyy",
 };

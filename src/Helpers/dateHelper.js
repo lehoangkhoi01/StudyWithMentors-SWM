@@ -1,16 +1,18 @@
 import { format, parse } from "date-fns";
 import * as dates from "date-arithmetic";
 
-export const convertDateFormat = (date, from, to) => {
-  if (!date || !from || !to) return "";
+// CONVERT {date} from {fromFormat} (ex: dd/MM/yyyy) to {toFormat} (ex: MM-yyyy)
+export const convertDateFormat = (date, fromFormat, toFormat) => {
+  if (!date || !fromFormat || !toFormat) return "";
 
-  const fromDateFormat = parse(date, from, new Date());
+  const fromDateFormat = parse(date, fromFormat, new Date());
 
-  return format(fromDateFormat, to);
+  return format(fromDateFormat, fromFormat);
 };
 
+// CONVERT {date} from {dateFormat} (ex: dd/MM/yyyy) to ISODate (ex: 2011-10-05T14:48:00.000Z)
 export const covertToISODate = (dateFormat, date) => {
-  console.log(date)
+  console.log(date);
   if (!date || date === "Invalid Date") return "";
 
   if (date instanceof Date) return date;
@@ -18,6 +20,7 @@ export const covertToISODate = (dateFormat, date) => {
   return parse(date, dateFormat, new Date());
 };
 
+// CONVERT {date} from ISODate (ex: 2011-10-05T14:48:00.000Z) to {dateFormat} (ex: dd/MM/yyyy)
 export const convertISOToFormat = (dateFormat, date) => {
   if (!date) {
     return "";
@@ -26,6 +29,17 @@ export const convertISOToFormat = (dateFormat, date) => {
   const selectedDate = new Date(date ?? new Date());
 
   return format(selectedDate, dateFormat);
+};
+
+// CONVERT the time (hh:mm:ss) to object {hour, minute, second}
+export const convertTimeToObject = (time) => {
+  const splitTime = time.toString().trim().split(":");
+
+  return {
+    hour: splitTime[0],
+    minute: splitTime[1],
+    second: splitTime[2],
+  };
 };
 
 export {

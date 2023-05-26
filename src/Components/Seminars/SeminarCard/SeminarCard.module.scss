@@ -1,18 +1,66 @@
+@import "../../../shared/theme";
+
 .card {
   &__container {
-    display: flex;
-    gap: 1rem;
+    padding: 0.6rem;
 
-    margin: 0 auto;
-    width: 50%;
-
-    padding: 1rem;
-    border: 1px solid black;
     border-radius: 1rem;
-    margin-block: 1rem;
+
+    background-color: $black000;
+  }
+
+  &__header {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
   }
 
   &__image {
-    width: 35%;
+    width: 100%;
+  }
+
+  &__status {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    text-align: center;
+    color: $black000;
+    font-size: 1.1rem;
+
+    padding-block: 0.8rem;
+
+    background: linear-gradient(
+      180deg,
+      rgba($secondary900, 0.6) 0%,
+      rgba($secondary900, 0.9) 100%
+    );
+    backdrop-filter: blur(4px);
+  }
+
+  &__information {
+    padding-inline: 1rem;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    min-height: 4rem;
+    -webkit-line-clamp: 2;
+    display: " webkit-box";
+    overflow: "hidden";
+    -webkit-box-orient: "vertical";
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+
+    img {
+      transform: scale(0.7);
+    }
   }
 }
