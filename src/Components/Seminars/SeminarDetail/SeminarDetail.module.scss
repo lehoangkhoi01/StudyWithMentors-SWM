@@ -1,0 +1,31 @@
+@import "../../../shared/theme";
+
+.detail {
+  &__container {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  &__content {
+    border-radius: 1.2rem;
+
+    background-color: $black000;
+    margin: 2rem 0;
+    padding: 1rem;
+  }
+
+  &__image {
+    width: 100%;
+    border: 1rem
+  }
+
+  &__information {
+    padding-inline: 2.5rem;
+  }
+
+  &__title {
+    color: $primary900;
+
+    font-size: 1.8rem;
+  }
+}

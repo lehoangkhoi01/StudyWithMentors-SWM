@@ -2,7 +2,7 @@ import {
   convertDateFormat,
   convertTimeToObject,
 } from "../../../Helpers/dateHelper";
-import { DATE_FORMAT } from "../../../shared/constants/common";
+import { DATE_FORMAT, SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarCard.module.scss";
 
 const SeminarCard = ({ data }) => {
@@ -27,7 +27,9 @@ const SeminarCard = ({ data }) => {
           src={require("../../../assets/Seminar_background.png")}
         />
         {new Date(data.startTime) < new Date() && (
-          <span className={style.card__status}>Sắp diễn ra</span>
+          <span className={style.card__status}>
+            {SEMINAR.IS_COMMING_STATUS}
+          </span>
         )}
       </div>
 

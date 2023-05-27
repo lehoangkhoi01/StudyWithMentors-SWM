@@ -285,3 +285,13 @@ export const FOLLOW = {
   FOLLOW: "Theo dõi",
   IS_FOLLOWING: "Đang theo dõi",
 };
+
+export const SEMINAR = {
+  IS_COMMING_STATUS: "Sắp diễn ra",
+  AUTHOR: "Diễn giả",
+  TIME: "Thời gian",
+  LOCATION: "Địa điểm",
+  ORGANIZER: "Tổ chức",
+  CONTENT: "Nội dung",
+  ATTACHED_FILE: "Tài liệu đính kèm",
+};
