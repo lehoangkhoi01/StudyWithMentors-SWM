@@ -83,7 +83,6 @@ function NavigationBar() {
   useEffect(() => {
     async function fetchUserData() {
       const userInfoResponse = await getUserInfo();
-      console.log(userInfoResponse);
       if (userInfoResponse && userInfoResponse.status === "403") {
         // expired token...
         console.log("expired token");
