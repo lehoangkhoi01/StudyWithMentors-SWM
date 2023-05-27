@@ -258,6 +258,8 @@ export const OTHERS = {
 
 export const DATE_FORMAT = {
   YYYY_MM_DD: "yyyy/MM/dd",
+  BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
+  DOT_DD_MM_YYYY: "dd.MM.yyyy",
   DD_MM_YYYY: "dd/MM/yyyy",
   MM_YYYY: "MM/yyyy",
 };
@@ -282,4 +284,14 @@ export const MODAL_DELETE_PROPERTY = {
 export const FOLLOW = {
   FOLLOW: "Theo dõi",
   IS_FOLLOWING: "Đang theo dõi",
+};
+
+export const SEMINAR = {
+  IS_COMMING_STATUS: "Sắp diễn ra",
+  AUTHOR: "Diễn giả",
+  TIME: "Thời gian",
+  LOCATION: "Địa điểm",
+  ORGANIZER: "Tổ chức",
+  CONTENT: "Nội dung",
+  ATTACHED_FILE: "Tài liệu đính kèm",
 };

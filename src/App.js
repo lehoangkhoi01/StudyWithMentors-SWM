@@ -20,6 +20,7 @@ import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
 import SeminarList from "./Components/Seminars/SeminarList/SeminarList";
 import EventFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
+import SeminarDetail from "./Components/Seminars/SeminarDetail/SeminarDetail";
 
 function App() {
   const user = useSelector(selectUser);
@@ -53,7 +54,8 @@ function App() {
               path={ROUTES.FORGOT_PASSWORD}
               component={ForgotPasswordPage}
             />
-            <Route path={ROUTES.Seminar_LIST} component={SeminarList} />
+            <Route exact path={ROUTES.SEMINAR_LIST} component={SeminarList} />
+            <Route exact path={ROUTES.SEMINAR_DETAIL} component={SeminarDetail} />
             <Route path={ROUTES.CALENDAR} component={CalendarPage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.EVENT_FEEDBACK} component={EventFeedbackPage} />

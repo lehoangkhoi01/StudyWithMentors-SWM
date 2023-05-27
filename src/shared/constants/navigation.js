@@ -11,13 +11,18 @@ export const ROUTES = {
   EVENT_FEEDBACK: "/event-feedback",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
-  EVENT_LIST: "/events",
+  SEMINAR_LIST: "/seminars",
+  SEMINAR_DETAIL: "/seminars/:id",
 };
 
 export const UNAUTHORIZED_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
@@ -31,6 +36,10 @@ export const COMMON_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
@@ -47,7 +56,7 @@ export const MENTOR_NAVBAR = [
   },
   {
     TITLE: "Hội thảo",
-    ROUTE: ROUTES.EVENT_LIST,
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
@@ -62,6 +71,10 @@ export const STAFF_NAVBAR = [
   {
     TITLE: "Trang chủ",
     ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Về Growth Me",
