@@ -1,30 +1,61 @@
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
+import { useEffect, useState } from "react";
+import { seminarService } from "../../../Services/seminarService";
+import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 
 const SeminarDetail = () => {
+  const [data, setData] = useState();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    try {
+      const getSeminarDetail = async () => {
+        const seminarDetail = await seminarService.getSeminarDetail(id);
+
+        setData(seminarDetail);
+      };
+
+      getSeminarDetail();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
     <div className={style.detail__container}>
-      <div>Danh sách sự kiện / Start up 001: How to market research</div>
+      <div>Danh sách sự kiện / {data.name}</div>
       <div className={style.detail__content}>
         <img
           className={style.detail__image}
-          src={require("../../../assets/Seminar_background.png")}
+          src={
+            data.imageLink
+              ? data.imageLink
+              : require("../../../assets/default-cover.jpg")
+          }
         />
         <div className={style.detail__information}>
-          <h1 className={style.detail__title}>
-            Start up 001: How to market research
-          </h1>
+          <h1 className={style.detail__title}>{data.name}</h1>
           <p>
-            <strong>{SEMINAR.AUTHOR}:</strong> Paul Kim
+            <strong>{SEMINAR.AUTHOR}:</strong>{" "}
+            {data.mentors.map(
+              (mentor, index) =>
+                `${mentor.fullName} ${
+                  data.mentors.length - 1 !== index ? "," : ""
+                }`
+            )}
           </p>
           <p>
-            <strong>{SEMINAR.TIME}:</strong> 9:00, 16.05.2023
+            <strong>{SEMINAR.TIME}:</strong>
+            {handleTimeToDisplay(data.startTime)}
           </p>
           <p>
-            <strong>{SEMINAR.LOCATION}:</strong> Seminar Room
+            <strong>{SEMINAR.LOCATION}:</strong> {data.location}
           </p>
           <p>
-            <strong>{SEMINAR.ORGANIZER}:</strong> Phòng Quan hệ Doanh nghiệp
+            <strong>{SEMINAR.ORGANIZER}:</strong> {data.organizer}
           </p>
           <div>
             <p>

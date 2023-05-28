@@ -50,6 +50,15 @@
     display: " webkit-box";
     overflow: "hidden";
     -webkit-box-orient: "vertical";
+
+    a {
+      text-decoration: none;
+      color: $black900;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__item {

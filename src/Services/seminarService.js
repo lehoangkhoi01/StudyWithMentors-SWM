@@ -7,4 +7,9 @@ export const seminarService = {
 
     return axiosClient.get(url);
   },
+  getSeminarDetail: (id) => {
+    const url = `${SeminarEndpoints.GET_SEMINAR_DETAIL}/${id}`;
+
+    return axiosClient.get(url);
+  }
 };
