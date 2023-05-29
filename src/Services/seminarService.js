@@ -14,4 +14,9 @@ export const seminarService = {
     const url = SeminarEndpoints.SEMINAR + "/" + data;
     return axiosClient.get(url);
   },
+  getSeminarDetail: (id) => {
+    const url = `${SeminarEndpoints.GET_SEMINAR_DETAIL}/${id}`;
+
+    return axiosClient.get(url);
+  }
 };

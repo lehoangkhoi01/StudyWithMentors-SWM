@@ -1,5 +1,6 @@
 import { format, parse } from "date-fns";
 import * as dates from "date-arithmetic";
+import { DATE_FORMAT } from "../shared/constants/common";
 
 // CONVERT {date} from {fromFormat} (ex: dd/MM/yyyy) to {toFormat} (ex: MM-yyyy)
 export const convertDateFormat = (date, fromFormat, toFormat) => {
@@ -40,6 +41,20 @@ export const convertTimeToObject = (time) => {
     minute: splitTime[1],
     second: splitTime[2],
   };
+};
+
+// CONVERT FROM (2023-05-25 12:20:06) TO 12:20, 2023-05-25
+export const handleTimeToDisplay = (fullDate) => {
+  const [date, time] = fullDate.toString().split(" ");
+
+  const timeObject = convertTimeToObject(time);
+  const formatedDate = convertDateFormat(
+    date,
+    DATE_FORMAT.BACK_END_YYYY_MM_DD,
+    DATE_FORMAT.DOT_DD_MM_YYYY
+  );
+
+  return `${timeObject.hour}:${timeObject.minute}, ${formatedDate}`;
 };
 
 export {

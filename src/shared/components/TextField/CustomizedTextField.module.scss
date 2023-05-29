@@ -39,10 +39,6 @@
 @media (max-width: $bp-xl) {
   .textField {
     &__container {
-      input {
-        padding-block: 0.5rem;
-      }
-
       textarea {
         padding-block: 0;
       }
@@ -55,10 +51,6 @@
     &__container {
       label {
         font-size: $SMALL_LABEL_SIZE;
-      }
-
-      input {
-        padding-block: 0.3rem;
       }
     }
 

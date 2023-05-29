@@ -1,30 +1,19 @@
-import {
-  convertDateFormat,
-  convertTimeToObject,
-} from "../../../Helpers/dateHelper";
-import { DATE_FORMAT, SEMINAR } from "../../../shared/constants/common";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
+import { SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarCard.module.scss";
 
 const SeminarCard = ({ data }) => {
-  const handleTimeToDisplay = (fullDate) => {
-    const [date, time] = fullDate.toString().split(" ");
-
-    const timeObject = convertTimeToObject(time);
-    const formatedDate = convertDateFormat(
-      date,
-      DATE_FORMAT.BACK_END_YYYY_MM_DD,
-      DATE_FORMAT.DOT_DD_MM_YYYY
-    );
-
-    return `${timeObject.hour}:${timeObject.minute}, ${formatedDate}`;
-  };
-
   return (
     <div className={style.card__container}>
       <div className={style.card__header}>
         <img
           className={style.card__image}
-          src={require("../../../assets/Seminar_background.png")}
+          src={
+            data.imageLink
+              ? data.imageLink
+              : require("../../../assets/default-cover.jpg")
+          }
         />
         {new Date(data.startTime) < new Date() && (
           <span className={style.card__status}>
@@ -34,7 +23,9 @@ const SeminarCard = ({ data }) => {
       </div>
 
       <div className={style.card__information}>
-        <h1 className={style.card__title}>{data.name}</h1>
+        <h1 className={style.card__title}>
+          <Link to={`/seminars/${data.id}`}>{data.name}</Link>
+        </h1>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Author_Seminar.png")} />
           <p>

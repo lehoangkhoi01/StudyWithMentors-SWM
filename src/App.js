@@ -16,10 +16,9 @@ import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
-import SeminarList from "./Components/Seminars/SeminarList/SeminarList";
-
-import SeminarDetail from "./Components/Seminars/SeminarDetail/SeminarDetail";
 import EventFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
+import SeminarsPage from "./Pages/Seminars/SeminarsPage";
+import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
 import SeminarCreate from "./Pages/Seminars/SeminarCreate";
 
 function App() {
@@ -45,11 +44,11 @@ function App() {
               component={SignUpConfirmationPage}
             />
             <Route path={ROUTES.CV} component={CVPage} />
-            <Route exact path={ROUTES.SEMINAR_LIST} component={SeminarList} />
+            <Route exact path={ROUTES.SEMINAR_LIST} component={SeminarsPage} />
             <Route
               exact
               path={ROUTES.SEMINAR_DETAIL}
-              component={SeminarDetail}
+              component={SeminarDetailPage}
             />
             <Route
               exact
