@@ -1,8 +1,63 @@
+@import "../../theme";
+
 .sidebar {
   &__appname {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 1rem 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__listitem {
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 1rem;
+    transition: ease;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 10px;
+    a,
+    div {
+      color: $primary900;
+      text-decoration: none;
+    }
+  }
+
+  &__listitem:hover {
+    background-color: $primary900;
+    & a,
+    div {
+      color: $black000;
+    }
+  }
+
+  &__listitemGroup {
+    color: $black600;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  &__listitemButton {
+    padding: 0;
+    & span {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+  &__infoSection {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: auto;
+    margin-bottom: 1rem;
+  }
+  &__userInfo {
+    margin-left: 10px;
   }
 }
