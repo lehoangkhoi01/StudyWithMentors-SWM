@@ -15,5 +15,15 @@ export const UserAccountEndpoints = {
 export const SeminarEndpoints = {
   SEARCH_SEMINAR: "seminars/search",
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
-  GET_SEMINAR_DETAIL: "seminars"
+  GET_SEMINAR_DETAIL: "seminars",
+  SEMINAR: "/seminars",
+};
+
+export const AccountEndpoints = {
+  ACCOUNT_STAFF: "accounts/staffs",
+  ACCONT_MENTOR: "accounts/mentors",
+};
+
+export const StaticResourceEndpoints = {
+  IMAGE: "resource/images",
 };

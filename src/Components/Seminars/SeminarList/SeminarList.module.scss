@@ -1,0 +1,70 @@
+@import "../../../shared/theme";
+@import "../../../shared/break-point";
+
+.list {
+  width: 90%;
+  margin: 0 auto 3rem;
+}
+
+.status__filter {
+  font-size: 1.2rem;
+  position: relative;
+  text-align: center;
+
+  &__items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    p {
+      color: $primary600;
+      font-weight: 600;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        color: $primary600;
+        border-bottom: 3px solid $primary600;
+      }
+
+      &:active {
+        color: $primary900;
+        border-bottom: 3px solid $primary900;
+      }
+    }
+  }
+
+  &__active {
+    color: $primary900 !important;
+    border-bottom: 3px solid $primary900 !important;
+  }
+
+  button {
+    width: max-content;
+
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: $bp-md) {
+    flex-wrap: wrap;
+
+    button {
+      position: relative;
+      right: unset;
+      top: unset;
+      transform: unset;
+    }
+  }
+}
+
+.add_icon {
+  transform: scale(0.7);
+  margin-right: 0.2rem;
+}

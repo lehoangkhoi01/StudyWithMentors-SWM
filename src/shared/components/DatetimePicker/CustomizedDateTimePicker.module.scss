@@ -1,7 +1,7 @@
 @import "../../theme";
 @import "../../break-point";
 
-.textField {
+.datePicker {
   &__container {
     display: flex;
     flex-direction: column;
@@ -20,56 +20,45 @@
         font-weight: 500;
       }
     }
-
-    input {
-      padding-block: 0.7rem;
-      background-color: $black000;
-      border-radius: 5px;
-    }
   }
 
-  &__limit {
-    text-align: right;
-    margin-top: 0.2rem;
+  &__input {
+    div {
+      border: none;
+      background-color: $black000;
 
-    font-size: $EXTRA_SMALL_SIZE;
+      input {
+        padding-block: 0.7rem;
+      }
+    }
   }
 }
 
 @media (max-width: $bp-xl) {
-  .textField {
-    &__container {
-      textarea {
-        padding-block: 0;
+  .datePicker {
+    &__input {
+      div {
+        input {
+          padding-block: 0.5rem;
+        }
       }
     }
   }
 }
 
 @media (max-width: $bp-md) {
-  .textField {
+  .datePicker {
     &__container {
       label {
         font-size: $SMALL_LABEL_SIZE;
       }
     }
-
-    &__limit {
-      font-size: $SMALL_LABEL_SIZE;
-    }
-  }
-}
-
-@media (max-width: $bp-md) {
-  .textField {
-    &__container {
-      label {
-        font-size: $EXSMALL_LABEL_SIZE;
+    &__input {
+      div {
+        input {
+          padding-block: 0.3rem;
+        }
       }
-    }
-
-    &__limit {
-      font-size: $EXSMALL_LABEL_SIZE;
     }
   }
 }
