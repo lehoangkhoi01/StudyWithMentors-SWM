@@ -1,13 +1,23 @@
 import { MuiFileInput } from "mui-file-input";
 import React from "react";
+import { OPTIONAL } from "../../constants/common";
+import style from "./FileInput.module.scss";
 
 const FileInput = (props) => {
   return (
-    <MuiFileInput
-      hideSizeText={false}
-      value={props.value}
-      onChange={props.onChange}
-    />
+    <div className={`${style.fileInput__container}`}>
+      <label htmlFor={props.inputId}>
+        {props.label}
+        {!props.required ? <span>({OPTIONAL})</span> : ""}
+      </label>
+      <MuiFileInput
+        name={props.name}
+        value={props.value}
+        onChange={props.onChange}
+        helperText={props.helperText}
+        errors={props.errors}
+      />
+    </div>
   );
 };
 

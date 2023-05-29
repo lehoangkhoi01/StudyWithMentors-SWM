@@ -1,6 +1,6 @@
 @import "../../theme";
 
-.fileInput {
+.autocomplete {
   &__container {
     display: flex;
     flex-direction: column;
@@ -19,5 +19,16 @@
         font-weight: 500;
       }
     }
+  }
+
+  &__rowDropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5px 0;
+    cursor: default;
+  }
+  &__rowDropdown:hover {
+    background-color: rgba(0, 0, 0, 0.04);
   }
 }
