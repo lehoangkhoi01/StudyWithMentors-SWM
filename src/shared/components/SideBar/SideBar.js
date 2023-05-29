@@ -4,13 +4,11 @@ import {
   ListItemButton,
   ListItem,
   List,
-  ListItemIcon,
   ListItemText,
   Divider,
   Typography,
+  Avatar,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
 import { APP_NAME } from "../../constants/common";
@@ -63,39 +61,53 @@ const SideBar = (props) => {
       </div>
 
       <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      <List className={`${style.sidebar__list}`}>
+        <ListItem
+          key="system-manage"
+          className={`${style.sidebar__listitemGroup}`}
+        >
+          Quản lí hệ thống
+        </ListItem>
+        <ListItem className={`${style.sidebar__listitem}`}>
+          <Link>Quản lí mentor</Link>
+        </ListItem>
+        <ListItem className={`${style.sidebar__listitem}`}>
+          <Link>Quản lí mentor</Link>
+        </ListItem>
+        <ListItem className={`${style.sidebar__listitem}`}>
+          <Link to={ROUTES.SEMINAR_LIST}>Quản lí sự kiện</Link>
+        </ListItem>
       </List>
       <Divider />
-      <List>
-        <ListItem key="Login" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/sign-in">Đăng nhập</Link>
-            </ListItemText>
-          </ListItemButton>
+
+      <List className={`${style.sidebar__list}`}>
+        <ListItem
+          key="account-manage"
+          className={`${style.sidebar__listitemGroup}`}
+        >
+          Quản lí tài khoản
         </ListItem>
-        <ListItem key="Logout" disablePadding>
-          <ListItemButton onClick={props.handleLogout}>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary="Đăng xuất" />
+        <ListItem key="account" className={`${style.sidebar__listitem}`}>
+          <Link>Tài khoản</Link>
+        </ListItem>
+
+        <ListItem key="Logout" className={`${style.sidebar__listitem}`}>
+          <ListItemButton
+            className={`${style.sidebar__listitemButton}`}
+            onClick={props.handleLogout}
+          >
+            <ListItemText sx={{ fontWeight: "600" }} primary="Đăng xuất" />
           </ListItemButton>
         </ListItem>
       </List>
+
+      <div className={`${style.sidebar__infoSection}`}>
+        <Avatar src={props.userInfo.avatarUrl} alt={props.userInfo.fullName} />
+        <div className={`${style.sidebar__userInfo}`}>
+          <Typography variant="h6">{props.userInfo.fullName}</Typography>
+          <Typography>{props.userInfo.role}</Typography>
+        </div>
+      </div>
     </Drawer>
   );
 };

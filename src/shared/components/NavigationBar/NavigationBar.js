@@ -317,10 +317,10 @@ function NavigationBar() {
     );
   };
 
-  const renderSidebar = () => {
-    return <SideBar handleLogout={handleLogout} />;
+  const renderSidebar = (userInfo) => {
+    return <SideBar userInfo={userInfo} handleLogout={handleLogout} />;
   };
 
-  return userInfo?.role === "STAFF" ? renderSidebar() : renderNavbar();
+  return userInfo?.role === "STAFF" ? renderSidebar(userInfo) : renderNavbar();
 }
 export default NavigationBar;
