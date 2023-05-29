@@ -13,6 +13,7 @@ export const ROUTES = {
   SERVER_ERROR: "/server-error",
   SEMINAR_LIST: "/seminars",
   SEMINAR_DETAIL: "/seminars/:id",
+  SEMINAR_CREATE: "/create-seminar",
 };
 
 export const UNAUTHORIZED_NAVBAR = [

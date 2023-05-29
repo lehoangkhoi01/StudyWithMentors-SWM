@@ -1,8 +1,7 @@
-//import SeminarList from "../../Components/Seminars/SeminarList/SeminarList";
-
+import React from "react";
 import SeminarForm from "../../Components/Seminars/SeminarForm/SeminarForm";
 
-const SeminarsPage = () => {
+const SeminarCreate = () => {
   return (
     <div>
       <SeminarForm />
@@ -10,4 +9,4 @@ const SeminarsPage = () => {
   );
 };
 
-export default SeminarsPage;
+export default SeminarCreate;
