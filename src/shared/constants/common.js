@@ -131,6 +131,7 @@ export const PLACE_HOLDER = {
   ALL_MAJOR: "Tất cả lĩnh vực",
   ALL_CATEGORY: "Tất cả phân loại",
   CHOOSE_IMAGE: "Bấm hoặc kéo file để tải poster",
+  DEFAULT_DEPARTMENT: "Tất cả phòng ban",
 };
 
 export const FILL_INFORMATION = {

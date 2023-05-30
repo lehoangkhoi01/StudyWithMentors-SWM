@@ -6,65 +6,59 @@ import { Grid } from "@mui/material";
 import SeminarFilter from "./SeminarFilter/SeminarFilter";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { BUTTON_LABEL, FILTER_SEMINAR } from "../../../shared/constants/common";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
-  const [majorName, setMajorName] = useState([]);
-  const [categoryName, setCategoryName] = useState([]);
+  const [filterInfo, setFilterInfo] = useState();
 
-  const handleMajorChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setMajorName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const handleCategoryChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setCategoryName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  const { setLoading } = useCustomLoading();
 
   useEffect(() => {
     const getSeminarList = async () => {
       try {
-        const response = await seminarService.getSemniars();
+        setLoading(true);
+        const clearedFilterInfo = Object.fromEntries(
+          Object.entries(filterInfo).filter(([, v]) => !!v)
+        );
 
-        setSeminars(response);
+        const response = await seminarService.getSemniars(clearedFilterInfo);
+
+        setSeminars(response.content);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getSeminarList();
-  }, []);
+  }, [filterInfo]);
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
   };
 
+  const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
+    setFilterInfo({
+      searchString: seminarName,
+      startDate,
+      endDate,
+      departmentId,
+    });
+  };
+
   return (
     <div>
-      <SeminarFilter
-        majorName={majorName}
-        categoryName={categoryName}
-        handleMajoreChange={handleMajorChange}
-        handleCategoryChange={handleCategoryChange}
-      />
+      <SeminarFilter onSeminarFilter={onSeminarFilter} />
       <div className={style.status__filter}>
         <div className={style.status__filter__items}>
           <p
             className={
-              statusFilter === FILTER_SEMINAR.ALL &&
-              style.status__filter__active
+              statusFilter === FILTER_SEMINAR.ALL
+                ? style.status__filter__active
+                : ""
             }
             onClick={() => {
               onChangeStatusFilter(FILTER_SEMINAR.ALL);
@@ -74,8 +68,9 @@ const SeminarList = () => {
           </p>
           <p
             className={
-              statusFilter === FILTER_SEMINAR.IS_COMMING &&
-              style.status__filter__active
+              statusFilter === FILTER_SEMINAR.IS_COMMING
+                ? style.status__filter__active
+                : ""
             }
             onClick={() => {
               onChangeStatusFilter(FILTER_SEMINAR.IS_COMMING);
@@ -85,8 +80,9 @@ const SeminarList = () => {
           </p>
           <p
             className={
-              statusFilter === FILTER_SEMINAR.PAST &&
-              style.status__filter__active
+              statusFilter === FILTER_SEMINAR.PAST
+                ? style.status__filter__active
+                : ""
             }
             onClick={() => {
               onChangeStatusFilter(FILTER_SEMINAR.PAST);
@@ -100,7 +96,7 @@ const SeminarList = () => {
           <img
             className={style.add_icon}
             src={require("../../../assets/icons/Add_Seminar.png")}
-          />{" "}
+          />
           {BUTTON_LABEL.CREATE_SEMINAR}
         </CustomizedButton>
       </div>

@@ -6,16 +6,19 @@ import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Button, Menu, MenuItem } from "@mui/material";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
+  const { setLoading } = useCustomLoading();
 
   const { id } = useParams();
 
   useEffect(() => {
     const getSeminarDetail = async () => {
       try {
+        setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
 
         console.log(seminarDetail);
@@ -23,6 +26,8 @@ const SeminarDetail = () => {
         setData(seminarDetail);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
