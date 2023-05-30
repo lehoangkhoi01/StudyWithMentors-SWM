@@ -6,26 +6,81 @@
     margin: 0 auto;
   }
 
+  &__stage {
+    margin-top: 1.5rem;
+
+    display: flex;
+    gap: 1rem;
+
+    a {
+      text-decoration: none;
+      color: rgba($black900, 0.6);
+    }
+  }
+
   &__content {
     border-radius: 1.2rem;
 
     background-color: $black000;
+
     margin: 2rem 0;
-    padding: 1rem;
+    padding: 1.5rem;
+
+    display: flex;
+    flex: unset;
   }
 
   &__image {
-    width: 100%;
-    border: 1rem
+    width: 30%;
+    height: fit-content;
+    border: 1rem;
+    border-radius: 0.8rem;
   }
 
   &__information {
     padding-inline: 2.5rem;
+
+    position: relative;
   }
 
   &__title {
     color: $primary900;
 
     font-size: 1.8rem;
+    margin-top: 0;
+  }
+
+  &__burger {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    img {
+      width: 25px;
+    }
+
+    button {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &__dropdown {
+    li {
+      display: flex;
+      gap: 0.8rem;
+
+      margin-inline: 0.3rem;
+      padding-inline: 0.5rem;
+
+      &:hover {
+        background-color: $primary50;
+      }
+    }
+
+    img {
+      width: 22px;
+    }
   }
 }

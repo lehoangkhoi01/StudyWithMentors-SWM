@@ -15,7 +15,7 @@ const SeminarCard = ({ data }) => {
               : require("../../../assets/default-cover.jpg")
           }
         />
-        {new Date(data.startTime) < new Date() && (
+        {new Date(data.startTime) >= new Date() && (
           <span className={style.card__status}>
             {SEMINAR.IS_COMMING_STATUS}
           </span>
@@ -31,8 +31,8 @@ const SeminarCard = ({ data }) => {
           <p>
             {data.mentors.map(
               (mentor, index) =>
-                `${mentor.fullName} ${
-                  data.mentors.length - 1 !== index ? "," : ""
+                `${mentor.fullName}${
+                  data.mentors.length - 1 !== index ? ", " : ""
                 }`
             )}
           </p>
@@ -47,7 +47,7 @@ const SeminarCard = ({ data }) => {
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Organizer_Seminar.png")} />
-          <p>{data.organizer}</p>
+          <p>{data.department?.name}</p>
         </div>
       </div>
     </div>
