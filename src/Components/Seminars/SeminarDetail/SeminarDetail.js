@@ -57,7 +57,7 @@ const SeminarDetail = () => {
             />
             <div className={style.detail__information}>
               <h1 className={style.detail__title}>{data.name}</h1>
-              <div>
+              <div className={style.detail__burger}>
                 <Button
                   id="basic-button"
                   aria-controls={open ? "basic-menu" : undefined}
@@ -83,18 +83,34 @@ const SeminarDetail = () => {
                     vertical: "top",
                     horizontal: "left",
                   }}
+                  className={style.detail__dropdown}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <img
+                      src={require("../../../assets/icons/Semniar_Report.png")}
+                    />
+                    <span>{SEMINAR.RERORT}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <img
+                      src={require("../../../assets/icons/Seminar_Edit.png")}
+                    />
+                    <span>{SEMINAR.EDIT}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <img
+                      src={require("../../../assets/icons/Seminar_Delete.png")}
+                    />
+                    <span>{SEMINAR.DELETE}</span>
+                  </MenuItem>
                 </Menu>
               </div>
               <p>
                 <strong>{SEMINAR.AUTHOR}:</strong>{" "}
                 {data.mentors.map(
                   (mentor, index) =>
-                    `${mentor.fullName} ${
-                      data.mentors.length - 1 !== index ? "," : ""
+                    `${mentor.fullName}${
+                      data.mentors.length - 1 !== index ? ", " : ""
                     }`
                 )}
               </p>
@@ -106,37 +122,14 @@ const SeminarDetail = () => {
                 <strong>{SEMINAR.LOCATION}: </strong> {data.location}
               </p>
               <p>
-                <strong>{SEMINAR.ORGANIZER}: </strong> {data.organizer}
+                <strong>{SEMINAR.ORGANIZER}: </strong> {data.department?.name}
               </p>
               <div>
                 <p>
                   <strong>{SEMINAR.CONTENT}: </strong>
                 </p>
                 <ul>
-                  <li>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industrys
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
-                  </li>
-                  <li>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industrys
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
-                  </li>
+                  <li>{data.description}</li>
                 </ul>
               </div>
               <p>
