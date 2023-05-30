@@ -15,7 +15,7 @@ export const BUTTON_LABEL = {
   DEFAULT: "Mặc định",
   TODAY: "Hôm nay",
   CREATE_SCHEDULE: "Tạo lịch",
-  CREATE_SEMINAR: "Tạo sự kiện",
+  CREATE_SEMINAR: "Tạo sự kiện mới",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -312,4 +312,10 @@ export const SEMINAR = {
   ORGANIZER: "Tổ chức",
   CONTENT: "Nội dung",
   ATTACHED_FILE: "Tài liệu đính kèm",
+};
+
+export const FILTER_SEMINAR = {
+  ALL: "Tất cả",
+  IS_COMMING: "Chưa diễn ra",
+  PAST: "Đã diễn ra",
 };

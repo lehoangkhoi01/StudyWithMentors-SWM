@@ -15,6 +15,7 @@ export const UserAccountEndpoints = {
 export const SeminarEndpoints = {
   SEARCH_SEMINAR: "seminars/search",
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
+  GET_SEMINAR_DETAIL: "seminars",
   SEMINAR: "/seminars",
 };
 
