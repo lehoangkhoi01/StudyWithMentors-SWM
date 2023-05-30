@@ -298,6 +298,7 @@ export const SEMINAR = {
   ORGANIZER: "Tổ chức",
   CONTENT: "Nội dung",
   ATTACHED_FILE: "Tài liệu đính kèm",
+  SEMINAR_LIST: "Danh sách sự kiện"
 };
 
 export const FILTER_SEMINAR = {
