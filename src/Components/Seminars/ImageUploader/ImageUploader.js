@@ -11,7 +11,7 @@ const ImageUploader = (props) => {
         value={props.value}
         onChange={props.onChange}
         helperText={props.helperText}
-        errors={props.errors}
+        error={props.error}
       />
     </div>
   );

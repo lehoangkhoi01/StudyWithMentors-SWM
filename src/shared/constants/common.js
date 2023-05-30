@@ -15,6 +15,7 @@ export const BUTTON_LABEL = {
   DEFAULT: "Mặc định",
   TODAY: "Hôm nay",
   CREATE_SCHEDULE: "Tạo lịch",
+  CREATE_SEMINAR: "Tạo sự kiện",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -36,6 +37,10 @@ export const TEXTFIELD_LABEL = {
   ISSUED_DATE: "Ngày cấp",
   DUE_DATE: "Thời hạn đến",
   SKILL: "Kỹ năng",
+  SEMINAR_NAME: "Tên sự kiện",
+  SEMINAR_PLACE: "Địa điểm",
+  SEMINAR_DESCRIPTION: "Thông tin chi tiết",
+  TIME: "Thời gian",
 };
 
 export const TITLE = {
@@ -57,6 +62,7 @@ export const TITLE = {
   LOGIN_TROUBLE: "Gặp rắc rối trong việc đăng nhập?",
   FOOTER: "© 2023 Growth Me",
   LABEL: "Nhãn",
+  SEMINAR_INFO: "Thông tin sự kiện",
 };
 
 export const OTHER_TEXT = {
@@ -124,6 +130,7 @@ export const PLACE_HOLDER = {
   DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
   ALL_MAJOR: "Tất cả lĩnh vực",
   ALL_CATEGORY: "Tất cả phân loại",
+  CHOOSE_IMAGE: "Bấm hoặc kéo file để tải poster",
 };
 
 export const FILL_INFORMATION = {
@@ -144,6 +151,8 @@ export const LENGTH = {
   PASSWORD_MAX: 100,
   PASSWORD_MIN: 8,
   EMAIL_MAX: 254,
+  SEMINAR_NAME: 200,
+  SEMINAR_PLACE: 200,
 };
 
 export const ERROR_MESSAGES = {
@@ -168,7 +177,13 @@ export const ERROR_MESSAGES = {
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
+  SEMINAR_NAME_LENGTH: "Độ dài tối đa là " + LENGTH.SEMINAR_NAME + " ký tự.",
+  INVALID_DATE_TIME: "Ngày giờ không hợp lệ",
+  INVALID_IMAGE_FILE:
+    "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
 };
+
+export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
 
 export const PROFILE_TITLES = {
   INTRODUCION: "Giới thiệu",
