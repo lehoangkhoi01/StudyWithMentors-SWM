@@ -84,22 +84,26 @@ const SeminarForm = () => {
   };
 
   const onSubmit = async (data) => {
-    data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
-    data.seminarTime = format(
-      data.seminarTime,
-      DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    );
-    const imageUrl = await handleUploadImage(data.seminarBackground);
-    let requestBody = {
-      name: data.seminarName,
-      description: data.seminarDescription,
-      location: data.seminarPlace,
-      imageUrl: imageUrl,
-      startTime: data.seminarTime,
-      mentorIds: data.seminarSpeakers,
-    };
-    const result = await seminarService.create(requestBody);
-    history.push(ROUTES.SEMINAR_LIST);
+    try {
+      data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
+      data.seminarTime = format(
+        data.seminarTime,
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      );
+      const imageUrl = await handleUploadImage(data.seminarBackground);
+      let requestBody = {
+        name: data.seminarName,
+        description: data.seminarDescription,
+        location: data.seminarPlace,
+        imageUrl: imageUrl,
+        startTime: data.seminarTime,
+        mentorIds: data.seminarSpeakers,
+      };
+      await seminarService.create(requestBody);
+      history.push(ROUTES.SEMINAR_LIST);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   React.useEffect(() => {
