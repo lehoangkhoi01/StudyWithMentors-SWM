@@ -7,35 +7,40 @@ import { Controller, useForm } from "react-hook-form";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { registerFullNameValidation } from "../../../shared/constants/validationRules";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import CloseIcon from "@mui/icons-material/Close";
 import { accountService } from "../../../Services/accountService";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
-import FileInput from "../../../shared/components/FileInput/FileInput";
 import { resourceService } from "../../../Services/resourceService";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import { seminarService } from "../../../Services/seminarService";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../../shared/constants/navigation";
-//import { DateTimePicker } from "@mui/x-date-pickers";
+import ImageUploader from "../ImageUploader/ImageUploader";
+import { IconButton } from "@mui/material";
 
 const SeminarForm = () => {
   const history = useHistory();
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [mentorList, setMentorList] = React.useState([]);
   const [seminarDate, setSeminarDate] = React.useState(new Date());
-  const { control, handleSubmit, register } = useForm({
+  const { control, handleSubmit, register, setValue } = useForm({
     defaultValues: {
-      seminarBackground: undefined,
+      seminarBackground: null,
     },
   });
 
   const onFileChange = (newValue) => {
-    console.log(newValue);
     if (newValue) {
       setSeminarBackground(URL.createObjectURL(newValue));
     } else {
       setSeminarBackground(null);
     }
+  };
+
+  const onRemoveImage = () => {
+    setSeminarBackground(null);
+    setValue("seminarBackground", null);
   };
 
   const getOptionLabel = (option) => option.profile.fullName;
@@ -90,30 +95,43 @@ const SeminarForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
-          <div className={`${style.seminarForm__image}`}>
-            <img src={seminarBackground} />
-          </div>
-          <Controller
-            name="seminarBackground"
-            control={control}
-            render={({ field, fieldState }) => {
-              return (
-                <FileInput
-                  inputId="seminarBackground"
-                  label="Hình ảnh"
-                  required={true}
-                  value={field.value}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    onFileChange(e);
-                  }}
-                  name={field.name}
-                  helperText={fieldState.invalid ? "File is invalid" : ""}
-                  error={fieldState.invalid}
-                />
-              );
-            }}
-          />
+          {seminarBackground ? (
+            <div className={`${style.seminarForm__image}`}>
+              <img src={seminarBackground} alt="seminar-poster" />
+              <IconButton
+                aria-label="remove"
+                size="large"
+                className={`${style.seminarForm__iconButton}`}
+                onClick={onRemoveImage}
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
+          ) : (
+            <Controller
+              name="seminarBackground"
+              defaultValue={seminarBackground}
+              control={control}
+              render={({ field, fieldState }) => {
+                return (
+                  <ImageUploader
+                    inputId="seminarBackground"
+                    label="Hình ảnh"
+                    placeholder="Bấm hoặc kéo file để tải poster"
+                    required={true}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      onFileChange(e);
+                    }}
+                    name={field.name}
+                    helperText={fieldState.invalid ? "File is invalid" : ""}
+                    error={fieldState.invalid}
+                  />
+                );
+              }}
+            />
+          )}
         </Grid2>
         <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
           <CustomTopTitle title="Thông tin sự kiện" />
@@ -173,17 +191,6 @@ const SeminarForm = () => {
               />
             )}
           />
-          {/* <AutocompleteInput
-            multiple={true}
-            name="Speaker"
-            required={true}
-            id="combo-box-demo"
-            options={mentorList}
-            getOptionLabel={getOptionLabel}
-            onChange={handleChangeSelectMentor}
-            value={selectedMentor}
-          /> */}
-
           <CustomizedTextField
             multiline
             maxRows={3}
