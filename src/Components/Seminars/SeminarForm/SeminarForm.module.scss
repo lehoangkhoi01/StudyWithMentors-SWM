@@ -30,11 +30,21 @@
     width: 100%;
     padding: 5px;
     margin-bottom: 1rem;
+    position: relative;
   }
   &__image > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  &__iconButton {
+    position: absolute;
+    top: 1.5vh;
+    right: 1vw;
+    color: $black000;
+  }
+  &__iconButton:hover {
+    background-color: $black800;
   }
 }
 

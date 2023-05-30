@@ -17,6 +17,12 @@ const CustomizedDateTimePicker = (props) => {
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled ?? false}
+        slotProps={{
+          textField: {
+            helperText: props?.fieldState?.error?.message,
+            error: props?.fieldState?.error?.message,
+          },
+        }}
         className={style.datePicker__input}
       />
     </div>

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "../constants/common";
+import { ERROR_MESSAGES, LENGTH } from "../constants/common";
 
 export const emailValidationRules = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
@@ -35,4 +35,20 @@ export const registerFullNameValidation = {
 
 export const registerConfirmPassword = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+};
+
+export const seminarNameValidation = {
+  require: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  maxLength: {
+    value: LENGTH.SEMINAR_NAME,
+    message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
+  },
+};
+
+export const seminarPlaceValidation = {
+  require: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  maxLength: {
+    value: LENGTH.SEMINAR_NAME,
+    message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
+  },
 };

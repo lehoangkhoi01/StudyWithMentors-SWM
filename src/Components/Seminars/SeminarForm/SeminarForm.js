@@ -1,41 +1,69 @@
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { format } from "date-fns";
+import { useHistory } from "react-router";
+//----------------
 import style from "./SeminarForm.module.scss";
 import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
-import { Controller, useForm } from "react-hook-form";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-import { registerFullNameValidation } from "../../../shared/constants/validationRules";
+import ImageUploader from "../ImageUploader/ImageUploader";
+import { IconButton } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { accountService } from "../../../Services/accountService";
+import CloseIcon from "@mui/icons-material/Close";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
-import FileInput from "../../../shared/components/FileInput/FileInput";
-import { resourceService } from "../../../Services/resourceService";
-import { format } from "date-fns";
-import { DATE_FORMAT } from "../../../shared/constants/common";
-import { seminarService } from "../../../Services/seminarService";
-import { useHistory } from "react-router";
+//-------------------
+import {
+  seminarNameValidation,
+  seminarPlaceValidation,
+} from "../../../shared/constants/validationRules";
+import {
+  validationSeminarDate,
+  validationSeminarImage,
+} from "./seminarValidation";
+import {
+  BUTTON_LABEL,
+  DATE_FORMAT,
+  PLACE_HOLDER,
+  TEXTFIELD_LABEL,
+  TITLE,
+  VALID_IMAGE_FILE_TYPE,
+} from "../../../shared/constants/common";
+//------------------
 import { ROUTES } from "../../../shared/constants/navigation";
-//import { DateTimePicker } from "@mui/x-date-pickers";
+import { accountService } from "../../../Services/accountService";
+import { seminarService } from "../../../Services/seminarService";
+import { resourceService } from "../../../Services/resourceService";
 
 const SeminarForm = () => {
   const history = useHistory();
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [mentorList, setMentorList] = React.useState([]);
   const [seminarDate, setSeminarDate] = React.useState(new Date());
-  const { control, handleSubmit, register } = useForm({
+  const {
+    control,
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      seminarBackground: undefined,
+      seminarBackground: null,
     },
   });
 
   const onFileChange = (newValue) => {
-    console.log(newValue);
-    if (newValue) {
+    if (newValue && VALID_IMAGE_FILE_TYPE.indexOf(newValue.type) >= 0) {
       setSeminarBackground(URL.createObjectURL(newValue));
     } else {
       setSeminarBackground(null);
     }
+  };
+
+  const onRemoveImage = () => {
+    setSeminarBackground(null);
+    setValue("seminarBackground", null);
   };
 
   const getOptionLabel = (option) => option.profile.fullName;
@@ -56,23 +84,26 @@ const SeminarForm = () => {
   };
 
   const onSubmit = async (data) => {
-    data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
-    data.seminarTime = format(
-      data.seminarTime,
-      DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    );
-    const imageUrl = await handleUploadImage(data.seminarBackground);
-    let requestBody = {
-      name: data.seminarName,
-      description: data.seminarDescription,
-      location: data.seminarPlace,
-      imageUrl: imageUrl,
-      startTime: data.seminarTime,
-      mentorIds: data.seminarSpeakers,
-    };
-    const result = await seminarService.create(requestBody);
-    console.log(result);
-    history.push(ROUTES.SEMINAR_LIST);
+    try {
+      data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
+      data.seminarTime = format(
+        data.seminarTime,
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      );
+      const imageUrl = await handleUploadImage(data.seminarBackground);
+      let requestBody = {
+        name: data.seminarName,
+        description: data.seminarDescription,
+        location: data.seminarPlace,
+        imageUrl: imageUrl,
+        startTime: data.seminarTime,
+        mentorIds: data.seminarSpeakers,
+      };
+      await seminarService.create(requestBody);
+      history.push(ROUTES.SEMINAR_LIST);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   React.useEffect(() => {
@@ -90,48 +121,68 @@ const SeminarForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
-          <div className={`${style.seminarForm__image}`}>
-            <img src={seminarBackground} />
-          </div>
-          <Controller
-            name="seminarBackground"
-            control={control}
-            render={({ field, fieldState }) => {
-              return (
-                <FileInput
-                  inputId="seminarBackground"
-                  label="Hình ảnh"
-                  required={true}
-                  value={field.value}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    onFileChange(e);
-                  }}
-                  name={field.name}
-                  helperText={fieldState.invalid ? "File is invalid" : ""}
-                  error={fieldState.invalid}
-                />
-              );
-            }}
-          />
+          {seminarBackground ? (
+            <div className={`${style.seminarForm__image}`}>
+              <img src={seminarBackground} alt="seminar-poster" />
+              <IconButton
+                aria-label="remove"
+                size="large"
+                className={`${style.seminarForm__iconButton}`}
+                onClick={onRemoveImage}
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
+          ) : (
+            <Controller
+              name="seminarBackground"
+              defaultValue={seminarBackground}
+              control={control}
+              rules={{
+                validate: validationSeminarImage,
+              }}
+              render={({ field, fieldState }) => {
+                return (
+                  <ImageUploader
+                    inputId="seminarBackground"
+                    placeholder={PLACE_HOLDER.CHOOSE_IMAGE}
+                    required={true}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      onFileChange(e);
+                    }}
+                    name={field.name}
+                    helperText={fieldState.error?.message}
+                    error={fieldState.invalid}
+                  />
+                );
+              }}
+            />
+          )}
         </Grid2>
         <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
-          <CustomTopTitle title="Thông tin sự kiện" />
+          <CustomTopTitle title={TITLE.SEMINAR_INFO} />
           <CustomizedTextField
             inputId="seminarName"
-            name="Tên sự kiện"
+            name={TEXTFIELD_LABEL.SEMINAR_NAME}
             required={true}
             options={{
-              ...register("seminarName", registerFullNameValidation),
+              ...register("seminarName", seminarNameValidation),
             }}
+            error={errors.seminarName ? true : false}
+            helperText={errors?.seminarName?.message}
           />
           <Controller
             control={control}
             name="seminarTime"
+            rules={{
+              validate: validationSeminarDate,
+            }}
             defaultValue={seminarDate}
-            render={({ field: { onChange, ...restField } }) => (
+            render={({ field: { onChange, ...restField }, fieldState }) => (
               <CustomizedDateTimePicker
-                label="Thời gian"
+                label={TEXTFIELD_LABEL.TIME}
                 ampm={false}
                 formName="seminarTime"
                 required={true}
@@ -139,16 +190,17 @@ const SeminarForm = () => {
                   onChange(event);
                   setSeminarDate(event);
                 }}
+                fieldState={fieldState}
                 {...restField}
               />
             )}
           />
           <CustomizedTextField
             inputId="seminarPlace"
-            name="Địa điểm"
+            name={TEXTFIELD_LABEL.SEMINAR_PLACE}
             required={true}
             options={{
-              ...register("seminarPlace", registerFullNameValidation),
+              ...register("seminarPlace", seminarPlaceValidation),
             }}
           />
 
@@ -161,7 +213,7 @@ const SeminarForm = () => {
                 multiple={true}
                 label="Speaker"
                 required={true}
-                id="combo-box-demo"
+                id="autocomplete-speakers"
                 options={mentorList}
                 getOptionLabel={getOptionLabel}
                 renderOption={renderOptionSpeakerAutocomplete}
@@ -173,25 +225,14 @@ const SeminarForm = () => {
               />
             )}
           />
-          {/* <AutocompleteInput
-            multiple={true}
-            name="Speaker"
-            required={true}
-            id="combo-box-demo"
-            options={mentorList}
-            getOptionLabel={getOptionLabel}
-            onChange={handleChangeSelectMentor}
-            value={selectedMentor}
-          /> */}
-
           <CustomizedTextField
             multiline
             maxRows={3}
             inputId="seminarDescription"
-            name="Thông tin chi tiết"
-            required={true}
+            name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
+            required={false}
             options={{
-              ...register("seminarDescription", registerFullNameValidation),
+              ...register("seminarDescription"),
             }}
           />
 
@@ -201,7 +242,7 @@ const SeminarForm = () => {
               variant="contained"
               color="primary600"
             >
-              Xác nhận
+              {BUTTON_LABEL.CREATE_SEMINAR}
             </CustomizedButton>
           </div>
         </Grid2>
