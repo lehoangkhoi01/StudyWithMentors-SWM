@@ -27,3 +27,7 @@ export const AccountEndpoints = {
 export const StaticResourceEndpoints = {
   IMAGE: "resource/images",
 };
+
+export const DepartmentEndPoints = {
+  DEPARTMENT: "departments",
+};

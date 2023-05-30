@@ -5,35 +5,42 @@
     width: 95%;
     margin: 2rem auto;
   }
+
   &__gridContainer {
     margin: 0;
     justify-content: center;
   }
+
   &__button {
     background-color: $primary600;
     padding: 9px 16px;
     border-radius: 10px;
     height: 45px;
     margin-top: 0.7vh;
+
+    &:hover {
+      background-color: $primary900;
+
+    }
   }
-  &__button:hover {
-    background-color: $primary900;
-  }
+
   &__linkButton {
     height: 45px;
     padding: 9px 0;
     color: $primary600;
     margin-top: 0.7vh;
-  }
-  &__linkButton:hover {
-    background-color: transparent;
-    text-decoration: underline;
+
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+    }
   }
 
   &__label {
     color: $black400;
-  }
-  &__label:focus {
-    color: $primary600;
+
+    &:focus {
+      color: $primary600;
+    }
   }
 }

@@ -1,0 +1,29 @@
+@import "../../theme";
+@import "../../break-point";
+
+.dateRange {
+  margin-top: 0.8vh;
+
+  div {
+    border: none;
+    background-color: $black000;
+
+    input {
+      padding-block: 0.7rem;
+    }
+
+    @media (max-width: $bp-xl) {
+      div {
+        input {
+        }
+      }
+    }
+
+    @media (max-width: $bp-md) {
+      div {
+        input {
+        }
+      }
+    }
+  }
+}

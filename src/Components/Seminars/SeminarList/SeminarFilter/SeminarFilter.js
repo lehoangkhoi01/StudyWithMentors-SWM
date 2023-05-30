@@ -6,26 +6,15 @@ import CustomizedTextField from "../../../../shared/components/TextField/Customi
 import CustomizedSelect from "../../../../shared/components/Select/CustomizedSelect";
 import {
   BUTTON_LABEL,
+  DATE_FORMAT,
   PLACE_HOLDER,
 } from "../../../../shared/constants/common";
+import { useForm } from "react-hook-form";
+import CustomizedDateRangePicker from "../../../../shared/components/DateRangePicker/CustomizedDateRangePicker";
+import { useEffect, useState } from "react";
+import { departmentService } from "../../../../Services/departmentService";
+import { convertISOToFormat } from "../../../../Helpers/dateHelper";
 
-const MAJOR_NAMES = [
-  { name: "IT - Phần mêm", value: "IT - Phần mêm" },
-  { name: "IT - Phần cứng", value: "IT - Phần cứng" },
-  { name: "Bất động sản", value: "Bất động sản" },
-  { name: "Thiết kế/Kiến trúc", value: "Thiết kế/Kiến trúc" },
-  { name: "Nhà hàng/Khách sạn", value: "Nhà hàng/Khách sạn" },
-  { name: "Marketing", value: "Marketing" },
-];
-
-const CATEGORY_NAMES = [
-  { name: "Kỹ năng mềm", value: "Kỹ năng mềm" },
-  { name: "Kiến thức chuyên môn", value: "Kiến thức chuyên môn" },
-  { name: "Nghề nghiệp", value: "Nghề nghiệp" },
-  { name: "Feedback và Lời khuyên", value: "eedback và Lời khuyên" },
-  { name: "Học bổng", value: "Học bổng" },
-  { name: "Các cuộc thi", value: "Các cuộc thi" },
-];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -44,6 +33,50 @@ const StyledLabelSelect = styled(InputLabel)`
 `;
 
 const SeminarFilter = (props) => {
+  const { register, getValues } = useForm();
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState([]);
+  const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
+
+  useEffect(() => {
+    const getDepartments = async () => {
+      try {
+        const response = await departmentService.getDepartments();
+
+        setDepartments(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getDepartments();
+  }, []);
+
+  const onFilter = () => {
+    const seminarName = getValues("seminarName");
+    const [startDateJs, endDateJs] = selectedDateRange;
+    const startDate = startDateJs ? startDateJs.toDate() : "";
+    const endDate = endDateJs ? endDateJs.toDate() : "";
+
+    console.log(startDateJs);
+    console.log(startDate);
+
+    props.onSeminarFilter(
+      seminarName,
+      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
+      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, endDate) ?? null,
+      selectedDepartment.id
+    );
+  };
+
+  const handleDepartmentChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setSelectedDepartment(value);
+  };
+
   return (
     <div className={`${style.filterSection__container}`}>
       <Grid
@@ -54,9 +87,11 @@ const SeminarFilter = (props) => {
         <Grid item xs={12} sm={4} lg={3.5}>
           <CustomizedTextField
             fullWidth
-            inputId="search"
             placeholder={PLACE_HOLDER.SEARCH_MENTOR}
             required={true}
+            options={{
+              ...register("seminarName"),
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={4} lg={3}>
@@ -66,13 +101,16 @@ const SeminarFilter = (props) => {
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
-              items={MAJOR_NAMES}
-              inputId="majorSelect"
-              imdultipleSelect={true}
-              value={props.majorName}
-              onChange={props.handleMajoreChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
-              renderValue={(selected) => selected.join(", ")}
+              items={departments}
+              isMultipleSelect={true}
+              value={selectedDepartment}
+              onChange={handleDepartmentChange}
+              placeholder={PLACE_HOLDER.DEFAULT_DEPARTMENT}
+              renderValue={(selected, index) => {
+                return `${selected.name}${
+                  index !== selected.length ? ", " : ""
+                }`;
+              }}
               MenuProps={MenuProps}
               required={true}
             />
@@ -80,20 +118,9 @@ const SeminarFilter = (props) => {
         </Grid>
         <Grid item xs={12} sm={4} lg={3}>
           <FormControl fullWidth>
-            <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_CATEGORY}
-            </StyledLabelSelect>
-            <CustomizedSelect
-              fullWidth
-              items={CATEGORY_NAMES}
-              inputId="majorSelect"
-              imdultipleSelect={true}
-              value={props.categoryName}
-              onChange={props.handleCategoryChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
-              renderValue={(selected) => selected.join(", ")}
-              MenuProps={MenuProps}
-              required={true}
+            <CustomizedDateRangePicker
+              value={selectedDateRange}
+              setValue={setSelectedDateRange}
             />
           </FormControl>
         </Grid>
@@ -103,6 +130,7 @@ const SeminarFilter = (props) => {
               className={`${style.filterSection__button}`}
               variant="contained"
               startIcon={<SearchIcon />}
+              onClick={onFilter}
             >
               {BUTTON_LABEL.SEARCH}
             </Button>

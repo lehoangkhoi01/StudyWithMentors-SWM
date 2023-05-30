@@ -2,9 +2,11 @@ import axiosClient from "./Axios/axiosClient";
 import { SeminarEndpoints } from "./apiEndpoints";
 
 export const seminarService = {
-  getSemniars: () => {
+  getSemniars: (filterInfo) => {
     const url = SeminarEndpoints.SEARCH_SEMINAR;
-    return axiosClient.get(url);
+    return axiosClient.get(url, {
+      params: filterInfo,
+    });
   },
   create: (data) => {
     const url = SeminarEndpoints.SEMINAR;
@@ -18,5 +20,5 @@ export const seminarService = {
     const url = `${SeminarEndpoints.GET_SEMINAR_DETAIL}/${id}`;
 
     return axiosClient.get(url);
-  }
+  },
 };

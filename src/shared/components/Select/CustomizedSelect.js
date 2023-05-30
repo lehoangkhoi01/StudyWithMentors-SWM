@@ -4,46 +4,50 @@ import style from "./CustomizedSelect.module.scss";
 
 import { MenuItem, Select } from "@mui/material";
 
-const CustomizedSelect = (props) => {
+const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
   return (
     <div className={`${style.select__container} ${props.className}`}>
-      {props.isMultipleSelect ? (
+      {isMultipleSelect ? (
         <>
           <label htmlFor={props.inputId}>{`${props.name ?? ""} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
           <Select
             multiple
             className={style.select__input}
-            id={props.inputId}
+            id={inputId}
             placeholder={props.placeholder}
             {...props}
           >
-            {props.items.map((item, index) => (
-              <MenuItem key={`SELECT_ITEM_${index}`} value={item.value}>
-                <Checkbox checked={props.value.indexOf(item.value) > -1} />
-                <ListItemText primary={item.name} />
-              </MenuItem>
-            ))}
+            {props.items.map((item, index) => {
+              return (
+                <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
+                  <Checkbox checked={props.value.indexOf(item) > -1} />
+                  <ListItemText primary={item.name} />
+                </MenuItem>
+              );
+            })}
           </Select>
         </>
       ) : (
         <>
-          <label htmlFor={props.inputId}>{`${props.name ?? ""} 
+          <label htmlFor={inputId}>{`${props.name ?? ""} 
       ${!props.required ? `(${OPTIONAL})` : ""}`}</label>
           <Select
             className={style.select__input}
-            id={props.inputId}
+            id={inputId}
             placeholder={props.placeholder}
             required={props.required}
             type={props.type ?? "text"}
-            defaultValue={props.items ? props.items[0].value : ""}
+            defaultValue={props.items ? props.items[0] : ""}
             {...props}
           >
-            {props.items.map((item, index) => (
-              <MenuItem key={`SELECT_ITEM_${index}`} value={item.value}>
-                {item.name}
-              </MenuItem>
-            ))}
+            {props.items.map((item, index) => {
+              return (
+                <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
+                  {item.name}
+                </MenuItem>
+              );
+            })}
           </Select>
         </>
       )}

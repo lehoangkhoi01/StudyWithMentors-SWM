@@ -23,6 +23,7 @@ export const covertToISODate = (dateFormat, date) => {
 
 // CONVERT {date} from ISODate (ex: 2011-10-05T14:48:00.000Z) to {dateFormat} (ex: dd/MM/yyyy)
 export const convertISOToFormat = (dateFormat, date) => {
+  console.log(date)
   if (!date) {
     return "";
   }
