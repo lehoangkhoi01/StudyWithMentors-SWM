@@ -39,9 +39,11 @@ import { resourceService } from "../../../Services/resourceService";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SeminarForm = () => {
   const history = useHistory();
+  const { setLoading } = useCustomLoading();
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [documents, setDocuments] = React.useState([]);
   const [mentorList, setMentorList] = React.useState([]);
@@ -131,6 +133,7 @@ const SeminarForm = () => {
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
       data.seminarTime = format(
@@ -146,12 +149,17 @@ const SeminarForm = () => {
         imageUrl: imageUrl,
         startTime: data.seminarTime,
         mentorIds: data.seminarSpeakers,
-        attachmentUrls: attachmentList,
+        attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
       await seminarService.create(requestBody);
       history.push(ROUTES.SEMINAR_LIST);
     } catch (error) {
       console.log(error);
+      if (error.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
