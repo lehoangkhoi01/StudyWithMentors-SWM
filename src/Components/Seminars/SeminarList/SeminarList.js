@@ -12,6 +12,7 @@ const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
   const [filterInfo, setFilterInfo] = useState();
+  const [nextLink, setNextLink] = useState();
 
   const { setLoading } = useCustomLoading();
 
@@ -28,16 +29,19 @@ const SeminarList = () => {
     setStatusFilter(status);
   };
 
-  const getSeminarList = async () => {
+  const getSeminarList = async (url) => {
     try {
       setLoading(true);
       const clearedFilterInfo = filterInfo
         ? Object.fromEntries(Object.entries(filterInfo).filter(([, v]) => !!v))
         : filterInfo;
 
-      const response = await seminarService.getSemniars(clearedFilterInfo);
+      const response = await seminarService.getSemniars(clearedFilterInfo, url);
 
-      setSeminars(response.content);
+      const data = url ? [...seminars, ...response.content] : response.content;
+
+      setSeminars(data);
+      setNextLink(response.nextPage);
     } catch (error) {
       console.log(error);
     } finally {
@@ -54,15 +58,19 @@ const SeminarList = () => {
     });
   };
 
+  const viewMoreSeminar = () => {
+    getSeminarList(nextLink);
+  };
+
   return (
     <div>
       <SeminarFilter onSeminarFilter={onSeminarFilter} />
-      <div className={style.status__filter}>
-        <div className={style.status__filter__items}>
+      <div className={style.seminarList__status__filter}>
+        <div className={style.seminarList__status__filter__items}>
           <p
             className={
               statusFilter === FILTER_SEMINAR.ALL
-                ? style.status__filter__active
+                ? style.seminarList__status__filter__active
                 : ""
             }
             onClick={() => {
@@ -74,7 +82,7 @@ const SeminarList = () => {
           <p
             className={
               statusFilter === FILTER_SEMINAR.IS_COMMING
-                ? style.status__filter__active
+                ? style.seminarList__status__filter__active
                 : ""
             }
             onClick={() => {
@@ -86,7 +94,7 @@ const SeminarList = () => {
           <p
             className={
               statusFilter === FILTER_SEMINAR.PAST
-                ? style.status__filter__active
+                ? style.seminarList__status__filter__active
                 : ""
             }
             onClick={() => {
@@ -99,19 +107,29 @@ const SeminarList = () => {
 
         <CustomizedButton variant="outlined" color="primary600">
           <img
-            className={style.add_icon}
+            className={style.seminarList__add_icon}
             src={require("../../../assets/icons/Add_Seminar.png")}
           />
           {BUTTON_LABEL.CREATE_SEMINAR}
         </CustomizedButton>
       </div>
-      <Grid className={style.list} container spacing={2} alignItems={"stretch"}>
+      <Grid
+        className={style.seminarList__list}
+        container
+        spacing={2}
+        alignItems={"stretch"}
+      >
         {seminars.map((data, index) => (
           <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} lg={3}>
             <SeminarCard data={data} />
           </Grid>
         ))}
       </Grid>
+      {!!nextLink && (
+        <p className={style.seminarList__viewMore} onClick={viewMoreSeminar}>
+          Xem thêm
+        </p>
+      )}
     </div>
   );
 };

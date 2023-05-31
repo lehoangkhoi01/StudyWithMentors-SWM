@@ -15,7 +15,6 @@ const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
             multiple
             className={style.select__input}
             id={inputId}
-            placeholder={props.placeholder}
             {...props}
           >
             {props.items.map((item, index) => {
@@ -35,7 +34,6 @@ const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
           <Select
             className={style.select__input}
             id={inputId}
-            placeholder={props.placeholder}
             required={props.required}
             type={props.type ?? "text"}
             defaultValue={props.items ? props.items[0] : ""}

@@ -67,9 +67,12 @@ const SeminarFilter = (props) => {
   };
 
   const handleDepartmentChange = (event) => {
+    console.log(event);
     const {
       target: { value },
     } = event;
+
+    console.log(value);
 
     setSelectedDepartment(value);
   };
@@ -103,19 +106,16 @@ const SeminarFilter = (props) => {
         <Grid item xs={12} sm={4} lg={3}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_MAJOR}
+              {PLACE_HOLDER.DEFAULT_DEPARTMENT}
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
               items={departments}
-              isMultipleSelect={true}
               value={selectedDepartment}
               onChange={handleDepartmentChange}
               placeholder={PLACE_HOLDER.DEFAULT_DEPARTMENT}
-              renderValue={(selected, index) => {
-                return `${selected.name}${
-                  index !== selected.length ? ", " : ""
-                }`;
+              renderValue={(selected) => {
+                return selected.name;
               }}
               MenuProps={MenuProps}
               required={true}
