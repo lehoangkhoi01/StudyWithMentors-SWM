@@ -117,6 +117,19 @@ const SeminarForm = () => {
     }
   };
 
+  const handleUploadAttachments = async (fileList) => {
+    let seminarAttachmentList = [];
+    if (fileList.length > 0) {
+      for (let i = 0; i < fileList.length; i++) {
+        let formData = new FormData();
+        formData.append("attachment", fileList[i]);
+        const attachmentUrl = await resourceService.uploadAttachment(formData);
+        seminarAttachmentList.push(attachmentUrl);
+      }
+    }
+    return seminarAttachmentList;
+  };
+
   const onSubmit = async (data) => {
     try {
       data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
@@ -125,6 +138,7 @@ const SeminarForm = () => {
         DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
       );
       const imageUrl = await handleUploadImage(data.seminarBackground);
+      const attachmentList = await handleUploadAttachments(documents);
       let requestBody = {
         name: data.seminarName,
         description: data.seminarDescription,
@@ -132,7 +146,7 @@ const SeminarForm = () => {
         imageUrl: imageUrl,
         startTime: data.seminarTime,
         mentorIds: data.seminarSpeakers,
-        documents: documents,
+        attachmentUrls: attachmentList,
       };
       await seminarService.create(requestBody);
       history.push(ROUTES.SEMINAR_LIST);
