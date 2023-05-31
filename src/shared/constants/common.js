@@ -16,6 +16,7 @@ export const BUTTON_LABEL = {
   TODAY: "Hôm nay",
   CREATE_SCHEDULE: "Tạo lịch",
   CREATE_SEMINAR: "Tạo sự kiện mới",
+  ADD_DOCUMENT: "Tải thêm tài liệu",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -41,6 +42,7 @@ export const TEXTFIELD_LABEL = {
   SEMINAR_PLACE: "Địa điểm",
   SEMINAR_DESCRIPTION: "Thông tin chi tiết",
   TIME: "Thời gian",
+  SPEAKER: "Diễn giả",
 };
 
 export const TITLE = {
@@ -154,6 +156,7 @@ export const LENGTH = {
   EMAIL_MAX: 254,
   SEMINAR_NAME: 200,
   SEMINAR_PLACE: 200,
+  FILE_MAX_SIZE: 10,
 };
 
 export const ERROR_MESSAGES = {
@@ -182,6 +185,8 @@ export const ERROR_MESSAGES = {
   INVALID_DATE_TIME: "Ngày giờ không hợp lệ",
   INVALID_IMAGE_FILE:
     "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
+  INVALID_SEMINAR_DOCUMENTS:
+    "Vui lòng chọn file hợp lệ với kích thước không quá 10MB. Tối đa 5 tài liệu.",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];

@@ -6,4 +6,8 @@ export const resourceService = {
     const url = StaticResourceEndpoints.IMAGE;
     return axiosClient.post(url, data);
   },
+  uploadAttachment: (data) => {
+    const url = StaticResourceEndpoints.ATTACHMENT;
+    return axiosClient.post(url, data);
+  },
 };

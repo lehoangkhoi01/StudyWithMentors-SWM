@@ -11,6 +11,7 @@ const CustomizedButton = (props) => {
         props.className
       }`}
       onClick={props.onClick}
+      startIcon={props.startIcon}
     >
       {props.children}
     </Button>
