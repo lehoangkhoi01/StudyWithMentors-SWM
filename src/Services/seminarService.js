@@ -2,8 +2,8 @@ import axiosClient from "./Axios/axiosClient";
 import { SeminarEndpoints } from "./apiEndpoints";
 
 export const seminarService = {
-  getSemniars: (filterInfo) => {
-    const url = SeminarEndpoints.SEARCH_SEMINAR;
+  getSemniars: (filterInfo, specificedUrl) => {
+    const url = specificedUrl ? specificedUrl : SeminarEndpoints.SEARCH_SEMINAR;
     return axiosClient.get(url, {
       params: filterInfo,
     });

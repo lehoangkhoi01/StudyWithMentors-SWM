@@ -1,70 +1,92 @@
 @import "../../../shared/theme";
 @import "../../../shared/break-point";
 
-.list {
-  width: 90%;
-  margin: 0 auto 3rem;
-}
+.seminarList {
+  &__list {
+    width: 90%;
+    margin: 0 auto 3rem;
+  }
 
-.status__filter {
-  font-size: 1.2rem;
-  position: relative;
-  text-align: center;
+  &__status__filter {
+    font-size: 1.2rem;
+    position: relative;
+    text-align: center;
 
-  &__items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    &__items {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
 
-    p {
-      color: $primary600;
-      font-weight: 600;
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      transition: all 0.1s ease-in-out;
-
-      &:hover {
+      p {
         color: $primary600;
-        border-bottom: 3px solid $primary600;
-      }
+        font-weight: 600;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
 
-      &:active {
-        color: $primary900;
-        border-bottom: 3px solid $primary900;
+        &:hover {
+          color: $primary600;
+          border-bottom: 3px solid $primary600;
+        }
+
+        &:active {
+          color: $primary900;
+          border-bottom: 3px solid $primary900;
+        }
       }
     }
-  }
 
-  &__active {
-    color: $primary900 !important;
-    border-bottom: 3px solid $primary900 !important;
-  }
-
-  button {
-    width: max-content;
-
-    position: absolute;
-    right: 3%;
-    top: 50%;
-    transform: translateY(-50%);
-
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: $bp-md) {
-    flex-wrap: wrap;
+    &__active {
+      color: $primary900 !important;
+      border-bottom: 3px solid $primary900 !important;
+    }
 
     button {
-      position: relative;
-      right: unset;
-      top: unset;
-      transform: unset;
+      width: max-content;
+
+      position: absolute;
+      right: 3%;
+      top: 50%;
+      transform: translateY(-50%);
+
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: $bp-md) {
+      flex-wrap: wrap;
+
+      button {
+        position: relative;
+        right: unset;
+        top: unset;
+        transform: unset;
+      }
     }
   }
-}
 
-.add_icon {
-  transform: scale(0.7);
-  margin-right: 0.2rem;
+  &__add_icon {
+    transform: scale(0.7);
+    margin-right: 0.2rem;
+  }
+
+  &__viewMore {
+    text-align: center;
+    color: $primary900;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    font-weight: 600;
+    font-size: 1.3rem;
+
+    &:hover {
+      text-decoration: underline;
+      transform: translateY(3%);
+    }
+
+    &:active {
+      text-decoration: underline;
+      transform: translateY(-1%);
+    }
+  }
 }
