@@ -25,20 +25,25 @@ import {
 import {
   BUTTON_LABEL,
   DATE_FORMAT,
+  ERROR_MESSAGES,
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
   TITLE,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
 //------------------
-import { ROUTES } from "../../../shared/constants/navigation";
 import { accountService } from "../../../Services/accountService";
+import { ROUTES } from "../../../shared/constants/navigation";
 import { seminarService } from "../../../Services/seminarService";
 import { resourceService } from "../../../Services/resourceService";
+import { convertBytesToMB } from "../../../Helpers/mathHelper";
+import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
+import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
 
 const SeminarForm = () => {
   const history = useHistory();
   const [seminarBackground, setSeminarBackground] = React.useState(null);
+  const [documents, setDocuments] = React.useState([]);
   const [mentorList, setMentorList] = React.useState([]);
   const [seminarDate, setSeminarDate] = React.useState(new Date());
   const {
@@ -50,6 +55,7 @@ const SeminarForm = () => {
   } = useForm({
     defaultValues: {
       seminarBackground: null,
+      seminarDocuments: [],
     },
   });
 
@@ -59,6 +65,34 @@ const SeminarForm = () => {
     } else {
       setSeminarBackground(null);
     }
+  };
+
+  const handleDocumentsChange = (e) => {
+    const files = e.target.files;
+    if (files.length === 1) {
+      setDocuments((prev) => [...prev, files[0]]);
+    } else {
+      const newFileList = Array.from(files);
+      setDocuments((prev) => [...prev, ...newFileList]);
+    }
+  };
+
+  const validateFiles = () => {
+    if (documents.length > 3) {
+      return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
+    }
+
+    for (let i = 0; i < documents.length; i++) {
+      if (convertBytesToMB(documents[i].size) > 3) {
+        return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
+      }
+    }
+  };
+
+  const handleRemoveDocuments = (index) => {
+    const tempList = [...documents];
+    tempList.splice(index, 1);
+    setDocuments(tempList);
   };
 
   const onRemoveImage = () => {
@@ -98,6 +132,7 @@ const SeminarForm = () => {
         imageUrl: imageUrl,
         startTime: data.seminarTime,
         mentorIds: data.seminarSpeakers,
+        documents: documents,
       };
       await seminarService.create(requestBody);
       history.push(ROUTES.SEMINAR_LIST);
@@ -211,7 +246,7 @@ const SeminarForm = () => {
             render={({ field: { value, onChange, ...restField } }) => (
               <AutocompleteInput
                 multiple={true}
-                label="Speaker"
+                label={TEXTFIELD_LABEL.SPEAKER}
                 required={true}
                 id="autocomplete-speakers"
                 options={mentorList}
@@ -231,10 +266,32 @@ const SeminarForm = () => {
             inputId="seminarDescription"
             name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
             required={false}
+            optional={true}
             options={{
               ...register("seminarDescription"),
             }}
           />
+          <ListFileDisplay items={documents} onRemove={handleRemoveDocuments} />
+
+          <Controller
+            name="seminarDocuments"
+            control={control}
+            defaultValue={documents}
+            rules={{ validate: validateFiles }}
+            render={({ field }) => {
+              return (
+                <FileInputIcon
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleDocumentsChange(e);
+                  }}
+                  field={field}
+                  error={errors.seminarDocuments}
+                />
+              );
+            }}
+          />
+          {/* <FileInputIcon /> */}
 
           <div className={`${style.seminarForm__button}`}>
             <CustomizedButton

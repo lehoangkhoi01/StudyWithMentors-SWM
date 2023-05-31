@@ -1,3 +1,4 @@
+import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import {
   ERROR_MESSAGES,
   VALID_IMAGE_FILE_TYPE,
@@ -13,7 +14,11 @@ export const validationSeminarDate = (value) => {
 };
 
 export const validationSeminarImage = (file) => {
-  if (file && VALID_IMAGE_FILE_TYPE.indexOf(file.type) < 0) {
+  if (
+    file &&
+    (VALID_IMAGE_FILE_TYPE.indexOf(file.type) < 0 ||
+      convertBytesToMB(file.size) > 10)
+  ) {
     return ERROR_MESSAGES.INVALID_IMAGE_FILE;
   }
 };
