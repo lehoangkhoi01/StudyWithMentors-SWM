@@ -33,7 +33,7 @@ const StyledLabelSelect = styled(InputLabel)`
 `;
 
 const SeminarFilter = (props) => {
-  const { register, getValues } = useForm();
+  const { register, getValues, reset } = useForm();
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
@@ -58,9 +58,6 @@ const SeminarFilter = (props) => {
     const startDate = startDateJs ? startDateJs.toDate() : "";
     const endDate = endDateJs ? endDateJs.toDate() : "";
 
-    console.log(startDateJs);
-    console.log(startDate);
-
     props.onSeminarFilter(
       seminarName,
       convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
@@ -75,6 +72,15 @@ const SeminarFilter = (props) => {
     } = event;
 
     setSelectedDepartment(value);
+  };
+
+  const clearFilter = () => {
+    setDepartments([]);
+    setSelectedDepartment([]);
+    setSelectedDateRange([null, null]);
+    reset({
+      seminarName: "",
+    });
   };
 
   return (
@@ -141,6 +147,7 @@ const SeminarFilter = (props) => {
             <Button
               variant="text"
               className={`${style.filterSection__linkButton}`}
+              onClick={clearFilter}
             >
               {BUTTON_LABEL.DEFAULT}
             </Button>

@@ -16,28 +16,33 @@ const SeminarList = () => {
   const { setLoading } = useCustomLoading();
 
   useEffect(() => {
-    const getSeminarList = async () => {
-      try {
-        setLoading(true);
-        const clearedFilterInfo = Object.fromEntries(
-          Object.entries(filterInfo).filter(([, v]) => !!v)
-        );
+    console.log("First load");
+    getSeminarList();
+  }, []);
 
-        const response = await seminarService.getSemniars(clearedFilterInfo);
-
-        setSeminars(response.content);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     getSeminarList();
   }, [filterInfo]);
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
+  };
+
+  const getSeminarList = async () => {
+    try {
+      setLoading(true);
+      const clearedFilterInfo = filterInfo
+        ? Object.fromEntries(Object.entries(filterInfo).filter(([, v]) => !!v))
+        : filterInfo;
+
+      const response = await seminarService.getSemniars(clearedFilterInfo);
+
+      setSeminars(response.content);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
