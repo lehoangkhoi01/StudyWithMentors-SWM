@@ -35,6 +35,11 @@
           border-bottom: 3px solid $primary900;
         }
       }
+
+      @media (max-width: $bp-sm) {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
     }
 
     &__active {
@@ -53,7 +58,7 @@
       font-size: 1.1rem;
     }
 
-    @media (max-width: $bp-md) {
+    @media (max-width: $bp-sm) {
       flex-wrap: wrap;
 
       button {
@@ -61,6 +66,8 @@
         right: unset;
         top: unset;
         transform: unset;
+
+        font-size: 0.9rem;
       }
     }
   }

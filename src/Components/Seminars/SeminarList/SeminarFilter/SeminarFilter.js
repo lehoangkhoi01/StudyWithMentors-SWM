@@ -11,7 +11,7 @@ import {
 } from "../../../../shared/constants/common";
 import { useForm } from "react-hook-form";
 import CustomizedDateRangePicker from "../../../../shared/components/DateRangePicker/CustomizedDateRangePicker";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { departmentService } from "../../../../Services/departmentService";
 import { convertISOToFormat } from "../../../../Helpers/dateHelper";
 
@@ -32,7 +32,7 @@ const StyledLabelSelect = styled(InputLabel)`
   }
 `;
 
-const SeminarFilter = (props) => {
+const SeminarFilter = forwardRef((props, ref) => {
   const { register, getValues, reset } = useForm();
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState([]);
@@ -78,13 +78,18 @@ const SeminarFilter = (props) => {
   };
 
   const clearFilter = () => {
-    setDepartments([]);
     setSelectedDepartment([]);
     setSelectedDateRange([null, null]);
     reset({
       seminarName: "",
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    resetSelectedDepartment() {
+      setSelectedDepartment([]);
+    },
+  }));
 
   return (
     <div className={`${style.filterSection__container}`}>
@@ -157,6 +162,8 @@ const SeminarFilter = (props) => {
       <Grid container spacing={3}></Grid>
     </div>
   );
-};
+});
+
+SeminarFilter.displayName = "SeminarFilter";
 
 export default SeminarFilter;
