@@ -14,6 +14,7 @@ export const ROUTES = {
   SEMINAR_LIST: "/seminars",
   SEMINAR_DETAIL: "/seminars/:id",
   SEMINAR_CREATE: "/create-seminar",
+  SEMINAR_UPDATE: "/update-seminar/:id",
 };
 
 export const UNAUTHORIZED_NAVBAR = [

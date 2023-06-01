@@ -3,11 +3,13 @@ export const feedbackQuestionList = [
     id: 1,
     question: "Bạn đánh giá tổng quan thế nào về trải nghiệm với buổi seminar?",
     type: "RATING",
+    result: "5",
   },
   {
     id: 2,
     question: "Sự kiện có đáp ứng được mong đợi của bạn không?",
     type: "YES/NO",
+    result: "YESS",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ export const feedbackQuestionList = [
     id: 5,
     question: "Có điều gì trong sự kiện cần phải cải thiện không?",
     type: "TEXT",
+    result: "454534665dfsgdfgf",
   },
   {
     id: 6,

@@ -27,6 +27,7 @@ const CustomizedTextField = (props) => {
         type={props.type ?? "text"}
         {...props.options}
         required={!props.optional}
+        disabled={props.disabled ?? false}
       />
       {props.multiline && (
         <span className={`${style.textField__limit}`}>

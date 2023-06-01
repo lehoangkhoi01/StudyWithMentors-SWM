@@ -11,7 +11,44 @@ import style from "./ListFileDisplay.module.scss";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 
 const ListFileDisplay = (props) => {
-  return (
+  const renderListForUpdate = () => (
+    <div>
+      <Typography className={`${style.filelist__label}`}>Tài liệu</Typography>
+      <List>
+        {props.oldItems.map((file, index) => (
+          <ListItem key={index} className={`${style.filelist__row}`}>
+            <a href={file}>Attachment {index + 1}</a>
+            <div className={`${style.filelist__right}`}>
+              <ListItemIcon>
+                <IconButton
+                  onClick={() => props.handleRemoveOldDocuments(index)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </ListItemIcon>
+            </div>
+          </ListItem>
+        ))}
+      </List>
+      <List>
+        {Array.from(props.items).map((file, index) => (
+          <ListItem key={index} className={`${style.filelist__row}`}>
+            <Typography>{file.name}</Typography>
+            <div className={`${style.filelist__right}`}>
+              <Typography>{convertBytesToMB(file.size)}MB</Typography>
+              <ListItemIcon>
+                <IconButton onClick={() => props.onRemove(index)}>
+                  <CloseIcon />
+                </IconButton>
+              </ListItemIcon>
+            </div>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
+  const renderList = () => (
     <div>
       <Typography className={`${style.filelist__label}`}>Tài liệu</Typography>
       {props?.items?.length > 0 ? (
@@ -33,6 +70,12 @@ const ListFileDisplay = (props) => {
       ) : null}
     </div>
   );
+
+  if (props.isUpdate) {
+    return renderListForUpdate();
+  } else {
+    return renderList();
+  }
 };
 
 export default ListFileDisplay;
