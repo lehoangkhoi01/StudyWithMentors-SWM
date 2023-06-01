@@ -49,13 +49,14 @@ const SeminarList = () => {
     }
 
     setStatusFilter(status);
-    onSeminarFilter(
-      filterInfo?.searchString,
-      filterInfo?.startDate,
-      filterInfo?.endDate,
-      filterDepartmentId,
-      statusFilter
-    );
+
+    setFilterInfo({
+      searchString: filterInfo?.searchString,
+      startDate: filterInfo?.startDate,
+      endDate: filterInfo?.endDate,
+      departmentId: filterDepartmentId,
+      status: statusFilter,
+    });
   };
 
   const getSeminarList = async (url) => {
@@ -78,14 +79,9 @@ const SeminarList = () => {
     }
   };
 
-  const onSeminarFilter = (
-    seminarName,
-    startDate,
-    endDate,
-    departmentId,
-    status
-  ) => {
+  const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
     if (departmentId) {
+      console.log(departmentId);
       setStatusFilter(FILTER_SEMINAR.ALL);
     }
 
@@ -94,7 +90,6 @@ const SeminarList = () => {
       startDate,
       endDate,
       departmentId,
-      status,
     });
   };
 
