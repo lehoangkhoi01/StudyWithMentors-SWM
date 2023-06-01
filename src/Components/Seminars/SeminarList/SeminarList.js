@@ -1,12 +1,18 @@
 import style from "./SeminarList.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SeminarCard from "../SeminarCard/SeminarCard";
 import { seminarService } from "../../../Services/seminarService";
 import { Grid } from "@mui/material";
 import SeminarFilter from "./SeminarFilter/SeminarFilter";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-import { BUTTON_LABEL, FILTER_SEMINAR } from "../../../shared/constants/common";
+import {
+  BUTTON_LABEL,
+  FILTER_SEMINAR,
+  OTHERS,
+} from "../../../shared/constants/common";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
@@ -15,9 +21,10 @@ const SeminarList = () => {
   const [nextLink, setNextLink] = useState();
 
   const { setLoading } = useCustomLoading();
+  const userInfo = useSelector(selectUserInfo);
+  const filterRef = useRef();
 
   useEffect(() => {
-    console.log("First load");
     getSeminarList();
   }, []);
 
@@ -26,7 +33,29 @@ const SeminarList = () => {
   }, [filterInfo]);
 
   const onChangeStatusFilter = (status) => {
+    const statusFilter =
+      status === FILTER_SEMINAR.IS_COMMING
+        ? "future"
+        : status === FILTER_SEMINAR.PAST
+        ? "past"
+        : null;
+
+    let filterDepartmentId = filterInfo?.departmentId;
+
+    if (status === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
+      filterDepartmentId = userInfo.departmentId;
+
+      filterRef.current.resetSelectedDepartment();
+    }
+
     setStatusFilter(status);
+    onSeminarFilter(
+      filterInfo?.searchString,
+      filterInfo?.startDate,
+      filterInfo?.endDate,
+      filterDepartmentId,
+      statusFilter
+    );
   };
 
   const getSeminarList = async (url) => {
@@ -49,12 +78,23 @@ const SeminarList = () => {
     }
   };
 
-  const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
+  const onSeminarFilter = (
+    seminarName,
+    startDate,
+    endDate,
+    departmentId,
+    status
+  ) => {
+    if (departmentId) {
+      setStatusFilter(FILTER_SEMINAR.ALL);
+    }
+
     setFilterInfo({
       searchString: seminarName,
       startDate,
       endDate,
       departmentId,
+      status,
     });
   };
 
@@ -64,7 +104,7 @@ const SeminarList = () => {
 
   return (
     <div>
-      <SeminarFilter onSeminarFilter={onSeminarFilter} />
+      <SeminarFilter ref={filterRef} onSeminarFilter={onSeminarFilter} />
       <div className={style.seminarList__status__filter}>
         <div className={style.seminarList__status__filter__items}>
           <p
@@ -103,6 +143,34 @@ const SeminarList = () => {
           >
             {FILTER_SEMINAR.PAST}
           </p>
+          {userInfo?.role === "STAFF" && (
+            <p
+              className={
+                statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
+                  ? style.seminarList__status__filter__active
+                  : ""
+              }
+              onClick={() => {
+                onChangeStatusFilter(FILTER_SEMINAR.DEPARTMENT_SEMINAR);
+              }}
+            >
+              {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
+            </p>
+          )}
+          {userInfo?.role === "STUDENT" && (
+            <p
+              className={
+                statusFilter === FILTER_SEMINAR.FOLLOWED_SEMINAR
+                  ? style.seminarList__status__filter__active
+                  : ""
+              }
+              onClick={() => {
+                onChangeStatusFilter(FILTER_SEMINAR.FOLLOWED_SEMINAR);
+              }}
+            >
+              {FILTER_SEMINAR.FOLLOWED_SEMINAR}
+            </p>
+          )}
         </div>
 
         <CustomizedButton variant="outlined" color="primary600">
@@ -127,7 +195,7 @@ const SeminarList = () => {
       </Grid>
       {!!nextLink && (
         <p className={style.seminarList__viewMore} onClick={viewMoreSeminar}>
-          Xem thêm
+          {OTHERS.VIEW_MORE}
         </p>
       )}
     </div>

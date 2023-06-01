@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { SEMINAR } from "../../../shared/constants/common";
+import { BUTTON_LABEL, SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
@@ -7,11 +7,18 @@ import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import QRModal from "./QRModal/QRModal";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
   const { setLoading } = useCustomLoading();
+  const userInfo = useSelector(selectUserInfo);
 
   const { id } = useParams();
 
@@ -33,6 +40,14 @@ const SeminarDetail = () => {
 
     getSeminarDetail();
   }, []);
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -62,54 +77,57 @@ const SeminarDetail = () => {
             />
             <div className={style.detail__information}>
               <h1 className={style.detail__title}>{data.name}</h1>
-              <div className={style.detail__burger}>
-                <Button
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  <img
-                    src={require("../../../assets/icons/Edit_Semniar.png")}
-                  />
-                </Button>
-                <Menu
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  className={style.detail__dropdown}
-                >
-                  <MenuItem onClick={handleClose}>
+              {userInfo?.role === "STAFF" && (
+                <div className={style.detail__burger}>
+                  <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  >
                     <img
-                      src={require("../../../assets/icons/Semniar_Report.png")}
+                      src={require("../../../assets/icons/Edit_Semniar.png")}
                     />
-                    <span>{SEMINAR.RERORT}</span>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <img
-                      src={require("../../../assets/icons/Seminar_Edit.png")}
-                    />
-                    <span>{SEMINAR.EDIT}</span>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <img
-                      src={require("../../../assets/icons/Seminar_Delete.png")}
-                    />
-                    <span>{SEMINAR.DELETE}</span>
-                  </MenuItem>
-                </Menu>
-              </div>
+                  </Button>
+                  <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    className={style.detail__dropdown}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <img
+                        src={require("../../../assets/icons/Semniar_Report.png")}
+                      />
+                      <span>{SEMINAR.RERORT}</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <img
+                        src={require("../../../assets/icons/Seminar_Edit.png")}
+                      />
+                      <span>{SEMINAR.EDIT}</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <img
+                        src={require("../../../assets/icons/Seminar_Delete.png")}
+                      />
+                      <span>{SEMINAR.DELETE}</span>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+
               <p>
                 <strong>{SEMINAR.AUTHOR}:</strong>{" "}
                 {data.mentors.map(
@@ -154,8 +172,23 @@ const SeminarDetail = () => {
                   typesetting
                 </li>
               </ul>
+              {userInfo?.role === "STUDENT" && (
+                <div className={style.detail__buttons}>
+                  <CustomizedButton variant="outlined" color="primary600">
+                    {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
+                  </CustomizedButton>
+                  <CustomizedButton
+                    onClick={onOpenModal}
+                    variant="outlined"
+                    color="primary600"
+                  >
+                    {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                  </CustomizedButton>
+                </div>
+              )}
             </div>
           </div>
+          <QRModal openModal={openModal} onCloseModal={onCloseModal} />
         </>
       )}
     </div>

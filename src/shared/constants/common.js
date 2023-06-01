@@ -17,6 +17,8 @@ export const BUTTON_LABEL = {
   CREATE_SCHEDULE: "Tạo lịch",
   CREATE_SEMINAR: "Tạo sự kiện mới",
   ADD_DOCUMENT: "Tải thêm tài liệu",
+  SUBCRIBE_SEMNIAR: "Quan tâm",
+  FEEDBACK_SEMINAR: "Đánh giá sự kiện",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -275,6 +277,7 @@ export const OTHERS = {
   CURRENT: "hiện tại",
   BELONG: "thuộc",
   THIS: "này",
+  VIEW_MORE: "Xem thêm",
 };
 
 export const DATE_FORMAT = {
@@ -328,4 +331,11 @@ export const FILTER_SEMINAR = {
   ALL: "Tất cả",
   IS_COMMING: "Chưa diễn ra",
   PAST: "Đã diễn ra",
+  DEPARTMENT_SEMINAR: "Sự kiện của phòng ban",
+  FOLLOWED_SEMINAR: "Quan tâm",
+};
+
+export const QR_TEXT = {
+  FEEDBACK_SEMINAR: "Đánh giá sự kiện",
+  OR_THIS_LINK: "hoặc vào đường link",
 };
