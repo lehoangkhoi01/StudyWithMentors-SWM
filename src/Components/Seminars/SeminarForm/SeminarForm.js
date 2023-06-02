@@ -94,16 +94,12 @@ const SeminarForm = () => {
     setDocuments(tempList);
   };
   const handleRemoveOldDocuments = (index) => {
-    console.log(index);
     const tempList = [...oldDocuments];
     const tempUrls = [...oldDocumentUrls];
-    console.log(oldDocumentUrls);
-    console.log(tempUrls);
     tempList.splice(index, 1);
     tempUrls.splice(index, 1);
     setOldDocuments(tempList);
     setOldDocumentUrls(tempUrls);
-    console.log(tempUrls);
   };
 
   const onRemoveImage = () => {

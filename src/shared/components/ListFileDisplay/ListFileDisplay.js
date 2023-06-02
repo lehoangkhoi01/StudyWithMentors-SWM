@@ -15,7 +15,7 @@ const ListFileDisplay = (props) => {
     <div>
       <Typography className={`${style.filelist__label}`}>Tài liệu</Typography>
       <List>
-        {props.oldItems.map((file, index) => (
+        {props.oldItems?.map((file, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
             <a href={file}>Attachment {index + 1}</a>
             <div className={`${style.filelist__right}`}>
