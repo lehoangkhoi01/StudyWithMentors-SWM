@@ -16,7 +16,7 @@ export const SeminarEndpoints = {
   SEARCH_SEMINAR: "seminars/search",
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
   GET_SEMINAR_DETAIL: "seminars",
-  SEMINAR: "/seminars",
+  SEMINAR: "seminars",
 };
 
 export const AccountEndpoints = {
@@ -31,4 +31,8 @@ export const StaticResourceEndpoints = {
 
 export const DepartmentEndPoints = {
   DEPARTMENT: "departments",
+};
+
+export const SeminarFeedbackEndpoints = {
+  SEMINAR_FEEDBACK: "feedbacks/seminar",
 };

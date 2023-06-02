@@ -1,8 +1,8 @@
 import React from "react";
-import EventFeedbackForm from "../../Components/EventFeedback/EventFeedbackForm";
+import SeminarFeedbackForm from "../../Components/SeminarFeedback/SeminarFeedbackForm";
 
-const EventFeedbackPage = () => {
-  return <EventFeedbackForm />;
+const SeminarFeedbackPage = () => {
+  return <SeminarFeedbackForm />;
 };
 
-export default EventFeedbackPage;
+export default SeminarFeedbackPage;

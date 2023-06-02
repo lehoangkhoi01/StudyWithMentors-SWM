@@ -4,7 +4,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    padding: 1rem;
   }
   &__wrapper {
     display: flex;
@@ -16,5 +16,9 @@
     font-weight: 600;
     margin-bottom: 0.8vh;
     align-self: flex-start;
+  }
+  &__ratingLabel {
+    color: $black400;
+    font-size: 1rem;
   }
 }
