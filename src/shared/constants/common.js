@@ -91,6 +91,7 @@ export const COMMON_MESSAGE = {
   IS_NOT_EXIST: "không tồn tại.",
   APPLY_RESET_PASSWORD_SUCCESS:
     "Đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục cùng Growth Me.",
+  SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
 };
 
 export const SIGN_UP_STAGE = {

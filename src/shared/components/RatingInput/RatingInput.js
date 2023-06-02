@@ -16,7 +16,6 @@ function getLabelText(value) {
 }
 
 const RatingInput = (props) => {
-  const [value, setValue] = React.useState(0);
   const [hover, setHover] = React.useState(-1);
 
   return (
@@ -24,20 +23,19 @@ const RatingInput = (props) => {
       <label className={`${style.ratingInput__label}`}>{props.title}</label>
       <div className={`${style.ratingInput__wrapper}`}>
         <Rating
-          name="hover-feedback"
-          value={value}
+          name={props.name}
           precision={1}
           getLabelText={getLabelText}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
+          onChange={props.onChange}
           onChangeActive={(event, newHover) => {
             setHover(newHover);
           }}
           emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
         />
-        {value !== null && (
-          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        {props.field.value !== null && (
+          <Box sx={{ ml: 2 }} className={`${style.ratingInput__ratingLabel}`}>
+            {labels[hover !== -1 ? hover : props.field.value]}
+          </Box>
         )}
       </div>
     </div>

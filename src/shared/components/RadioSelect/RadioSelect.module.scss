@@ -1,0 +1,13 @@
+@import "../../theme";
+.radioSelect {
+  &__container {
+    padding: 1rem;
+  }
+  &__label {
+    font-size: $LABEL_SIZE;
+    color: $primary900;
+    font-weight: 600;
+    margin-bottom: 0.8vh;
+    align-self: flex-start;
+  }
+}
