@@ -1,7 +1,7 @@
-import MentorList from "../Components/MentorList/MentorList";
+import SeminarList from "../Components/Seminars/SeminarList/SeminarList";
 
 const HomePage = () => {
-  return <MentorList />;
+  return <SeminarList />;
 };
 
 export default HomePage;

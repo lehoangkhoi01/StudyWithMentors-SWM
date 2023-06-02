@@ -13,6 +13,8 @@ import { useHistory } from "react-router-dom";
 import { userAction } from "../../../Store/slices/userSlice";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
 import { Typography } from "@mui/material";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
+import { TITLE } from "../../../shared/constants/common";
 
 const SignInForm = () => {
   const history = useHistory();
@@ -47,6 +49,7 @@ const SignInForm = () => {
       <Grid2 xs={12} md={6} className={`${style.signIn__formContainer}`}>
         <CustomPattern width={"50%"} height={"95%"} />
         <div className={`${style.signIn__formSection}`}>
+          <CustomTopTitle title={TITLE.SIGN_IN} />
           <GoogleSignInButton onClick={handleSignInWithGoogle} />
           <Typography
             variant="subtitle1"
