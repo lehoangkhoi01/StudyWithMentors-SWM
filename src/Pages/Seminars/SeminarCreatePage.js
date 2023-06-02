@@ -1,7 +1,7 @@
 import React from "react";
 import SeminarForm from "../../Components/Seminars/SeminarForm/SeminarForm";
 
-const SeminarCreate = () => {
+const SeminarCreatePage = () => {
   return (
     <div>
       <SeminarForm />
@@ -9,4 +9,4 @@ const SeminarCreate = () => {
   );
 };
 
-export default SeminarCreate;
+export default SeminarCreatePage;

@@ -1,7 +1,9 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
+import moment from "moment";
 import { useHistory } from "react-router";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 //----------------
 import style from "./SeminarForm.module.scss";
 import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
@@ -26,6 +28,7 @@ import {
   BUTTON_LABEL,
   DATE_FORMAT,
   ERROR_MESSAGES,
+  LENGTH,
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
   TITLE,
@@ -44,10 +47,15 @@ import { useCustomLoading } from "../../../Helpers/generalHelper";
 const SeminarForm = () => {
   const history = useHistory();
   const { setLoading } = useCustomLoading();
+  const { id } = useParams();
+  const isFormUpdate = id ? true : false;
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [documents, setDocuments] = React.useState([]);
+  const [oldDocuments, setOldDocuments] = React.useState([]);
+  const [oldDocumentUrls, setOldDocumentUrls] = React.useState([]);
   const [mentorList, setMentorList] = React.useState([]);
   const [seminarDate, setSeminarDate] = React.useState(new Date());
+  const [seminarDetail, setSeminarDetail] = React.useState(null);
   const {
     control,
     handleSubmit,
@@ -58,6 +66,7 @@ const SeminarForm = () => {
     defaultValues: {
       seminarBackground: null,
       seminarDocuments: [],
+      seminarSpeakers: [],
     },
   });
 
@@ -79,22 +88,18 @@ const SeminarForm = () => {
     }
   };
 
-  const validateFiles = () => {
-    if (documents.length > 3) {
-      return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
-    }
-
-    for (let i = 0; i < documents.length; i++) {
-      if (convertBytesToMB(documents[i].size) > 3) {
-        return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
-      }
-    }
-  };
-
   const handleRemoveDocuments = (index) => {
     const tempList = [...documents];
     tempList.splice(index, 1);
     setDocuments(tempList);
+  };
+  const handleRemoveOldDocuments = (index) => {
+    const tempList = [...oldDocuments];
+    const tempUrls = [...oldDocumentUrls];
+    tempList.splice(index, 1);
+    tempUrls.splice(index, 1);
+    setOldDocuments(tempList);
+    setOldDocumentUrls(tempUrls);
   };
 
   const onRemoveImage = () => {
@@ -102,14 +107,31 @@ const SeminarForm = () => {
     setValue("seminarBackground", null);
   };
 
-  const getOptionLabel = (option) => option.profile.fullName;
+  const getOptionLabel = (option) => {
+    if (isFormUpdate) {
+      return option.fullName;
+    } else {
+      return option.profile.fullName;
+    }
+  };
 
-  const renderOptionSpeakerAutocomplete = (props, option) => (
-    <li {...props} className={`${style.autocomplete__rowDropdown}`}>
-      <div>{option.profile.fullName}</div>
-      <div>{option.email}</div>
-    </li>
-  );
+  const renderOptionSpeakerAutocomplete = (props, option) => {
+    if (isFormUpdate) {
+      return (
+        <li {...props} className={`${style.autocomplete__rowDropdown}`}>
+          <div>{option.fullName}</div>
+          <div>{option.email}</div>
+        </li>
+      );
+    } else {
+      return (
+        <li {...props} className={`${style.autocomplete__rowDropdown}`}>
+          <div>{option.profile.fullName}</div>
+          <div>{option.email}</div>
+        </li>
+      );
+    }
+  };
 
   const handleUploadImage = async (file) => {
     if (file) {
@@ -133,6 +155,14 @@ const SeminarForm = () => {
   };
 
   const onSubmit = async (data) => {
+    if (isFormUpdate) {
+      handleUpdateSeminar(data);
+    } else {
+      handleCreateSeminar(data);
+    }
+  };
+
+  const handleCreateSeminar = async (data) => {
     setLoading(true);
     try {
       data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
@@ -163,13 +193,89 @@ const SeminarForm = () => {
     }
   };
 
+  const handleUpdateSeminar = async (data) => {
+    setLoading(true);
+    try {
+      // Process data before submit
+      let imageUrl = null;
+      let attachmentUrls = null;
+      if (data.seminarBackground) {
+        imageUrl = await handleUploadImage(data.seminarBackground);
+      } else if (seminarBackground == null && data.seminarBackground == null) {
+        imageUrl = "";
+      }
+
+      const newAttachmentList = await handleUploadAttachments(documents);
+      const totalAttachmentList = [...oldDocumentUrls, ...newAttachmentList];
+      if (
+        newAttachmentList.length != 0 ||
+        oldDocumentUrls.length !== seminarDetail.attachmentUrls
+      ) {
+        attachmentUrls = [...totalAttachmentList];
+      }
+
+      //--------------------------
+
+      let requestBody = {
+        imageUrl: imageUrl,
+        attachmentUrls: attachmentUrls,
+      };
+      await seminarService.update(id, requestBody);
+    } catch (error) {
+      control.log(error);
+      if (error.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const validateFiles = () => {
+    if (documents.length + oldDocuments.length > LENGTH.FILE_MAX_NUM) {
+      return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
+    }
+
+    for (let i = 0; i < documents.length; i++) {
+      if (convertBytesToMB(documents[i].size) > LENGTH.FILE_MAX_SIZE) {
+        return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
+      }
+    }
+  };
+
   React.useEffect(() => {
     const fetchMentorList = async () => {
       const result = await accountService.getAllMentors();
       setMentorList(result);
     };
-    fetchMentorList();
+    const getSeminarDetail = async () => {
+      const seminar = await seminarService.getSeminarDetail(id);
+      setSeminarDetail(seminar);
+    };
+
+    try {
+      if (isFormUpdate) {
+        getSeminarDetail();
+      }
+      fetchMentorList();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  React.useEffect(() => {
+    if (seminarDetail) {
+      console.log(seminarDetail);
+      setValue("seminarName", seminarDetail.name);
+      setValue("seminarPlace", seminarDetail.location);
+      setValue("seminarDescription", seminarDetail.description);
+      setValue("seminarTime", moment(seminarDetail.startTime).toDate());
+      setValue("seminarSpeakers", seminarDetail.mentors);
+      setSeminarBackground(seminarDetail.imageLink);
+      setOldDocuments(seminarDetail.attachmentLinks);
+      setOldDocumentUrls(seminarDetail.attachmentUrls);
+    }
+  }, [seminarDetail]);
 
   return (
     <Grid2 container className={`${style.seminarForm__container}`}>
@@ -227,6 +333,7 @@ const SeminarForm = () => {
             options={{
               ...register("seminarName", seminarNameValidation),
             }}
+            disabled={isFormUpdate}
             error={errors.seminarName ? true : false}
             helperText={errors?.seminarName?.message}
           />
@@ -243,6 +350,7 @@ const SeminarForm = () => {
                 ampm={false}
                 formName="seminarTime"
                 required={true}
+                disabled={isFormUpdate}
                 onChange={(event) => {
                   onChange(event);
                   setSeminarDate(event);
@@ -259,15 +367,16 @@ const SeminarForm = () => {
             options={{
               ...register("seminarPlace", seminarPlaceValidation),
             }}
+            disabled={isFormUpdate}
           />
 
           <Controller
             control={control}
             name="seminarSpeakers"
-            defaultValue={[]}
             render={({ field: { value, onChange, ...restField } }) => (
               <AutocompleteInput
                 multiple={true}
+                disabled={isFormUpdate}
                 label={TEXTFIELD_LABEL.SPEAKER}
                 required={true}
                 id="autocomplete-speakers"
@@ -277,7 +386,7 @@ const SeminarForm = () => {
                 onChange={(e, data) => {
                   onChange(data);
                 }}
-                value={value.id}
+                value={value}
                 {...restField}
               />
             )}
@@ -287,13 +396,20 @@ const SeminarForm = () => {
             maxRows={3}
             inputId="seminarDescription"
             name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
+            disabled={isFormUpdate}
             required={false}
             optional={true}
             options={{
               ...register("seminarDescription"),
             }}
           />
-          <ListFileDisplay items={documents} onRemove={handleRemoveDocuments} />
+          <ListFileDisplay
+            isUpdate={isFormUpdate}
+            items={documents}
+            oldItems={oldDocuments}
+            onRemove={handleRemoveDocuments}
+            handleRemoveOldDocuments={handleRemoveOldDocuments}
+          />
 
           <Controller
             name="seminarDocuments"
@@ -313,17 +429,31 @@ const SeminarForm = () => {
               );
             }}
           />
-          {/* <FileInputIcon /> */}
 
-          <div className={`${style.seminarForm__button}`}>
-            <CustomizedButton
-              type="submit"
-              variant="contained"
-              color="primary600"
-            >
-              {BUTTON_LABEL.CREATE_SEMINAR}
-            </CustomizedButton>
-          </div>
+          <Grid2
+            container
+            className={`${style.seminarForm__buttonContainer}`}
+            spacing={2}
+          >
+            <Grid2 xs={6} item>
+              <CustomizedButton variant="outlined" color="primary600">
+                {isFormUpdate
+                  ? BUTTON_LABEL.CANCEL_EDIT
+                  : BUTTON_LABEL.CANCEL_CREATE}
+              </CustomizedButton>
+            </Grid2>
+            <Grid2 xs={6} item>
+              <CustomizedButton
+                type="submit"
+                variant="contained"
+                color="primary600"
+              >
+                {isFormUpdate
+                  ? BUTTON_LABEL.UPDATE_SEMINAR
+                  : BUTTON_LABEL.CREATE_SEMINAR}
+              </CustomizedButton>
+            </Grid2>
+          </Grid2>
         </Grid2>
       </form>
     </Grid2>

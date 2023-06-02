@@ -2,6 +2,7 @@ import { BrowserRouter, Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "./Store/slices/userSlice";
 import { Route } from "react-router";
+import { ROUTES } from "./shared/constants/navigation";
 import SignInPage from "./Pages/Authentication/SignInPage";
 import SignUpPage from "./Pages/Authentication/SignUpPage";
 import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
@@ -11,7 +12,6 @@ import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 import CVPage from "./Pages/CV/CVPage";
 import HomePage from "./Pages/HomePage";
 import AccountPage from "./Pages/Authentication/AccountPage";
-import { ROUTES } from "./shared/constants/navigation";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
@@ -19,7 +19,7 @@ import CalendarPage from "./Pages/CalendarPage";
 import EventFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import SeminarsPage from "./Pages/Seminars/SeminarsPage";
 import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
-import SeminarCreate from "./Pages/Seminars/SeminarCreate";
+import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -52,9 +52,10 @@ function App() {
             />
             <Route
               exact
-              path={ROUTES.SEMINAR_CREATE}
-              component={SeminarCreate}
+              path={ROUTES.SEMINAR_UPDATE}
+              component={SeminarCreatePage}
             />
+            <Route path={ROUTES.SEMINAR_CREATE} component={SeminarCreatePage} />
             <Route path={ROUTES.CALENDAR} component={CalendarPage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.EVENT_FEEDBACK} component={EventFeedbackPage} />

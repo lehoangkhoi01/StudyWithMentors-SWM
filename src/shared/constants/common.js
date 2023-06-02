@@ -11,11 +11,13 @@ export const BUTTON_LABEL = {
   SAVE_EDIT: "Lưu lại",
   SIGN_UP_ACCOUNT: "Đăng ký tài khoản",
   CANCEL_EDIT: "Hủy chỉnh sửa",
+  CANCEL_CREATE: "Hủy tạo",
   SEARCH: "Tìm kiếm",
   DEFAULT: "Mặc định",
   TODAY: "Hôm nay",
   CREATE_SCHEDULE: "Tạo lịch",
   CREATE_SEMINAR: "Tạo sự kiện mới",
+  UPDATE_SEMINAR: "Cập nhật sự kiện",
   ADD_DOCUMENT: "Tải thêm tài liệu",
   SUBCRIBE_SEMNIAR: "Quan tâm",
   FEEDBACK_SEMINAR: "Đánh giá sự kiện",
@@ -158,7 +160,8 @@ export const LENGTH = {
   EMAIL_MAX: 254,
   SEMINAR_NAME: 200,
   SEMINAR_PLACE: 200,
-  FILE_MAX_SIZE: 10,
+  FILE_MAX_SIZE: 5, //MB
+  FILE_MAX_NUM: 3,
 };
 
 export const ERROR_MESSAGES = {
@@ -188,7 +191,12 @@ export const ERROR_MESSAGES = {
   INVALID_IMAGE_FILE:
     "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
   INVALID_SEMINAR_DOCUMENTS:
-    "Vui lòng chọn file hợp lệ với kích thước không quá 10MB. Tối đa 5 tài liệu.",
+    "Vui lòng chọn file hợp lệ với kích thước không quá " +
+    LENGTH.FILE_MAX_SIZE +
+    "MB. " +
+    "Tối đa " +
+    LENGTH.FILE_MAX_NUM +
+    " tài liệu.",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
