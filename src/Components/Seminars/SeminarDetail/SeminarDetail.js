@@ -16,7 +16,6 @@ const SeminarDetail = () => {
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-
   const { setLoading } = useCustomLoading();
   const userInfo = useSelector(selectUserInfo);
 
@@ -158,20 +157,6 @@ const SeminarDetail = () => {
               <p>
                 <strong>{SEMINAR.ATTACHED_FILE}: </strong>
               </p>
-              <ul>
-                <li>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting
-                </li>
-                <li>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting
-                </li>
-                <li>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting
-                </li>
-              </ul>
               <div className={style.detail__buttons}>
                 {userInfo?.role === "STUDENT" && (
                   <CustomizedButton variant="outlined" color="primary600">
