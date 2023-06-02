@@ -31,7 +31,7 @@ const ListFileDisplay = (props) => {
         ))}
       </List>
       <List>
-        {Array.from(props.items).map((file, index) => (
+        {Array.from(props.items)?.map((file, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
             <Typography>{file.name}</Typography>
             <div className={`${style.filelist__right}`}>

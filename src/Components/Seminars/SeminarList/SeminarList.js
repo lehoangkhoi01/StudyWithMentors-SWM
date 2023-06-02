@@ -13,6 +13,8 @@ import {
 import { useCustomLoading } from "../../../Helpers/generalHelper";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { useHistory } from "react-router";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
@@ -23,6 +25,7 @@ const SeminarList = () => {
   const { setLoading } = useCustomLoading();
   const userInfo = useSelector(selectUserInfo);
   const filterRef = useRef();
+  const history = useHistory();
 
   useEffect(() => {
     getSeminarList();
@@ -97,6 +100,10 @@ const SeminarList = () => {
     getSeminarList(nextLink);
   };
 
+  const navigateToCreatePage = () => {
+    history.push(ROUTES.SEMINAR_CREATE);
+  };
+
   return (
     <div>
       <SeminarFilter ref={filterRef} onSeminarFilter={onSeminarFilter} />
@@ -168,7 +175,11 @@ const SeminarList = () => {
           )}
         </div>
 
-        <CustomizedButton variant="outlined" color="primary600">
+        <CustomizedButton
+          variant="outlined"
+          color="primary600"
+          onClick={navigateToCreatePage}
+        >
           <img
             className={style.seminarList__add_icon}
             src={require("../../../assets/icons/Add_Seminar.png")}
