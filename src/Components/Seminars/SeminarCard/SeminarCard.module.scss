@@ -7,16 +7,21 @@
     border-radius: 1rem;
 
     background-color: $black000;
+
+    min-height: 30rem;
+    max-height: 30rem;
+    overflow-y: auto;
   }
 
   &__header {
     position: relative;
-    border-radius: 1rem;
-    overflow: hidden;
+    text-align: center;
   }
 
   &__image {
-    width: 100%;
+    width: auto;
+    height: 12rem;
+    border-radius: 1rem;
   }
 
   &__status {

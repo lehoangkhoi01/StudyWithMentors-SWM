@@ -172,23 +172,27 @@ const SeminarDetail = () => {
                   typesetting
                 </li>
               </ul>
-              {userInfo?.role === "STUDENT" && (
-                <div className={style.detail__buttons}>
+              <div className={style.detail__buttons}>
+                {userInfo?.role === "STUDENT" && (
                   <CustomizedButton variant="outlined" color="primary600">
                     {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
                   </CustomizedButton>
-                  <CustomizedButton
-                    onClick={onOpenModal}
-                    variant="outlined"
-                    color="primary600"
-                  >
-                    {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                  </CustomizedButton>
-                </div>
-              )}
+                )}
+                <CustomizedButton
+                  onClick={onOpenModal}
+                  variant="outlined"
+                  color="primary600"
+                >
+                  {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                </CustomizedButton>
+              </div>
             </div>
           </div>
-          <QRModal openModal={openModal} onCloseModal={onCloseModal} />
+          <QRModal
+            seminarId={data.id}
+            openModal={openModal}
+            onCloseModal={onCloseModal}
+          />
         </>
       )}
     </div>
