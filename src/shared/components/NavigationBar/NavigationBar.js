@@ -186,8 +186,8 @@ function NavigationBar() {
               <Typography
                 variant="h5"
                 noWrap
-                component="a"
-                href=""
+                component={Link}
+                to={ROUTES.HOME}
                 sx={{
                   mr: 2,
                   display: { xs: "flex", md: "none" },

@@ -59,7 +59,7 @@ const SeminarDetail = () => {
   return (
     <div className={style.detail__container}>
       {data && (
-        <>
+        <div>
           <div className={style.detail__stage}>
             <Link to="/seminars">{SEMINAR.SEMINAR_LIST}</Link>
             <span>/</span>
@@ -178,7 +178,7 @@ const SeminarDetail = () => {
             openModal={openModal}
             onCloseModal={onCloseModal}
           />
-        </>
+        </div>
       )}
     </div>
   );

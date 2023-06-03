@@ -1,11 +1,16 @@
 @import "../../theme";
+@import "../../break-point";
 
 .footer {
-    &__container {
-        text-align: center;
-        font-size: $EXTRA_SMALL_SIZE;
-        padding: .5rem;
-        color: $primary200;
-        background-color: $primary900;
+  &__container {
+    text-align: center;
+    font-size: $EXTRA_SMALL_SIZE;
+    padding: 0.5rem;
+    color: $primary200;
+    background-color: $primary900;
+
+    @media (max-width: $bp-sm) {
+        font-size: $NORMAL_FONT_SIZE;
     }
+  }
 }
