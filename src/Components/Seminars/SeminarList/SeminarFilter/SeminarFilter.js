@@ -135,7 +135,14 @@ const SeminarFilter = forwardRef((props, ref) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={3} md={2.5} lg={1.5}>
+        <Grid
+          marginTop={{ xs: 1, sm: 0 }}
+          item
+          xs={12}
+          sm={3}
+          md={2.5}
+          lg={1.5}
+        >
           <FormControl fullWidth>
             <Button
               className={`${style.filterSection__button}`}
