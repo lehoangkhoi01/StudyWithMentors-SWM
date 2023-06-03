@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Rating } from "@mui/material";
+import { Box, Rating, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import style from "./RatingInput.module.scss";
 
@@ -21,6 +21,15 @@ const RatingInput = (props) => {
   return (
     <div className={`${style.ratingInput__container}`}>
       <label className={`${style.ratingInput__label}`}>{props.title}</label>
+      {props.error && (
+        <Typography
+          className={`${style.ratingInput__errorText}`}
+          variant="caption"
+          ml={2}
+        >
+          {props.error?.message}
+        </Typography>
+      )}
       <div className={`${style.ratingInput__wrapper}`}>
         <Rating
           name={props.name}
@@ -30,7 +39,7 @@ const RatingInput = (props) => {
           onChangeActive={(event, newHover) => {
             setHover(newHover);
           }}
-          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="medium" />}
         />
         {props.field.value !== null && (
           <Box sx={{ ml: 2 }} className={`${style.ratingInput__ratingLabel}`}>

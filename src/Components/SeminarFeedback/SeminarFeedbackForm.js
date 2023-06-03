@@ -14,14 +14,22 @@ import { useCustomLoading } from "../../Helpers/generalHelper";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../shared/constants/navigation";
 import { seminarFeedbackValidationField } from "./seminarFeedbackValidation";
+import { seminarService } from "../../Services/seminarService";
+import { Typography } from "@mui/material";
 
 const SeminarFeedbackForm = () => {
   const { id } = useParams();
   const history = useHistory();
   const { setLoading } = useCustomLoading();
+  const [seminarDetail, setSeminarDetail] = React.useState(null);
   const [questionList, setQuestionList] = React.useState([]);
   const [isSendSuccess, setIsSendSuccess] = React.useState(false);
-  const { handleSubmit, register, control } = useForm();
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm();
 
   const renderInput = (questionObject, index) => {
     switch (questionObject.type) {
@@ -41,6 +49,7 @@ const SeminarFeedbackForm = () => {
                 field={field}
                 name="rating"
                 onChange={(event, value) => field.onChange(value)}
+                error={errors[`question${index}`]}
               />
             )}
           />
@@ -62,6 +71,7 @@ const SeminarFeedbackForm = () => {
                 field={field}
                 name="radio"
                 onChange={(event, value) => field.onChange(value)}
+                error={errors[`question${index}`]}
               />
             )}
           />
@@ -105,15 +115,27 @@ const SeminarFeedbackForm = () => {
 
   React.useEffect(() => {
     const fetchQuestionList = async () => {
-      const result = await seminarFeedbackService.getQuestion(id);
-      setQuestionList(result.questions);
+      try {
+        const result = await seminarFeedbackService.getQuestion(id);
+        setQuestionList(result.questions);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const fetchSeminarDetail = async () => {
+      try {
+        const seminarDetail = await seminarService.getSeminarDetail(id);
+        setSeminarDetail(seminarDetail);
+      } catch (error) {
+        console.log(error);
+        if (error.status == "404") {
+          history.push(ROUTES.NOT_FOUND);
+        }
+      }
     };
 
-    try {
-      fetchQuestionList();
-    } catch (error) {
-      console.log(error);
-    }
+    fetchQuestionList();
+    fetchSeminarDetail();
   }, []);
 
   if (isSendSuccess) {
@@ -126,8 +148,8 @@ const SeminarFeedbackForm = () => {
           className={`${style.eventFeedback__form}`}
         >
           <CustomTopTitle title={TITLE.EVENT_FEEDBACK} />
+          <Typography variant="h6">{seminarDetail?.name}</Typography>
           {questionList.map((item, index) => renderInput(item, index))}
-
           <CustomizedButton
             type="submit"
             variant="contained"

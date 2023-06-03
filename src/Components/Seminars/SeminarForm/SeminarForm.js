@@ -246,22 +246,26 @@ const SeminarForm = () => {
 
   React.useEffect(() => {
     const fetchMentorList = async () => {
-      const result = await accountService.getAllMentors();
-      setMentorList(result);
+      try {
+        const result = await accountService.getAllMentors();
+        setMentorList(result);
+      } catch (error) {
+        console.log(error);
+      }
     };
     const getSeminarDetail = async () => {
-      const seminar = await seminarService.getSeminarDetail(id);
-      setSeminarDetail(seminar);
+      try {
+        const seminar = await seminarService.getSeminarDetail(id);
+        setSeminarDetail(seminar);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    try {
-      if (isFormUpdate) {
-        getSeminarDetail();
-      }
-      fetchMentorList();
-    } catch (error) {
-      console.log(error);
+    if (isFormUpdate) {
+      getSeminarDetail();
     }
+    fetchMentorList();
   }, []);
 
   React.useEffect(() => {
