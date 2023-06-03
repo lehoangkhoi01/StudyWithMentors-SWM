@@ -11,6 +11,8 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import QRModal from "./QRModal/QRModal";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
+import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
@@ -156,6 +158,10 @@ const SeminarDetail = () => {
               </div>
               <p>
                 <strong>{SEMINAR.ATTACHED_FILE}: </strong>
+                <ListFileDisplay
+                  mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
+                  oldItems={data.attachmentLinks}
+                />
               </p>
               <div className={style.detail__buttons}>
                 {userInfo?.role === "STUDENT" && (
