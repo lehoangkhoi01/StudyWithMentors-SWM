@@ -43,6 +43,7 @@ import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -272,8 +273,8 @@ const SeminarForm = () => {
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
       setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
-      setOldDocuments(seminarDetail.attachmentLinks);
-      setOldDocumentUrls(seminarDetail.attachmentUrls);
+      setOldDocuments(seminarDetail.attachmentLinks ?? []);
+      setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
     }
   }, [seminarDetail]);
 
@@ -341,7 +342,7 @@ const SeminarForm = () => {
             control={control}
             name="seminarTime"
             rules={{
-              validate: validationSeminarDate,
+              validate: isFormUpdate ? null : validationSeminarDate,
             }}
             defaultValue={seminarDate}
             render={({ field: { onChange, ...restField }, fieldState }) => (
@@ -404,6 +405,11 @@ const SeminarForm = () => {
             }}
           />
           <ListFileDisplay
+            mode={
+              isFormUpdate
+                ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
+                : SEMINAR_DETAIL_VIEW_MODE.CREATE
+            }
             isUpdate={isFormUpdate}
             items={documents}
             oldItems={oldDocuments}
