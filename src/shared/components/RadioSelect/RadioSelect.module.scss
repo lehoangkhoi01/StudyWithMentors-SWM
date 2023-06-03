@@ -1,4 +1,6 @@
 @import "../../theme";
+@import "../../break-point";
+
 .radioSelect {
   &__container {
     padding: 1rem;
@@ -9,5 +11,19 @@
     font-weight: 600;
     margin-bottom: 0.8vh;
     align-self: flex-start;
+  }
+  &__errorText {
+    color: $systemRed;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .radioSelect {
+    &__container {
+      padding: 1rem 0;
+    }
+    &__label {
+      font-size: $SMALL_LABEL_SIZE;
+    }
   }
 }

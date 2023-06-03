@@ -1,4 +1,5 @@
 @import "../../theme";
+@import "../../break-point";
 
 .ratingInput {
   &__container {
@@ -9,6 +10,8 @@
   &__wrapper {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0;
   }
   &__label {
     font-size: $LABEL_SIZE;
@@ -19,6 +22,23 @@
   }
   &__ratingLabel {
     color: $black400;
-    font-size: 1rem;
+    font-size: $SMALL_LABEL_SIZE;
+  }
+  &__errorText {
+    color: $systemRed;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .ratingInput {
+    &__container {
+      padding: 1rem 0;
+    }
+    &__label {
+      font-size: $SMALL_LABEL_SIZE;
+    }
+    &__ratingLabel {
+      font-size: $EXSMALL_LABEL_SIZE;
+    }
   }
 }

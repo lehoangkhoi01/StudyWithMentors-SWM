@@ -5,6 +5,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Typography,
 } from "@mui/material";
 import style from "./RadioSelect.module.scss";
 
@@ -17,6 +18,15 @@ const RadioSelect = (props) => {
       >
         {props.title}
       </FormLabel>
+      {props.error && (
+        <Typography
+          className={`${style.radioSelect__errorText}`}
+          variant="caption"
+          ml={2}
+        >
+          {props.error?.message}
+        </Typography>
+      )}
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue="female"
