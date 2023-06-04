@@ -1,0 +1,14 @@
+@import "../../theme";
+
+.breadcrumbs {
+  &__link {
+    color: $black800;
+    text-decoration: none;
+  }
+  &__link:hover {
+    text-decoration: underline;
+  }
+  &__title {
+    color: $black900;
+  }
+}

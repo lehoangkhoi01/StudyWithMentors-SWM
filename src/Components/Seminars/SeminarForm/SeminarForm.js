@@ -15,6 +15,7 @@ import { IconButton } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
+import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 //-------------------
 import {
   seminarNameValidation,
@@ -34,9 +35,13 @@ import {
   TITLE,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
+import {
+  BREADCRUMBS_TITLE,
+  CREATE_SEMINAR_BREADCRUMBS,
+} from "../../../shared/constants/breadcrumbs";
 //------------------
 import { accountService } from "../../../Services/accountService";
-import { ROUTES } from "../../../shared/constants/navigation";
+import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { seminarService } from "../../../Services/seminarService";
 import { resourceService } from "../../../Services/resourceService";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
@@ -70,6 +75,27 @@ const SeminarForm = () => {
       seminarSpeakers: [],
     },
   });
+
+  const UPDATE_SEMINAR_BREADCRUMBS = [
+    {
+      title: BREADCRUMBS_TITLE.SEMINAR_LIST,
+      route: ROUTES.SEMINAR_LIST,
+    },
+    {
+      title: seminarDetail?.name,
+      route: ROUTES_STATIC.SEMINAR_DETAIL + "/" + id,
+    },
+    {
+      title: BREADCRUMBS_TITLE.UPDATE_SEMINAR,
+      route: null,
+    },
+  ];
+
+  const breadcrumbsNavigate = isFormUpdate
+    ? UPDATE_SEMINAR_BREADCRUMBS
+    : CREATE_SEMINAR_BREADCRUMBS;
+
+  //----------------------------------------------------
 
   const onFileChange = (newValue) => {
     if (newValue && VALID_IMAGE_FILE_TYPE.indexOf(newValue.type) >= 0) {
@@ -283,190 +309,201 @@ const SeminarForm = () => {
   }, [seminarDetail]);
 
   return (
-    <Grid2 container className={`${style.seminarForm__container}`}>
-      <form
-        className={`${style.seminarForm__form}`}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
-          {seminarBackground ? (
-            <div className={`${style.seminarForm__image}`}>
-              <img src={seminarBackground} alt="seminar-poster" />
-              <IconButton
-                aria-label="remove"
-                size="large"
-                className={`${style.seminarForm__iconButton}`}
-                onClick={onRemoveImage}
-              >
-                <CloseIcon />
-              </IconButton>
-            </div>
-          ) : (
-            <Controller
-              name="seminarBackground"
-              defaultValue={seminarBackground}
-              control={control}
-              rules={{
-                validate: validationSeminarImage,
+    <div className={`${style.seminarForm__container}`}>
+      <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
+      <Grid2 container className={`${style.seminarForm__gridWrapper}`}>
+        <form
+          className={`${style.seminarForm__form}`}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Grid2
+            xs={12}
+            md={6}
+            className={`${style.seminarForm__gridContainer}`}
+          >
+            {seminarBackground ? (
+              <div className={`${style.seminarForm__image}`}>
+                <img src={seminarBackground} alt="seminar-poster" />
+                <IconButton
+                  aria-label="remove"
+                  size="large"
+                  className={`${style.seminarForm__iconButton}`}
+                  onClick={onRemoveImage}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            ) : (
+              <Controller
+                name="seminarBackground"
+                defaultValue={seminarBackground}
+                control={control}
+                rules={{
+                  validate: validationSeminarImage,
+                }}
+                render={({ field, fieldState }) => {
+                  return (
+                    <ImageUploader
+                      inputId="seminarBackground"
+                      placeholder={PLACE_HOLDER.CHOOSE_IMAGE}
+                      required={true}
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        onFileChange(e);
+                      }}
+                      name={field.name}
+                      helperText={fieldState.error?.message}
+                      error={fieldState.invalid}
+                    />
+                  );
+                }}
+              />
+            )}
+          </Grid2>
+          <Grid2
+            xs={12}
+            md={6}
+            className={`${style.seminarForm__gridContainer}`}
+          >
+            <CustomTopTitle title={TITLE.SEMINAR_INFO} />
+            <CustomizedTextField
+              inputId="seminarName"
+              name={TEXTFIELD_LABEL.SEMINAR_NAME}
+              required={true}
+              options={{
+                ...register("seminarName", seminarNameValidation),
               }}
-              render={({ field, fieldState }) => {
+              disabled={isFormUpdate}
+              error={errors.seminarName ? true : false}
+              helperText={errors?.seminarName?.message}
+            />
+            <Controller
+              control={control}
+              name="seminarTime"
+              rules={{
+                validate: isFormUpdate ? null : validationSeminarDate,
+              }}
+              defaultValue={seminarDate}
+              render={({ field: { onChange, ...restField }, fieldState }) => (
+                <CustomizedDateTimePicker
+                  label={TEXTFIELD_LABEL.TIME}
+                  ampm={false}
+                  formName="seminarTime"
+                  required={true}
+                  disabled={isFormUpdate}
+                  onChange={(event) => {
+                    onChange(event);
+                    setSeminarDate(event);
+                  }}
+                  fieldState={fieldState}
+                  {...restField}
+                />
+              )}
+            />
+            <CustomizedTextField
+              inputId="seminarPlace"
+              name={TEXTFIELD_LABEL.SEMINAR_PLACE}
+              required={true}
+              options={{
+                ...register("seminarPlace", seminarPlaceValidation),
+              }}
+              disabled={isFormUpdate}
+            />
+
+            <Controller
+              control={control}
+              name="seminarSpeakers"
+              render={({ field: { value, onChange, ...restField } }) => (
+                <AutocompleteInput
+                  multiple={true}
+                  disabled={isFormUpdate}
+                  label={TEXTFIELD_LABEL.SPEAKER}
+                  required={true}
+                  id="autocomplete-speakers"
+                  options={mentorList}
+                  getOptionLabel={getOptionLabel}
+                  renderOption={renderOptionSpeakerAutocomplete}
+                  onChange={(e, data) => {
+                    onChange(data);
+                  }}
+                  value={value}
+                  {...restField}
+                />
+              )}
+            />
+            <CustomizedTextField
+              multiline
+              maxRows={3}
+              inputId="seminarDescription"
+              name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
+              disabled={isFormUpdate}
+              required={false}
+              optional={true}
+              options={{
+                ...register("seminarDescription"),
+              }}
+            />
+            <ListFileDisplay
+              mode={
+                isFormUpdate
+                  ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
+                  : SEMINAR_DETAIL_VIEW_MODE.CREATE
+              }
+              isUpdate={isFormUpdate}
+              items={documents}
+              oldItems={oldDocuments}
+              onRemove={handleRemoveDocuments}
+              handleRemoveOldDocuments={handleRemoveOldDocuments}
+            />
+
+            <Controller
+              name="seminarDocuments"
+              control={control}
+              defaultValue={documents}
+              rules={{ validate: validateFiles }}
+              render={({ field }) => {
                 return (
-                  <ImageUploader
-                    inputId="seminarBackground"
-                    placeholder={PLACE_HOLDER.CHOOSE_IMAGE}
-                    required={true}
-                    value={field.value}
+                  <FileInputIcon
                     onChange={(e) => {
                       field.onChange(e);
-                      onFileChange(e);
+                      handleDocumentsChange(e);
                     }}
-                    name={field.name}
-                    helperText={fieldState.error?.message}
-                    error={fieldState.invalid}
+                    field={field}
+                    error={errors.seminarDocuments}
                   />
                 );
               }}
             />
-          )}
-        </Grid2>
-        <Grid2 xs={12} md={6} className={`${style.seminarForm__gridContainer}`}>
-          <CustomTopTitle title={TITLE.SEMINAR_INFO} />
-          <CustomizedTextField
-            inputId="seminarName"
-            name={TEXTFIELD_LABEL.SEMINAR_NAME}
-            required={true}
-            options={{
-              ...register("seminarName", seminarNameValidation),
-            }}
-            disabled={isFormUpdate}
-            error={errors.seminarName ? true : false}
-            helperText={errors?.seminarName?.message}
-          />
-          <Controller
-            control={control}
-            name="seminarTime"
-            rules={{
-              validate: isFormUpdate ? null : validationSeminarDate,
-            }}
-            defaultValue={seminarDate}
-            render={({ field: { onChange, ...restField }, fieldState }) => (
-              <CustomizedDateTimePicker
-                label={TEXTFIELD_LABEL.TIME}
-                ampm={false}
-                formName="seminarTime"
-                required={true}
-                disabled={isFormUpdate}
-                onChange={(event) => {
-                  onChange(event);
-                  setSeminarDate(event);
-                }}
-                fieldState={fieldState}
-                {...restField}
-              />
-            )}
-          />
-          <CustomizedTextField
-            inputId="seminarPlace"
-            name={TEXTFIELD_LABEL.SEMINAR_PLACE}
-            required={true}
-            options={{
-              ...register("seminarPlace", seminarPlaceValidation),
-            }}
-            disabled={isFormUpdate}
-          />
 
-          <Controller
-            control={control}
-            name="seminarSpeakers"
-            render={({ field: { value, onChange, ...restField } }) => (
-              <AutocompleteInput
-                multiple={true}
-                disabled={isFormUpdate}
-                label={TEXTFIELD_LABEL.SPEAKER}
-                required={true}
-                id="autocomplete-speakers"
-                options={mentorList}
-                getOptionLabel={getOptionLabel}
-                renderOption={renderOptionSpeakerAutocomplete}
-                onChange={(e, data) => {
-                  onChange(data);
-                }}
-                value={value}
-                {...restField}
-              />
-            )}
-          />
-          <CustomizedTextField
-            multiline
-            maxRows={3}
-            inputId="seminarDescription"
-            name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
-            disabled={isFormUpdate}
-            required={false}
-            optional={true}
-            options={{
-              ...register("seminarDescription"),
-            }}
-          />
-          <ListFileDisplay
-            mode={
-              isFormUpdate
-                ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
-                : SEMINAR_DETAIL_VIEW_MODE.CREATE
-            }
-            isUpdate={isFormUpdate}
-            items={documents}
-            oldItems={oldDocuments}
-            onRemove={handleRemoveDocuments}
-            handleRemoveOldDocuments={handleRemoveOldDocuments}
-          />
-
-          <Controller
-            name="seminarDocuments"
-            control={control}
-            defaultValue={documents}
-            rules={{ validate: validateFiles }}
-            render={({ field }) => {
-              return (
-                <FileInputIcon
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleDocumentsChange(e);
-                  }}
-                  field={field}
-                  error={errors.seminarDocuments}
-                />
-              );
-            }}
-          />
-
-          <Grid2
-            container
-            className={`${style.seminarForm__buttonContainer}`}
-            spacing={2}
-          >
-            <Grid2 xs={6} item>
-              <CustomizedButton variant="outlined" color="primary600">
-                {isFormUpdate
-                  ? BUTTON_LABEL.CANCEL_EDIT
-                  : BUTTON_LABEL.CANCEL_CREATE}
-              </CustomizedButton>
-            </Grid2>
-            <Grid2 xs={6} item>
-              <CustomizedButton
-                type="submit"
-                variant="contained"
-                color="primary600"
-              >
-                {isFormUpdate
-                  ? BUTTON_LABEL.UPDATE_SEMINAR
-                  : BUTTON_LABEL.CREATE_SEMINAR}
-              </CustomizedButton>
+            <Grid2
+              container
+              className={`${style.seminarForm__buttonContainer}`}
+              spacing={2}
+            >
+              <Grid2 xs={6} item>
+                <CustomizedButton variant="outlined" color="primary600">
+                  {isFormUpdate
+                    ? BUTTON_LABEL.CANCEL_EDIT
+                    : BUTTON_LABEL.CANCEL_CREATE}
+                </CustomizedButton>
+              </Grid2>
+              <Grid2 xs={6} item>
+                <CustomizedButton
+                  type="submit"
+                  variant="contained"
+                  color="primary600"
+                >
+                  {isFormUpdate
+                    ? BUTTON_LABEL.UPDATE_SEMINAR
+                    : BUTTON_LABEL.CREATE_SEMINAR}
+                </CustomizedButton>
+              </Grid2>
             </Grid2>
           </Grid2>
-        </Grid2>
-      </form>
-    </Grid2>
+        </form>
+      </Grid2>
+    </div>
   );
 };
 

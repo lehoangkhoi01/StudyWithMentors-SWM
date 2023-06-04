@@ -17,6 +17,11 @@ export const ROUTES = {
   SEMINAR_UPDATE: "/update-seminar/:id",
 };
 
+export const ROUTES_STATIC = {
+  SEMINAR_DETAIL: "/seminars",
+  SEMINAR_UPDATE: "/update-seminar",
+};
+
 export const UNAUTHORIZED_NAVBAR = [
   {
     TITLE: "Trang chủ",
