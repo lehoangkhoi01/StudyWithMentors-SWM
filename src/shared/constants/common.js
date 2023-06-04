@@ -164,6 +164,7 @@ export const LENGTH = {
   SEMINAR_PLACE: 200,
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 3,
+  SPEAKERS_MAX: 3,
 };
 
 export const ERROR_MESSAGES = {
@@ -199,6 +200,8 @@ export const ERROR_MESSAGES = {
     "Tối đa " +
     LENGTH.FILE_MAX_NUM +
     " tài liệu.",
+  INVALID_NO_SPEAKERS:
+    "Vui lòng chọn tối đa " + LENGTH.SPEAKERS_MAX + " diễn giả.",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
