@@ -348,3 +348,4 @@ export const QR_TEXT = {
   FEEDBACK_SEMINAR: "Đánh giá sự kiện",
   OR_THIS_LINK: "hoặc vào đường link",
 };
+
