@@ -20,6 +20,7 @@ import SeminarsPage from "./Pages/Seminars/SeminarsPage";
 import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
 import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
+import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 
 function App() {
   const user = useSelector(selectUser);
@@ -67,6 +68,7 @@ function App() {
           </Switch>
         </div>
         <LoadingProvider />
+        <NotiSnackbar />
       </div>
       <Footer />
     </BrowserRouter>

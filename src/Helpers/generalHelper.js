@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { helperAction } from "../Store/slices/helperSlice";
+import { notificationAction } from "../Store/slices/notificationSlice";
 import { selectUserInfo, userAction } from "../Store/slices/userSlice";
 import { userAccountService } from "../Services/userAccountService";
 
@@ -13,6 +14,21 @@ export const useCustomLoading = () => {
   };
   return {
     setLoading,
+  };
+};
+
+export const useNotification = () => {
+  const dispatch = useDispatch();
+  const setNotification = (noti) => {
+    dispatch(notificationAction.setNotification(noti));
+  };
+  const setNotiOpen = (isOpen) => {
+    dispatch(notificationAction.setOpen(isOpen));
+  };
+
+  return {
+    setNotification,
+    setNotiOpen,
   };
 };
 
