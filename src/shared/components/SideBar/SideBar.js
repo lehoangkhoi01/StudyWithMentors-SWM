@@ -8,7 +8,12 @@ import {
   Divider,
   Typography,
   Avatar,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
 import { APP_NAME } from "../../constants/common";
@@ -18,19 +23,14 @@ import style from "./Sidebar.module.scss";
 import { drawerWidth } from "../../constants/globalStyle";
 
 const SideBar = (props) => {
-  return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawerContent = (
+    <>
       <div className={`${style.sidebar__appname}`}>
         <Logo
           src={logoPath}
@@ -108,7 +108,72 @@ const SideBar = (props) => {
           <Typography>{props.userInfo.role}</Typography>
         </div>
       </div>
-    </Drawer>
+    </>
+  );
+
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { xl: `calc(100% - ${drawerWidth}px)` },
+          ml: { xl: `${drawerWidth}px` },
+          backgroundColor: "#1A237E",
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { xl: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Growth Me
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        component="nav"
+        sx={{ width: { xl: drawerWidth }, flexShrink: { xl: 0 } }}
+        aria-label="mailbox folders"
+      >
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", xl: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: "none", xl: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+          open
+        >
+          {drawerContent}
+        </Drawer>
+      </Box>
+    </>
   );
 };
 
