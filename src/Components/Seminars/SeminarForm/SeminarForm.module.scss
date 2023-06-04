@@ -14,7 +14,6 @@
   &__gridContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 
   &__form {
@@ -23,7 +22,8 @@
     text-align: center;
     gap: 2vh;
     background-color: $black000;
-    padding: 1rem;
+    padding: 2rem;
+    border-radius: 1.2rem;
   }
   &__buttonContainer {
     margin: 1rem 0;

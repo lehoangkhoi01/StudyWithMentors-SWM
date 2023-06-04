@@ -1,5 +1,6 @@
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
+  LOGOUT: "Đăng xuất",
   GOOGLE_LOGIN: "Tiếp tục với Google",
   SAVE: "Lưu",
   LATER: "Để sau",
@@ -92,6 +93,7 @@ export const COMMON_MESSAGE = {
   APPLY_RESET_PASSWORD_SUCCESS:
     "Đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục cùng Growth Me.",
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
+  CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -163,6 +165,7 @@ export const LENGTH = {
   SEMINAR_PLACE: 200,
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 3,
+  SPEAKERS_MAX: 3,
 };
 
 export const ERROR_MESSAGES = {
@@ -198,6 +201,8 @@ export const ERROR_MESSAGES = {
     "Tối đa " +
     LENGTH.FILE_MAX_NUM +
     " tài liệu.",
+  INVALID_NO_SPEAKERS:
+    "Vui lòng chọn tối đa " + LENGTH.SPEAKERS_MAX + " diễn giả.",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
