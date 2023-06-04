@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Typography } from "@mui/material";
 import React from "react";
 import style from "./AutocompleteInput.module.scss";
 import { OPTIONAL } from "../../constants/common";
@@ -23,6 +23,16 @@ const AutocompleteInput = (props) => {
         renderInput={(params) => <TextField {...params} />}
         {...props}
       />
+      {props.error && (
+        <Typography
+          className={`${style.autocomplete__errorText}`}
+          variant="caption"
+          textAlign="left"
+          ml={2}
+        >
+          {props.error?.message}
+        </Typography>
+      )}
     </div>
   );
 };

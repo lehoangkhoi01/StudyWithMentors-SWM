@@ -92,6 +92,7 @@ export const COMMON_MESSAGE = {
   APPLY_RESET_PASSWORD_SUCCESS:
     "Đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục cùng Growth Me.",
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
+  CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
 };
 
 export const SIGN_UP_STAGE = {

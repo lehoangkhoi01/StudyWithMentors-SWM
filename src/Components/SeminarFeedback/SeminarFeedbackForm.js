@@ -55,7 +55,6 @@ const SeminarFeedbackForm = () => {
           />
         );
       case "YES/NO":
-        // return <RadioSelect key={index} title={questionObject.question} />;
         return (
           <Controller
             control={control}

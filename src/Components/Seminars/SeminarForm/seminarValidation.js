@@ -13,6 +13,13 @@ export const validationSeminarDate = (value) => {
   }
 };
 
+export const validationSeminarSpeakers = (value) => {
+  console.log(value);
+  if (!value || value.length === 0) {
+    return ERROR_MESSAGES.REQUIRED_FIELD;
+  }
+};
+
 export const validationSeminarImage = (file) => {
   if (
     file &&

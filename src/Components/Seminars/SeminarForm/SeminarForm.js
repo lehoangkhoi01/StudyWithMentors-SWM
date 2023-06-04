@@ -24,9 +24,11 @@ import {
 import {
   validationSeminarDate,
   validationSeminarImage,
+  validationSeminarSpeakers,
 } from "./seminarValidation";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   DATE_FORMAT,
   ERROR_MESSAGES,
   LENGTH,
@@ -213,6 +215,11 @@ const SeminarForm = () => {
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
       await seminarService.create(requestBody);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.CREATE_SEMINAR_SUCCESS,
+      });
       history.push(ROUTES.SEMINAR_LIST);
     } catch (error) {
       console.log(error);
@@ -423,6 +430,9 @@ const SeminarForm = () => {
             <Controller
               control={control}
               name="seminarSpeakers"
+              rules={{
+                validate: validationSeminarSpeakers,
+              }}
               render={({ field: { value, onChange, ...restField } }) => (
                 <AutocompleteInput
                   multiple={true}
@@ -434,9 +444,11 @@ const SeminarForm = () => {
                   getOptionLabel={getOptionLabel}
                   renderOption={renderOptionSpeakerAutocomplete}
                   onChange={(e, data) => {
+                    console.log(data);
                     onChange(data);
                   }}
                   value={value}
+                  error={errors.seminarSpeakers}
                   {...restField}
                 />
               )}
