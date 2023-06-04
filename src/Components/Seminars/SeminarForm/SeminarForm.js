@@ -47,12 +47,16 @@ import { resourceService } from "../../../Services/resourceService";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
 
 const SeminarForm = () => {
   const history = useHistory();
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
   const { id } = useParams();
   const isFormUpdate = id ? true : false;
   const [seminarBackground, setSeminarBackground] = React.useState(null);
@@ -248,6 +252,11 @@ const SeminarForm = () => {
         attachmentUrls: attachmentUrls,
       };
       await seminarService.update(id, requestBody);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: "Cập nhật sự kiện thành công",
+      });
     } catch (error) {
       control.log(error);
       if (error.status == "500") {
