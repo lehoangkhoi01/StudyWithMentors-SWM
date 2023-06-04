@@ -6,7 +6,6 @@ import { useHistory } from "react-router";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 //----------------
 import style from "./SeminarForm.module.scss";
-import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -34,7 +33,6 @@ import {
   LENGTH,
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
-  TITLE,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
 import {
@@ -382,7 +380,6 @@ const SeminarForm = () => {
             md={6}
             className={`${style.seminarForm__gridContainer}`}
           >
-            <CustomTopTitle title={TITLE.SEMINAR_INFO} />
             <CustomizedTextField
               inputId="seminarName"
               name={TEXTFIELD_LABEL.SEMINAR_NAME}

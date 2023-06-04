@@ -194,7 +194,7 @@ const SeminarList = () => {
         alignItems={"stretch"}
       >
         {seminars.map((data, index) => (
-          <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} lg={3}>
+          <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} lg={4} xl={3}>
             <SeminarCard data={data} />
           </Grid>
         ))}
