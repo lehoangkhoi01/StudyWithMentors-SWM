@@ -175,17 +175,19 @@ const SeminarList = () => {
           )}
         </div>
 
-        <CustomizedButton
-          variant="outlined"
-          color="primary600"
-          onClick={navigateToCreatePage}
-        >
-          <img
-            className={style.seminarList__add_icon}
-            src={require("../../../assets/icons/Add_Seminar.png")}
-          />
-          {BUTTON_LABEL.CREATE_SEMINAR}
-        </CustomizedButton>
+        {userInfo?.role === "STAFF" ? (
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={navigateToCreatePage}
+          >
+            <img
+              className={style.seminarList__add_icon}
+              src={require("../../../assets/icons/Add_Seminar.png")}
+            />
+            {BUTTON_LABEL.CREATE_SEMINAR}
+          </CustomizedButton>
+        ) : null}
       </div>
       <Grid
         className={style.seminarList__list}

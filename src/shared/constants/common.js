@@ -1,5 +1,6 @@
 export const BUTTON_LABEL = {
   LOGIN: "Đăng nhập",
+  LOGOUT: "Đăng xuất",
   GOOGLE_LOGIN: "Tiếp tục với Google",
   SAVE: "Lưu",
   LATER: "Để sau",

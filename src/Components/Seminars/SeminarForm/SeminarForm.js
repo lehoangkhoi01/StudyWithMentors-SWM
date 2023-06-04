@@ -325,7 +325,11 @@ const SeminarForm = () => {
   return (
     <div className={`${style.seminarForm__container}`}>
       <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
-      <Grid2 container className={`${style.seminarForm__gridWrapper}`}>
+      <Grid2
+        spacing={2}
+        container
+        className={`${style.seminarForm__gridWrapper}`}
+      >
         <form
           className={`${style.seminarForm__form}`}
           onSubmit={handleSubmit(onSubmit)}

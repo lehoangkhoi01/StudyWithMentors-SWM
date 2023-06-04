@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Drawer,
-  ListItemButton,
   ListItem,
   List,
-  ListItemText,
   Divider,
   Typography,
   Avatar,
@@ -16,11 +14,12 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
-import { APP_NAME } from "../../constants/common";
+import { APP_NAME, BUTTON_LABEL } from "../../constants/common";
 import { ROUTES } from "../../constants/navigation";
 import Logo from "../Logo/Logo";
 import style from "./Sidebar.module.scss";
 import { drawerWidth } from "../../constants/globalStyle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const SideBar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -90,22 +89,20 @@ const SideBar = (props) => {
         <ListItem key="account" className={`${style.sidebar__listitem}`}>
           <Link>Tài khoản</Link>
         </ListItem>
-
-        <ListItem key="Logout" className={`${style.sidebar__listitem}`}>
-          <ListItemButton
-            className={`${style.sidebar__listitemButton}`}
-            onClick={props.handleLogout}
-          >
-            <ListItemText sx={{ fontWeight: "600" }} primary="Đăng xuất" />
-          </ListItemButton>
-        </ListItem>
       </List>
 
       <div className={`${style.sidebar__infoSection}`}>
         <Avatar src={props.userInfo.avatarUrl} alt={props.userInfo.fullName} />
         <div className={`${style.sidebar__userInfo}`}>
           <Typography variant="h6">{props.userInfo.fullName}</Typography>
-          <Typography>{props.userInfo.role}</Typography>
+          <Typography sx={{ display: "flex", justifyContent: "space-around" }}>
+            {props.userInfo.role}{" "}
+            <ExitToAppIcon
+              className={`${style.sidebar__icon}`}
+              titleAccess={BUTTON_LABEL.LOGOUT}
+              onClick={props.handleLogout}
+            />
+          </Typography>
         </div>
       </div>
     </>
