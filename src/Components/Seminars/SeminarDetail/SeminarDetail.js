@@ -4,7 +4,6 @@ import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
-import { Link } from "react-router-dom/cjs/react-router-dom";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -13,6 +12,10 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import { useHistory } from "react-router";
+import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
+import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
+import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
@@ -20,6 +23,12 @@ const SeminarDetail = () => {
   const [openModal, setOpenModal] = useState(false);
   const { setLoading } = useCustomLoading();
   const userInfo = useSelector(selectUserInfo);
+  const history = useHistory();
+
+  const breadcrumbsNavigate = [
+    { title: BREADCRUMBS_TITLE.SEMINAR_LIST, route: ROUTES.SEMINAR_LIST },
+    { title: data?.name, route: null },
+  ];
 
   const { id } = useParams();
 
@@ -58,15 +67,15 @@ const SeminarDetail = () => {
     setAnchorEl(null);
   };
 
+  const handleNavigate = (route) => {
+    history.push(route);
+  };
+
   return (
     <div className={style.detail__container}>
       {data && (
         <div>
-          <div className={style.detail__stage}>
-            <Link to="/seminars">{SEMINAR.SEMINAR_LIST}</Link>
-            <span>/</span>
-            <span>{data.name}</span>
-          </div>
+          <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
           <div className={style.detail__content}>
             <img
               className={style.detail__image}
@@ -113,7 +122,11 @@ const SeminarDetail = () => {
                       />
                       <span>{SEMINAR.RERORT}</span>
                     </MenuItem>
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem
+                      onClick={() =>
+                        handleNavigate(ROUTES_STATIC.SEMINAR_UPDATE + "/" + id)
+                      }
+                    >
                       <img
                         src={require("../../../assets/icons/Seminar_Edit.png")}
                       />
