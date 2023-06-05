@@ -98,9 +98,12 @@ const SeminarFeedbackForm = () => {
     answers.forEach((item, index) => {
       item.answer = data[`question${index}`];
     });
+    const requestBody = {
+      result: answers,
+    };
 
     try {
-      await seminarFeedbackService.send(id, answers);
+      await seminarFeedbackService.send(id, requestBody);
       setIsSendSuccess(true);
     } catch (error) {
       console.log(error);

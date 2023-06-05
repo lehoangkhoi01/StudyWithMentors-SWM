@@ -2,14 +2,9 @@ import React from "react";
 import { Box, Rating, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import style from "./RatingInput.module.scss";
+import { RATING_LABEL } from "../../constants/systemType";
 
-const labels = {
-  1: "Không hài lòng",
-  2: "Khá không hài lòng",
-  3: "Bình thường",
-  4: "Khá hài lòng",
-  5: "Rất hài lòng",
-};
+const labels = RATING_LABEL;
 
 function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
