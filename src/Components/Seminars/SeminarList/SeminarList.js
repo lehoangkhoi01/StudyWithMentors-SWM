@@ -175,17 +175,19 @@ const SeminarList = () => {
           )}
         </div>
 
-        <CustomizedButton
-          variant="outlined"
-          color="primary600"
-          onClick={navigateToCreatePage}
-        >
-          <img
-            className={style.seminarList__add_icon}
-            src={require("../../../assets/icons/Add_Seminar.png")}
-          />
-          {BUTTON_LABEL.CREATE_SEMINAR}
-        </CustomizedButton>
+        {userInfo?.role === "STAFF" ? (
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={navigateToCreatePage}
+          >
+            <img
+              className={style.seminarList__add_icon}
+              src={require("../../../assets/icons/Add_Seminar.png")}
+            />
+            {BUTTON_LABEL.CREATE_SEMINAR}
+          </CustomizedButton>
+        ) : null}
       </div>
       <Grid
         className={style.seminarList__list}
@@ -194,7 +196,7 @@ const SeminarList = () => {
         alignItems={"stretch"}
       >
         {seminars.map((data, index) => (
-          <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} lg={3}>
+          <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} lg={4} xl={3}>
             <SeminarCard data={data} />
           </Grid>
         ))}

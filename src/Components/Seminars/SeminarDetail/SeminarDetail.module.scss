@@ -3,7 +3,8 @@
 
 .detail {
   &__container {
-    width: 75%;
+    width: 90%;
+    min-height: 90%;
     margin: 0 auto;
   }
 
@@ -22,13 +23,10 @@
 
   &__content {
     border-radius: 1.2rem;
-
     background-color: $black000;
-
-    margin: 2rem 0;
+    margin: 1rem 0;
     padding: 1.5rem;
     font-size: 1rem;
-
     display: flex;
     flex: unset;
   }
@@ -42,8 +40,8 @@
 
   &__information {
     padding-inline: 2.5rem;
-
     position: relative;
+    width: 100%;
   }
 
   &__title {

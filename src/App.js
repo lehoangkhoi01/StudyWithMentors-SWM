@@ -22,6 +22,7 @@ import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
+import { Toolbar } from "@mui/material";
 
 function App() {
   const user = useSelector(selectUser);
@@ -36,6 +37,9 @@ function App() {
       >
         <NavigationBar />
         <div className={`${style.content}`}>
+          {user?.userInfo?.role === "STAFF" ? (
+            <Toolbar sx={{ display: "none" }} />
+          ) : null}
           <Switch className={`${style.switchContainer}`}>
             <Route exact path="/" component={HomePage} />
             <Route path={ROUTES.HOME} component={HomePage} />

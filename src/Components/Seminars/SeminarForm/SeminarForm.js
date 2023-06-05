@@ -6,7 +6,6 @@ import { useHistory } from "react-router";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 //----------------
 import style from "./SeminarForm.module.scss";
-import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -24,15 +23,16 @@ import {
 import {
   validationSeminarDate,
   validationSeminarImage,
+  validationSeminarSpeakers,
 } from "./seminarValidation";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   DATE_FORMAT,
   ERROR_MESSAGES,
   LENGTH,
   PLACE_HOLDER,
   TEXTFIELD_LABEL,
-  TITLE,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
 import {
@@ -213,6 +213,11 @@ const SeminarForm = () => {
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
       await seminarService.create(requestBody);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.CREATE_SEMINAR_SUCCESS,
+      });
       history.push(ROUTES.SEMINAR_LIST);
     } catch (error) {
       console.log(error);
@@ -320,7 +325,11 @@ const SeminarForm = () => {
   return (
     <div className={`${style.seminarForm__container}`}>
       <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
-      <Grid2 container className={`${style.seminarForm__gridWrapper}`}>
+      <Grid2
+        spacing={2}
+        container
+        className={`${style.seminarForm__gridWrapper}`}
+      >
         <form
           className={`${style.seminarForm__form}`}
           onSubmit={handleSubmit(onSubmit)}
@@ -375,7 +384,6 @@ const SeminarForm = () => {
             md={6}
             className={`${style.seminarForm__gridContainer}`}
           >
-            <CustomTopTitle title={TITLE.SEMINAR_INFO} />
             <CustomizedTextField
               inputId="seminarName"
               name={TEXTFIELD_LABEL.SEMINAR_NAME}
@@ -423,6 +431,9 @@ const SeminarForm = () => {
             <Controller
               control={control}
               name="seminarSpeakers"
+              rules={{
+                validate: validationSeminarSpeakers,
+              }}
               render={({ field: { value, onChange, ...restField } }) => (
                 <AutocompleteInput
                   multiple={true}
@@ -434,9 +445,11 @@ const SeminarForm = () => {
                   getOptionLabel={getOptionLabel}
                   renderOption={renderOptionSpeakerAutocomplete}
                   onChange={(e, data) => {
+                    console.log(data);
                     onChange(data);
                   }}
                   value={value}
+                  error={errors.seminarSpeakers}
                   {...restField}
                 />
               )}

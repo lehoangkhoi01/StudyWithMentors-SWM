@@ -1,11 +1,19 @@
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { BUTTON_LABEL, SEMINAR } from "../../../shared/constants/common";
+import {
+  BUTTON_LABEL,
+  COMMON_MESSAGE,
+  ERROR_MESSAGES,
+  SEMINAR,
+} from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { Button, Menu, MenuItem } from "@mui/material";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import QRModal from "./QRModal/QRModal";
 import { useSelector } from "react-redux";
@@ -16,12 +24,15 @@ import { useHistory } from "react-router";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
 import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
 
@@ -37,11 +48,11 @@ const SeminarDetail = () => {
       try {
         setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
-
-        console.log(seminarDetail);
-
         setData(seminarDetail);
       } catch (error) {
+        if (error?.status == "404") {
+          history.push(ROUTES.NOT_FOUND);
+        }
         console.log(error);
       } finally {
         setLoading(false);
@@ -59,10 +70,45 @@ const SeminarDetail = () => {
     setOpenModal(false);
   };
 
+  const onOpenRemoveDialog = () => {
+    setOpenRemoveDialog(true);
+  };
+
+  const onCloseRemoveDialog = () => {
+    setOpenRemoveDialog(false);
+  };
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleRemoveSeminar = async () => {
+    setLoading(true);
+    try {
+      await seminarService.removeSeminar(id);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.REMOVE_SEMINAR_SUCCESS,
+      });
+      history.push(ROUTES.SEMINAR_LIST);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+      if (error?.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+    } finally {
+      setOpenRemoveDialog(false);
+      setLoading(false);
+    }
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -132,7 +178,7 @@ const SeminarDetail = () => {
                       />
                       <span>{SEMINAR.EDIT}</span>
                     </MenuItem>
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem onClick={onOpenRemoveDialog}>
                       <img
                         src={require("../../../assets/icons/Seminar_Delete.png")}
                       />
@@ -196,6 +242,13 @@ const SeminarDetail = () => {
             seminarId={data.id}
             openModal={openModal}
             onCloseModal={onCloseModal}
+          />
+          <ConfirmationDialog
+            open={openRemoveDialog}
+            title="Xóa sự kiện"
+            content="Bạn có chắc muốn xóa sự kiện này không? Hành động này không thể hoàn tác"
+            handleClose={onCloseRemoveDialog}
+            handleSubmit={handleRemoveSeminar}
           />
         </div>
       )}

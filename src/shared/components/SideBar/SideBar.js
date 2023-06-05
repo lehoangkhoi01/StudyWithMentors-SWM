@@ -1,36 +1,35 @@
 import React from "react";
 import {
   Drawer,
-  ListItemButton,
   ListItem,
   List,
-  ListItemText,
   Divider,
   Typography,
   Avatar,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
-import { APP_NAME } from "../../constants/common";
+import { APP_NAME, BUTTON_LABEL } from "../../constants/common";
 import { ROUTES } from "../../constants/navigation";
 import Logo from "../Logo/Logo";
 import style from "./Sidebar.module.scss";
 import { drawerWidth } from "../../constants/globalStyle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const SideBar = (props) => {
-  return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawerContent = (
+    <>
       <div className={`${style.sidebar__appname}`}>
         <Logo
           src={logoPath}
@@ -90,25 +89,88 @@ const SideBar = (props) => {
         <ListItem key="account" className={`${style.sidebar__listitem}`}>
           <Link>Tài khoản</Link>
         </ListItem>
-
-        <ListItem key="Logout" className={`${style.sidebar__listitem}`}>
-          <ListItemButton
-            className={`${style.sidebar__listitemButton}`}
-            onClick={props.handleLogout}
-          >
-            <ListItemText sx={{ fontWeight: "600" }} primary="Đăng xuất" />
-          </ListItemButton>
-        </ListItem>
       </List>
 
       <div className={`${style.sidebar__infoSection}`}>
         <Avatar src={props.userInfo.avatarUrl} alt={props.userInfo.fullName} />
         <div className={`${style.sidebar__userInfo}`}>
           <Typography variant="h6">{props.userInfo.fullName}</Typography>
-          <Typography>{props.userInfo.role}</Typography>
+          <Typography sx={{ display: "flex", justifyContent: "space-around" }}>
+            {props.userInfo.role}{" "}
+            <ExitToAppIcon
+              className={`${style.sidebar__icon}`}
+              titleAccess={BUTTON_LABEL.LOGOUT}
+              onClick={props.handleLogout}
+            />
+          </Typography>
         </div>
       </div>
-    </Drawer>
+    </>
+  );
+
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { xl: `calc(100% - ${drawerWidth}px)` },
+          ml: { xl: `${drawerWidth}px` },
+          backgroundColor: "#1A237E",
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { xl: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Growth Me
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        component="nav"
+        sx={{ width: { xl: drawerWidth }, flexShrink: { xl: 0 } }}
+        aria-label="mailbox folders"
+      >
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", xl: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: "none", xl: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+          open
+        >
+          {drawerContent}
+        </Drawer>
+      </Box>
+    </>
   );
 };
 
