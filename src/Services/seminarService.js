@@ -24,4 +24,8 @@ export const seminarService = {
     const url = `${SeminarEndpoints.GET_SEMINAR_DETAIL}/${id}`;
     return axiosClient.get(url);
   },
+  removeSeminar: (id) => {
+    const url = `${SeminarEndpoints.SEMINAR}/${id}`;
+    return axiosClient.delete(url);
+  },
 };

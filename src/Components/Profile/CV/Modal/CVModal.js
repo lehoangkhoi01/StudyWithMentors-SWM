@@ -215,7 +215,7 @@ const CVModal = (props) => {
                 >
                   {type === MODAL_TYPE.EDIT
                     ? BUTTON_LABEL.CANCEL_EDIT
-                    : BUTTON_LABEL.CANCEL}
+                    : BUTTON_LABEL.CANCEL_SAVE}
                 </CustomizedButton>
                 <CustomizedButton
                   type="submit"
