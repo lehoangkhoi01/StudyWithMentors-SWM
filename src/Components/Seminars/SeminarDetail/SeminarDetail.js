@@ -162,7 +162,11 @@ const SeminarDetail = () => {
                     }}
                     className={style.detail__dropdown}
                   >
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem
+                      onClick={() =>
+                        handleNavigate(ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id)
+                      }
+                    >
                       <img
                         src={require("../../../assets/icons/Semniar_Report.png")}
                       />

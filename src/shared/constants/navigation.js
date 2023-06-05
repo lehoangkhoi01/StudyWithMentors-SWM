@@ -21,6 +21,7 @@ export const ROUTES = {
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
   SEMINAR_UPDATE: "/update-seminar",
+  FEEDBACK_OVERVIEW: "/feedback-overview",
 };
 
 export const UNAUTHORIZED_NAVBAR = [

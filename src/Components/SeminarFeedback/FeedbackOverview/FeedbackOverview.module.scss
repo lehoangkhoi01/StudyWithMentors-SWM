@@ -43,7 +43,9 @@
 
   &__pagination {
     margin-top: 2rem;
-    justify-content: flex-end;
-    align-items: flex-end;
+
+    ul {
+      justify-content: flex-end;
+    }
   }
 }
