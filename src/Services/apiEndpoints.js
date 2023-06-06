@@ -35,4 +35,5 @@ export const DepartmentEndPoints = {
 
 export const SeminarFeedbackEndpoints = {
   SEMINAR_FEEDBACK: "feedbacks/seminar",
+  SEMINAR_FEEDBACK_REPORT: "/feedbacks/seminar-feedback-report",
 };

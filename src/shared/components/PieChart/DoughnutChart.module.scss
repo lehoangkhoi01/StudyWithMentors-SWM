@@ -4,12 +4,15 @@
 .chart {
   &__container {
     background-color: $black000;
-    width: fit-content;
+
+    width: min-content;
 
     position: relative;
 
     border-radius: 5px;
     box-shadow: 0px 1.63778px 8.18892px rgba($black900, 0.1);
+
+    margin-inline: auto;
 
     p {
       padding: 1rem 1rem 0;

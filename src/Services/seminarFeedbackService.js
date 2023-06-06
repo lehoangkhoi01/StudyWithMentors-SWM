@@ -10,4 +10,8 @@ export const seminarFeedbackService = {
     const url = `${SeminarFeedbackEndpoints.SEMINAR_FEEDBACK}/${id}`;
     return axiosClient.post(url, data);
   },
+  getReport: (id) => {
+    const url = `${SeminarFeedbackEndpoints.SEMINAR_FEEDBACK_REPORT}/${id}`;
+    return axiosClient.get(url);
+  },
 };
