@@ -99,7 +99,7 @@ const SeminarFeedbackForm = () => {
       item.answer = data[`question${index}`];
     });
     const requestBody = {
-      result: answers,
+      results: answers,
     };
 
     try {
