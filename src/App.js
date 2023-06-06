@@ -21,6 +21,7 @@ import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
 import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
+import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
 import { Toolbar } from "@mui/material";
 
 function App() {
@@ -66,6 +67,10 @@ function App() {
             <Route
               path={ROUTES.SEMINAR_FEEDBACK}
               component={SeminarFeedbackPage}
+            />
+            <Route
+              path={ROUTES.FEEDBACK_OVERVIEW}
+              component={FeedbackOverviewPage}
             />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />

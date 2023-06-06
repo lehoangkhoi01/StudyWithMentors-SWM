@@ -297,6 +297,7 @@ export const OTHERS = {
   BELONG: "thuộc",
   THIS: "này",
   VIEW_MORE: "Xem thêm",
+  AVERAGE: "Trung bình",
 };
 
 export const DATE_FORMAT = {
@@ -357,4 +358,14 @@ export const FILTER_SEMINAR = {
 export const QR_TEXT = {
   FEEDBACK_SEMINAR: "Đánh giá sự kiện",
   OR_THIS_LINK: "hoặc vào đường link",
+};
+
+export const FEEDBACK_TYPE = {
+  RATTING: "RATING",
+  YES_NO: "YES/NO",
+};
+
+export const FEEDBACK_LABEL = {
+  RATING: ["1 sao", "2 sao", "3 sao", "4 sao", "5 sao"],
+  YES_NO: ["Không", "Có"],
 };

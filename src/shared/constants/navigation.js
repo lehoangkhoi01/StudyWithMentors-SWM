@@ -15,11 +15,13 @@ export const ROUTES = {
   SEMINAR_DETAIL: "/seminars/:id",
   SEMINAR_CREATE: "/create-seminar",
   SEMINAR_UPDATE: "/update-seminar/:id",
+  FEEDBACK_OVERVIEW: "/feedback-overview/:id",
 };
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
   SEMINAR_UPDATE: "/update-seminar",
+  FEEDBACK_OVERVIEW: "/feedback-overview",
 };
 
 export const UNAUTHORIZED_NAVBAR = [

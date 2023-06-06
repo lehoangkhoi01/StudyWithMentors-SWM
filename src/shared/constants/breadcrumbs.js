@@ -8,6 +8,7 @@ export const BREADCRUMBS_TITLE = {
   SEMINAR_LIST: "Danh sách sự kiện",
   CREATE_SEMINAR: "Tạo sự kiện mới",
   UPDATE_SEMINAR: "Chỉnh sửa sự kiện",
+  FEEDBACK_OVERVIEW: "Báo cáo sự kiện",
 };
 
 export const CREATE_SEMINAR_BREADCRUMBS = [
