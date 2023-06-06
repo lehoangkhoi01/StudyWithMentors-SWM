@@ -40,7 +40,6 @@ import {
   CREATE_SEMINAR_BREADCRUMBS,
 } from "../../../shared/constants/breadcrumbs";
 //------------------
-import { accountService } from "../../../Services/accountService";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { seminarService } from "../../../Services/seminarService";
 import { resourceService } from "../../../Services/resourceService";
@@ -49,15 +48,20 @@ import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFile
 import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
 import {
   useCustomLoading,
+  useFetchSpeakerList,
   useNotification,
 } from "../../../Helpers/generalHelper";
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import { useSelector } from "react-redux";
+import { selectMentorList } from "../../../Store/slices/mentorSlice";
 
 const SeminarForm = () => {
   const history = useHistory();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const { getSpeakerList } = useFetchSpeakerList();
   const { id } = useParams();
+  const mentors = useSelector(selectMentorList);
   const isFormUpdate = id ? true : false;
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [documents, setDocuments] = React.useState([]);
@@ -285,14 +289,6 @@ const SeminarForm = () => {
   };
 
   React.useEffect(() => {
-    const fetchMentorList = async () => {
-      try {
-        const result = await accountService.getAllMentors();
-        setMentorList(result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
@@ -305,12 +301,18 @@ const SeminarForm = () => {
     if (isFormUpdate) {
       getSeminarDetail();
     }
-    fetchMentorList();
   }, []);
 
   React.useEffect(() => {
+    const fetchMentorList = async () => {
+      const mentorResults = await getSpeakerList();
+      setMentorList(mentorResults);
+    };
+    fetchMentorList();
+  }, [mentors]);
+
+  React.useEffect(() => {
     if (seminarDetail) {
-      console.log(seminarDetail);
       setValue("seminarName", seminarDetail.name);
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
