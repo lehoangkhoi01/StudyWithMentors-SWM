@@ -288,6 +288,14 @@ const SeminarForm = () => {
     }
   };
 
+  const onNavigateToList = () => {
+    history.push(ROUTES.SEMINAR_LIST);
+  };
+
+  const onNavigateToDetail = () => {
+    history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
+  };
+
   React.useEffect(() => {
     const getSeminarDetail = async () => {
       try {
@@ -506,7 +514,11 @@ const SeminarForm = () => {
               spacing={2}
             >
               <Grid2 xs={6} item>
-                <CustomizedButton variant="outlined" color="primary600">
+                <CustomizedButton
+                  variant="outlined"
+                  color="primary600"
+                  onClick={isFormUpdate ? onNavigateToDetail : onNavigateToList}
+                >
                   {isFormUpdate
                     ? BUTTON_LABEL.CANCEL_EDIT
                     : BUTTON_LABEL.CANCEL_CREATE}
