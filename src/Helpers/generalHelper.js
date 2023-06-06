@@ -3,6 +3,8 @@ import { helperAction } from "../Store/slices/helperSlice";
 import { notificationAction } from "../Store/slices/notificationSlice";
 import { selectUserInfo, userAction } from "../Store/slices/userSlice";
 import { userAccountService } from "../Services/userAccountService";
+import { mentorAcion, selectMentorList } from "../Store/slices/mentorSlice";
+import { accountService } from "../Services/accountService";
 
 // reason: want to specify delay time for loading for smoothier
 export const useCustomLoading = () => {
@@ -50,5 +52,25 @@ export const useFetchUserInfo = () => {
 
   return {
     getUserInfo,
+  };
+};
+
+export const useFetchSpeakerList = () => {
+  const dispatch = useDispatch();
+  let mentorList = useSelector(selectMentorList);
+
+  const getSpeakerList = async () => {
+    if (!mentorList || mentorList.length === 0) {
+      try {
+        mentorList = await accountService.getAllMentors();
+        dispatch(mentorAcion.setMentorList(mentorList));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return mentorList;
+  };
+  return {
+    getSpeakerList,
   };
 };
