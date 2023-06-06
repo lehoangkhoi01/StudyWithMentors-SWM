@@ -4,7 +4,7 @@ import style from "./CustomizedButton.module.scss";
 const CustomizedButton = (props) => {
   return (
     <Button
-      fullWidth
+      fullWidth={props.fullWidth ?? true}
       type={props.type}
       variant={props.variant}
       className={`${style.btn} ${style[`${props.color}__${props.variant}`]} ${
@@ -12,6 +12,7 @@ const CustomizedButton = (props) => {
       }`}
       onClick={props.onClick}
       startIcon={props.startIcon}
+      size={props.size}
     >
       {props.children}
     </Button>
