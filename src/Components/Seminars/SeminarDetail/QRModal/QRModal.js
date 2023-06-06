@@ -23,7 +23,7 @@ const QRModal = (props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {window.location.host}/seminar-feedback/${props.seminarId}
+            {hostname}/seminar-feedback/${props.seminarId}
           </Link>
         </div>
       </Modal>
