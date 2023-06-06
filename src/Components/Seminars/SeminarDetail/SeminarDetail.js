@@ -164,7 +164,9 @@ const SeminarDetail = () => {
                   >
                     <MenuItem
                       onClick={() =>
-                        handleNavigate(ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id)
+                        handleNavigate(
+                          ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                        )
                       }
                     >
                       <img
@@ -250,6 +252,8 @@ const SeminarDetail = () => {
           <ConfirmationDialog
             open={openRemoveDialog}
             title="Xóa sự kiện"
+            cancelLabel={BUTTON_LABEL.CANCEL}
+            confirmLabel={BUTTON_LABEL.CONFIRM}
             content="Bạn có chắc muốn xóa sự kiện này không? Hành động này không thể hoàn tác"
             handleClose={onCloseRemoveDialog}
             handleSubmit={handleRemoveSeminar}

@@ -6,10 +6,12 @@ import { COMMON_MESSAGE } from "../../../shared/constants/common";
 
 const SendFeedbackSuccess = () => {
   return (
-    <Grid2 container className={style.signUp__container}>
-      <Grid2 xs={12} className={style.signUp__rightSide}>
+    <Grid2 container className={style.seminarFeedbackSuccess__container}>
+      <Grid2 xs={12} className={style.seminarFeedbackSuccess__rightSide}>
         <CustomPattern width={"50%"} height={"95%"} />
-        <div className={`${style.signUp__rightSide__container}`}>
+        <div
+          className={`${style.seminarFeedbackSuccess__rightSide__container}`}
+        >
           <img alt="image" src={require("../../../assets/envelope.png")} />
           <span className={`${style.textCenter}`}>
             {COMMON_MESSAGE.SEND_FEEDBACK_SUCCESS}
