@@ -23,7 +23,7 @@ export const covertToISODate = (dateFormat, date) => {
 
 // CONVERT {date} from ISODate (ex: 2011-10-05T14:48:00.000Z) to {dateFormat} (ex: dd/MM/yyyy)
 export const convertISOToFormat = (dateFormat, date) => {
-  console.log(date)
+  console.log(date);
   if (!date) {
     return "";
   }
@@ -44,18 +44,26 @@ export const convertTimeToObject = (time) => {
   };
 };
 
-// CONVERT FROM (2023-05-25 12:20:06) TO 12:20, 2023-05-25
-export const handleTimeToDisplay = (fullDate) => {
+// CONVERT FROM {fromDateFormat (default yyyy-MM-dd} 12:20:06) 
+// TO 12:20{seperator (default ",")} {toDateFormat (default yyyy-MM-dd}
+export const handleTimeToDisplay = (
+  fullDate,
+  fromDateFormat,
+  toDateFormat,
+  seperator
+) => {
   const [date, time] = fullDate.toString().split(" ");
 
   const timeObject = convertTimeToObject(time);
   const formatedDate = convertDateFormat(
     date,
-    DATE_FORMAT.BACK_END_YYYY_MM_DD,
-    DATE_FORMAT.DOT_DD_MM_YYYY
+    fromDateFormat ?? DATE_FORMAT.BACK_END_YYYY_MM_DD,
+    toDateFormat ?? DATE_FORMAT.DOT_DD_MM_YYYY
   );
 
-  return `${timeObject.hour}:${timeObject.minute}, ${formatedDate}`;
+  return `${timeObject.hour}:${timeObject.minute}${
+    seperator ?? ","
+  } ${formatedDate}`;
 };
 
 export {

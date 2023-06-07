@@ -302,11 +302,11 @@ export const OTHERS = {
 
 export const DATE_FORMAT = {
   YYYY_MM_DD: "yyyy/MM/dd",
-  BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   DOT_DD_MM_YYYY: "dd.MM.yyyy",
   DD_MM_YYYY: "dd/MM/yyyy",
   MM_YYYY: "MM/yyyy",
   DD_MM_YYYY__HH_mm: "dd/MM/yyyy HH:mm",
+  BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   BACK_END_DD_MM_YYYY__HH_mm_ss: "dd-MM-yyyy HH:mm:ss",
   BACK_END_YYYY_MM_DD__HH_mm_ss: "yyyy-MM-dd HH:mm:ss",
 };
@@ -368,4 +368,16 @@ export const FEEDBACK_TYPE = {
 export const FEEDBACK_LABEL = {
   RATING: ["1 sao", "2 sao", "3 sao", "4 sao", "5 sao"],
   YES_NO: ["Không", "Có"],
+};
+
+export const ADMIN_TABLE_HEADER = {
+  SELECT: "Chọn",
+  NUMBER: "STT",
+  NAME: "Diễn giả",
+  EMAIL: "Email",
+  PHONE: "Số điện thoại",
+  PROFILE: "Profile",
+  CREATED_DATE: "Ngày tạo",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
 };
