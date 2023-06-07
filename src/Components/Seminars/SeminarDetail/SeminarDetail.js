@@ -25,6 +25,7 @@ import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
 import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import DiscussionRoom from "../../DiscussionRoom/DiscussionRoom";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
@@ -260,6 +261,7 @@ const SeminarDetail = () => {
           />
         </div>
       )}
+      <DiscussionRoom />
     </div>
   );
 };
