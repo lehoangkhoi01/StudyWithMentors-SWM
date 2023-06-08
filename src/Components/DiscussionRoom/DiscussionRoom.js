@@ -24,6 +24,7 @@ import { DATE_FORMAT } from "../../shared/constants/common";
 const DiscussionRoom = () => {
   const [currentComment, setCurrentComment] = React.useState("");
   const [commentList, setCommentList] = React.useState([]);
+  //const [commentMap, setCommentMap] = React.useState();
 
   const renderUpvoteSection = (vote) => {
     return (
@@ -95,48 +96,48 @@ const DiscussionRoom = () => {
   };
 
   React.useEffect(() => {
-    let result = [...commentList];
-    const fetchDataPromise = new Promise((resolve) => {
-      const fetchData = onSnapshot(
-        collection(db, "comments"),
-        (querySnapshot) => {
-          querySnapshot.forEach((document) => {
-            let userComment = {
-              id: document.id,
-              createdDate: format(
-                document.data().serverTimeStamp.toDate(),
-                DATE_FORMAT.DD_MM_YYYY__HH_mm
-              ),
-
-              ...document.data(),
-            };
-
-            if (document.data().user) {
-              // const userInfo = (await getDoc(document.data().user)).data();
-              // userComment.userInfo = userInfo;
-              getDoc(document.data().user).then((res) => {
-                userComment.userInfo = res.data();
-              });
-            }
-            result.push(userComment);
-          });
-        }
-      );
-      resolve(fetchData);
-    });
-
-    const fetchAll = async () => {
-      fetchDataPromise.then(() => {
-        console.log(result);
-        if (result.length !== 0) {
-          setCommentList(result);
-        }
-
-        setCurrentComment("a");
+    onSnapshot(collection(db, "comments"), (querySnapshot) => {
+      const promises = [];
+      querySnapshot.forEach(async (document) => {
+        let userComment = {
+          id: document.id,
+          createdDate: format(
+            document.data().serverTimeStamp.toDate(),
+            DATE_FORMAT.DD_MM_YYYY__HH_mm
+          ),
+          ...document.data(),
+        };
+        const userRef = userComment.user;
+        const promise = getDoc(userRef);
+        promises.push(promise);
       });
-    };
+      Promise.all(promises)
+        .then((userDocs) => {
+          console.log(querySnapshot.docs);
+          const updatedComments = querySnapshot.docs
+            .map((change, index) => {
+              const commentData = change.data();
+              const userData = userDocs[index].exists()
+                ? userDocs[index].data()
+                : null;
+              return {
+                id: change.id,
+                createdDate: format(
+                  commentData.serverTimeStamp.toDate(),
+                  DATE_FORMAT.DD_MM_YYYY__HH_mm
+                ),
+                ...commentData,
+                userInfo: userData,
+              };
+            })
+            .filter((comment) => comment !== null);
 
-    fetchAll();
+          setCommentList(updatedComments);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    });
   }, []);
 
   React.useEffect(() => {
