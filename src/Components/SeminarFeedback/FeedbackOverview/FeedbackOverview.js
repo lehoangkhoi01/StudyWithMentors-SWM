@@ -12,125 +12,11 @@ import {
   FEEDBACK_TYPE,
 } from "../../../shared/constants/common";
 import { RATING_LABEL } from "../../../shared/constants/systemType";
+import { seminarFeedbackService } from "../../../Services/seminarFeedbackService";
 
-const DUMMY = [
-  {
-    id: 1,
-    question: "Bạn đánh giá tổng quan thế nào về trải nghiệm với buổi seminar?",
-    type: "RATING",
-    statistics: {
-      1: 0,
-      2: 2,
-      3: 2,
-      4: 0,
-      5: 0,
-    },
-  },
-  {
-    id: 2,
-    question: "Sự kiện có đáp ứng được mong đợi của bạn không?",
-    type: "YES/NO",
-    statistics: {
-      No: 2,
-      Yes: 2,
-    },
-  },
-  {
-    id: 3,
-    question: "Chủ đề và buổi diễn thảo có phù hợp và cuốn hút bạn không?",
-    type: "YES/NO",
-    statistics: {
-      No: 0,
-      Yes: 4,
-    },
-  },
-  {
-    id: 4,
-    question: "Bạn đánh giá thế nào về mặt tổ chức và hậu cần của sự kiện?",
-    type: "RATING",
-    statistics: {
-      1: 0,
-      2: 3,
-      3: 0,
-      4: 0,
-      5: 0,
-      6: 1,
-    },
-  },
-  {
-    id: 5,
-    question:
-      "Bạn đánh giá thế nào về chất lượng và chuyên môn của diễn giả men1",
-    type: "RATING",
-    statistics: {
-      1: 0,
-      2: 0,
-      3: 4,
-      4: 0,
-      5: 0,
-    },
-  },
-  {
-    id: 6,
-    question:
-      "Bạn có muốn được kết nối với diễn giả men1 sau buổi seminar này không?",
-    type: "YES/NO",
-    statistics: {
-      No: 0,
-      Yes: 4,
-    },
-  },
-  {
-    id: 7,
-    question:
-      "Bạn đánh giá thế nào về chất lượng và chuyên môn của diễn giả men2",
-    type: "RATING",
-    statistics: {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 4,
-    },
-  },
-  {
-    id: 8,
-    question:
-      "Bạn có muốn được kết nối với diễn giả men2 sau buổi seminar này không?",
-    type: "YES/NO",
-    statistics: {
-      No: 4,
-      Yes: 0,
-    },
-  },
-  {
-    id: 9,
-    question:
-      "Bạn đánh giá thế nào về chất lượng và chuyên môn của diễn giả men4",
-    type: "RATING",
-    statistics: {
-      0: 4,
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    },
-  },
-  {
-    id: 10,
-    question:
-      "Bạn có muốn được kết nối với diễn giả men4 sau buổi seminar này không?",
-    type: "YES/NO",
-    statistics: {
-      No: 4,
-      Yes: 0,
-    },
-  },
-];
 const FeedbackOverview = () => {
   const [seminarDetail, setSeminarDetail] = useState();
-  const [feedbackData, setFeedbackData] = useState(DUMMY);
+  const [feedbackData, setFeedbackData] = useState();
 
   const { id } = useParams();
 
@@ -144,9 +30,20 @@ const FeedbackOverview = () => {
       }
     };
 
-    getSeminarDetail();
+    const getFeedbackReport = async () => {
+      try {
+        const seminar = await seminarFeedbackService.getReport(id);
 
-    convertFeedbackBEToFE(DUMMY);
+        console.log(seminar);
+
+        convertFeedbackBEToFE(seminar);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getSeminarDetail();
+    getFeedbackReport();
   }, []);
 
   const convertFeedbackBEToFE = (data) => {
@@ -193,7 +90,7 @@ const FeedbackOverview = () => {
     <div>
       <div className={style.overview__container}>
         <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
-        {seminarDetail && (
+        {seminarDetail && feedbackData && (
           <div className={style.overview__information}>
             <div className={style.overview__title}>
               <h2>Báo cáo sự kiện</h2>
@@ -202,7 +99,7 @@ const FeedbackOverview = () => {
             <div className={style.overview__charts}>
               <Grid container spacing={2} alignItems={"stretch"}>
                 {feedbackData.map((data, index) => (
-                  <Grid key={`CHART_${index}`} item xs={12} md={6} lg={3}>
+                  <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
                     <DoughnutChart data={data} />
                   </Grid>
                 ))}

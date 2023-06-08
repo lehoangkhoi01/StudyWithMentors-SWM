@@ -68,4 +68,32 @@
       justify-content: center;
     }
   }
+
+  &__header {
+    th {
+      position: relative;
+    }
+
+    &_sortable {
+      cursor: pointer;
+
+      transition: all 0.2 ease-out;
+
+      &:hover {
+        filter: brightness(0.8);
+      }
+    }
+  }
+
+  &__sortIcon {
+    display: inline-block;
+    position: absolute;
+
+    top: 55%;
+    transform: translateY(-50%);
+
+    svg {
+      height: 15px;
+    }
+  }
 }

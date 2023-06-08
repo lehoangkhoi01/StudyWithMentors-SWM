@@ -17,6 +17,7 @@ export const ROUTES = {
   SEMINAR_UPDATE: "/update-seminar/:id",
   FEEDBACK_OVERVIEW: "/feedback-overview/:id",
   ADMIN_SEMINAR_LIST: "/admin/seminars",
+  DISCUSSION: "/discussion/:id",
 };
 
 export const ROUTES_STATIC = {

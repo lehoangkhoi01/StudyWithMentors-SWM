@@ -1,0 +1,36 @@
+@import "../../shared/theme";
+
+.discussion {
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+  &__wrapper {
+    border-radius: 20px;
+    background-color: $black000;
+    width: 70%;
+    padding: 2rem;
+  }
+  &__textbox {
+    background-color: $black50;
+    border-radius: 10px;
+  }
+  &__buttonContainer {
+    width: 30%;
+    margin: 0.5rem 0 0.5rem auto;
+  }
+  &__upvoteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $primary600;
+    font-weight: 600;
+
+    &__icon {
+      font-size: 2rem;
+    }
+    &__icon:hover {
+      cursor: pointer;
+    }
+  }
+}

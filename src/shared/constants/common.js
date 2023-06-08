@@ -381,3 +381,8 @@ export const ADMIN_TABLE_HEADER = {
   STATUS: "Trạng thái",
   ACTION: "Tác vụ",
 };
+
+export const SORT_DIRECTION = {
+  DESC: "desc",
+  ASC: "asc",
+};
