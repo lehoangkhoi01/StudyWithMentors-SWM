@@ -16,6 +16,7 @@ export const ROUTES = {
   SEMINAR_CREATE: "/create-seminar",
   SEMINAR_UPDATE: "/update-seminar/:id",
   FEEDBACK_OVERVIEW: "/feedback-overview/:id",
+  DISCUSSION: "/discussion/:id",
 };
 
 export const ROUTES_STATIC = {

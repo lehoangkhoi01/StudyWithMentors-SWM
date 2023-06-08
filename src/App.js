@@ -23,6 +23,7 @@ import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
 import { Toolbar } from "@mui/material";
+import DiscussionPage from "./Pages/Discussion/DiscussionPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -72,6 +73,7 @@ function App() {
               path={ROUTES.FEEDBACK_OVERVIEW}
               component={FeedbackOverviewPage}
             />
+            <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
