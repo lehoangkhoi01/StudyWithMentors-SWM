@@ -23,6 +23,7 @@ import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
 import { Toolbar } from "@mui/material";
+import MentorListAdminPage from "./Pages/Mentor/MentorListAdminPage";
 import DiscussionPage from "./Pages/Discussion/DiscussionPage";
 
 function App() {
@@ -72,6 +73,10 @@ function App() {
             <Route
               path={ROUTES.FEEDBACK_OVERVIEW}
               component={FeedbackOverviewPage}
+            />
+            <Route
+              path={ROUTES.ADMIN_SEMINAR_LIST}
+              component={MentorListAdminPage}
             />
             <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
