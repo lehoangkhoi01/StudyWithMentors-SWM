@@ -170,7 +170,7 @@ const AdminMentorList = () => {
   });
   const [selectedMentorId, setSelectedMentorId] = useState([]);
   const [pagination, setPagination] = useState({
-    page: 0,
+    page: 1,
     pageSize: 12,
     totalPage: 1,
   });
@@ -192,7 +192,7 @@ const AdminMentorList = () => {
 
     setMentors([...updatedMentorList]);
     setOriginMentors([...updatedMentorList]);
-    onPaginate(1);
+    onPaginate(1, [...updatedMentorList]);
   };
 
   useEffect(() => {
@@ -299,21 +299,28 @@ const AdminMentorList = () => {
     }
   };
 
-  const onPaginate = (page) => {
+  const onPaginate = (page, initData) => {
     const { pageSize } = pagination;
-    
-    const totalPage = Math.ceil(mentors.length / pageSize);
 
-    const adjustPage = totalPage >= page ? page : totalPage;
+    const mentorList = initData ?? mentors;
+
+    let pageNumber = page;
+
+    if (!page && mentorList.length) {
+      pageNumber = 1;
+    }
+
+    const totalPage = Math.ceil(mentorList.length / pageSize);
+
+    const adjustPage = totalPage >= pageNumber ? pageNumber : totalPage;
     const offset = pageSize * (adjustPage - 1);
 
-    const paginatedMentors = mentors.slice(offset, pageSize * adjustPage);
-   
+    const paginatedMentors = mentorList.slice(offset, pageSize * adjustPage);
 
     setDisplayedMentors(paginatedMentors);
 
     setPagination({
-      ...pagination,
+      pageSize,
       page: adjustPage,
       totalPage,
     });
