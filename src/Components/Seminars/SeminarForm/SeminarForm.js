@@ -47,6 +47,7 @@ import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import FileInputIcon from "../../../shared/components/FileInputIcon/FileInputIcon";
 import {
+  useCustomAppbar,
   useCustomLoading,
   useFetchSpeakerList,
   useNotification,
@@ -54,10 +55,12 @@ import {
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
 import { useSelector } from "react-redux";
 import { selectMentorList } from "../../../Store/slices/mentorSlice";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const SeminarForm = () => {
   const history = useHistory();
   const { setLoading } = useCustomLoading();
+  const { setAppbar } = useCustomAppbar();
   const { setNotification } = useNotification();
   const { getSpeakerList } = useFetchSpeakerList();
   const { id } = useParams();
@@ -308,7 +311,10 @@ const SeminarForm = () => {
     };
 
     if (isFormUpdate) {
+      setAppbar(APPBAR_TITLES.SEMINAR_UPDATE);
       getSeminarDetail();
+    } else {
+      setAppbar(APPBAR_TITLES.SEMINAR_CREATE);
     }
   }, []);
 

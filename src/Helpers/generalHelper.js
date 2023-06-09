@@ -19,6 +19,16 @@ export const useCustomLoading = () => {
   };
 };
 
+export const useCustomAppbar = () => {
+  const dispatch = useDispatch();
+  const setAppbar = (title) => {
+    dispatch(helperAction.setAppbarTitle(title));
+  };
+  return {
+    setAppbar,
+  };
+};
+
 export const useNotification = () => {
   const dispatch = useDispatch();
   const setNotification = (noti) => {

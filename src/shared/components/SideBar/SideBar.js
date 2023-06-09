@@ -20,9 +20,12 @@ import Logo from "../Logo/Logo";
 import style from "./Sidebar.module.scss";
 import { drawerWidth } from "../../constants/globalStyle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useSelector } from "react-redux";
+import { selectAppbarTitle } from "../../../Store/slices/helperSlice";
 
 const SideBar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const appbarTitle = useSelector(selectAppbarTitle);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -129,7 +132,7 @@ const SideBar = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Growth Me
+            {appbarTitle}
           </Typography>
         </Toolbar>
       </AppBar>
