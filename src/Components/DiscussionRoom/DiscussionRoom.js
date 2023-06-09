@@ -140,6 +140,7 @@ const DiscussionRoom = () => {
 
         <div>
           <OutlinedInput
+            value={currentComment}
             fullWidth
             multiline
             rows={2}

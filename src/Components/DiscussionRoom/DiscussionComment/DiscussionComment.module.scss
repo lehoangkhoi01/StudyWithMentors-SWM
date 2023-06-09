@@ -25,6 +25,10 @@
     margin: 0.5rem 0;
     font-size: $SMALL_BUTTON_TEXT_SIZE;
   }
+  &__buttonContainer {
+    width: 30%;
+    margin: 0.5rem 0 0.5rem auto;
+  }
   &__userInfo {
     display: flex;
   }

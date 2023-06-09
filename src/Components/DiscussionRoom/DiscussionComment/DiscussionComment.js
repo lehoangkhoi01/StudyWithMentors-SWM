@@ -17,14 +17,26 @@ import {
   ListItemText,
   Typography,
   Button,
+  OutlinedInput,
 } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import style from "./DiscussionComment.module.scss";
+import { doc } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { addDocument } from "../../../firebase/firebaseService";
 
 const DiscussionComment = (props) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [currentReply, setCurrentReply] = React.useState("");
   const handleExpand = () => {
     setExpanded(!expanded);
+  };
+
+  const handleReplyChange = (e) => {
+    if (e.target.value && e.target.value.trim() !== "") {
+      setCurrentReply(e.target.value);
+    }
   };
 
   const renderUpvoteSection = (comment) => {
@@ -87,6 +99,20 @@ const DiscussionComment = (props) => {
     ));
   };
 
+  const handleSubmit = () => {
+    const requestBody = {
+      parentId: props.comment.id,
+      message: currentReply,
+      user: doc(db, "users/TvmDbIY8sl4HNtUL1RX1"),
+    };
+    try {
+      addDocument("comments", requestBody);
+      setCurrentReply("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Accordion expanded={expanded}>
       <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
@@ -134,6 +160,26 @@ const DiscussionComment = (props) => {
 
       <AccordionDetails>
         {props.replies?.length > 0 ? renderReplies(props.replies) : null}
+        <div>
+          <OutlinedInput
+            value={currentReply}
+            fullWidth
+            multiline
+            rows={2}
+            onChange={handleReplyChange}
+            placeholder="Hãy nhập câu hỏi của bạn"
+            className={`${style.discussion__textbox}`}
+          />
+          <div className={`${style.discussionComment__buttonContainer}`}>
+            <CustomizedButton
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary600"
+            >
+              Gửi phản hồi
+            </CustomizedButton>
+          </div>
+        </div>
       </AccordionDetails>
     </Accordion>
   );
