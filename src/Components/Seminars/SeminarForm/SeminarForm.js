@@ -499,7 +499,9 @@ const SeminarForm = () => {
             />
             <ListFileDisplay
               mode={
-                isFormUpdate
+                isFormDisabled
+                  ? SEMINAR_DETAIL_VIEW_MODE.VIEW
+                  : isFormUpdate
                   ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
                   : SEMINAR_DETAIL_VIEW_MODE.CREATE
               }
@@ -510,24 +512,26 @@ const SeminarForm = () => {
               handleRemoveOldDocuments={handleRemoveOldDocuments}
             />
 
-            <Controller
-              name="seminarDocuments"
-              control={control}
-              defaultValue={documents}
-              rules={{ validate: validateFiles }}
-              render={({ field }) => {
-                return (
-                  <FileInputIcon
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleDocumentsChange(e);
-                    }}
-                    field={field}
-                    error={errors.seminarDocuments}
-                  />
-                );
-              }}
-            />
+            {isFormDisabled ? null : (
+              <Controller
+                name="seminarDocuments"
+                control={control}
+                defaultValue={documents}
+                rules={{ validate: validateFiles }}
+                render={({ field }) => {
+                  return (
+                    <FileInputIcon
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleDocumentsChange(e);
+                      }}
+                      field={field}
+                      error={errors.seminarDocuments}
+                    />
+                  );
+                }}
+              />
+            )}
 
             <Grid2
               container
