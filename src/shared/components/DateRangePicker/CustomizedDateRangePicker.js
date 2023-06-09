@@ -8,7 +8,7 @@ const CustomizedDateRangePicker = (props) => {
       <DateRangePicker
         className={style.dateRange}
         value={props.value}
-        localeText={{ start: "Ngày bắt đầu", end: "Ngày kết thúc" }}
+        localeText={{ start: "Từ ngày", end: "Đến ngày" }}
         onChange={(newValue) => props.setValue(newValue)}
       />
     </LocalizationProvider>
