@@ -14,7 +14,9 @@ const QRModal = (props) => {
           <h2>{QR_TEXT.FEEDBACK_SEMINAR}</h2>
           <QRCode
             size={256}
-            value={hostname + `/seminar-feedback/${props.seminarId}`}
+            value={
+              "https://" + hostname + `/seminar-feedback/${props.seminarId}`
+            }
           />
           <p>{QR_TEXT.OR_THIS_LINK}</p>
 
