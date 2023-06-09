@@ -26,7 +26,6 @@ const CustomizedTextField = (props) => {
         placeholder={props.placeholder}
         type={props.type ?? "text"}
         {...props.options}
-        required={!props.optional}
         disabled={props.disabled ?? false}
       />
       {props.multiline && (

@@ -66,6 +66,7 @@ const SeminarForm = () => {
   const { id } = useParams();
   const mentors = useSelector(selectMentorList);
   const isFormUpdate = id ? true : false;
+  const [isFormDisabled, setFormDisabled] = React.useState(false);
   const [seminarBackground, setSeminarBackground] = React.useState(null);
   const [documents, setDocuments] = React.useState([]);
   const [oldDocuments, setOldDocuments] = React.useState([]);
@@ -146,7 +147,8 @@ const SeminarForm = () => {
   };
 
   const getOptionLabel = (option) => {
-    if (isFormUpdate) {
+    console.log(option);
+    if (isFormDisabled || seminarDetail?.mentors?.length > 0) {
       return option.fullName;
     } else {
       return option.profile.fullName;
@@ -154,7 +156,7 @@ const SeminarForm = () => {
   };
 
   const renderOptionSpeakerAutocomplete = (props, option) => {
-    if (isFormUpdate) {
+    if (isFormDisabled) {
       return (
         <li {...props} className={`${style.autocomplete__rowDropdown}`}>
           <div>{option.fullName}</div>
@@ -336,6 +338,9 @@ const SeminarForm = () => {
       setSeminarBackground(seminarDetail.imageLink);
       setOldDocuments(seminarDetail.attachmentLinks ?? []);
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
+      if (moment(seminarDetail.startTime).toDate() < new Date()) {
+        setFormDisabled(true);
+      }
     }
   }, [seminarDetail]);
 
@@ -405,10 +410,8 @@ const SeminarForm = () => {
               inputId="seminarName"
               name={TEXTFIELD_LABEL.SEMINAR_NAME}
               required={true}
-              options={{
-                ...register("seminarName", seminarNameValidation),
-              }}
-              disabled={isFormUpdate}
+              options={{ ...register("seminarName", seminarNameValidation) }}
+              disabled={isFormDisabled}
               error={errors.seminarName ? true : false}
               helperText={errors?.seminarName?.message}
             />
@@ -425,7 +428,7 @@ const SeminarForm = () => {
                   ampm={false}
                   formName="seminarTime"
                   required={true}
-                  disabled={isFormUpdate}
+                  disabled={isFormDisabled}
                   onChange={(event) => {
                     onChange(event);
                     setSeminarDate(event);
@@ -442,7 +445,9 @@ const SeminarForm = () => {
               options={{
                 ...register("seminarPlace", seminarPlaceValidation),
               }}
-              disabled={isFormUpdate}
+              disabled={isFormDisabled}
+              error={errors.seminarPlace ? true : false}
+              helperText={errors?.seminarPlace?.message}
             />
 
             <Controller
@@ -454,7 +459,7 @@ const SeminarForm = () => {
               render={({ field: { value, onChange, ...restField } }) => (
                 <AutocompleteInput
                   multiple={true}
-                  disabled={isFormUpdate}
+                  disabled={isFormDisabled}
                   label={TEXTFIELD_LABEL.SPEAKER}
                   required={true}
                   id="autocomplete-speakers"
@@ -462,10 +467,9 @@ const SeminarForm = () => {
                   getOptionLabel={getOptionLabel}
                   renderOption={renderOptionSpeakerAutocomplete}
                   onChange={(e, data) => {
-                    console.log(data);
                     onChange(data);
                   }}
-                  value={value}
+                  value={isFormUpdate ? value : value.id}
                   error={errors.seminarSpeakers}
                   {...restField}
                 />
@@ -476,7 +480,7 @@ const SeminarForm = () => {
               maxRows={3}
               inputId="seminarDescription"
               name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
-              disabled={isFormUpdate}
+              disabled={isFormDisabled}
               required={false}
               optional={true}
               options={{
