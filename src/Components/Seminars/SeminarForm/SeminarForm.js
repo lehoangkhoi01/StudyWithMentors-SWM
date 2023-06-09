@@ -266,6 +266,7 @@ const SeminarForm = () => {
         type: "success",
         message: "Cập nhật sự kiện thành công",
       });
+      history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
     } catch (error) {
       control.log(error);
       if (error.status == "500") {

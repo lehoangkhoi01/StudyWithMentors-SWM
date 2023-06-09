@@ -11,3 +11,9 @@ export const RATING_LABEL = {
   4: "Khá hài lòng",
   5: "Rất hài lòng",
 };
+
+export const SYSTEM_ROLE = {
+  STAFF: "STAFF",
+  ADMIN: "ADMIN",
+  STUDENT: "STUDENT",
+};

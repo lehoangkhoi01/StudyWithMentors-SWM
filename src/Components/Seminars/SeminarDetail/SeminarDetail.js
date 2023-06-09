@@ -19,7 +19,10 @@ import QRModal from "./QRModal/QRModal";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
-import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import {
+  SEMINAR_DETAIL_VIEW_MODE,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import { useHistory } from "react-router";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
@@ -230,18 +233,20 @@ const SeminarDetail = () => {
                 />
               </p>
               <div className={style.detail__buttons}>
-                {userInfo?.role === "STUDENT" && (
+                {userInfo?.role === SYSTEM_ROLE.STUDENT && (
                   <CustomizedButton variant="outlined" color="primary600">
                     {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
                   </CustomizedButton>
                 )}
-                <CustomizedButton
-                  onClick={onOpenModal}
-                  variant="outlined"
-                  color="primary600"
-                >
-                  {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                </CustomizedButton>
+                {userInfo?.role !== SYSTEM_ROLE.STAFF && (
+                  <CustomizedButton
+                    onClick={onOpenModal}
+                    variant="outlined"
+                    color="primary600"
+                  >
+                    {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                  </CustomizedButton>
+                )}
               </div>
             </div>
           </div>
