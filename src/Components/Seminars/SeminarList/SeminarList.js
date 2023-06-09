@@ -91,7 +91,6 @@ const SeminarList = () => {
 
   const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
     if (departmentId) {
-      console.log(departmentId);
       setStatusFilter(FILTER_SEMINAR.ALL);
     }
 
