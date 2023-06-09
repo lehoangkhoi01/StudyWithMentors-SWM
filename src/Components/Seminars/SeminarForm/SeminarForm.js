@@ -147,29 +147,16 @@ const SeminarForm = () => {
   };
 
   const getOptionLabel = (option) => {
-    if (isFormDisabled || seminarDetail?.mentors?.length > 0) {
-      return option.fullName;
-    } else {
-      return option.profile.fullName;
-    }
+    return option.fullName;
   };
 
   const renderOptionSpeakerAutocomplete = (props, option) => {
-    if (isFormDisabled) {
-      return (
-        <li {...props} className={`${style.autocomplete__rowDropdown}`}>
-          <div>{option.fullName}</div>
-          <div>{option.email}</div>
-        </li>
-      );
-    } else {
-      return (
-        <li {...props} className={`${style.autocomplete__rowDropdown}`}>
-          <div>{option.profile.fullName}</div>
-          <div>{option.email}</div>
-        </li>
-      );
-    }
+    return (
+      <li {...props} className={`${style.autocomplete__rowDropdown}`}>
+        <div>{option.fullName}</div>
+        <div>{option.email}</div>
+      </li>
+    );
   };
 
   const handleUploadImage = async (file) => {
