@@ -147,7 +147,6 @@ const SeminarForm = () => {
   };
 
   const getOptionLabel = (option) => {
-    console.log(option);
     if (isFormDisabled || seminarDetail?.mentors?.length > 0) {
       return option.fullName;
     } else {
@@ -205,6 +204,7 @@ const SeminarForm = () => {
   const handleCreateSeminar = async (data) => {
     setLoading(true);
     try {
+      //Process data before submit
       data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
       data.seminarTime = format(
         data.seminarTime,
@@ -212,6 +212,7 @@ const SeminarForm = () => {
       );
       const imageUrl = await handleUploadImage(data.seminarBackground);
       const attachmentList = await handleUploadAttachments(documents);
+      //----------------------------------------
       let requestBody = {
         name: data.seminarName,
         description: data.seminarDescription,
@@ -242,6 +243,11 @@ const SeminarForm = () => {
     setLoading(true);
     try {
       // Process data before submit
+      data.seminarTime = format(
+        data.seminarTime,
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      );
+
       let imageUrl = null;
       let attachmentUrls = null;
       if (data.seminarBackground) {
@@ -262,8 +268,12 @@ const SeminarForm = () => {
       //--------------------------
 
       let requestBody = {
+        name: data.seminarName,
+        description: data.seminarDescription,
+        location: data.seminarPlace,
         imageUrl: imageUrl,
         attachmentUrls: attachmentUrls,
+        startTime: data.seminarTime,
       };
       await seminarService.update(id, requestBody);
       setNotification({
@@ -273,7 +283,7 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
     } catch (error) {
-      control.log(error);
+      console.log(error);
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
@@ -489,7 +499,9 @@ const SeminarForm = () => {
             />
             <ListFileDisplay
               mode={
-                isFormUpdate
+                isFormDisabled
+                  ? SEMINAR_DETAIL_VIEW_MODE.VIEW
+                  : isFormUpdate
                   ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
                   : SEMINAR_DETAIL_VIEW_MODE.CREATE
               }
@@ -500,24 +512,26 @@ const SeminarForm = () => {
               handleRemoveOldDocuments={handleRemoveOldDocuments}
             />
 
-            <Controller
-              name="seminarDocuments"
-              control={control}
-              defaultValue={documents}
-              rules={{ validate: validateFiles }}
-              render={({ field }) => {
-                return (
-                  <FileInputIcon
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleDocumentsChange(e);
-                    }}
-                    field={field}
-                    error={errors.seminarDocuments}
-                  />
-                );
-              }}
-            />
+            {isFormDisabled ? null : (
+              <Controller
+                name="seminarDocuments"
+                control={control}
+                defaultValue={documents}
+                rules={{ validate: validateFiles }}
+                render={({ field }) => {
+                  return (
+                    <FileInputIcon
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleDocumentsChange(e);
+                      }}
+                      field={field}
+                      error={errors.seminarDocuments}
+                    />
+                  );
+                }}
+              />
+            )}
 
             <Grid2
               container

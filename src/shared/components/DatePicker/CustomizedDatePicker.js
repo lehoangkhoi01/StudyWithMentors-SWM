@@ -10,7 +10,6 @@ const CustomizedDatePicker = (props) => {
   const dateFormat = props.format ?? DATE_FORMAT.MM_YYYY;
 
   useLayoutEffect(() => {
-    console.log(props.value);
     if (!isMapped && props.value !== undefined && props.value !== "") {
       setValue(props.value ?? null);
       setIsMapped(true);
@@ -35,11 +34,9 @@ const CustomizedDatePicker = (props) => {
           },
         }}
         onChange={(e) => {
-          console.log(e);
           const datevalue = convertISOToFormat(dateFormat, e);
           setValue(e);
           props.setValue(props.formName, datevalue);
-          console.log(props.getValues());
         }}
         value={value}
       ></DatePicker>
