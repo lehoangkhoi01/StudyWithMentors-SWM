@@ -1,6 +1,6 @@
-@import "../../shared/theme";
+@import "../../../shared/theme";
 
-.discussion {
+.discussionComment {
   &__container {
     display: flex;
     justify-content: center;
@@ -11,13 +11,22 @@
     width: 70%;
     padding: 2rem;
   }
+  &__accordionSummary {
+    user-select: text;
+    cursor: default;
+  }
   &__textbox {
     background-color: $black50;
     border-radius: 10px;
   }
-  &__buttonContainer {
-    width: 30%;
-    margin: 0.5rem 0 0.5rem auto;
+  &__button {
+    padding: 0px;
+    color: $primary600;
+    margin: 0.5rem 0;
+    font-size: $SMALL_BUTTON_TEXT_SIZE;
+  }
+  &__userInfo {
+    display: flex;
   }
   &__upvoteContainer {
     display: flex;
