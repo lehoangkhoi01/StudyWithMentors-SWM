@@ -38,7 +38,7 @@ export const registerConfirmPassword = {
 };
 
 export const seminarNameValidation = {
-  require: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
   maxLength: {
     value: LENGTH.SEMINAR_NAME,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
@@ -46,9 +46,9 @@ export const seminarNameValidation = {
 };
 
 export const seminarPlaceValidation = {
-  require: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
   maxLength: {
-    value: LENGTH.SEMINAR_NAME,
+    value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
 };
