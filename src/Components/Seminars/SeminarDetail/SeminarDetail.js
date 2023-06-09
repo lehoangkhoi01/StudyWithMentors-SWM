@@ -11,6 +11,7 @@ import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { Button, Menu, MenuItem } from "@mui/material";
 import {
+  useCustomAppbar,
   useCustomLoading,
   useNotification,
 } from "../../../Helpers/generalHelper";
@@ -19,13 +20,17 @@ import QRModal from "./QRModal/QRModal";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
-import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import {
+  SEMINAR_DETAIL_VIEW_MODE,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import { useHistory } from "react-router";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
 import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import DiscussionRoom from "../../DiscussionRoom/DiscussionRoom";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
@@ -33,6 +38,7 @@ const SeminarDetail = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
   const { setLoading } = useCustomLoading();
+  const { setAppbar } = useCustomAppbar();
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
@@ -43,6 +49,8 @@ const SeminarDetail = () => {
   ];
 
   const { id } = useParams();
+
+  setAppbar(APPBAR_TITLES.SEMINAR_DETAIL);
 
   useEffect(() => {
     const getSeminarDetail = async () => {
@@ -230,18 +238,20 @@ const SeminarDetail = () => {
                 />
               </p>
               <div className={style.detail__buttons}>
-                {userInfo?.role === "STUDENT" && (
+                {userInfo?.role === SYSTEM_ROLE.STUDENT && (
                   <CustomizedButton variant="outlined" color="primary600">
                     {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
                   </CustomizedButton>
                 )}
-                <CustomizedButton
-                  onClick={onOpenModal}
-                  variant="outlined"
-                  color="primary600"
-                >
-                  {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                </CustomizedButton>
+                {userInfo?.role !== SYSTEM_ROLE.STAFF && (
+                  <CustomizedButton
+                    onClick={onOpenModal}
+                    variant="outlined"
+                    color="primary600"
+                  >
+                    {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                  </CustomizedButton>
+                )}
               </div>
             </div>
           </div>

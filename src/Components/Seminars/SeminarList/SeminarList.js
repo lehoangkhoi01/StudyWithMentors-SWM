@@ -10,11 +10,15 @@ import {
   FILTER_SEMINAR,
   OTHERS,
 } from "../../../shared/constants/common";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import {
+  useCustomAppbar,
+  useCustomLoading,
+} from "../../../Helpers/generalHelper";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../../shared/constants/navigation";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
@@ -23,6 +27,9 @@ const SeminarList = () => {
   const [nextLink, setNextLink] = useState();
 
   const { setLoading } = useCustomLoading();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.SEMINAR_LIST);
+
   const userInfo = useSelector(selectUserInfo);
   const filterRef = useRef();
   const history = useHistory();

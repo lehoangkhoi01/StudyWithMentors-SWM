@@ -13,8 +13,12 @@ import {
 } from "../../../shared/constants/common";
 import { RATING_LABEL } from "../../../shared/constants/systemType";
 import { seminarFeedbackService } from "../../../Services/seminarFeedbackService";
+import { useCustomAppbar } from "../../../Helpers/generalHelper";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const FeedbackOverview = () => {
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.SEMINAR_REPORT);
   const [seminarDetail, setSeminarDetail] = useState();
   const [feedbackData, setFeedbackData] = useState();
   const [feedbackText, setFeedbackText] = useState({
