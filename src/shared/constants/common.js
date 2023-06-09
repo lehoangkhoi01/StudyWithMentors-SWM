@@ -138,12 +138,12 @@ export const PLACE_HOLDER = {
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",
-  SEARCH_MENTOR: "Tên kỹ năng, công ty mà bạn quan tâm",
+  SEARCH_MENTOR: "Tên theo hội thảo, diễn giả",
   DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
   ALL_MAJOR: "Tất cả lĩnh vực",
   ALL_CATEGORY: "Tất cả phân loại",
   CHOOSE_IMAGE: "Bấm hoặc kéo file để tải poster",
-  DEFAULT_DEPARTMENT: "Tất cả phòng ban",
+  DEFAULT_DEPARTMENT: "Phòng ban",
 };
 
 export const FILL_INFORMATION = {
