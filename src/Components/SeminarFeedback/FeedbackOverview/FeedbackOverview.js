@@ -17,6 +17,24 @@ import { seminarFeedbackService } from "../../../Services/seminarFeedbackService
 const FeedbackOverview = () => {
   const [seminarDetail, setSeminarDetail] = useState();
   const [feedbackData, setFeedbackData] = useState();
+  const [feedbackText, setFeedbackText] = useState({
+    improvements: [],
+    displayedImprovements: [],
+    others: [],
+    displayedOthers: [],
+  });
+  const [pagination, setPagination] = useState({
+    improvements: {
+      page: 1,
+      pageSize: 5,
+      totalPage: 1,
+    },
+    others: {
+      page: 1,
+      pageSize: 5,
+      totalPage: 1,
+    },
+  });
 
   const { id } = useParams();
 
@@ -36,7 +54,18 @@ const FeedbackOverview = () => {
 
         console.log(seminar);
 
-        convertFeedbackBEToFE(seminar);
+        const { reportStatistic, improvements, others } = seminar;
+
+        convertFeedbackBEToFE(reportStatistic);
+        setFeedbackText({
+          improvements,
+          displayedImprovements: [],
+          others,
+          displayedOthers: [],
+        });
+
+        onPaginateImprovments(1, improvements);
+        onPaginateOthers(1, others);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +81,6 @@ const FeedbackOverview = () => {
 
       switch (item.type) {
         case FEEDBACK_TYPE.YES_NO:
-          console.log(item.type);
           return {
             ...item,
             label: FEEDBACK_LABEL.YES_NO,
@@ -86,6 +114,83 @@ const FeedbackOverview = () => {
     },
   ];
 
+  const onPaginateImprovments = (page, initData) => {
+    const { pageSize } = pagination.improvements;
+
+    const improvementsList = initData ?? feedbackText.improvements;
+
+    let pageNumber = page;
+
+    if (!page && improvementsList.length) {
+      pageNumber = 1;
+    }
+
+    const totalPage = Math.ceil(improvementsList.length / pageSize);
+
+    const adjustPage = totalPage >= pageNumber ? pageNumber : totalPage;
+    const offset = pageSize * (adjustPage - 1);
+
+    const paginatedImprovements = improvementsList.slice(
+      offset,
+      pageSize * adjustPage
+    );
+
+    setFeedbackText((prevValue) => {
+      return {
+        ...prevValue,
+        displayedImprovements: paginatedImprovements,
+      };
+    });
+
+    setPagination((prevValue) => {
+      return {
+        ...prevValue,
+        improvements: {
+          pageSize,
+          page: adjustPage,
+          totalPage,
+        },
+      };
+    });
+  };
+
+  const onPaginateOthers = (page, initData) => {
+    const { pageSize } = pagination.others;
+
+    const othersList = initData ?? feedbackText.others;
+
+    let pageNumber = page;
+
+    if (!page && othersList.length) {
+      pageNumber = 1;
+    }
+
+    const totalPage = Math.ceil(othersList.length / pageSize);
+
+    const adjustPage = totalPage >= pageNumber ? pageNumber : totalPage;
+    const offset = pageSize * (adjustPage - 1);
+
+    const paginatedOthers = othersList.slice(offset, pageSize * adjustPage);
+
+    setFeedbackText((prevValue) => {
+      return {
+        ...prevValue,
+        displayedOthers: paginatedOthers,
+      };
+    });
+
+    setPagination((prevValue) => {
+      return {
+        ...prevValue,
+        others: {
+          pageSize,
+          page: adjustPage,
+          totalPage,
+        },
+      };
+    });
+  };
+
   return (
     <div>
       <div className={style.overview__container}>
@@ -107,84 +212,47 @@ const FeedbackOverview = () => {
             </div>
             <div>
               <p className={style.overview__subHeader}>
-                Cần cải thiện (20 câu trả lời)
+                Cần cải thiện ({feedbackText.displayedImprovements.length})
               </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
+              {console.log(feedbackText)}
+              {feedbackText.displayedImprovements.map((improvement, index) => (
+                <p
+                  key={`IMPROVEMENT_${index}`}
+                  className={style.overview__feedbackItem}
+                >
+                  {improvement}
+                </p>
+              ))}
               <Pagination
                 className={style.overview__pagination}
-                count={6}
                 variant="outlined"
                 shape="rounded"
+                page={pagination.improvements.page}
+                onChange={(_, page) => {
+                  onPaginateImprovments(page);
+                }}
               />
             </div>
             <div>
               <p className={style.overview__subHeader}>
-                Cần cải thiện (15 câu trả lời)
+                Cần cải thiện ({feedbackText.displayedOthers.length})
               </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
-              <p className={style.overview__feedbackItem}>
-                Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-                Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos.
-              </p>
+              {feedbackText.displayedOthers.map((other, index) => (
+                <p
+                  key={`OTHER_${index}`}
+                  className={style.overview__feedbackItem}
+                >
+                  {other}
+                </p>
+              ))}
               <Pagination
                 className={style.overview__pagination}
-                count={6}
                 variant="outlined"
                 shape="rounded"
+                page={pagination.others.page}
+                onChange={(_, page) => {
+                  onPaginateOthers(page);
+                }}
               />
             </div>
           </div>
