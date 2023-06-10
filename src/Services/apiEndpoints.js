@@ -22,6 +22,8 @@ export const SeminarEndpoints = {
 export const AccountEndpoints = {
   ACCOUNT_STAFF: "accounts/staffs",
   ACCONT_MENTOR: "accounts/mentors",
+  DELETE_MENTOR: "accounts/mentors/invalidate",
+  CREATE_MENTOR: "accounts/mentors",
 };
 
 export const StaticResourceEndpoints = {

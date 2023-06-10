@@ -24,6 +24,8 @@ export const BUTTON_LABEL = {
   SUBCRIBE_SEMNIAR: "Quan tâm",
   FEEDBACK_SEMINAR: "Đánh giá sự kiện",
   CONFIRM: "Xác nhận",
+  ADD_MENTOR: "Thêm diễn giả",
+  DEACTIVATE_MENTOR: "Vô hiệu hóa",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -134,7 +136,7 @@ export const PLACE_HOLDER = {
   LOGIN_PASSWORD: "Nhập mật khẩu",
   DEFAULT_EMAIL: "Example@gmail.com",
   DEFAULT_NAME: "Nguyễn Văn A",
-  DEFAULT_PHONE: "0982 123 456",
+  DEFAULT_PHONE: "0982123456",
   DEFAULT_DOB: "01/01/2001",
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",

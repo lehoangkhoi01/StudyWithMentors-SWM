@@ -1,6 +1,6 @@
 import { useState } from "react";
 import style from "./CVSection.module.scss";
-import CVModal from "../Modal/CVModal";
+import CVModal from "../../../Modal/CVModal";
 import { PROFILE_TITLES } from "../../../../shared/constants/common";
 import { Grid } from "@mui/material";
 

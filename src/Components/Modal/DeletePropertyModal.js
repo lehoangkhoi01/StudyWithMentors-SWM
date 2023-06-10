@@ -1,10 +1,8 @@
 import { Modal } from "@mui/material";
 import style from "./DeletePropertyModal.module.scss";
-import {
-  MODAL_DELETE_PROPERTY,
-  OTHERS,
-} from "../../../../shared/constants/common";
-import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
+
+import CustomizedButton from "../../shared/components/Button/CustomizedButton";
+import { MODAL_DELETE_PROPERTY, OTHERS } from "../../shared/constants/common";
 
 const DeletePropertyModal = (props) => {
   return (
