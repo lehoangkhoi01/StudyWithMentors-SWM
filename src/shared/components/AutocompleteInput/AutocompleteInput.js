@@ -4,7 +4,6 @@ import style from "./AutocompleteInput.module.scss";
 import { OPTIONAL } from "../../constants/common";
 
 const AutocompleteInput = (props) => {
-  console.log(props);
   return (
     <div className={`${style.autocomplete__container}`}>
       <label htmlFor={props.inputId}>
@@ -21,8 +20,6 @@ const AutocompleteInput = (props) => {
         renderOption={props.renderOption}
         getOptionLabel={props.getOptionLabel}
         onChange={(event, newValue) => {
-          console.log(newValue);
-          // const selectedIds = newValue.map((option) => option.id);
           props.setSelectedValues(newValue);
           props.field.onChange(newValue);
         }}

@@ -237,6 +237,7 @@ const SeminarForm = () => {
         data.seminarTime,
         DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
       );
+      data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
 
       let imageUrl = null;
       let attachmentUrls = null;
@@ -261,6 +262,7 @@ const SeminarForm = () => {
         name: data.seminarName,
         description: data.seminarDescription,
         location: data.seminarPlace,
+        mentorIds: data.seminarSpeakers,
         imageUrl: imageUrl,
         attachmentUrls: attachmentUrls,
         startTime: data.seminarTime,
@@ -335,7 +337,7 @@ const SeminarForm = () => {
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
-      //setValue("seminarSpeakers", seminarDetail.mentors);
+      setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
       setOldDocuments(seminarDetail.attachmentLinks ?? []);
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
