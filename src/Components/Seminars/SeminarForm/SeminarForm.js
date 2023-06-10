@@ -72,7 +72,9 @@ const SeminarForm = () => {
   const [oldDocuments, setOldDocuments] = React.useState([]);
   const [oldDocumentUrls, setOldDocumentUrls] = React.useState([]);
   const [mentorList, setMentorList] = React.useState([]);
-  const [seminarDate, setSeminarDate] = React.useState(new Date());
+  const [seminarDate, setSeminarDate] = React.useState(
+    new Date().setDate(new Date().getDate() + 1) // set tomorrow as default date
+  );
   const [seminarDetail, setSeminarDetail] = React.useState(null);
   const [selectedSpeakers, setSelectedSpeakers] = React.useState([]);
   const {
@@ -439,6 +441,7 @@ const SeminarForm = () => {
                     onChange(event);
                     setSeminarDate(event);
                   }}
+                  disablePast={true}
                   fieldState={fieldState}
                   {...restField}
                 />
