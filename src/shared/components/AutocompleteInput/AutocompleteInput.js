@@ -4,6 +4,7 @@ import style from "./AutocompleteInput.module.scss";
 import { OPTIONAL } from "../../constants/common";
 
 const AutocompleteInput = (props) => {
+  console.log(props);
   return (
     <div className={`${style.autocomplete__container}`}>
       <label htmlFor={props.inputId}>
@@ -11,6 +12,7 @@ const AutocompleteInput = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <Autocomplete
+        {...props.field}
         disablePortal
         disabled={props.disabled ?? false}
         id={props.id}
@@ -18,10 +20,16 @@ const AutocompleteInput = (props) => {
         options={props.options}
         renderOption={props.renderOption}
         getOptionLabel={props.getOptionLabel}
-        onChange={props.onChange}
-        value={props.value}
+        onChange={(event, newValue) => {
+          console.log(newValue);
+          // const selectedIds = newValue.map((option) => option.id);
+          props.setSelectedValues(newValue);
+          props.field.onChange(newValue);
+        }}
+        value={props.selectedValues.map((selectedId) => {
+          return props.options.find((option) => option.id === selectedId.id);
+        })}
         renderInput={(params) => <TextField {...params} />}
-        {...props}
       />
       {props.error && (
         <Typography

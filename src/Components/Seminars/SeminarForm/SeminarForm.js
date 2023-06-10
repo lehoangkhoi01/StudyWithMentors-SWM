@@ -74,6 +74,7 @@ const SeminarForm = () => {
   const [mentorList, setMentorList] = React.useState([]);
   const [seminarDate, setSeminarDate] = React.useState(new Date());
   const [seminarDetail, setSeminarDetail] = React.useState(null);
+  const [selectedSpeakers, setSelectedSpeakers] = React.useState([]);
   const {
     control,
     handleSubmit,
@@ -147,7 +148,7 @@ const SeminarForm = () => {
   };
 
   const getOptionLabel = (option) => {
-    return option.fullName;
+    return option?.fullName;
   };
 
   const renderOptionSpeakerAutocomplete = (props, option) => {
@@ -158,6 +159,8 @@ const SeminarForm = () => {
       </li>
     );
   };
+
+  const extractValue = (option) => (option ? option.id : "");
 
   const handleUploadImage = async (file) => {
     if (file) {
@@ -304,6 +307,7 @@ const SeminarForm = () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
         setSeminarDetail(seminar);
+        setSelectedSpeakers(seminar.mentors);
       } catch (error) {
         console.log(error);
       }
@@ -331,12 +335,13 @@ const SeminarForm = () => {
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
-      setValue("seminarSpeakers", seminarDetail.mentors);
+      //setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
       setOldDocuments(seminarDetail.attachmentLinks ?? []);
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
       if (moment(seminarDetail.startTime).toDate() < new Date()) {
         setFormDisabled(true);
+        history.push(ROUTES.NOT_FOUND);
       }
     }
   }, [seminarDetail]);
@@ -361,14 +366,16 @@ const SeminarForm = () => {
             {seminarBackground ? (
               <div className={`${style.seminarForm__image}`}>
                 <img src={seminarBackground} alt="seminar-poster" />
-                <IconButton
-                  aria-label="remove"
-                  size="large"
-                  className={`${style.seminarForm__iconButton}`}
-                  onClick={onRemoveImage}
-                >
-                  <CloseIcon />
-                </IconButton>
+                {!isFormDisabled && (
+                  <IconButton
+                    aria-label="remove"
+                    size="large"
+                    className={`${style.seminarForm__iconButton}`}
+                    onClick={onRemoveImage}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                )}
               </div>
             ) : (
               <Controller
@@ -450,10 +457,11 @@ const SeminarForm = () => {
             <Controller
               control={control}
               name="seminarSpeakers"
+              defaultValue={[]}
               rules={{
                 validate: validationSeminarSpeakers,
               }}
-              render={({ field: { value, onChange, ...restField } }) => (
+              render={({ field }) => (
                 <AutocompleteInput
                   multiple={true}
                   disabled={isFormDisabled}
@@ -463,12 +471,11 @@ const SeminarForm = () => {
                   options={mentorList}
                   getOptionLabel={getOptionLabel}
                   renderOption={renderOptionSpeakerAutocomplete}
-                  onChange={(e, data) => {
-                    onChange(data);
-                  }}
-                  value={isFormUpdate ? value : value.id}
                   error={errors.seminarSpeakers}
-                  {...restField}
+                  extractValue={extractValue}
+                  selectedValues={selectedSpeakers}
+                  setSelectedValues={setSelectedSpeakers}
+                  field={field}
                 />
               )}
             />

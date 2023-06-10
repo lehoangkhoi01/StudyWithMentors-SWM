@@ -184,24 +184,29 @@ const SeminarDetail = () => {
                       />
                       <span>{SEMINAR.RERORT}</span>
                     </MenuItem>
-                    <MenuItem
-                      onClick={() =>
-                        handleNavigate(ROUTES_STATIC.SEMINAR_UPDATE + "/" + id)
-                      }
-                    >
-                      <img
-                        src={require("../../../assets/icons/Seminar_Edit.png")}
-                      />
-                      <span>{SEMINAR.EDIT}</span>
-                    </MenuItem>
+
                     {moment(data.startTime) > Date.now() && (
-                      //Not show delete menu for past event
-                      <MenuItem onClick={onOpenRemoveDialog}>
-                        <img
-                          src={require("../../../assets/icons/Seminar_Delete.png")}
-                        />
-                        <span>{SEMINAR.DELETE}</span>
-                      </MenuItem>
+                      //Not show edit and delete menu for past event
+                      <>
+                        <MenuItem
+                          onClick={() =>
+                            handleNavigate(
+                              ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                            )
+                          }
+                        >
+                          <img
+                            src={require("../../../assets/icons/Seminar_Edit.png")}
+                          />
+                          <span>{SEMINAR.EDIT}</span>
+                        </MenuItem>
+                        <MenuItem onClick={onOpenRemoveDialog}>
+                          <img
+                            src={require("../../../assets/icons/Seminar_Delete.png")}
+                          />
+                          <span>{SEMINAR.DELETE}</span>
+                        </MenuItem>
+                      </>
                     )}
                   </Menu>
                 </div>
