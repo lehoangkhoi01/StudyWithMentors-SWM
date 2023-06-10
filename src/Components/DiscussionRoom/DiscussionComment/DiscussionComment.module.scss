@@ -32,6 +32,10 @@
   &__userInfo {
     display: flex;
   }
+  &__actionContainer {
+    display: flex;
+    flex-direction: row;
+  }
   &__upvoteContainer {
     display: flex;
     flex-direction: column;

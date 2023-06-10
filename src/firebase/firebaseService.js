@@ -1,5 +1,11 @@
 import { db } from "./firebase";
-import { collection, Timestamp, addDoc } from "firebase/firestore";
+import {
+  collection,
+  Timestamp,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 export const addDocument = async (collectionName, data) => {
   try {
@@ -10,5 +16,19 @@ export const addDocument = async (collectionName, data) => {
     await addDoc(collection(db, collectionName), newData);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const updateDocument = async (collectionName, id, updatedData) => {
+  const documentRef = doc(db, collectionName, id);
+  if (documentRef) {
+    try {
+      const result = await updateDoc(documentRef, updatedData);
+      return result;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  } else {
+    return Promise.reject("Can not document");
   }
 };

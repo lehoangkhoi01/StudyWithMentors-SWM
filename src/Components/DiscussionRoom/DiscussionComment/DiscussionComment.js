@@ -18,8 +18,15 @@ import {
   Typography,
   Button,
   OutlinedInput,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
 } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditIcon from "@mui/icons-material/Edit";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import style from "./DiscussionComment.module.scss";
 import { doc } from "firebase/firestore";
@@ -28,9 +35,18 @@ import { addDocument } from "../../../firebase/firebaseService";
 
 const DiscussionComment = (props) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
   const [currentReply, setCurrentReply] = React.useState("");
+
   const handleExpand = () => {
     setExpanded(!expanded);
+  };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleReplyChange = (e) => {
@@ -40,25 +56,57 @@ const DiscussionComment = (props) => {
   };
 
   const renderUpvoteSection = (comment) => {
-    return comment.parentId ? null : (
-      <div className={`${style.discussionComment__upvoteContainer}`}>
-        {comment.voteList?.includes("H8ajNk6j55TLaxbzT1OS") ? (
-          <>
-            <ArrowDropUpIcon
-              onClick={() => props.handleUpvoteComment(comment, "unvote")}
-              className={`${style.discussionComment__upvoteContainer__icon} ${style.discussionComment__upvoteContainer__icon_clicked}`}
-            />
-            {comment.vote}
-          </>
-        ) : (
-          <>
-            <ArrowDropUpIcon
-              onClick={() => props.handleUpvoteComment(comment, "upvote")}
-              className={`${style.discussionComment__upvoteContainer__icon}`}
-            />
-            {comment.vote}
-          </>
-        )}
+    return (
+      <div className={`${style.discussionComment__actionContainer}`}>
+        <div className={`${style.discussionComment__upvoteContainer}`}>
+          {comment.voteList?.includes("H8ajNk6j55TLaxbzT1OS") ? (
+            <>
+              <ArrowDropUpIcon
+                onClick={() => props.handleUpvoteComment(comment, "unvote")}
+                className={`${style.discussionComment__upvoteContainer__icon} ${style.discussionComment__upvoteContainer__icon_clicked}`}
+              />
+              {comment.vote}
+            </>
+          ) : (
+            <>
+              <ArrowDropUpIcon
+                onClick={() => props.handleUpvoteComment(comment, "upvote")}
+                className={`${style.discussionComment__upvoteContainer__icon}`}
+              />
+              {comment.vote}
+            </>
+          )}
+        </div>
+        <IconButton
+          onClick={handleClick}
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <ListItemText>Chỉnh sửa</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>Xóa</ListItemText>
+          </MenuItem>
+        </Menu>
       </div>
     );
   };
@@ -69,6 +117,7 @@ const DiscussionComment = (props) => {
         key={`comment${reply.id}`}
         alignItems="flex-start"
         className={`${style.discussionComment__accordionSummary}`}
+        secondaryAction={renderUpvoteSection(reply)}
       >
         <ListItemText
           primary={
