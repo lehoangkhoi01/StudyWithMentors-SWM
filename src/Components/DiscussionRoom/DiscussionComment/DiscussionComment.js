@@ -31,26 +31,37 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import style from "./DiscussionComment.module.scss";
 import { doc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
-import { addDocument } from "../../../firebase/firebaseService";
+import { addDocument, deleteDocument } from "../../../firebase/firebaseService";
 
 const DiscussionComment = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [currentReply, setCurrentReply] = React.useState("");
+  const [currentActionComment, setCurrentActionComment] = React.useState(null);
 
   const handleExpand = () => {
     setExpanded(!expanded);
   };
-  const handleClick = (event) => {
+  const handleClick = (event, comment) => {
+    setCurrentActionComment(comment);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleDelete = async () => {
+    try {
+      handleClose();
+      await deleteDocument("comments", currentActionComment.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleReplyChange = (e) => {
-    if (e.target.value && e.target.value.trim() !== "") {
+    if (e.target.value) {
       setCurrentReply(e.target.value);
     }
   };
@@ -78,7 +89,7 @@ const DiscussionComment = (props) => {
           )}
         </div>
         <IconButton
-          onClick={handleClick}
+          onClick={(e) => handleClick(e, comment)}
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
@@ -86,7 +97,7 @@ const DiscussionComment = (props) => {
           <MoreVertIcon />
         </IconButton>
         <Menu
-          id="basic-menu"
+          id={"basic-menu"}
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
@@ -100,7 +111,7 @@ const DiscussionComment = (props) => {
             </ListItemIcon>
             <ListItemText>Chỉnh sửa</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => handleDelete()}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
@@ -153,6 +164,7 @@ const DiscussionComment = (props) => {
       parentId: props.comment.id,
       message: currentReply,
       user: doc(db, "users/TvmDbIY8sl4HNtUL1RX1"),
+      vote: 0,
     };
     try {
       addDocument("comments", requestBody);

@@ -5,6 +5,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const addDocument = async (collectionName, data) => {
@@ -29,6 +30,19 @@ export const updateDocument = async (collectionName, id, updatedData) => {
       return Promise.reject(error);
     }
   } else {
-    return Promise.reject("Can not document");
+    return Promise.reject("Can not find document");
+  }
+};
+
+export const deleteDocument = async (collectionName, id) => {
+  const documentRef = doc(db, collectionName, id);
+  if (documentRef) {
+    try {
+      await deleteDoc(documentRef);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  } else {
+    return Promise.reject("Can not find document");
   }
 };
