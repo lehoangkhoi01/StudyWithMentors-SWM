@@ -1,7 +1,7 @@
 import { Modal } from "@mui/material";
 import { useForm } from "react-hook-form";
 import style from "./CVModal.module.scss";
-import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
+import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import {
   BUTTON_LABEL,
   CV_REGISTER_NAME_PREFIX,
@@ -9,19 +9,19 @@ import {
   ERROR_MESSAGES,
   INPUT_TYPES,
   MODAL_TYPE,
-} from "../../../../shared/constants/common";
-import CustomizedTextField from "../../../../shared/components/TextField/CustomizedTextField";
-import CustomizedDatePicker from "../../../../shared/components/DatePicker/CustomizedDatePicker";
-import CustomizedCheckBox from "../../../../shared/components/CheckBox/CustomizedCheckBox";
+} from "../../shared/constants/common";
+import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
+import CustomizedDatePicker from "../../shared/components/DatePicker/CustomizedDatePicker";
+import CustomizedCheckBox from "../../shared/components/CheckBox/CustomizedCheckBox";
 import { useEffect, useLayoutEffect, useState } from "react";
 import {
   getRegisterNamePrefixFromTitle,
   removeRegisterNamePrefix,
-} from "../../../../Helpers/SpecificComponentHelper/CVHelper";
+} from "../../Helpers/SpecificComponentHelper/CVHelper";
 import {
   convertDateFormat,
   covertToISODate,
-} from "../../../../Helpers/dateHelper";
+} from "../../Helpers/dateHelper";
 
 const CVModal = (props) => {
   const [registerNamePrefix, setRegisterNamePrefix] = useState();
@@ -145,7 +145,7 @@ const CVModal = (props) => {
               <img
                 className={style.modal__cancel}
                 onClick={props.onCloseModal}
-                src={require("../../../../assets/icons/Cancel.png")}
+                src={require("../../assets/icons/Cancel.png")}
               />
               <h1>{props.title}</h1>
               {props.textFields.map((textField, index) => {
