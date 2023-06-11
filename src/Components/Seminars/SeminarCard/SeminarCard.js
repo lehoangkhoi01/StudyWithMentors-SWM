@@ -15,7 +15,7 @@ const SeminarCard = ({ data }) => {
               : require("../../../assets/default-cover.jpg")
           }
         />
-        {new Date(data.startTime) >= new Date() && (
+        {data.status === "FUTURE" && (
           <span className={style.card__status}>
             {SEMINAR.IS_COMMING_STATUS}
           </span>

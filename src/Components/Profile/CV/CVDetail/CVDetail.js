@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./CVDetail.module.scss";
-import CVModal from "../Modal/CVModal";
-import DeletePropertyModal from "../Modal/DeletePropertyModal";
+import CVModal from "../../../Modal/CVModal";
+import DeletePropertyModal from "../../../Modal/DeletePropertyModal";
 
 const CVDetail = (props) => {
   const [openModal, setOpenModal] = useState({

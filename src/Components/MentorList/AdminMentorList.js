@@ -22,6 +22,10 @@ import CustomizedTextField from "../../shared/components/TextField/CustomizedTex
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useForm } from "react-hook-form";
+import DeletePropertyModal from "../Modal/DeletePropertyModal";
+import { accountService } from "../../Services/accountService";
+import { useCustomLoading } from "../../Helpers/generalHelper";
+import UpsertMentorModal from "../Modal/UpsertMentorModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,120 +50,121 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const DUMMY_DATA = [
   {
     id: 0,
-    name: "Nguyễn Văn A",
+    fullName: "Nguyễn Văn A",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 1,
-    name: "Nguyễn Văn B",
+    fullName: "Nguyễn Văn B",
     email: "nguyenvanb@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 2,
-    name: "Nguyễn Văn C",
+    fullName: "Nguyễn Văn C",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 3,
-    name: "Nguyễn Thị B",
+    fullName: "Nguyễn Thị B",
     email: "nguyenthib@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 4,
-    name: "Nguyễn Văn A",
+    fullName: "Nguyễn Văn A",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 5,
-    name: "Nguyễn Thị B",
+    fullName: "Nguyễn Thị B",
     email: "nguyenthib@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 6,
-    name: "Nguyễn Văn A",
+    fullName: "Nguyễn Văn A",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 7,
-    name: "Nguyễn Thị B",
+    fullName: "Nguyễn Thị B",
     email: "nguyenthib@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 8,
-    name: "Nguyễn Văn A",
+    fullName: "Nguyễn Văn A",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 9,
-    name: "Nguyễn Thị B",
+    fullName: "Nguyễn Thị B",
     email: "nguyenthib@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 10,
-    name: "Nguyễn Văn B",
+    fullName: "Nguyễn Văn B",
     email: "nguyenvanb@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 11,
-    name: "Nguyễn Văn C",
+    fullName: "Nguyễn Văn C",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
   {
     id: 12,
-    name: "Nguyễn Văn A",
+    fullName: "Nguyễn Văn A",
     email: "nguyenvana@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Đang chờ",
   },
   {
     id: 13,
-    name: "Nguyễn Thị B",
+    fullName: "Nguyễn Thị B",
     email: "nguyenthib@gmail.com",
-    phone: "0982 123 456",
-    createAt: "2023-03-23 07:00:00",
+    phoneNum: "0982 123 456",
+    createdDate: "2023-03-23 07:00:00",
     status: "Hoạt động",
   },
 ];
 
 const AdminMentorList = () => {
   const { register, getValues, setValue } = useForm();
+  const { setLoading } = useCustomLoading();
 
   const [mentors, setMentors] = useState([]);
   const [originMentors, setOriginMentors] = useState([]);
@@ -174,26 +179,12 @@ const AdminMentorList = () => {
     pageSize: 12,
     totalPage: 1,
   });
-
-  const adjustMentorList = (mentors) => {
-    const updatedMentorList = mentors.map((mentor, index) => {
-      return {
-        ...mentor,
-        number: index + 1,
-        createAt: handleTimeToDisplay(
-          mentor.createAt,
-          null,
-          DATE_FORMAT.DD_MM_YYYY,
-          " -"
-        ),
-        defaultCreateAt: mentor.createAt,
-      };
-    });
-
-    setMentors([...updatedMentorList]);
-    setOriginMentors([...updatedMentorList]);
-    onPaginate(1, [...updatedMentorList]);
-  };
+  const [openModal, setOpenModal] = useState({
+    upsert: false,
+    delete: false,
+  });
+  const [existedData, setExistedData] = useState(null);
+  const [deletedMentor, setDeletedMentor] = useState(null);
 
   useEffect(() => {
     adjustMentorList(DUMMY_DATA);
@@ -206,6 +197,26 @@ const AdminMentorList = () => {
   useEffect(() => {
     onPaginate(pagination.page);
   }, [mentors]);
+
+  const adjustMentorList = (mentors) => {
+    const updatedMentorList = mentors.map((mentor, index) => {
+      return {
+        ...mentor,
+        number: index + 1,
+        createdDate: handleTimeToDisplay(
+          mentor.createdDate,
+          null,
+          DATE_FORMAT.DD_MM_YYYY,
+          " -"
+        ),
+        defaultCreatedDate: mentor.createdDate,
+      };
+    });
+
+    setMentors([...updatedMentorList]);
+    setOriginMentors([...updatedMentorList]);
+    onPaginate(1, [...updatedMentorList]);
+  };
 
   const updateSort = (att) => {
     if (sortData.attribute === att) {
@@ -279,7 +290,7 @@ const AdminMentorList = () => {
     let temp = [...originMentors];
 
     temp = temp.filter((mentor) =>
-      mentor.name.toLowerCase().includes(searchTerm)
+      mentor.fullName.toLowerCase().includes(searchTerm)
     );
 
     onSortTable(temp);
@@ -297,6 +308,34 @@ const AdminMentorList = () => {
         return [...prevValue];
       });
     }
+  };
+
+  const openUpsertModalHandler = (_, data) => {
+    if (data) {
+      setExistedData(data);
+    }
+
+    setOpenModal({
+      upsert: true,
+      delete: false,
+    });
+  };
+
+  const openDeleteModalHandler = (mentor) => {
+    setDeletedMentor(mentor);
+    setOpenModal({
+      upsert: false,
+      delete: true,
+    });
+  };
+
+  const onCloseModal = () => {
+    setExistedData(null);
+    setOpenModal({
+      upsert: false,
+      delete: false,
+    });
+    setDeletedMentor(null);
   };
 
   const onPaginate = (page, initData) => {
@@ -326,167 +365,217 @@ const AdminMentorList = () => {
     });
   };
 
+  const onDeleteMentors = async () => {
+    try {
+      setLoading(true);
+      if (deletedMentor) {
+        accountService.deleteMentors([deletedMentor.id]);
+        setDeletedMentor(null);
+      } else {
+        accountService.deleteMentors(selectedMentorId);
+        setSelectedMentorId([]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className={style.list__container}>
-      <div className={style.list__actions}>
-        <CustomizedButton variant="outlined" color="primary600">
-          <img src={require("../../assets/icons/Add_Mentor.png")} />
-          <p>Thêm diễn giả</p>
-        </CustomizedButton>
-        <CustomizedButton variant="outlined" color="primary600">
-          <img src={require("../../assets/icons/Remove_Mentor.png")} />
-          <p>Vô hiệu hóa</p>
-        </CustomizedButton>
-        <CustomizedTextField
-          placeholder="Tìm kiếm diễn giả"
-          className={style.list__input}
-          required={true}
-          options={{ ...register("searchTerm") }}
+    <>
+      <div className={style.list__container}>
+        <div className={style.list__actions}>
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={openUpsertModalHandler}
+          >
+            <img src={require("../../assets/icons/Add_Mentor.png")} />
+            <p>{BUTTON_LABEL.ADD_MENTOR}</p>
+          </CustomizedButton>
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={onDeleteMentors}
+          >
+            <img src={require("../../assets/icons/Remove_Mentor.png")} />
+            <p>{BUTTON_LABEL.DEACTIVATE_MENTOR}</p>
+          </CustomizedButton>
+          <CustomizedTextField
+            placeholder="Tìm kiếm diễn giả"
+            className={style.list__input}
+            required={true}
+            options={{ ...register("searchTerm") }}
+          />
+          <CustomizedButton
+            variant="contained"
+            color="primary600"
+            onClick={onSearchMentor}
+          >
+            <img src={require("../../assets/icons/Search_Icon.png")} />
+            <p>Tìm kiếm</p>
+          </CustomizedButton>
+          <Button
+            variant="text"
+            onClick={resetDefault}
+            className={`${style.filterSection__linkButton}`}
+          >
+            {BUTTON_LABEL.DEFAULT}
+          </Button>
+        </div>
+        <TableContainer component={Paper} className={style.list__table}>
+          <Table aria-label="customized table">
+            <TableHead>
+              <TableRow className={style.list__header}>
+                <StyledTableCell align="center">
+                  {ADMIN_TABLE_HEADER.SELECT}
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  align="center"
+                  onClick={() => {
+                    updateSort("number");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.NUMBER}</span>
+                  {renderSortIcon("number")}
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  onClick={() => {
+                    updateSort("fullName");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.NAME}</span>
+                  {renderSortIcon("fullName")}
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  onClick={() => {
+                    updateSort("email");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.EMAIL}</span>
+                  {renderSortIcon("email")}
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  align="center"
+                  onClick={() => {
+                    updateSort("phoneNum");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.PHONE}</span>
+                  {renderSortIcon("phoneNum")}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <span>{ADMIN_TABLE_HEADER.PROFILE}</span>
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  align="center"
+                  onClick={() => {
+                    updateSort("defaultcreatedDate");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.CREATED_DATE}</span>
+                  {renderSortIcon("defaultCreatedDate")}
+                </StyledTableCell>
+                <StyledTableCell
+                  className={style.list__header_sortable}
+                  align="center"
+                  onClick={() => {
+                    updateSort("status");
+                  }}
+                >
+                  <span>{ADMIN_TABLE_HEADER.STATUS}</span>
+                  {renderSortIcon("status")}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {ADMIN_TABLE_HEADER.ACTION}
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {displayedMentors.map((row) => (
+                <StyledTableRow key={`ROW_INDEX_${row.id}`}>
+                  <StyledTableCell align="center">
+                    <Checkbox
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#3948AB",
+                        },
+                      }}
+                      checked={selectedMentorId.includes(row.id)}
+                      onChange={() => {
+                        onSelectMentor(row.id);
+                      }}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.number}</StyledTableCell>
+                  <StyledTableCell>{row.fullName}</StyledTableCell>
+                  <StyledTableCell>{row.email}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.phoneNum}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Link to={`#`}>CV diễn giả</Link>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.createdDate}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.status}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <IconButton
+                      onClick={() => {
+                        openUpsertModalHandler(null, row);
+                      }}
+                    >
+                      <img
+                        className={style.list__table_icon}
+                        src={require("../../assets/icons/Table_Edit.png")}
+                      />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        openDeleteModalHandler(row);
+                      }}
+                    >
+                      <img
+                        className={style.list__table_icon}
+                        src={require("../../assets/icons/Table_Delete.png")}
+                      />
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Pagination
+          className={style.list__pagination}
+          count={pagination.totalPage}
+          variant="outlined"
+          shape="rounded"
+          page={pagination.page}
+          onChange={(_, page) => {
+            onPaginate(page);
+          }}
         />
-        <CustomizedButton
-          variant="contained"
-          color="primary600"
-          onClick={onSearchMentor}
-        >
-          <img src={require("../../assets/icons/Search_Icon.png")} />
-          <p>Tìm kiếm</p>
-        </CustomizedButton>
-        <Button
-          variant="text"
-          onClick={resetDefault}
-          className={`${style.filterSection__linkButton}`}
-        >
-          {BUTTON_LABEL.DEFAULT}
-        </Button>
       </div>
-      <TableContainer component={Paper} className={style.list__table}>
-        <Table aria-label="customized table">
-          <TableHead>
-            <TableRow className={style.list__header}>
-              <StyledTableCell align="center">
-                {ADMIN_TABLE_HEADER.SELECT}
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                align="center"
-                onClick={() => {
-                  updateSort("number");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.NUMBER}</span>
-                {renderSortIcon("number")}
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                onClick={() => {
-                  updateSort("name");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.NAME}</span>
-                {renderSortIcon("name")}
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                onClick={() => {
-                  updateSort("email");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.EMAIL}</span>
-                {renderSortIcon("email")}
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                align="center"
-                onClick={() => {
-                  updateSort("phone");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.PHONE}</span>
-                {renderSortIcon("phone")}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <span>{ADMIN_TABLE_HEADER.PROFILE}</span>
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                align="center"
-                onClick={() => {
-                  updateSort("defaultCreateAt");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.CREATED_DATE}</span>
-                {renderSortIcon("defaultCreateAt")}
-              </StyledTableCell>
-              <StyledTableCell
-                className={style.list__header_sortable}
-                align="center"
-                onClick={() => {
-                  updateSort("status");
-                }}
-              >
-                <span>{ADMIN_TABLE_HEADER.STATUS}</span>
-                {renderSortIcon("status")}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {ADMIN_TABLE_HEADER.ACTION}
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {displayedMentors.map((row) => (
-              <StyledTableRow key={`ROW_INDEX_${row.id}`}>
-                <StyledTableCell align="center">
-                  <Checkbox
-                    sx={{
-                      "&.Mui-checked": {
-                        color: "#3948AB",
-                      },
-                    }}
-                    checked={selectedMentorId.includes(row.id)}
-                    onChange={() => {
-                      onSelectMentor(row.id);
-                    }}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.number}</StyledTableCell>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                <StyledTableCell>{row.email}</StyledTableCell>
-                <StyledTableCell align="center">{row.phone}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Link to={`#`}>CV diễn giả</Link>
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.createAt}</StyledTableCell>
-                <StyledTableCell align="center">{row.status}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <IconButton>
-                    <img
-                      className={style.list__table_icon}
-                      src={require("../../assets/icons/Table_Edit.png")}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <img
-                      className={style.list__table_icon}
-                      src={require("../../assets/icons/Table_Delete.png")}
-                    />
-                  </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Pagination
-        className={style.list__pagination}
-        count={pagination.totalPage}
-        variant="outlined"
-        shape="rounded"
-        page={pagination.page}
-        onChange={(_, page) => {
-          onPaginate(page);
-        }}
+      <DeletePropertyModal
+        openModal={openModal.delete}
+        onCloseModal={onCloseModal}
+        title={deletedMentor?.fullName}
+        onDeleteProperty={onDeleteMentors}
       />
-    </div>
+      <UpsertMentorModal
+        openModal={openModal.upsert}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+      />
+    </>
   );
 };
 

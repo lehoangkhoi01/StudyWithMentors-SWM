@@ -112,7 +112,11 @@ const SeminarList = () => {
 
   return (
     <div>
-      <SeminarFilter ref={filterRef} onSeminarFilter={onSeminarFilter} />
+      <SeminarFilter
+        ref={filterRef}
+        onSeminarFilter={onSeminarFilter}
+        onChangeStatusFilter={onChangeStatusFilter}
+      />
       <div className={style.seminarList__status__filter}>
         <div className={style.seminarList__status__filter__items}>
           <p

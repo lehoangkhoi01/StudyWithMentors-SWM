@@ -23,6 +23,7 @@ const CustomizedDateTimePicker = (props) => {
             error: props?.fieldState?.error?.message,
           },
         }}
+        disablePast={props.disablePast ?? false}
         className={style.datePicker__input}
       />
     </div>

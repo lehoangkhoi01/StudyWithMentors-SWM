@@ -7,6 +7,7 @@ import CustomizedSelect from "../../../../shared/components/Select/CustomizedSel
 import {
   BUTTON_LABEL,
   DATE_FORMAT,
+  FILTER_SEMINAR,
   PLACE_HOLDER,
 } from "../../../../shared/constants/common";
 import { useForm } from "react-hook-form";
@@ -67,12 +68,9 @@ const SeminarFilter = forwardRef((props, ref) => {
   };
 
   const handleDepartmentChange = (event) => {
-    console.log(event);
     const {
       target: { value },
     } = event;
-
-    console.log(value);
 
     setSelectedDepartment(value);
   };
@@ -83,6 +81,9 @@ const SeminarFilter = forwardRef((props, ref) => {
     reset({
       seminarName: "",
     });
+    props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
+
+    onFilter();
   };
 
   useImperativeHandle(ref, () => ({
