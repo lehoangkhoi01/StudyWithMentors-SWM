@@ -355,6 +355,8 @@ export const FILTER_SEMINAR = {
   PAST: "Đã diễn ra",
   DEPARTMENT_SEMINAR: "Sự kiện của phòng ban",
   FOLLOWED_SEMINAR: "Quan tâm",
+  POPULAR: "Nổi bật",
+  FOLLOWING: "Đang theo dõi",
 };
 
 export const QR_TEXT = {

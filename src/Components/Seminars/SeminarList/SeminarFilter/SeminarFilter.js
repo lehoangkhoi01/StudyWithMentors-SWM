@@ -120,9 +120,7 @@ const SeminarFilter = forwardRef((props, ref) => {
               value={selectedDepartment}
               onChange={handleDepartmentChange}
               placeholder={PLACE_HOLDER.DEFAULT_DEPARTMENT}
-              renderValue={(selected) => {
-                return selected.name;
-              }}
+              renderValue={(selected) => selected.name}
               MenuProps={MenuProps}
               required={true}
             />

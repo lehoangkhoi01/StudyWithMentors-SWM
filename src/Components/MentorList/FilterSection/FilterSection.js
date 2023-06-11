@@ -4,8 +4,13 @@ import style from "./FilterSection.module.scss";
 import { styled } from "@mui/material/styles";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
-import { BUTTON_LABEL, PLACE_HOLDER } from "../../../shared/constants/common";
+import {
+  BUTTON_LABEL,
+  FILTER_SEMINAR,
+  PLACE_HOLDER,
+} from "../../../shared/constants/common";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const MAJOR_NAMES = [
   { name: "IT - Phần mêm", value: "IT - Phần mêm" },
@@ -41,7 +46,9 @@ const StyledLabelSelect = styled(InputLabel)`
   }
 `;
 
-const FilterSection = () => {
+const FilterSection = (props) => {
+  const { register, reset } = useForm();
+
   const [majorName, setMajorName] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
 
@@ -49,20 +56,24 @@ const FilterSection = () => {
     const {
       target: { value },
     } = event;
-    setMajorName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    console.log(value);
+    setMajorName(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleCategoryChange = (event) => {
     const {
       target: { value },
     } = event;
-    setCategoryName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setCategoryName(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const clearFilter = () => {
+    setMajorName([]);
+    setCategoryName([]);
+    reset({
+      searchTerm: "",
+    });
+    props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
   };
 
   return (
@@ -78,6 +89,9 @@ const FilterSection = () => {
             inputId="search"
             placeholder={PLACE_HOLDER.SEARCH_MENTOR}
             required={true}
+            options={{
+              ...register("searchTerm"),
+            }}
           />
         </Grid>
         <Grid item xs={3}>
@@ -93,7 +107,12 @@ const FilterSection = () => {
               value={majorName}
               onChange={handleMajoreChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
-              renderValue={(selected) => selected.join(", ")}
+              renderValue={(selected) => {
+                return selected.map(
+                  (item, index) =>
+                    `${item.name}${index < selected.length - 1 ? ", " : ""}`
+                );
+              }}
               MenuProps={MenuProps}
               required={true}
             />
@@ -112,7 +131,12 @@ const FilterSection = () => {
               value={categoryName}
               onChange={handleCategoryChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
-              renderValue={(selected) => selected.join(", ")}
+              renderValue={(selected) => {
+                return selected.map(
+                  (item, index) =>
+                    `${item.name}${index < selected.length - 1 ? ", " : ""}`
+                );
+              }}
               MenuProps={MenuProps}
               required={true}
             />
@@ -134,6 +158,7 @@ const FilterSection = () => {
             <Button
               variant="text"
               className={`${style.filterSection__linkButton}`}
+              onClick={clearFilter}
             >
               {BUTTON_LABEL.DEFAULT}
             </Button>

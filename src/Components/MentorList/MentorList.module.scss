@@ -1,9 +1,86 @@
 @import "../../shared/theme";
+@import "../../shared/break-point";
 
 .mentorList {
   &__container {
     display: flex;
     align-items: center;
     padding: 1rem 2vw;
+  }
+
+  &__status__filter {
+    font-size: 1.2rem;
+    position: relative;
+    text-align: center;
+
+    &__items {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+
+      p {
+        color: $primary600;
+        font-weight: 600;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+          color: $primary600;
+          border-bottom: 3px solid $primary600;
+        }
+
+        &:active {
+          color: $primary900;
+          border-bottom: 3px solid $primary900;
+        }
+      }
+
+      @media (max-width: $bp-lg) {
+        gap: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: $bp-sm) {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    &__active {
+      color: $primary900 !important;
+      border-bottom: 3px solid $primary900 !important;
+    }
+
+    button {
+      width: max-content;
+
+      position: absolute;
+      right: 3%;
+      top: 50%;
+      transform: translateY(-50%);
+
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: $bp-lg) {
+      button {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: $bp-md) {
+      flex-wrap: wrap;
+
+      button {
+        position: relative;
+        right: unset;
+        top: unset;
+        transform: unset;
+
+        font-size: 0.9rem;
+      }
+    }
   }
 }
