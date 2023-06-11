@@ -16,7 +16,8 @@ export const ROUTES = {
   SEMINAR_CREATE: "/create-seminar",
   SEMINAR_UPDATE: "/update-seminar/:id",
   FEEDBACK_OVERVIEW: "/feedback-overview/:id",
-  ADMIN_SEMINAR_LIST: "/admin/seminars",
+  MENTOR_LIST: "/mentors",
+  ADMIN_MENTOR_LIST: "/admin/mentors",
   DISCUSSION: "/discussion/:id",
 };
 
@@ -34,9 +35,6 @@ export const UNAUTHORIZED_NAVBAR = [
   {
     TITLE: "Hội thảo",
     ROUTE: ROUTES.SEMINAR_LIST,
-  },
-  {
-    TITLE: "Về Growth Me",
   },
   {
     TITLE: "Tìm Mentor",
@@ -66,11 +64,12 @@ export const MENTOR_NAVBAR = [
     ROUTE: ROUTES.HOME,
   },
   {
-    TITLE: "Hội thảo",
-    ROUTE: ROUTES.SEMINAR_LIST,
+    TITLE: "Tìm mentor",
+    ROUTE: ROUTES.MENTOR_LIST,
   },
   {
-    TITLE: "Về Growth Me",
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
     TITLE: "Hồ sơ của tôi",

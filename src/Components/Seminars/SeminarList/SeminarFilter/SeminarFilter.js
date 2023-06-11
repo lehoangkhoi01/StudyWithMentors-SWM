@@ -167,7 +167,6 @@ const SeminarFilter = forwardRef((props, ref) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3}></Grid>
     </div>
   );
 });

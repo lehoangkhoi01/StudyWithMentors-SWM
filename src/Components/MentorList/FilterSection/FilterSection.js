@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { BUTTON_LABEL, PLACE_HOLDER } from "../../../shared/constants/common";
+import { useState } from "react";
 
 const MAJOR_NAMES = [
   { name: "IT - Phần mêm", value: "IT - Phần mêm" },
@@ -40,13 +41,36 @@ const StyledLabelSelect = styled(InputLabel)`
   }
 `;
 
-const FilterSection = (props) => {
+const FilterSection = () => {
+  const [majorName, setMajorName] = useState([]);
+  const [categoryName, setCategoryName] = useState([]);
+
+  const handleMajoreChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMajorName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleCategoryChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCategoryName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   return (
     <div className={`${style.filterSection__container}`}>
       <Grid
         className={`${style.filterSection__gridContainer}`}
         container
-        spacing={2}
+        columnSpacing={{ sm: 2 }}
       >
         <Grid item xs={3.5}>
           <CustomizedTextField
@@ -66,8 +90,8 @@ const FilterSection = (props) => {
               items={MAJOR_NAMES}
               inputId="majorSelect"
               isMultipleSelect={true}
-              value={props.majorName}
-              onChange={props.handleMajoreChange}
+              value={majorName}
+              onChange={handleMajoreChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
@@ -85,8 +109,8 @@ const FilterSection = (props) => {
               items={CATEGORY_NAMES}
               inputId="majorSelect"
               isMultipleSelect={true}
-              value={props.categoryName}
-              onChange={props.handleCategoryChange}
+              value={categoryName}
+              onChange={handleCategoryChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
