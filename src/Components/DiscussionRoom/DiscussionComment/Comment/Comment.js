@@ -10,12 +10,13 @@ import {
 import CommentAction from "../CommentAction/CommentAction";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./Comment.module.scss";
+import { Timestamp } from "firebase/firestore";
+import { updateDocument } from "../../../../firebase/firebaseService";
 
 const Comment = (props) => {
   const [updatedComment, setUpdatedComment] = React.useState(null);
 
   const onUpdateComment = (comment) => {
-    console.log(comment);
     setUpdatedComment(comment);
   };
 
@@ -23,10 +24,28 @@ const Comment = (props) => {
     setUpdatedComment(null);
   };
 
+  const onChangeUpdateComment = (e) => {
+    setUpdatedComment(e.target.value);
+  };
+
+  const handleSubmitUpdateComment = async () => {
+    const updatedCommentObject = {
+      message: updatedComment,
+      serverTimeStamp: Timestamp.now(),
+    };
+    try {
+      await updateDocument("comments", props.comment.id, updatedCommentObject);
+      setUpdatedComment(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updateCommentBox = (
     <div>
       <OutlinedInput
         value={updatedComment?.message}
+        onChange={onChangeUpdateComment}
         fullWidth
         multiline
         rows={2}
@@ -41,7 +60,11 @@ const Comment = (props) => {
         >
           Hủy
         </CustomizedButton>
-        <CustomizedButton variant="contained" color="primary600">
+        <CustomizedButton
+          onClick={handleSubmitUpdateComment}
+          variant="contained"
+          color="primary600"
+        >
           Cập nhật
         </CustomizedButton>
       </div>
