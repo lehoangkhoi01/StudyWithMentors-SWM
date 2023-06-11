@@ -2,7 +2,7 @@ import React from "react";
 import { List, Typography, OutlinedInput } from "@mui/material";
 import style from "./DiscussionRoom.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
-import { addDocument } from "../../firebase/firebaseService";
+import { addDocument, updateDocument } from "../../firebase/firebaseService";
 import {
   collection,
   doc,
@@ -10,7 +10,6 @@ import {
   onSnapshot,
   orderBy,
   query,
-  updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { format } from "date-fns";
@@ -23,7 +22,7 @@ const DiscussionRoom = () => {
   const [replyMap, setReplyMap] = React.useState(new Map());
 
   const handleUpvoteComment = async (comment, action) => {
-    const documentRef = doc(db, "comments", comment.id);
+    //const documentRef = doc(db, "comments", comment.id);
     let updatedData = {};
     if (action === "upvote") {
       updatedData = {
@@ -40,7 +39,7 @@ const DiscussionRoom = () => {
     }
 
     try {
-      await updateDoc(documentRef, updatedData);
+      await updateDocument("comments", comment.id, updatedData);
     } catch (error) {
       console.log(error);
     }
