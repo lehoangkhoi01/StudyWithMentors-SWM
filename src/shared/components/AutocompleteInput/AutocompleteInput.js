@@ -11,6 +11,7 @@ const AutocompleteInput = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <Autocomplete
+        {...props.field}
         disablePortal
         disabled={props.disabled ?? false}
         id={props.id}
@@ -18,10 +19,14 @@ const AutocompleteInput = (props) => {
         options={props.options}
         renderOption={props.renderOption}
         getOptionLabel={props.getOptionLabel}
-        onChange={props.onChange}
-        value={props.value}
+        onChange={(event, newValue) => {
+          props.setSelectedValues(newValue);
+          props.field.onChange(newValue);
+        }}
+        value={props.selectedValues.map((selectedId) => {
+          return props.options.find((option) => option.id === selectedId.id);
+        })}
         renderInput={(params) => <TextField {...params} />}
-        {...props}
       />
       {props.error && (
         <Typography

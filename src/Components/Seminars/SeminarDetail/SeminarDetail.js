@@ -31,6 +31,7 @@ import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBrea
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import DiscussionRoom from "../../DiscussionRoom/DiscussionRoom";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import moment from "moment";
 
 const SeminarDetail = () => {
   const [data, setData] = useState();
@@ -183,22 +184,30 @@ const SeminarDetail = () => {
                       />
                       <span>{SEMINAR.RERORT}</span>
                     </MenuItem>
-                    <MenuItem
-                      onClick={() =>
-                        handleNavigate(ROUTES_STATIC.SEMINAR_UPDATE + "/" + id)
-                      }
-                    >
-                      <img
-                        src={require("../../../assets/icons/Seminar_Edit.png")}
-                      />
-                      <span>{SEMINAR.EDIT}</span>
-                    </MenuItem>
-                    <MenuItem onClick={onOpenRemoveDialog}>
-                      <img
-                        src={require("../../../assets/icons/Seminar_Delete.png")}
-                      />
-                      <span>{SEMINAR.DELETE}</span>
-                    </MenuItem>
+
+                    {moment(data.startTime) > Date.now() && (
+                      //Not show edit and delete menu for past event
+                      <>
+                        <MenuItem
+                          onClick={() =>
+                            handleNavigate(
+                              ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                            )
+                          }
+                        >
+                          <img
+                            src={require("../../../assets/icons/Seminar_Edit.png")}
+                          />
+                          <span>{SEMINAR.EDIT}</span>
+                        </MenuItem>
+                        <MenuItem onClick={onOpenRemoveDialog}>
+                          <img
+                            src={require("../../../assets/icons/Seminar_Delete.png")}
+                          />
+                          <span>{SEMINAR.DELETE}</span>
+                        </MenuItem>
+                      </>
+                    )}
                   </Menu>
                 </div>
               )}

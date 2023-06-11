@@ -55,11 +55,7 @@ const FeedbackOverview = () => {
     const getFeedbackReport = async () => {
       try {
         const seminar = await seminarFeedbackService.getReport(id);
-
-        console.log(seminar);
-
         const { reportStatistic, improvements, others } = seminar;
-
         convertFeedbackBEToFE(reportStatistic);
         setFeedbackText({
           improvements,
