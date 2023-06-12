@@ -21,6 +21,8 @@ const DiscussionRoom = () => {
   const [commentList, setCommentList] = React.useState([]);
   const [replyMap, setReplyMap] = React.useState(new Map());
 
+  localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
+
   const handleUpvoteComment = async (comment, action) => {
     //const documentRef = doc(db, "comments", comment.id);
     let updatedData = {};
@@ -119,10 +121,14 @@ const DiscussionRoom = () => {
               };
             })
             .filter((comment) => comment !== null);
-          filterReplies(updatedComments.filter((comment) => comment.parentId));
-          setCommentList(
-            updatedComments.filter((comment) => !comment.parentId)
-          );
+          if (localStorage.getItem("SHOULD_RERENDER_COMMENT") === "true") {
+            filterReplies(
+              updatedComments.filter((comment) => comment.parentId)
+            );
+            setCommentList(
+              updatedComments.filter((comment) => !comment.parentId)
+            );
+          }
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -134,7 +140,7 @@ const DiscussionRoom = () => {
     <div className={`${style.discussion__container}`}>
       <div className={`${style.discussion__wrapper}`}>
         <Typography mb={2} variant="h6">
-          Thảo luận
+          Thảo luận ({commentList.length})
         </Typography>
 
         <div>
@@ -144,7 +150,7 @@ const DiscussionRoom = () => {
             multiline
             rows={2}
             onChange={onChangeCurrentComment}
-            placeholder="Hãy nhập câu hỏi của bạn"
+            placeholder="Gửi câu hỏi của bạn để được giải đáp"
             className={`${style.discussion__textbox}`}
           />
           <div className={`${style.discussion__buttonContainer}`}>
