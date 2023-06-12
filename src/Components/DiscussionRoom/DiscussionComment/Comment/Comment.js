@@ -10,23 +10,45 @@ import {
 import CommentAction from "../CommentAction/CommentAction";
 import CustomizedButton from "../../../../shared/components/Button/CustomizedButton";
 import style from "./Comment.module.scss";
+import { Timestamp } from "firebase/firestore";
+import { updateDocument } from "../../../../firebase/firebaseService";
 
 const Comment = (props) => {
   const [updatedComment, setUpdatedComment] = React.useState(null);
 
   const onUpdateComment = (comment) => {
-    console.log(comment);
     setUpdatedComment(comment);
+    props.updateLocalStorage("false");
+    localStorage.setItem("SHOULD_RERENDER_COMMENT", "false");
   };
 
   const onCancelUpdateComment = () => {
     setUpdatedComment(null);
   };
 
+  const onChangeUpdateComment = (e) => {
+    setUpdatedComment(e.target.value);
+  };
+
+  const handleSubmitUpdateComment = async () => {
+    const updatedCommentObject = {
+      message: updatedComment,
+      serverTimeStamp: Timestamp.now(),
+    };
+    try {
+      localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
+      await updateDocument("comments", props.comment.id, updatedCommentObject);
+      setUpdatedComment(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updateCommentBox = (
     <div>
       <OutlinedInput
         value={updatedComment?.message}
+        onChange={onChangeUpdateComment}
         fullWidth
         multiline
         rows={2}
@@ -41,7 +63,11 @@ const Comment = (props) => {
         >
           Hủy
         </CustomizedButton>
-        <CustomizedButton variant="contained" color="primary600">
+        <CustomizedButton
+          onClick={handleSubmitUpdateComment}
+          variant="contained"
+          color="primary600"
+        >
           Cập nhật
         </CustomizedButton>
       </div>
@@ -63,11 +89,15 @@ const Comment = (props) => {
               onUpdateComment={onUpdateComment}
             />
           }
-          className={`${style.comment__accordionSummary}`}
+          className={
+            props.isReply
+              ? `${style.comment__accordionSummary} ${style.comment__reply}`
+              : `${style.comment__accordionSummary}`
+          }
         >
           <ListItemText
             primary={
-              <div className={`${style.discussionComment__userInfo}`}>
+              <div className={`${style.comment__userInfo}`}>
                 <ListItemAvatar>
                   <Avatar
                     alt={props.comment.userInfo?.name}

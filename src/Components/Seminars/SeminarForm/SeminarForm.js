@@ -10,7 +10,7 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import ImageUploader from "../ImageUploader/ImageUploader";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
@@ -56,6 +56,7 @@ import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
 import { useSelector } from "react-redux";
 import { selectMentorList } from "../../../Store/slices/mentorSlice";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import UpsertMentorModal from "../../Modal/UpsertMentorModal";
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -90,6 +91,8 @@ const SeminarForm = () => {
       seminarSpeakers: [],
     },
   });
+
+  const [openAddMentorModal, setOpenAddMentorModal] = React.useState(false);
 
   const UPDATE_SEMINAR_BREADCRUMBS = [
     {
@@ -306,6 +309,14 @@ const SeminarForm = () => {
     history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
   };
 
+  const handleOpenAddMentorModal = () => {
+    setOpenAddMentorModal(true);
+  };
+
+  const handleCloseMentorModal = () => {
+    setOpenAddMentorModal(false);
+  };
+
   React.useEffect(() => {
     const getSeminarDetail = async () => {
       try {
@@ -484,6 +495,13 @@ const SeminarForm = () => {
                 />
               )}
             />
+            <Button
+              onClick={handleOpenAddMentorModal}
+              sx={{ width: "max-content", alignSelf: "flex-end" }}
+            >
+              Thêm diễn giả mới
+            </Button>
+
             <CustomizedTextField
               multiline
               maxRows={3}
@@ -563,6 +581,10 @@ const SeminarForm = () => {
           </Grid2>
         </form>
       </Grid2>
+      <UpsertMentorModal
+        openModal={openAddMentorModal}
+        onCloseModal={handleCloseMentorModal}
+      />
     </div>
   );
 };
