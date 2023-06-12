@@ -37,7 +37,7 @@ const Comment = (props) => {
     };
     try {
       localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
-      await updateDocument("comments", props.comment.id, updatedCommentObject);
+      await updateDocument("Comments", props.comment.id, updatedCommentObject);
       setUpdatedComment(null);
     } catch (error) {
       console.log(error);
@@ -100,13 +100,13 @@ const Comment = (props) => {
               <div className={`${style.comment__userInfo}`}>
                 <ListItemAvatar>
                   <Avatar
-                    alt={props.comment.userInfo?.name}
+                    alt={props.comment.userInfo?.fullName}
                     src={props.comment.userInfo?.avatarUrl}
                   />
                 </ListItemAvatar>
                 <div>
                   <Typography fontWeight={600} fontSize={"1.2rem"}>
-                    {props.comment.userInfo?.name}
+                    {props.comment.userInfo?.fullName}
                   </Typography>
                   <Typography variant="subtitle2" color="text.secondary">
                     Gửi lúc {props.comment.createdDate}

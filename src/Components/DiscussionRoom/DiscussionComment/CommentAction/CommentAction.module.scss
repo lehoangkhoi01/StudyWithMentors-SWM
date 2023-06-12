@@ -1,6 +1,9 @@
 @import "../../../../shared/theme";
 
 .commentAction {
+  &__hide {
+    visibility: hidden;
+  }
   &__actionContainer {
     display: flex;
     flex-direction: row;
