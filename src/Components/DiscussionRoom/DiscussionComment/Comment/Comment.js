@@ -18,6 +18,7 @@ const Comment = (props) => {
 
   const onUpdateComment = (comment) => {
     setUpdatedComment(comment);
+    localStorage.setItem("SHOULD_RERENDER_COMMENT", "false");
   };
 
   const onCancelUpdateComment = () => {
@@ -34,6 +35,7 @@ const Comment = (props) => {
       serverTimeStamp: Timestamp.now(),
     };
     try {
+      localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
       await updateDocument("comments", props.comment.id, updatedCommentObject);
       setUpdatedComment(null);
     } catch (error) {
@@ -86,11 +88,15 @@ const Comment = (props) => {
               onUpdateComment={onUpdateComment}
             />
           }
-          className={`${style.comment__accordionSummary}`}
+          className={
+            props.isReply
+              ? `${style.comment__accordionSummary} ${style.comment__reply}`
+              : `${style.comment__accordionSummary}`
+          }
         >
           <ListItemText
             primary={
-              <div className={`${style.discussionComment__userInfo}`}>
+              <div className={`${style.comment__userInfo}`}>
                 <ListItemAvatar>
                   <Avatar
                     alt={props.comment.userInfo?.name}

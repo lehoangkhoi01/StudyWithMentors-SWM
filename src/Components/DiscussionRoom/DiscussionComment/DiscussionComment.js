@@ -39,7 +39,7 @@ const DiscussionComment = (props) => {
 
   const renderReplies = (replies) => {
     return replies.map((reply) => (
-      <Comment key={"reply" + reply.id} comment={reply} />
+      <Comment key={"reply" + reply.id} comment={reply} isReply={true} />
     ));
   };
 
@@ -62,34 +62,39 @@ const DiscussionComment = (props) => {
     & .MuiAccordionSummary-content {
       flex-direction: column;
     }
+    box-shadow: none;
   `;
 
   return (
-    <Accordion expanded={expanded}>
+    <Accordion expanded={expanded} sx={{ boxShadow: "none" }}>
       <StyledAccordionSummary
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Comment comment={props.comment} />
+        <Comment
+          comment={props.comment}
+          setShouldRerender={props.setShouldRerender}
+          isReply={false}
+        />
         <Button
           className={`${style.discussionComment__button}`}
           onClick={handleExpand}
         >
-          Xem trả lời
+          Xem trả lời {props.replies && "(" + props.replies?.length + ")"}
         </Button>
       </StyledAccordionSummary>
 
       <AccordionDetails>
         {props.replies?.length > 0 ? renderReplies(props.replies) : null}
-        <div>
+        <div className={`${style.discussionComment__replyContainer}`}>
           <OutlinedInput
             value={currentReply}
             fullWidth
             multiline
             rows={2}
             onChange={handleReplyChange}
-            placeholder="Hãy nhập câu hỏi của bạn"
-            className={`${style.discussion__textbox}`}
+            placeholder="Phản hồi tại đây..."
+            className={`${style.discussionComment__textbox}`}
           />
           <div className={`${style.discussionComment__buttonContainer}`}>
             <CustomizedButton
