@@ -73,8 +73,8 @@ const DiscussionComment = (props) => {
       >
         <Comment
           comment={props.comment}
-          setShouldRerender={props.setShouldRerender}
           isReply={false}
+          updateLocalStorage={props.updateLocalStorage}
         />
         <Button
           className={`${style.discussionComment__button}`}
