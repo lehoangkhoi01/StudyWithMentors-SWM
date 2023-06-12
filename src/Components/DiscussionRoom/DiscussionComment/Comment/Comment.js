@@ -18,6 +18,7 @@ const Comment = (props) => {
 
   const onUpdateComment = (comment) => {
     setUpdatedComment(comment);
+    props.updateLocalStorage("false");
     localStorage.setItem("SHOULD_RERENDER_COMMENT", "false");
   };
 
