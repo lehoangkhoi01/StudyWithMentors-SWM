@@ -189,26 +189,28 @@ const DiscussionRoom = (props) => {
           </IconButton>
         </div>
 
-        <div>
-          <OutlinedInput
-            value={currentComment}
-            fullWidth
-            multiline
-            rows={2}
-            onChange={onChangeCurrentComment}
-            placeholder="Gửi câu hỏi của bạn để được giải đáp"
-            className={`${style.discussion__textbox}`}
-          />
-          <div className={`${style.discussion__buttonContainer}`}>
-            <CustomizedButton
-              onClick={handleSubmitComment}
-              variant="contained"
-              color="primary600"
-            >
-              Gửi câu hỏi
-            </CustomizedButton>
+        {userInfo && (
+          <div>
+            <OutlinedInput
+              value={currentComment}
+              fullWidth
+              multiline
+              rows={2}
+              onChange={onChangeCurrentComment}
+              placeholder="Gửi câu hỏi của bạn để được giải đáp"
+              className={`${style.discussion__textbox}`}
+            />
+            <div className={`${style.discussion__buttonContainer}`}>
+              <CustomizedButton
+                onClick={handleSubmitComment}
+                variant="contained"
+                color="primary600"
+              >
+                Gửi câu hỏi
+              </CustomizedButton>
+            </div>
           </div>
-        </div>
+        )}
 
         {commentList.length > 0 ? (
           <List className={`${style.discussion__list}`}>
