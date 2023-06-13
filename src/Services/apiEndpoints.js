@@ -9,7 +9,8 @@ export const AuthenticationEndpoints = {
 
 export const UserAccountEndpoints = {
   GET_USER_INFO: "user-profile/current",
-  USER_CV: "user-profile/cv/current",
+  USER_CV: "user-profile/current/cv",
+  UPDATE_PROFILE: "user-profile/mentors",
 };
 
 export const SeminarEndpoints = {

@@ -9,6 +9,7 @@ import DoughnutChart from "../../../shared/components/PieChart/DoughnutChart";
 import { Grid, Pagination } from "@mui/material";
 import {
   FEEDBACK_LABEL,
+  FEEDBACK_OVERVIEW,
   FEEDBACK_TYPE,
 } from "../../../shared/constants/common";
 import { RATING_LABEL } from "../../../shared/constants/systemType";
@@ -48,6 +49,7 @@ const FeedbackOverview = () => {
         const seminar = await seminarService.getSeminarDetail(id);
         setSeminarDetail(seminar);
       } catch (error) {
+        console.log("getSeminarDetail");
         console.log(error);
       }
     };
@@ -67,6 +69,7 @@ const FeedbackOverview = () => {
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
       } catch (error) {
+        console.log("getFeedbackReport");
         console.log(error);
       }
     };
@@ -128,6 +131,7 @@ const FeedbackOverview = () => {
     const totalPage = Math.ceil(improvementsList.length / pageSize);
 
     const adjustPage = totalPage >= pageNumber ? pageNumber : totalPage;
+    console.log(adjustPage);
     const offset = pageSize * (adjustPage - 1);
 
     const paginatedImprovements = improvementsList.slice(
@@ -198,7 +202,7 @@ const FeedbackOverview = () => {
         {seminarDetail && feedbackData && (
           <div className={style.overview__information}>
             <div className={style.overview__title}>
-              <h2>Báo cáo sự kiện</h2>
+              <h2>{FEEDBACK_OVERVIEW.SEMNIAR_REPORT}</h2>
               <p>{seminarDetail.name}</p>
             </div>
             <div className={style.overview__charts}>
@@ -212,7 +216,7 @@ const FeedbackOverview = () => {
             </div>
             <div>
               <p className={style.overview__subHeader}>
-                Cần cải thiện ({feedbackText.displayedImprovements.length})
+              {FEEDBACK_OVERVIEW.IMPROVEMENT}({feedbackText.displayedImprovements.length})
               </p>
               {console.log(feedbackText)}
               {feedbackText.displayedImprovements.map((improvement, index) => (
@@ -235,7 +239,7 @@ const FeedbackOverview = () => {
             </div>
             <div>
               <p className={style.overview__subHeader}>
-                Cần cải thiện ({feedbackText.displayedOthers.length})
+              {FEEDBACK_OVERVIEW.OTHERS} ({feedbackText.displayedOthers.length})
               </p>
               {feedbackText.displayedOthers.map((other, index) => (
                 <p

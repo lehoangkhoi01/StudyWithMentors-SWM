@@ -15,8 +15,9 @@ import {
   mapCVSection,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
-
-const IS_EXIST_BACKGROUND = false;
+import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const TEXT_FIELDS = [
   {
@@ -211,92 +212,6 @@ const TEXT_FIELDS = [
   },
 ];
 
-// const DUMMY_CV = {
-//   userProfileId: "123",
-//   description:
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-//   workingExps: [
-//     {
-//       index: "0",
-//       position: "string",
-//       company: "string",
-//       startDate: "2020-02-13",
-//       endDate: "2020-02-13",
-//       description: "string",
-//       workingHere: false,
-//     },
-//     {
-//       index: "1",
-//       position: "string",
-//       company: "string",
-//       startDate: "2020-02-13",
-//       endDate: "2020-02-13",
-//       description: "string",
-//       workingHere: false,
-//     },
-//   ],
-//   learningExps: [
-//     {
-//       index: "0",
-//       school: "string",
-//       major: "string",
-//       startDate: "2020-02-13",
-//       endDate: "2020-02-13",
-//       description: "string",
-//     },
-//   ],
-//   socialActivities: [
-//     {
-//       index: "0",
-//       organization: "string",
-//       position: "string",
-//       startDate: "2020-02-13",
-//       endDate: "2020-02-13",
-//       description: "string",
-//       attendingThis: false,
-//     },
-//   ],
-//   achievements: [
-//     {
-//       index: "0",
-//       name: "string",
-//       organization: "string",
-//       achievingDate: "2020-02-13",
-//       description: "string",
-//     },
-//   ],
-//   certificates: [
-//     {
-//       index: "0",
-//       name: "string",
-//       organization: "string",
-//       achievingDate: "2020-02-13",
-//       expiryDate: "2020-02-13",
-//       description: "string",
-//     },
-//   ],
-//   skills: [
-//     {
-//       index: "0",
-//       name: "ABC thuộc Google",
-//       description:
-//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-//     },
-//     {
-//       index: "1",
-//       name: "ABC thuộc Google",
-//       description:
-//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-//     },
-//     {
-//       index: "2",
-//       name: "ABC thuộc Google",
-//       description:
-//         "Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-//     },
-//   ],
-// };
-
 const INIT_CV = {
   userProfileId: "",
   description: "",
@@ -313,6 +228,9 @@ const CV = () => {
   const [selectedTextFields, setSelectedTextFields] = useState();
   const [cvData, setCVData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setLoading } = useCustomLoading();
+  const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
     const getCVData = async () => {
@@ -377,6 +295,7 @@ const CV = () => {
 
   const updateCVToBE = async (prevCV) => {
     setIsLoading(true);
+    setLoading(true);
 
     const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
 
@@ -386,6 +305,7 @@ const CV = () => {
 
     setCVData(CVDataFromBE);
     setIsLoading(false);
+    setLoading(false);
   };
 
   const convertNullToEmptyArrayProperty = (CVData) => {
@@ -405,20 +325,25 @@ const CV = () => {
           <div
             className={style.cv__detail__information}
             style={{
-              backgroundImage: IS_EXIST_BACKGROUND
-                ? `url("https://i.stack.imgur.com/XNazg.png")`
-                : null,
+              backgroundImage: null,
             }}
           >
             <div className={style.cv__detail__information_brief}>
               <div className={style.cv__detail__information_img}>
-                <img src={require("../../../assets/sbcf-default-avatar.png")} />
+                <img
+                  className={style.cv__detail__information_avatar}
+                  src={
+                    userInfo?.avatarUrl
+                      ? userInfo.avatarUrl
+                      : require("../../../assets/sbcf-default-avatar.png")
+                  }
+                />
                 <div className={style.cv__detail__information_edit}>
                   <img src={require("../../../assets/icons/pen-icon.png")} />
                 </div>
               </div>
               <div>
-                <h2>Nguyễn Văn A</h2>
+                <h2>{userInfo?.fullName}</h2>
                 <p>Business Analyst tại CodeStringers</p>
               </div>
             </div>

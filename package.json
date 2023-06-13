@@ -38,6 +38,7 @@
     "react-scripts": "5.0.1",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
+    "react-tooltip": "^5.13.1",
     "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },

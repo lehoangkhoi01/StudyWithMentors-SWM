@@ -3,6 +3,7 @@ import style from "./UpsertMentorModal.module.scss";
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import {
   BUTTON_LABEL,
+  ERROR_MESSAGES,
   MODAL_TYPE,
   PLACE_HOLDER,
 } from "../../shared/constants/common";
@@ -10,9 +11,13 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import { accountService } from "../../Services/accountService";
+import { useNotification } from "../../Helpers/generalHelper";
+import { userAccountService } from "../../Services/userAccountService";
 
 const UpsertMentorModal = (props) => {
   const { handleSubmit, register, setValue, getValues } = useForm();
+  const { setNotification } = useNotification();
+
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
   useEffect(() => {
@@ -33,9 +38,27 @@ const UpsertMentorModal = (props) => {
       Object.entries(fullForm).filter(([_, v]) => v != null)
     );
 
-    await accountService.createMentor(specificForm);
+    try {
+      if (type === MODAL_TYPE.EDIT) {
+        await userAccountService.updateUserProfile(
+          props.existedData.id,
+          specificForm
+        );
+      } else if (type === MODAL_TYPE.ADD) {
+        await accountService.createMentor(specificForm);
+      }
 
-    props.onSuccess();
+      props.getMentors();
+      props.onCloseModal();
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    }
   };
 
   return (

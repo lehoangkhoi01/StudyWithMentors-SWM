@@ -6,4 +6,8 @@ export const userAccountService = {
     const url = UserAccountEndpoints.GET_USER_INFO;
     return axiosClient.get(url);
   },
+  updateUserProfile: (id, data) => {
+    const url = `${UserAccountEndpoints.UPDATE_PROFILE}/${id}`;
+    return axiosClient.post(url, data);
+  },
 };
