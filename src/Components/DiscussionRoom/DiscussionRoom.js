@@ -1,5 +1,6 @@
 import React from "react";
-import { List, Typography, OutlinedInput } from "@mui/material";
+import { List, Typography, OutlinedInput, IconButton } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import style from "./DiscussionRoom.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import { addDocument, updateDocument } from "../../firebase/firebaseService";
@@ -20,9 +21,11 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../Store/slices/userSlice";
 
 const DiscussionRoom = (props) => {
+  const [sortByDate, setSortByDate] = React.useState(true);
   const [currentComment, setCurrentComment] = React.useState("");
   const [commentList, setCommentList] = React.useState([]);
   const [replyMap, setReplyMap] = React.useState(new Map());
+  const [allComments, setAllComments] = React.useState([]);
   localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
   const [shoudlRerender, setShouldRerender] = React.useState(true);
   const userInfo = useSelector(selectUserInfo);
@@ -79,7 +82,7 @@ const DiscussionRoom = (props) => {
   };
 
   const filterReplies = (comments) => {
-    let tempMap = new Map(replyMap);
+    let tempMap = new Map();
     comments.forEach((comment) => {
       if (tempMap.get(comment.parentId)) {
         let replies = tempMap.get(comment.parentId);
@@ -129,6 +132,7 @@ const DiscussionRoom = (props) => {
               })
               .filter((comment) => comment !== null);
             if (localStorage.getItem("SHOULD_RERENDER_COMMENT") === "true") {
+              setAllComments(updatedComments);
               filterReplies(
                 updatedComments.filter((comment) => comment.parentId)
               );
@@ -150,12 +154,36 @@ const DiscussionRoom = (props) => {
     };
   }, [shoudlRerender]);
 
+  React.useEffect(() => {
+    if (commentList.length > 0) {
+      let temp = [...allComments];
+      if (!sortByDate) {
+        temp.sort((a, b) => b.vote - a.vote);
+        setCommentList(temp.filter((comment) => !comment.parentId));
+        filterReplies(temp.filter((comment) => comment.parentId));
+      } else {
+        temp.sort((a, b) => b.serverTimeStamp - a.serverTimeStamp);
+        setCommentList(temp.filter((comment) => !comment.parentId));
+        filterReplies(temp.filter((comment) => comment.parentId));
+      }
+    }
+  }, [sortByDate]);
+
   return (
     <div className={`${style.discussion__container}`}>
       <div className={`${style.discussion__wrapper}`}>
-        <Typography mb={2} variant="h6">
-          Thảo luận ({commentList.length})
-        </Typography>
+        <div className={`${style.discussion__heading}`}>
+          <Typography mb={2} variant="h6">
+            Thảo luận ({commentList.length})
+          </Typography>
+          <IconButton
+            onClick={() => {
+              setSortByDate((prev) => !prev);
+            }}
+          >
+            <FilterListIcon />
+          </IconButton>
+        </div>
 
         <div>
           <OutlinedInput
