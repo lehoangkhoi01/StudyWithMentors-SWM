@@ -52,19 +52,21 @@ const DiscussionComment = (props) => {
   };
 
   const handleSubmit = () => {
-    const requestBody = {
-      seminarId: props.seminarId,
-      parentId: props.comment.id,
-      message: currentReply,
-      user: doc(db, "Users/" + userInfo.accountId),
-      vote: 0,
-      voteList: [],
-    };
-    try {
-      addDocument("Comments", requestBody);
-      setCurrentReply("");
-    } catch (error) {
-      console.log(error);
+    if (currentReply.trim()) {
+      const requestBody = {
+        seminarId: props.seminarId,
+        parentId: props.comment.id,
+        message: currentReply.trim(),
+        user: doc(db, "Users/" + userInfo.accountId),
+        vote: 0,
+        voteList: [],
+      };
+      try {
+        addDocument("Comments", requestBody);
+        setCurrentReply("");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

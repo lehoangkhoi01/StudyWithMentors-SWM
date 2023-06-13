@@ -11,6 +11,13 @@
     width: 70%;
     padding: 2rem;
   }
+  &__active {
+    color: $primary600;
+  }
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+  }
   &__textbox {
     background-color: $black50;
     border-radius: 10px;
