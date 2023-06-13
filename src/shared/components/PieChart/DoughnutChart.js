@@ -50,7 +50,7 @@ const DoughnutChart = (props) => {
       <Doughnut className={style.chart__pie} data={data} options={options} />
       {props.data.showAverage && (
         <span className={`${style.chart__average}`}>
-          {OTHERS.AVERAGE}:
+          {OTHERS.AVERAGE}:{" "}
           {(
             props.data.value.reduce(
               (sum, currentValue) => sum + currentValue,

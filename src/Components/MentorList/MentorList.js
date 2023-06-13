@@ -3,15 +3,24 @@ import ImageSlider from "./ImageSlider/ImageSlider";
 import style from "./MentorList.module.scss";
 import FilterSection from "./FilterSection/FilterSection";
 import MentorCard from "./MentorCard/MentorCard";
-import { Grid } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
 import { FILTER_SEMINAR } from "../../shared/constants/common";
 import { useState } from "react";
 
 const MentorList = () => {
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 12,
+    totalPage: 1,
+  });
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
+  };
+
+  const onPaginate = (page) => {
+    setPagination({ page, pageSize: 12, totalPage: 1 });
   };
 
   return (
@@ -72,6 +81,16 @@ const MentorList = () => {
           <MentorCard />
         </Grid>
       </Grid>
+      <Pagination
+        className={style.list__pagination}
+        count={pagination.totalPage}
+        variant="outlined"
+        shape="rounded"
+        page={pagination.page}
+        onChange={(_, page) => {
+          onPaginate(page);
+        }}
+      />
     </div>
   );
 };

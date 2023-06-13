@@ -13,6 +13,7 @@ const CustomizedButton = (props) => {
       onClick={props.onClick}
       startIcon={props.startIcon}
       size={props.size}
+      disabled={props.disabled}
     >
       {props.children}
     </Button>

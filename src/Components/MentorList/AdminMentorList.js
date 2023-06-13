@@ -11,6 +11,10 @@ import {
   ADMIN_TABLE_HEADER,
   BUTTON_LABEL,
   DATE_FORMAT,
+  ERROR_MESSAGES,
+  MENTOR_STATUS,
+  MODAL_DELETE_PROPERTY,
+  OTHERS,
   SORT_DIRECTION,
 } from "../../shared/constants/common";
 import { Button, Checkbox, IconButton, Pagination } from "@mui/material";
@@ -24,7 +28,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useForm } from "react-hook-form";
 import DeletePropertyModal from "../Modal/DeletePropertyModal";
 import { accountService } from "../../Services/accountService";
-import { useCustomLoading } from "../../Helpers/generalHelper";
+import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import UpsertMentorModal from "../Modal/UpsertMentorModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,124 +51,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const DUMMY_DATA = [
-  {
-    id: 0,
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 1,
-    fullName: "Nguyễn Văn B",
-    email: "nguyenvanb@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 2,
-    fullName: "Nguyễn Văn C",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 3,
-    fullName: "Nguyễn Thị B",
-    email: "nguyenthib@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 4,
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 5,
-    fullName: "Nguyễn Thị B",
-    email: "nguyenthib@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 6,
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 7,
-    fullName: "Nguyễn Thị B",
-    email: "nguyenthib@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 8,
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 9,
-    fullName: "Nguyễn Thị B",
-    email: "nguyenthib@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 10,
-    fullName: "Nguyễn Văn B",
-    email: "nguyenvanb@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 11,
-    fullName: "Nguyễn Văn C",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-  {
-    id: 12,
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Đang chờ",
-  },
-  {
-    id: 13,
-    fullName: "Nguyễn Thị B",
-    email: "nguyenthib@gmail.com",
-    phoneNum: "0982 123 456",
-    createdDate: "2023-03-23 07:00:00",
-    status: "Hoạt động",
-  },
-];
-
 const AdminMentorList = () => {
   const { register, getValues, setValue } = useForm();
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   const [mentors, setMentors] = useState([]);
   const [originMentors, setOriginMentors] = useState([]);
@@ -187,7 +77,7 @@ const AdminMentorList = () => {
   const [deletedMentor, setDeletedMentor] = useState(null);
 
   useEffect(() => {
-    adjustMentorList(DUMMY_DATA);
+    getMentors();
   }, []);
 
   useEffect(() => {
@@ -197,6 +87,25 @@ const AdminMentorList = () => {
   useEffect(() => {
     onPaginate(pagination.page);
   }, [mentors]);
+
+  const getMentors = async () => {
+    try {
+      setLoading(true);
+      const mentors = await accountService.getAllMentors();
+
+      adjustMentorList(mentors);
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const adjustMentorList = (mentors) => {
     const updatedMentorList = mentors.map((mentor, index) => {
@@ -322,7 +231,9 @@ const AdminMentorList = () => {
   };
 
   const openDeleteModalHandler = (mentor) => {
-    setDeletedMentor(mentor);
+    if (mentor) {
+      setDeletedMentor(mentor);
+    }
     setOpenModal({
       upsert: false,
       delete: true,
@@ -369,15 +280,24 @@ const AdminMentorList = () => {
     try {
       setLoading(true);
       if (deletedMentor) {
-        accountService.deleteMentors([deletedMentor.id]);
+        await accountService.deleteMentors([deletedMentor.id]);
         setDeletedMentor(null);
       } else {
-        accountService.deleteMentors(selectedMentorId);
+        await accountService.deleteMentors(selectedMentorId);
         setSelectedMentorId([]);
       }
+
+      getMentors();
     } catch (error) {
       console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
     } finally {
+      setOpenModal({ upsert: false, delete: false });
       setLoading(false);
     }
   };
@@ -397,7 +317,8 @@ const AdminMentorList = () => {
           <CustomizedButton
             variant="outlined"
             color="primary600"
-            onClick={onDeleteMentors}
+            disabled={!selectedMentorId.length}
+            onClick={() => openDeleteModalHandler()}
           >
             <img src={require("../../assets/icons/Remove_Mentor.png")} />
             <p>{BUTTON_LABEL.DEACTIVATE_MENTOR}</p>
@@ -476,7 +397,7 @@ const AdminMentorList = () => {
                   className={style.list__header_sortable}
                   align="center"
                   onClick={() => {
-                    updateSort("defaultcreatedDate");
+                    updateSort("defaultCreatedDate");
                   }}
                 >
                   <span>{ADMIN_TABLE_HEADER.CREATED_DATE}</span>
@@ -525,7 +446,9 @@ const AdminMentorList = () => {
                   <StyledTableCell align="center">
                     {row.createdDate}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{row.status}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {MENTOR_STATUS[row.status]}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <IconButton
                       onClick={() => {
@@ -538,6 +461,7 @@ const AdminMentorList = () => {
                       />
                     </IconButton>
                     <IconButton
+                      disabled={row.status !== MENTOR_STATUS.ACTIVATED}
                       onClick={() => {
                         openDeleteModalHandler(row);
                       }}
@@ -567,13 +491,15 @@ const AdminMentorList = () => {
       <DeletePropertyModal
         openModal={openModal.delete}
         onCloseModal={onCloseModal}
-        title={deletedMentor?.fullName}
+        title={deletedMentor?.fullName ?? OTHERS.ALL_MENTOR}
         onDeleteProperty={onDeleteMentors}
+        type={MODAL_DELETE_PROPERTY.DEACTIVATE}
       />
       <UpsertMentorModal
         openModal={openModal.upsert}
         onCloseModal={onCloseModal}
         existedData={existedData}
+        getMentors={getMentors}
       />
     </>
   );

@@ -300,6 +300,7 @@ export const OTHERS = {
   THIS: "này",
   VIEW_MORE: "Xem thêm",
   AVERAGE: "Trung bình",
+  ALL_MENTOR: "các mentor",
 };
 
 export const DATE_FORMAT = {
@@ -324,10 +325,14 @@ export const CV_REGISTER_NAME_PREFIX = {
 };
 
 export const MODAL_DELETE_PROPERTY = {
-  CONFIRM: "Bạn có muốn xóa",
-  DETAIL: "sau khi xóa sẽ không thể khôi phục lại được",
+  DELETE_CONFIRM: "Bạn có muốn xóa",
+  DEACTIVATE_CONFIRM: "Bạn có muốn vô hiệu hóa",
+  DELETE_DETAIL: "sau khi xóa sẽ không thể khôi phục lại được",
+  DEACTIVATE_DETAIL:
+    "Các tài khoản sau khi bị vô hiệu hóa sẽ không còn hữu dụng trên trang website của Growth Me nữa.",
   BACK: "Quay lại",
   DELETE: "Xóa",
+  DEACTIVATE: "Vô hiệu hóa",
 };
 
 export const FOLLOW = {
@@ -389,4 +394,17 @@ export const ADMIN_TABLE_HEADER = {
 export const SORT_DIRECTION = {
   DESC: "desc",
   ASC: "asc",
+};
+
+export const MENTOR_STATUS = {
+  NOT_DEFINE: "Không xác định",
+  INVALIDATE: "Vô hiệu hóa",
+  WAITING: "Đang chờ",
+  ACTIVATED: "Hoạt động",
+};
+
+export const FEEDBACK_OVERVIEW = {
+  SEMNIAR_REPORT: "Báo cáo sự kiện",
+  IMPROVEMENT: "Cần cải thiện",
+  OTHERS: "Ý kiến khác",
 };
