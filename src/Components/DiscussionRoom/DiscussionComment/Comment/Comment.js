@@ -12,6 +12,7 @@ import CustomizedButton from "../../../../shared/components/Button/CustomizedBut
 import style from "./Comment.module.scss";
 import { Timestamp } from "firebase/firestore";
 import { updateDocument } from "../../../../firebase/firebaseService";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const Comment = (props) => {
   const [updatedComment, setUpdatedComment] = React.useState(null);
@@ -45,7 +46,7 @@ const Comment = (props) => {
   };
 
   const updateCommentBox = (
-    <div>
+    <div className={`${style.comment__editTextbox}`}>
       <OutlinedInput
         value={updatedComment?.message}
         onChange={onChangeUpdateComment}
@@ -55,22 +56,31 @@ const Comment = (props) => {
         placeholder="Hãy nhập câu hỏi của bạn"
         className={`${style.comment__textbox}`}
       />
-      <div className={`${style.comment__buttonContainer}`}>
-        <CustomizedButton
-          onClick={onCancelUpdateComment}
-          variant="outlined"
-          color="primary600"
-        >
-          Hủy
-        </CustomizedButton>
-        <CustomizedButton
-          onClick={handleSubmitUpdateComment}
-          variant="contained"
-          color="primary600"
-        >
-          Cập nhật
-        </CustomizedButton>
-      </div>
+      <Grid2
+        container
+        spacing={2}
+        className={`${style.comment__buttonContainer}`}
+      >
+        <Grid2 xs={12} md={6}>
+          <CustomizedButton
+            onClick={onCancelUpdateComment}
+            variant="outlined"
+            color="primary600"
+          >
+            Hủy
+          </CustomizedButton>
+        </Grid2>
+
+        <Grid2 xs={12} md={6}>
+          <CustomizedButton
+            onClick={handleSubmitUpdateComment}
+            variant="contained"
+            color="primary600"
+          >
+            Cập nhật
+          </CustomizedButton>
+        </Grid2>
+      </Grid2>
     </div>
   );
 
