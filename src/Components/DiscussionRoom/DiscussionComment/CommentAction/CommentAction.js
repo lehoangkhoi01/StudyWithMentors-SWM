@@ -12,10 +12,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import style from "./CommentAction.module.scss";
 import { deleteDocument } from "../../../../firebase/firebaseService";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../../Store/slices/userSlice";
 
 const CommentAction = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const userInfo = useSelector(selectUserInfo);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -28,7 +31,7 @@ const CommentAction = (props) => {
   const handleDelete = async () => {
     try {
       handleClose();
-      await deleteDocument("comments", props.comment.id);
+      await deleteDocument("Comments", props.comment.id);
     } catch (error) {
       console.log(error);
     }
@@ -41,7 +44,7 @@ const CommentAction = (props) => {
   return (
     <div className={`${style.commentAction__actionContainer}`}>
       <div className={`${style.commentAction__upvoteContainer}`}>
-        {props.comment.voteList?.includes("H8ajNk6j55TLaxbzT1OS") ? (
+        {props.comment.voteList?.includes(userInfo?.accountId) ? (
           <>
             <ArrowDropUpIcon
               onClick={() => props.handleUpvoteComment(props.comment, "unvote")}
@@ -59,36 +62,45 @@ const CommentAction = (props) => {
           </>
         )}
       </div>
-      <IconButton
-        onClick={handleClick}
-        aria-controls={open ? "basic-menu" + props.comment.id : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+
+      <div
+        className={
+          userInfo?.accountId !== props.comment?.user.id
+            ? `${style.commentAction__hide}`
+            : null
+        }
       >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id={"basic-menu" + props.comment.id}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button" + props.comment.id,
-        }}
-      >
-        <MenuItem onClick={() => handleUpdateComment(props.comment)}>
-          <ListItemIcon>
-            <EditIcon />
-          </ListItemIcon>
-          <ListItemText>Chỉnh sửa</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          <ListItemText>Xóa</ListItemText>
-        </MenuItem>
-      </Menu>
+        <IconButton
+          onClick={handleClick}
+          aria-controls={open ? "basic-menu" + props.comment.id : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id={"basic-menu" + props.comment.id}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button" + props.comment.id,
+          }}
+        >
+          <MenuItem onClick={() => handleUpdateComment(props.comment)}>
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <ListItemText>Chỉnh sửa</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleDelete}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>Xóa</ListItemText>
+          </MenuItem>
+        </Menu>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
-import { List, Typography, OutlinedInput } from "@mui/material";
+import { List, Typography, OutlinedInput, IconButton } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import style from "./DiscussionRoom.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import { addDocument, updateDocument } from "../../firebase/firebaseService";
@@ -10,18 +11,24 @@ import {
   onSnapshot,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../shared/constants/common";
 import DiscussionComment from "./DiscussionComment/DiscussionComment";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../Store/slices/userSlice";
 
-const DiscussionRoom = () => {
+const DiscussionRoom = (props) => {
+  const [sortByDate, setSortByDate] = React.useState(true);
   const [currentComment, setCurrentComment] = React.useState("");
   const [commentList, setCommentList] = React.useState([]);
   const [replyMap, setReplyMap] = React.useState(new Map());
+  const [allComments, setAllComments] = React.useState([]);
   localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
   const [shoudlRerender, setShouldRerender] = React.useState(true);
+  const userInfo = useSelector(selectUserInfo);
 
   const updateLocalStorage = (value) => {
     localStorage.setItem("SHOULD_RERENDER_COMMENT", value);
@@ -35,51 +42,50 @@ const DiscussionRoom = () => {
       updatedData = {
         vote: (comment.vote += 1),
         voteList: comment.voteList
-          ? [...comment.voteList, "H8ajNk6j55TLaxbzT1OS"]
-          : ["H8ajNk6j55TLaxbzT1OS"],
+          ? [...comment.voteList, userInfo?.accountId]
+          : [userInfo?.accountId],
       };
     } else {
       updatedData = {
         vote: (comment.vote -= 1),
-        voteList: comment.voteList.filter((c) => c !== "H8ajNk6j55TLaxbzT1OS"),
+        voteList: comment.voteList.filter((c) => c !== userInfo?.accountId),
       };
     }
 
     try {
-      await updateDocument("comments", comment.id, updatedData);
+      await updateDocument("Comments", comment.id, updatedData);
     } catch (error) {
       console.log(error);
     }
   };
 
   const onChangeCurrentComment = (e) => {
-    if (e.target.value && e.target.value.trim() !== "") {
+    if (e.target.value) {
       setCurrentComment(e.target.value);
     }
   };
 
   const handleSubmitComment = () => {
-    const requestBody = {
-      userId: "user1",
-      name: "Hoang Khoi",
-      avatarUrl:
-        "https://th.bing.com/th/id/OIP.Y_4FpCugJav6Gi0FJARFhgHaGN?pid=ImgDet&rs=1",
-      message: currentComment,
-      vote: 0,
-      voteList: [],
-      clientTimeStamp: new Date().toString(),
-      user: doc(db, "users/H8ajNk6j55TLaxbzT1OS"),
-    };
-    try {
-      addDocument("comments", requestBody);
-      setCurrentComment("");
-    } catch (error) {
-      console.log(error);
+    if (currentComment.trim()) {
+      const requestBody = {
+        seminarId: props.seminarId,
+        message: currentComment.trim(),
+        vote: 0,
+        voteList: [],
+        user: doc(db, "Users/" + userInfo?.accountId),
+      };
+
+      try {
+        addDocument("Comments", requestBody);
+        setCurrentComment("");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const filterReplies = (comments) => {
-    let tempMap = new Map(replyMap);
+    let tempMap = new Map();
     comments.forEach((comment) => {
       if (tempMap.get(comment.parentId)) {
         let replies = tempMap.get(comment.parentId);
@@ -95,9 +101,10 @@ const DiscussionRoom = () => {
 
   React.useEffect(() => {
     let detach = null;
-    const collectionRef = collection(db, "comments");
+    const collectionRef = collection(db, "Comments");
     const orderedQuery = query(
       collectionRef,
+      where("seminarId", "==", props.seminarId),
       orderBy("serverTimeStamp", "desc")
     );
     if (shoudlRerender) {
@@ -128,6 +135,7 @@ const DiscussionRoom = () => {
               })
               .filter((comment) => comment !== null);
             if (localStorage.getItem("SHOULD_RERENDER_COMMENT") === "true") {
+              setAllComments(updatedComments);
               filterReplies(
                 updatedComments.filter((comment) => comment.parentId)
               );
@@ -149,12 +157,37 @@ const DiscussionRoom = () => {
     };
   }, [shoudlRerender]);
 
+  React.useEffect(() => {
+    if (commentList.length > 0) {
+      let temp = [...allComments];
+      if (!sortByDate) {
+        temp.sort((a, b) => b.vote - a.vote);
+        setCommentList(temp.filter((comment) => !comment.parentId));
+        filterReplies(temp.filter((comment) => comment.parentId));
+      } else {
+        temp.sort((a, b) => b.serverTimeStamp - a.serverTimeStamp);
+        setCommentList(temp.filter((comment) => !comment.parentId));
+        filterReplies(temp.filter((comment) => comment.parentId));
+      }
+    }
+  }, [sortByDate]);
+
   return (
     <div className={`${style.discussion__container}`}>
       <div className={`${style.discussion__wrapper}`}>
-        <Typography mb={2} variant="h6">
-          Thảo luận ({commentList.length})
-        </Typography>
+        <div className={`${style.discussion__heading}`}>
+          <Typography mb={2} variant="h6">
+            Thảo luận ({commentList.length})
+          </Typography>
+          <IconButton
+            onClick={() => {
+              setSortByDate((prev) => !prev);
+            }}
+            className={sortByDate ? `${style.discussion__active}` : null}
+          >
+            <FilterListIcon />
+          </IconButton>
+        </div>
 
         <div>
           <OutlinedInput
@@ -182,6 +215,7 @@ const DiscussionRoom = () => {
             {commentList.map((comment) => (
               <DiscussionComment
                 key={"discussioncomment" + comment.id}
+                seminarId={props.seminarId}
                 comment={comment}
                 replies={replyMap.get(comment.id)}
                 handleUpvoteComment={handleUpvoteComment}

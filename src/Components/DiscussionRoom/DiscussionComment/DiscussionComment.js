@@ -22,10 +22,13 @@ import { db } from "../../../firebase/firebase";
 import { addDocument } from "../../../firebase/firebaseService";
 
 import Comment from "./Comment/Comment";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const DiscussionComment = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [currentReply, setCurrentReply] = React.useState("");
+  const userInfo = useSelector(selectUserInfo);
 
   const handleExpand = () => {
     setExpanded(!expanded);
@@ -39,22 +42,31 @@ const DiscussionComment = (props) => {
 
   const renderReplies = (replies) => {
     return replies.map((reply) => (
-      <Comment key={"reply" + reply.id} comment={reply} isReply={true} />
+      <Comment
+        key={"reply" + reply.id}
+        comment={reply}
+        isReply={true}
+        handleUpvoteComment={props.handleUpvoteComment}
+      />
     ));
   };
 
   const handleSubmit = () => {
-    const requestBody = {
-      parentId: props.comment.id,
-      message: currentReply,
-      user: doc(db, "users/TvmDbIY8sl4HNtUL1RX1"),
-      vote: 0,
-    };
-    try {
-      addDocument("comments", requestBody);
-      setCurrentReply("");
-    } catch (error) {
-      console.log(error);
+    if (currentReply.trim()) {
+      const requestBody = {
+        seminarId: props.seminarId,
+        parentId: props.comment.id,
+        message: currentReply.trim(),
+        user: doc(db, "Users/" + userInfo.accountId),
+        vote: 0,
+        voteList: [],
+      };
+      try {
+        addDocument("Comments", requestBody);
+        setCurrentReply("");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -75,6 +87,7 @@ const DiscussionComment = (props) => {
           comment={props.comment}
           isReply={false}
           updateLocalStorage={props.updateLocalStorage}
+          handleUpvoteComment={props.handleUpvoteComment}
         />
         <Button
           className={`${style.discussionComment__button}`}

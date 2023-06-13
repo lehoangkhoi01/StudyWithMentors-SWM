@@ -187,7 +187,7 @@ const SeminarDetail = () => {
 
                     {moment(data.startTime) > Date.now() && (
                       //Not show edit and delete menu for past event
-                      <>
+                      <div>
                         <MenuItem
                           onClick={() =>
                             handleNavigate(
@@ -206,7 +206,7 @@ const SeminarDetail = () => {
                           />
                           <span>{SEMINAR.DELETE}</span>
                         </MenuItem>
-                      </>
+                      </div>
                     )}
                   </Menu>
                 </div>
@@ -280,7 +280,7 @@ const SeminarDetail = () => {
           />
         </div>
       )}
-      <DiscussionRoom />
+      <DiscussionRoom seminarId={id} />
     </div>
   );
 };
