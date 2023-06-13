@@ -31,7 +31,7 @@ const CommentAction = (props) => {
   const handleDelete = async () => {
     try {
       handleClose();
-      await deleteDocument("comments", props.comment.id);
+      await deleteDocument("Comments", props.comment.id);
     } catch (error) {
       console.log(error);
     }
