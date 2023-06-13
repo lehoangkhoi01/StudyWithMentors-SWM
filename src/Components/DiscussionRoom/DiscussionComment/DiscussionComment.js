@@ -99,26 +99,29 @@ const DiscussionComment = (props) => {
 
       <AccordionDetails>
         {props.replies?.length > 0 ? renderReplies(props.replies) : null}
-        <div className={`${style.discussionComment__replyContainer}`}>
-          <OutlinedInput
-            value={currentReply}
-            fullWidth
-            multiline
-            rows={2}
-            onChange={handleReplyChange}
-            placeholder="Phản hồi tại đây..."
-            className={`${style.discussionComment__textbox}`}
-          />
-          <div className={`${style.discussionComment__buttonContainer}`}>
-            <CustomizedButton
-              onClick={handleSubmit}
-              variant="contained"
-              color="primary600"
-            >
-              Gửi phản hồi
-            </CustomizedButton>
+
+        {userInfo && (
+          <div className={`${style.discussionComment__replyContainer}`}>
+            <OutlinedInput
+              value={currentReply}
+              fullWidth
+              multiline
+              rows={2}
+              onChange={handleReplyChange}
+              placeholder="Phản hồi tại đây..."
+              className={`${style.discussionComment__textbox}`}
+            />
+            <div className={`${style.discussionComment__buttonContainer}`}>
+              <CustomizedButton
+                onClick={handleSubmit}
+                variant="contained"
+                color="primary600"
+              >
+                Gửi phản hồi
+              </CustomizedButton>
+            </div>
           </div>
-        </div>
+        )}
       </AccordionDetails>
     </Accordion>
   );
