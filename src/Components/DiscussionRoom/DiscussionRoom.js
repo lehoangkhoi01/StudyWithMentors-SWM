@@ -60,24 +60,27 @@ const DiscussionRoom = (props) => {
   };
 
   const onChangeCurrentComment = (e) => {
-    if (e.target.value && e.target.value.trim() !== "") {
+    if (e.target.value) {
       setCurrentComment(e.target.value);
     }
   };
 
   const handleSubmitComment = () => {
-    const requestBody = {
-      seminarId: props.seminarId,
-      message: currentComment,
-      vote: 0,
-      voteList: [],
-      user: doc(db, "Users/" + userInfo?.accountId),
-    };
-    try {
-      addDocument("Comments", requestBody);
-      setCurrentComment("");
-    } catch (error) {
-      console.log(error);
+    if (currentComment.trim()) {
+      const requestBody = {
+        seminarId: props.seminarId,
+        message: currentComment.trim(),
+        vote: 0,
+        voteList: [],
+        user: doc(db, "Users/" + userInfo?.accountId),
+      };
+
+      try {
+        addDocument("Comments", requestBody);
+        setCurrentComment("");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -180,6 +183,7 @@ const DiscussionRoom = (props) => {
             onClick={() => {
               setSortByDate((prev) => !prev);
             }}
+            className={sortByDate ? `${style.discussion__active}` : null}
           >
             <FilterListIcon />
           </IconButton>

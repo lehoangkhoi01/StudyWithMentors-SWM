@@ -28,20 +28,28 @@ const Comment = (props) => {
   };
 
   const onChangeUpdateComment = (e) => {
-    setUpdatedComment(e.target.value);
+    if (e.target.value) {
+      setUpdatedComment(e.target.value);
+    }
   };
 
   const handleSubmitUpdateComment = async () => {
-    const updatedCommentObject = {
-      message: updatedComment,
-      serverTimeStamp: Timestamp.now(),
-    };
-    try {
-      localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
-      await updateDocument("Comments", props.comment.id, updatedCommentObject);
-      setUpdatedComment(null);
-    } catch (error) {
-      console.log(error);
+    if (updatedComment.trim()) {
+      const updatedCommentObject = {
+        message: updatedComment.trim(),
+        serverTimeStamp: Timestamp.now(),
+      };
+      try {
+        localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
+        await updateDocument(
+          "Comments",
+          props.comment.id,
+          updatedCommentObject
+        );
+        setUpdatedComment(null);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -126,7 +134,7 @@ const Comment = (props) => {
             }
             secondary={
               <>
-                <Typography color="text.primary">
+                <Typography width="90%" color="text.primary">
                   {props.comment.message}
                 </Typography>
               </>
