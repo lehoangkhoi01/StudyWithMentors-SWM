@@ -35,9 +35,7 @@ const DiscussionComment = (props) => {
   };
 
   const handleReplyChange = (e) => {
-    if (e.target.value) {
-      setCurrentReply(e.target.value);
-    }
+    setCurrentReply(e.target.value);
   };
 
   const renderReplies = (replies) => {
