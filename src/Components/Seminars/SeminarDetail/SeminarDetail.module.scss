@@ -9,6 +9,20 @@
     padding: 1rem 0;
   }
 
+  &__seminarStatus {
+    width: max-content;
+    padding: 0.7rem;
+    font-size: 1rem;
+    color: $black000;
+    border-radius: 5px;
+  }
+  &__futureLabel {
+    background-color: $secondary900;
+  }
+  &__pastLabel {
+    background-color: $primary400;
+  }
+
   &__stage {
     margin-top: 1.5rem;
     font-size: 1rem;

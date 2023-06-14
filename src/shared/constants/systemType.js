@@ -17,3 +17,8 @@ export const SYSTEM_ROLE = {
   ADMIN: "ADMIN",
   STUDENT: "STUDENT",
 };
+
+export const SEMINAR_STATUS = {
+  FUTURE: "FUTURE",
+  PAST: "PAST",
+};

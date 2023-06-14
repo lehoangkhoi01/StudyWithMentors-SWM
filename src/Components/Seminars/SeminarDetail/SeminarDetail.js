@@ -4,6 +4,7 @@ import {
   COMMON_MESSAGE,
   ERROR_MESSAGES,
   SEMINAR,
+  TITLE,
 } from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ListFileDisplay from "../../../shared/components/ListFileDisplay/ListFileDisplay";
 import {
   SEMINAR_DETAIL_VIEW_MODE,
+  SEMINAR_STATUS,
   SYSTEM_ROLE,
 } from "../../../shared/constants/systemType";
 import { useHistory } from "react-router";
@@ -52,25 +54,6 @@ const SeminarDetail = () => {
   const { id } = useParams();
 
   setAppbar(APPBAR_TITLES.SEMINAR_DETAIL);
-
-  useEffect(() => {
-    const getSeminarDetail = async () => {
-      try {
-        setLoading(true);
-        const seminarDetail = await seminarService.getSeminarDetail(id);
-        setData(seminarDetail);
-      } catch (error) {
-        if (error?.status == "404") {
-          history.push(ROUTES.NOT_FOUND);
-        }
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getSeminarDetail();
-  }, []);
 
   const onOpenModal = () => {
     setOpenModal(true);
@@ -127,6 +110,46 @@ const SeminarDetail = () => {
     history.push(route);
   };
 
+  const renderSeminarStatusLabel = () => {
+    if (data && data.status === SEMINAR_STATUS.FUTURE) {
+      return (
+        <div
+          className={`${style.detail__seminarStatus} ${style.detail__futureLabel}`}
+        >
+          {TITLE.SEMINAR_FUTURE}
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className={`${style.detail__seminarStatus} ${style.detail__pastLabel}`}
+        >
+          {TITLE.SEMINAR_PAST}
+        </div>
+      );
+    }
+  };
+
+  useEffect(() => {
+    const getSeminarDetail = async () => {
+      try {
+        setLoading(true);
+        const seminarDetail = await seminarService.getSeminarDetail(id);
+        setData(seminarDetail);
+        console.log(seminarDetail);
+      } catch (error) {
+        if (error?.status == "404") {
+          history.push(ROUTES.NOT_FOUND);
+        }
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getSeminarDetail();
+  }, []);
+
   return (
     <div className={style.detail__container}>
       {data && (
@@ -141,8 +164,11 @@ const SeminarDetail = () => {
                   : require("../../../assets/default-cover.jpg")
               }
             />
+
             <div className={style.detail__information}>
               <h1 className={style.detail__title}>{data.name}</h1>
+              {renderSeminarStatusLabel()}
+
               {userInfo?.role === "STAFF" && (
                 <div className={style.detail__burger}>
                   <Button
@@ -211,7 +237,6 @@ const SeminarDetail = () => {
                   </Menu>
                 </div>
               )}
-
               <p>
                 <strong>{SEMINAR.AUTHOR}:</strong>{" "}
                 {data.mentors.map(
@@ -264,11 +289,13 @@ const SeminarDetail = () => {
               </div>
             </div>
           </div>
+
           <QRModal
             seminarId={data.id}
             openModal={openModal}
             onCloseModal={onCloseModal}
           />
+
           <ConfirmationDialog
             open={openRemoveDialog}
             title="Xóa sự kiện"
