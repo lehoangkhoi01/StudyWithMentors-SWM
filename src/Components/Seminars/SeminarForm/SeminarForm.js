@@ -217,13 +217,13 @@ const SeminarForm = () => {
         mentorIds: data.seminarSpeakers,
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
-      await seminarService.create(requestBody);
+      const result = await seminarService.create(requestBody);
       setNotification({
         isOpen: true,
         type: "success",
         message: COMMON_MESSAGE.CREATE_SEMINAR_SUCCESS,
       });
-      history.push(ROUTES.SEMINAR_LIST);
+      history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + result.id);
     } catch (error) {
       console.log(error);
       if (error.status == "500") {
