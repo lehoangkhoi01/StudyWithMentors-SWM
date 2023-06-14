@@ -26,6 +26,8 @@ export const BUTTON_LABEL = {
   CONFIRM: "Xác nhận",
   ADD_MENTOR: "Thêm diễn giả",
   DEACTIVATE_MENTOR: "Vô hiệu hóa",
+  VIEW_MORE: "Xem thêm",
+  VIEW_LESS: "Thu gọn",
 };
 
 export const TEXTFIELD_LABEL = {
