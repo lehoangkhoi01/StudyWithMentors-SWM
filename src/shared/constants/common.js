@@ -103,6 +103,7 @@ export const COMMON_MESSAGE = {
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
+  ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
 };
 
 export const SIGN_UP_STAGE = {

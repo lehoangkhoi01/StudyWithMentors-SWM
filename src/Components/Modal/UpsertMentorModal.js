@@ -3,6 +3,7 @@ import style from "./UpsertMentorModal.module.scss";
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   ERROR_MESSAGES,
   MODAL_TYPE,
   PLACE_HOLDER,
@@ -22,7 +23,7 @@ const UpsertMentorModal = (props) => {
   const { handleSubmit, register, setValue, getValues } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
-  const { getSpeakerList } = useFetchSpeakerList();
+  const { getLatestSpeakerList } = useFetchSpeakerList();
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
@@ -55,9 +56,15 @@ const UpsertMentorModal = (props) => {
         await accountService.createMentor(specificForm);
       }
 
-      const mentorResults = await getSpeakerList();
-      props.onSucess(mentorResults);
-
+      await getLatestSpeakerList();
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.ADD_MENTOR_SUCCESS,
+      });
+      if (props.onSuccess) {
+        props.onSuccess();
+      }
       props.onCloseModal();
     } catch (error) {
       console.log(error);

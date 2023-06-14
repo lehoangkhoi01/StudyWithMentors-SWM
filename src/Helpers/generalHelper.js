@@ -80,7 +80,18 @@ export const useFetchSpeakerList = () => {
     }
     return mentorList;
   };
+
+  const getLatestSpeakerList = async () => {
+    try {
+      mentorList = await accountService.getAllMentors();
+      dispatch(mentorAcion.setMentorList(mentorList));
+    } catch (error) {
+      console.log(error);
+    }
+    return mentorList;
+  };
   return {
+    getLatestSpeakerList,
     getSpeakerList,
   };
 };
