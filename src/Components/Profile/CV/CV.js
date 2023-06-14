@@ -1,9 +1,11 @@
 import {
   CV_REGISTER_NAME_PREFIX,
+  ERROR_MESSAGES,
   INPUT_TYPES,
   PROFILE_TITLES,
   REGISTER_FIELD,
   TEXTFIELD_LABEL,
+  VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
 import style from "./CV.module.scss";
 import CVSection from "./CVSection/CVSection";
@@ -15,9 +17,14 @@ import {
   mapCVSection,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import ConfirmImage from "../../Modal/ImageCrop/ConfirmImage";
+import { userAccountService } from "../../../Services/userAccountService";
 
 const TEXT_FIELDS = [
   {
@@ -228,6 +235,10 @@ const CV = () => {
   const [selectedTextFields, setSelectedTextFields] = useState();
   const [cvData, setCVData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [croppingImage, setCroppingImage] = useState();
+  const [eventfile, setEventFile] = useState({});
+  const { setNotification } = useNotification();
 
   const { setLoading } = useCustomLoading();
   const userInfo = useSelector(selectUserInfo);
@@ -318,6 +329,42 @@ const CV = () => {
     });
   };
 
+  const onCloseModal = () => {
+    setOpenModal(false);
+
+    eventfile.target.value = null;
+  };
+
+  const onSelectImage = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setCroppingImage({ files: e.target.files });
+
+      setOpenModal(true);
+    }
+  };
+
+  const updateAvatar = async (url) => {
+    try {
+      setLoading(true);
+      await userAccountService.updateUserProfile(userInfo.accountId, {
+        ...userInfo,
+        avatarLink: url,
+        avatarUrl: url,
+      });
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      console.log(error);
+    } finally {
+      setLoading(false);
+      onCloseModal();
+    }
+  };
+
   return (
     <div className={style.cv__container}>
       {!isLoading && (
@@ -339,7 +386,26 @@ const CV = () => {
                   }
                 />
                 <div className={style.cv__detail__information_edit}>
-                  <img src={require("../../../assets/icons/pen-icon.png")} />
+                  <>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      accept={VALID_IMAGE_FILE_TYPE.toString()}
+                      id="choose-file"
+                      type="file"
+                      onChange={(e) => {
+                        onSelectImage(e);
+                        setEventFile(e);
+                      }}
+                    />
+                    <label htmlFor="choose-file">
+                      <img
+                        // onClick={onOpenCropImage}
+                        src={require("../../../assets/icons/pen-icon.png")}
+                      />
+                    </label>
+                  </>
                 </div>
               </div>
               <div>
@@ -389,6 +455,12 @@ const CV = () => {
       )}
 
       <div className={style.cv__booking}></div>
+      <ConfirmImage
+        openModal={openModal}
+        onCloseModal={onCloseModal}
+        croppingImage={croppingImage}
+        onUpdateImage={updateAvatar}
+      />
     </div>
   );
 };
