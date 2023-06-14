@@ -15,7 +15,7 @@ import { updateDocument } from "../../../../firebase/firebaseService";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const Comment = (props) => {
-  const [updatedComment, setUpdatedComment] = React.useState(null);
+  const [updatedComment, setUpdatedComment] = React.useState(undefined);
 
   const onUpdateComment = (comment) => {
     setUpdatedComment(comment);
@@ -24,13 +24,11 @@ const Comment = (props) => {
   };
 
   const onCancelUpdateComment = () => {
-    setUpdatedComment(null);
+    setUpdatedComment(undefined);
   };
 
   const onChangeUpdateComment = (e) => {
-    if (e.target.value) {
-      setUpdatedComment(e.target.value);
-    }
+    setUpdatedComment(e.target.value);
   };
 
   const handleSubmitUpdateComment = async () => {
@@ -94,7 +92,7 @@ const Comment = (props) => {
 
   return (
     <>
-      {updatedComment ? (
+      {updatedComment != undefined ? (
         updateCommentBox
       ) : (
         <ListItem

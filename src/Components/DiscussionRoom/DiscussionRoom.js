@@ -60,9 +60,7 @@ const DiscussionRoom = (props) => {
   };
 
   const onChangeCurrentComment = (e) => {
-    if (e.target.value) {
-      setCurrentComment(e.target.value);
-    }
+    setCurrentComment(e.target.value);
   };
 
   const handleSubmitComment = () => {
