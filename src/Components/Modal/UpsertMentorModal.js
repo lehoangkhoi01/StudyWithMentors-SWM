@@ -11,12 +11,18 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import { accountService } from "../../Services/accountService";
-import { useNotification } from "../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useFetchSpeakerList,
+  useNotification,
+} from "../../Helpers/generalHelper";
 import { userAccountService } from "../../Services/userAccountService";
 
 const UpsertMentorModal = (props) => {
   const { handleSubmit, register, setValue, getValues } = useForm();
+  const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const { getSpeakerList } = useFetchSpeakerList();
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
 
@@ -39,6 +45,7 @@ const UpsertMentorModal = (props) => {
     );
 
     try {
+      setLoading(true);
       if (type === MODAL_TYPE.EDIT) {
         await userAccountService.updateUserProfile(
           props.existedData.id,
@@ -48,7 +55,9 @@ const UpsertMentorModal = (props) => {
         await accountService.createMentor(specificForm);
       }
 
-      props.getMentors();
+      const mentorResults = await getSpeakerList();
+      props.onSucess(mentorResults);
+
       props.onCloseModal();
     } catch (error) {
       console.log(error);
@@ -58,6 +67,8 @@ const UpsertMentorModal = (props) => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
+    } finally {
+      setLoading(false);
     }
   };
 

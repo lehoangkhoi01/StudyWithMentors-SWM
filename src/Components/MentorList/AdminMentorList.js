@@ -302,6 +302,10 @@ const AdminMentorList = () => {
     }
   };
 
+  const onUpsertSuccess = (mentors) => {
+    adjustMentorList(mentors);
+  };
+
   return (
     <>
       <div className={style.list__container}>
@@ -499,7 +503,7 @@ const AdminMentorList = () => {
         openModal={openModal.upsert}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        getMentors={getMentors}
+        onSucess={onUpsertSuccess}
       />
     </>
   );

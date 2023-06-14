@@ -412,3 +412,8 @@ export const FEEDBACK_OVERVIEW = {
   IMPROVEMENT: "Cần cải thiện",
   OTHERS: "Ý kiến khác",
 };
+
+export const CROP_IMAGE = {
+  ADJUST_AVATAR: "Điều chỉnh ảnh đại diện",
+  AVATAR_AFTER_ADJUST: "Ảnh đại diện sau khi điều chỉnh",
+};
