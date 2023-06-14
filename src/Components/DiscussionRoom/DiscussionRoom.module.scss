@@ -5,6 +5,10 @@
     display: flex;
     justify-content: center;
   }
+  &__list {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
   &__wrapper {
     border-radius: 20px;
     background-color: $black000;
