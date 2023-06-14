@@ -111,6 +111,17 @@
       width: 40%;
     }
   }
+  &__expandButton {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__seminarDescription {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
 
   @media (max-width: $bp-lg) {
     &__container {

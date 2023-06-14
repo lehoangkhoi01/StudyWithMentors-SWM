@@ -10,7 +10,7 @@ import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem, Typography } from "@mui/material";
 import {
   useCustomAppbar,
   useCustomLoading,
@@ -40,6 +40,7 @@ const SeminarDetail = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
+  const [expandDetail, setExpandDetail] = useState(false);
   const { setLoading } = useCustomLoading();
   const { setAppbar } = useCustomAppbar();
   const { setNotification } = useNotification();
@@ -260,9 +261,24 @@ const SeminarDetail = () => {
                 <p>
                   <strong>{SEMINAR.CONTENT}: </strong>
                 </p>
-                <ul>
-                  <li>{data.description}</li>
-                </ul>
+                <Typography
+                  className={
+                    expandDetail ? null : `${style.detail__seminarDescription}`
+                  }
+                >
+                  {data.description}
+                </Typography>
+                <div className={`${style.detail__expandButton}`}>
+                  <Button
+                    onClick={() => {
+                      setExpandDetail((prev) => !prev);
+                    }}
+                  >
+                    {expandDetail
+                      ? BUTTON_LABEL.VIEW_LESS
+                      : BUTTON_LABEL.VIEW_MORE}
+                  </Button>
+                </div>
               </div>
               <p>
                 <strong>{SEMINAR.ATTACHED_FILE}: </strong>
