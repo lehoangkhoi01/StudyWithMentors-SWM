@@ -49,7 +49,7 @@ export const TEXTFIELD_LABEL = {
   SKILL: "Kỹ năng",
   SEMINAR_NAME: "Tên sự kiện",
   SEMINAR_PLACE: "Địa điểm",
-  SEMINAR_DESCRIPTION: "Thông tin chi tiết",
+  SEMINAR_DESCRIPTION: "Mô tả",
   TIME: "Thời gian",
   SPEAKER: "Diễn giả",
 };
@@ -346,7 +346,7 @@ export const SEMINAR = {
   TIME: "Thời gian",
   LOCATION: "Địa điểm",
   ORGANIZER: "Tổ chức",
-  CONTENT: "Nội dung",
+  CONTENT: "Mô tả",
   ATTACHED_FILE: "Tài liệu đính kèm",
   SEMINAR_LIST: "Danh sách sự kiện",
   RERORT: "Xem báo cáo",
