@@ -74,6 +74,8 @@ export const TITLE = {
   FOOTER: "© 2023 Growth Me",
   LABEL: "Nhãn",
   SEMINAR_INFO: "Thông tin sự kiện",
+  SEMINAR_FUTURE: "Sắp diễn ra",
+  SEMINAR_PAST: "Đã diễn ra",
 };
 
 export const OTHER_TEXT = {
