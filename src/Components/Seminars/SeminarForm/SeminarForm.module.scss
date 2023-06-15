@@ -73,10 +73,17 @@
 
   &__rowDropdown {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     margin: 5px 0;
+    padding: 10px;
     cursor: default;
+
+    &__userInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
   }
   &__rowDropdown:hover {
     background-color: rgba(0, 0, 0, 0.04);

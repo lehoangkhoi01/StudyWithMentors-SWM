@@ -10,9 +10,11 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import ImageUploader from "../ImageUploader/ImageUploader";
-import { Button, IconButton } from "@mui/material";
+import { Button, Checkbox, IconButton, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
 import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 //-------------------
@@ -125,12 +127,9 @@ const SeminarForm = () => {
 
   const handleDocumentsChange = (e) => {
     const files = e.target.files;
-    if (files.length === 1) {
-      setDocuments((prev) => [...prev, files[0]]);
-    } else {
-      const newFileList = Array.from(files);
-      setDocuments((prev) => [...prev, ...newFileList]);
-    }
+    let tempDocuments = [...documents];
+    tempDocuments = [...tempDocuments, ...Array.from(files)];
+    setDocuments(tempDocuments);
   };
 
   const handleRemoveDocuments = (index) => {
@@ -156,11 +155,19 @@ const SeminarForm = () => {
     return option?.fullName;
   };
 
-  const renderOptionSpeakerAutocomplete = (props, option) => {
+  const renderOptionSpeakerAutocomplete = (props, option, { selected }) => {
     return (
       <li {...props} className={`${style.autocomplete__rowDropdown}`}>
-        <div>{option.fullName}</div>
-        <div>{option.email}</div>
+        <Checkbox
+          icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+          checkedIcon={<CheckBoxIcon fontSize="small" />}
+          style={{ marginRight: 8 }}
+          checked={selected}
+        />
+        <div className={`${style.autocomplete__rowDropdown__userInfo}`}>
+          <Typography textAlign="left">{option.fullName}</Typography>
+          <Typography variant="caption">{option.email}</Typography>
+        </div>
       </li>
     );
   };

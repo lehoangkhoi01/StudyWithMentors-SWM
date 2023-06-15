@@ -28,7 +28,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useForm } from "react-hook-form";
 import DeletePropertyModal from "../Modal/DeletePropertyModal";
 import { accountService } from "../../Services/accountService";
-import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useFetchSpeakerList,
+  useNotification,
+} from "../../Helpers/generalHelper";
 import UpsertMentorModal from "../Modal/UpsertMentorModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -53,6 +57,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const AdminMentorList = () => {
   const { register, getValues, setValue } = useForm();
+  const { getLatestSpeakerList } = useFetchSpeakerList();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
@@ -91,9 +96,9 @@ const AdminMentorList = () => {
   const getMentors = async () => {
     try {
       setLoading(true);
-      const mentors = await accountService.getAllMentors();
+      //const mentors = await accountService.getAllMentors();
 
-      adjustMentorList(mentors);
+      await adjustMentorList();
     } catch (error) {
       console.log(error);
 
@@ -107,7 +112,9 @@ const AdminMentorList = () => {
     }
   };
 
-  const adjustMentorList = (mentors) => {
+  const adjustMentorList = async () => {
+    const mentors = await getLatestSpeakerList();
+    console.log(mentors);
     const updatedMentorList = mentors.map((mentor, index) => {
       return {
         ...mentor,
@@ -300,10 +307,6 @@ const AdminMentorList = () => {
       setOpenModal({ upsert: false, delete: false });
       setLoading(false);
     }
-  };
-
-  const onUpsertSuccess = (mentors) => {
-    adjustMentorList(mentors);
   };
 
   return (
@@ -503,7 +506,7 @@ const AdminMentorList = () => {
         openModal={openModal.upsert}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSucess={onUpsertSuccess}
+        onSuccess={adjustMentorList}
       />
     </>
   );

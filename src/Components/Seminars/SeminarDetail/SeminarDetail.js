@@ -137,7 +137,6 @@ const SeminarDetail = () => {
         setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
         setData(seminarDetail);
-        console.log(seminarDetail);
       } catch (error) {
         if (error?.status == "404") {
           history.push(ROUTES.NOT_FOUND);
@@ -261,32 +260,46 @@ const SeminarDetail = () => {
                 <p>
                   <strong>{SEMINAR.CONTENT}: </strong>
                 </p>
-                <Typography
-                  className={
-                    expandDetail ? null : `${style.detail__seminarDescription}`
-                  }
-                >
-                  {data.description}
-                </Typography>
-                <div className={`${style.detail__expandButton}`}>
-                  <Button
-                    onClick={() => {
-                      setExpandDetail((prev) => !prev);
-                    }}
-                  >
-                    {expandDetail
-                      ? BUTTON_LABEL.VIEW_LESS
-                      : BUTTON_LABEL.VIEW_MORE}
-                  </Button>
-                </div>
+                {data.description ? (
+                  <>
+                    <Typography
+                      className={
+                        expandDetail
+                          ? null
+                          : `${style.detail__seminarDescription}`
+                      }
+                    >
+                      {data.description}
+                    </Typography>
+                    <div className={`${style.detail__expandButton}`}>
+                      <Button
+                        onClick={() => {
+                          setExpandDetail((prev) => !prev);
+                        }}
+                      >
+                        {expandDetail
+                          ? BUTTON_LABEL.VIEW_LESS
+                          : BUTTON_LABEL.VIEW_MORE}
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
+                )}
               </div>
+
               <p>
                 <strong>{SEMINAR.ATTACHED_FILE}: </strong>
-                <ListFileDisplay
-                  mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
-                  oldItems={data.attachmentLinks}
-                />
+                {data.attachmentLinks?.length > 0 ? (
+                  <ListFileDisplay
+                    mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
+                    oldItems={data.attachmentLinks}
+                  />
+                ) : (
+                  <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                )}
               </p>
+
               <div className={style.detail__buttons}>
                 {userInfo?.role === SYSTEM_ROLE.STUDENT && (
                   <CustomizedButton variant="outlined" color="primary600">

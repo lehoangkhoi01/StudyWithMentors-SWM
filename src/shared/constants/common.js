@@ -103,6 +103,7 @@ export const COMMON_MESSAGE = {
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
+  ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -200,7 +201,7 @@ export const ERROR_MESSAGES = {
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
   SEMINAR_NAME_LENGTH: "Độ dài tối đa là " + LENGTH.SEMINAR_NAME + " ký tự.",
-  INVALID_DATE_TIME: "Ngày giờ không hợp lệ",
+  INVALID_DATE_TIME_FUTURE: "Vui lòng chọn ngày giờ trong tương lai",
   INVALID_IMAGE_FILE:
     "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
   INVALID_SEMINAR_DOCUMENTS:
@@ -356,6 +357,8 @@ export const SEMINAR = {
   RERORT: "Xem báo cáo",
   EDIT: "Chỉnh sửa",
   DELETE: "Xóa",
+  EMPTY_DESCRIPTION: "Chưa có mô tả về hội thảo.",
+  EMPTY_ATTACHMENTS: "Chưa có tài liệu tham khảo.",
 };
 
 export const FILTER_SEMINAR = {
