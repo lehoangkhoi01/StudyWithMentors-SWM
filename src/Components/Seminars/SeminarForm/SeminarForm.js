@@ -127,12 +127,17 @@ const SeminarForm = () => {
 
   const handleDocumentsChange = (e) => {
     const files = e.target.files;
-    if (files.length === 1) {
-      setDocuments((prev) => [...prev, files[0]]);
-    } else {
-      const newFileList = Array.from(files);
-      setDocuments((prev) => [...prev, ...newFileList]);
-    }
+    let tempDocuments = [...documents];
+    console.log(files);
+    tempDocuments = [...tempDocuments, ...Array.from(files)];
+    setDocuments(tempDocuments);
+    // console.log(files);
+    // if (files.length === 1) {
+    //   setDocuments((prev) => [...prev, files[0]]);
+    // } else {
+    //   const newFileList = Array.from(files);
+    //   setDocuments((prev) => [...prev, ...newFileList]);
+    // }
   };
 
   const handleRemoveDocuments = (index) => {
