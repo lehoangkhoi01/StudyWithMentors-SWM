@@ -137,7 +137,6 @@ const SeminarDetail = () => {
         setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
         setData(seminarDetail);
-        console.log(seminarDetail);
       } catch (error) {
         if (error?.status == "404") {
           history.push(ROUTES.NOT_FOUND);

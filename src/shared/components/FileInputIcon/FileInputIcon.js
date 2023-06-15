@@ -24,6 +24,9 @@ const FileInputIcon = (props) => {
           }}
           style={{ display: "none" }}
           onChange={props.onChange}
+          onClick={(event) => {
+            event.target.value = null;
+          }}
         />
 
         <CustomizedButton
