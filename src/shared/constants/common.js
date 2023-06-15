@@ -357,6 +357,8 @@ export const SEMINAR = {
   RERORT: "Xem báo cáo",
   EDIT: "Chỉnh sửa",
   DELETE: "Xóa",
+  EMPTY_DESCRIPTION: "Chưa có mô tả về hội thảo.",
+  EMPTY_ATTACHMENTS: "Chưa có tài liệu tham khảo.",
 };
 
 export const FILTER_SEMINAR = {
