@@ -2,6 +2,7 @@ import {
   CV_REGISTER_NAME_PREFIX,
   ERROR_MESSAGES,
   INPUT_TYPES,
+  OTHERS,
   PROFILE_TITLES,
   REGISTER_FIELD,
   TEXTFIELD_LABEL,
@@ -13,6 +14,7 @@ import ProgressImage from "./ProgressImage/ProgressImage";
 import CVDetail from "./CVDetail/CVDetail";
 import { useEffect, useState } from "react";
 import {
+  findLastestWorkingExp,
   getRegisterNamePrefixFromTitle,
   mapCVSection,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
@@ -238,8 +240,9 @@ const CV = () => {
   const [openModal, setOpenModal] = useState(false);
   const [croppingImage, setCroppingImage] = useState();
   const [eventfile, setEventFile] = useState({});
-  const { setNotification } = useNotification();
+  const [position, setPosition] = useState(null);
 
+  const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
   const userInfo = useSelector(selectUserInfo);
 
@@ -247,17 +250,17 @@ const CV = () => {
     const getCVData = async () => {
       let CVDataFromBE = await cvEndpoints.getUserCV();
 
-      if (
-        CVDataFromBE.data === "" ||
-        CVDataFromBE.data === [] ||
-        CVDataFromBE.data === {}
-      ) {
+      if (CVDataFromBE.data === "" || CVDataFromBE.data || CVDataFromBE.data) {
         CVDataFromBE = INIT_CV;
       }
 
       delete CVDataFromBE.userProfileId;
 
       convertNullToEmptyArrayProperty(CVDataFromBE);
+
+      const lastedPosition = findLastestWorkingExp(CVDataFromBE.workingExps);
+
+      setPosition(lastedPosition);
 
       setCVData(CVDataFromBE);
     };
@@ -365,6 +368,8 @@ const CV = () => {
     }
   };
 
+  console.log(!!position);
+
   return (
     <div className={style.cv__container}>
       {!isLoading && (
@@ -410,7 +415,10 @@ const CV = () => {
               </div>
               <div>
                 <h2>{userInfo?.fullName}</h2>
-                <p>Business Analyst tại CodeStringers</p>
+                <p>
+                  {position &&
+                    `${position.position} ${OTHERS.AT} ${position.company}`}
+                </p>
               </div>
             </div>
           </div>

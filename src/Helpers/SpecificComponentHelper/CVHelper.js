@@ -28,14 +28,14 @@ export const mapCVSection = (data, indexOfProperty) => {
           section.company
         } (${convertDateFormat(
           section.startDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )} - ${
           section.workingHere
             ? OTHERS.CURRENT
             : convertDateFormat(
                 section.endDate,
-                DATE_FORMAT.YYYY_MM_DD,
+                DATE_FORMAT.BACK_END_YYYY_MM_DD,
                 DATE_FORMAT.MM_YYYY
               )
         })`,
@@ -49,11 +49,11 @@ export const mapCVSection = (data, indexOfProperty) => {
           section.school
         } (${convertDateFormat(
           section.startDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )} - ${convertDateFormat(
           section.endDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
         detail: section.description,
@@ -66,14 +66,14 @@ export const mapCVSection = (data, indexOfProperty) => {
           section.organization
         } (${convertDateFormat(
           section.startDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )} - ${
           section.attendingThis
             ? OTHERS.CURRENT
             : convertDateFormat(
                 section.endDate,
-                DATE_FORMAT.YYYY_MM_DD,
+                DATE_FORMAT.BACK_END_YYYY_MM_DD,
                 DATE_FORMAT.MM_YYYY
               )
         })`,
@@ -87,7 +87,7 @@ export const mapCVSection = (data, indexOfProperty) => {
           section.organization
         } (${convertDateFormat(
           section.achievingDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
         detail: section.description,
@@ -100,7 +100,7 @@ export const mapCVSection = (data, indexOfProperty) => {
           section.organization
         } (${convertDateFormat(
           section.achievingDate,
-          DATE_FORMAT.YYYY_MM_DD,
+          DATE_FORMAT.BACK_END_YYYY_MM_DD,
           DATE_FORMAT.MM_YYYY
         )})`,
         detail: section.description,
@@ -148,4 +148,23 @@ export const removeRegisterNamePrefix = (section, prefix) => {
   });
 
   return result;
+};
+
+export const findLastestWorkingExp = (workingExps) => {
+  if (workingExps.length === 0) {
+    return null;
+  }
+
+  let latestEndDateObj = workingExps[0];
+
+  for (let i = 1; i < workingExps.length; i++) {
+    if (
+      workingExps[i].endDate &&
+      workingExps[i].endDate > latestEndDateObj.endDate
+    ) {
+      latestEndDateObj = workingExps[i];
+    }
+  }
+
+  return latestEndDateObj;
 };

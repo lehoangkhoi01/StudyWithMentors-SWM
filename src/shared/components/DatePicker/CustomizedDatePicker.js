@@ -11,6 +11,7 @@ const CustomizedDatePicker = (props) => {
 
   useLayoutEffect(() => {
     if (!isMapped && props.value !== undefined && props.value !== "") {
+      console.log("Mapped");
       setValue(props.value ?? null);
       setIsMapped(true);
     }
@@ -37,6 +38,8 @@ const CustomizedDatePicker = (props) => {
           const datevalue = convertISOToFormat(dateFormat, e);
           setValue(e);
           props.setValue(props.formName, datevalue);
+
+          if (!isMapped) setIsMapped(true);
         }}
         value={value}
       ></DatePicker>
