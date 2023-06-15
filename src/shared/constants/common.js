@@ -201,7 +201,7 @@ export const ERROR_MESSAGES = {
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
   SEMINAR_NAME_LENGTH: "Độ dài tối đa là " + LENGTH.SEMINAR_NAME + " ký tự.",
-  INVALID_DATE_TIME: "Ngày giờ không hợp lệ",
+  INVALID_DATE_TIME_FUTURE: "Vui lòng chọn ngày giờ trong tương lai",
   INVALID_IMAGE_FILE:
     "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
   INVALID_SEMINAR_DOCUMENTS:

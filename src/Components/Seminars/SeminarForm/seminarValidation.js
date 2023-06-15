@@ -10,7 +10,7 @@ export const validationSeminarDate = (value) => {
     return ERROR_MESSAGES.REQUIRED_FIELD;
   }
   if (value <= Date.now()) {
-    return ERROR_MESSAGES.INVALID_DATE_TIME;
+    return ERROR_MESSAGES.INVALID_DATE_TIME_FUTURE;
   }
 };
 
