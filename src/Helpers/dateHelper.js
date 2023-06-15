@@ -8,7 +8,7 @@ export const convertDateFormat = (date, fromFormat, toFormat) => {
 
   const fromDateFormat = parse(date, fromFormat, new Date());
 
-  return format(fromDateFormat, fromFormat);
+  return format(fromDateFormat, toFormat);
 };
 
 // CONVERT {date} from {dateFormat} (ex: dd/MM/yyyy) to ISODate (ex: 2011-10-05T14:48:00.000Z)
@@ -42,7 +42,7 @@ export const convertTimeToObject = (time) => {
   };
 };
 
-// CONVERT FROM {fromDateFormat (default yyyy-MM-dd} 12:20:06) 
+// CONVERT FROM {fromDateFormat (default yyyy-MM-dd} 12:20:06)
 // TO 12:20{seperator (default ",")} {toDateFormat (default yyyy-MM-dd}
 export const handleTimeToDisplay = (
   fullDate,

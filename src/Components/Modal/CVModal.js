@@ -18,10 +18,7 @@ import {
   getRegisterNamePrefixFromTitle,
   removeRegisterNamePrefix,
 } from "../../Helpers/SpecificComponentHelper/CVHelper";
-import {
-  convertDateFormat,
-  covertToISODate,
-} from "../../Helpers/dateHelper";
+import { convertDateFormat, covertToISODate } from "../../Helpers/dateHelper";
 
 const CVModal = (props) => {
   const [registerNamePrefix, setRegisterNamePrefix] = useState();
@@ -35,6 +32,7 @@ const CVModal = (props) => {
     formState: { errors },
   } = useForm();
   const [type, setType] = useState(MODAL_TYPE.ADD);
+  const [isWorking, setIsWorking] = useState(false);
 
   useLayoutEffect(() => {
     reset();
@@ -62,34 +60,50 @@ const CVModal = (props) => {
     if (
       watch(`${registerNamePrefix}_workingHere`) ||
       watch(`${registerNamePrefix}_attendingThis`)
-    )
+    ) {
       setValue(`${registerNamePrefix}_endDate`, "");
+      setIsWorking(true);
+    }
   }, [
     watch(`${registerNamePrefix}_workingHere`),
     watch(`${registerNamePrefix}_attendingThis`),
   ]);
 
   const validateEndDate = (val) => {
-    const formValue = getValues();
-    const startDateString = formValue[`${registerNamePrefix}_startDate`];
+    if (!isWorking) {
+      const formValue = getValues();
+      const startDateString = formValue[`${registerNamePrefix}_startDate`];
 
-    const endDateTimeNumber = covertToISODate(
-      DATE_FORMAT.MM_YYYY,
-      val
-    ).getTime();
-    const statDateTimeNumber = covertToISODate(
-      DATE_FORMAT.MM_YYYY,
-      startDateString
-    ).getTime();
+      const endDateTime = covertToISODate(DATE_FORMAT.MM_YYYY, val);
+
+      const startDateTime = covertToISODate(
+        DATE_FORMAT.MM_YYYY,
+        startDateString
+      );
+
+      const endDateTimeNumber = endDateTime.getTime();
+      const startDateTimeNumber = startDateTime.getTime();
+
+      // if (!val || val.length === 0) {
+      //   return ERROR_MESSAGES.REQUIRED_FIELD;
+      // }
+      if (endDateTimeNumber < startDateTimeNumber) {
+        return ERROR_MESSAGES.INVALID_END_DATE;
+      }
+    }
+  };
+
+  const validateStartDate = (val) => {
+    const startDateTime = covertToISODate(DATE_FORMAT.MM_YYYY, val);
+
     const currentDate = new Date().getTime();
+
+    const startDateTimeNumber = startDateTime.getTime();
 
     // if (!val || val.length === 0) {
     //   return ERROR_MESSAGES.REQUIRED_FIELD;
     // }
-    if (
-      endDateTimeNumber < statDateTimeNumber ||
-      endDateTimeNumber < currentDate
-    ) {
+    if (startDateTimeNumber > currentDate) {
       return ERROR_MESSAGES.INVALID_END_DATE;
     }
   };
@@ -100,6 +114,14 @@ const CVModal = (props) => {
         ...register(registerName, {
           validate: {
             checkEndDate: (val) => validateEndDate(val),
+          },
+        }),
+      };
+    } else if (registerName.includes("startDate")) {
+      return {
+        ...register(registerName, {
+          validate: {
+            checkEndDate: (val) => validateStartDate(val),
           },
         }),
       };
@@ -125,7 +147,7 @@ const CVModal = (props) => {
         specificForm[key] = convertDateFormat(
           specificForm[key],
           DATE_FORMAT.MM_YYYY,
-          DATE_FORMAT.YYYY_MM_DD
+          DATE_FORMAT.BACK_END_YYYY_MM_DD
         );
       }
     });
