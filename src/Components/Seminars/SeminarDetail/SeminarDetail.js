@@ -285,7 +285,9 @@ const SeminarDetail = () => {
                       </div>
                     </>
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_DESCRIPTION}
+                    </Typography>
                   )}
                 </div>
 
@@ -297,7 +299,9 @@ const SeminarDetail = () => {
                       oldItems={data.attachmentLinks}
                     />
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_ATTACHMENTS}
+                    </Typography>
                   )}
                 </p>
 
