@@ -85,6 +85,7 @@ const SeminarForm = () => {
     handleSubmit,
     register,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -520,6 +521,7 @@ const SeminarForm = () => {
               disabled={isFormDisabled}
               required={false}
               optional={true}
+              watch={watch("seminarDescription")}
               options={{
                 ...register("seminarDescription"),
               }}
