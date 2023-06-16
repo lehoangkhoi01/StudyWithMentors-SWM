@@ -54,6 +54,7 @@ export const TEXTFIELD_LABEL = {
   SEMINAR_DESCRIPTION: "Mô tả",
   TIME: "Thời gian",
   SPEAKER: "Diễn giả",
+  DOCUMENT: "Tài liệu",
 };
 
 export const TITLE = {
@@ -218,6 +219,9 @@ export const ERROR_MESSAGES = {
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
+
+export const VALID_DOCS_FILE_TYPE_STRING =
+  ".jpg, .jpeg, .gif, .svg, .png, .pdf, .doc, .docx, .html, .htm, .xls, .xlsx, .txt, .mp4, .avi, .mov, .flv, .avchd, .ppt, .pptx, .odp, .key, .m4a, .mp3, .wav, .rar, .zip, .zipx, .7z, .pkg, .tar.gz, .csv, .dat, .db, .dbf, .log, .mdb, .sql, .xml, .tar, .apk, .bat, .bin, .com, .exe, .jar, .msi, .py, .wsf";
 
 export const PROFILE_TITLES = {
   INTRODUCION: "Giới thiệu",
