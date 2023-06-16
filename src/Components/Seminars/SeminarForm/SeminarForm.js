@@ -305,6 +305,9 @@ const SeminarForm = () => {
       if (convertBytesToMB(documents[i].size) > LENGTH.FILE_MAX_SIZE) {
         return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
       }
+      // if(VALID_DOCS_FILE_TYPLE.indexOf(documents[i].type) < 0) {
+      //   return
+      // }
     }
   };
 

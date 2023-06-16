@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import style from "./ListFileDisplay.module.scss";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../constants/systemType";
+import { OPTIONAL, TEXTFIELD_LABEL } from "../../constants/common";
 
 const ListFileDisplay = (props) => {
   const renderListForUpdate = () => (
@@ -62,7 +63,9 @@ const ListFileDisplay = (props) => {
 
   const renderList = () => (
     <div>
-      <Typography className={`${style.filelist__label}`}>Tài liệu</Typography>
+      <Typography className={`${style.filelist__label}`}>
+        {TEXTFIELD_LABEL.DOCUMENT} <span>({OPTIONAL})</span>
+      </Typography>
       {props?.items?.length > 0 ? (
         <List>
           {Array.from(props.items).map((file, index) => (
