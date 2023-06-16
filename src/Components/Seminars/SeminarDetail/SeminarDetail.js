@@ -263,26 +263,34 @@ const SeminarDetail = () => {
                   </p>
                   {data.description ? (
                     <>
-                      <Typography
-                        className={
-                          expandDetail
-                            ? null
-                            : `${style.detail__seminarDescription}`
-                        }
-                      >
-                        {data.description}
-                      </Typography>
-                      <div className={`${style.detail__expandButton}`}>
-                        <Button
-                          onClick={() => {
-                            setExpandDetail((prev) => !prev);
-                          }}
-                        >
-                          {expandDetail
-                            ? BUTTON_LABEL.VIEW_LESS
-                            : BUTTON_LABEL.VIEW_MORE}
-                        </Button>
-                      </div>
+                      {data.description.length > 300 ? (
+                        <>
+                          <Typography
+                            className={
+                              expandDetail
+                                ? null
+                                : `${style.detail__seminarDescription}`
+                            }
+                          >
+                            {data.description}
+                          </Typography>
+                          <div className={`${style.detail__expandButton}`}>
+                            <Button
+                              onClick={() => {
+                                setExpandDetail((prev) => !prev);
+                              }}
+                            >
+                              {expandDetail
+                                ? BUTTON_LABEL.VIEW_LESS
+                                : BUTTON_LABEL.VIEW_MORE}
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography>{data.description}</Typography>
+                        </>
+                      )}
                     </>
                   ) : (
                     <Typography color="GrayText" fontStyle="italic">
