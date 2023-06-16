@@ -153,190 +153,195 @@ const SeminarDetail = () => {
   return (
     <div className={style.detail__container}>
       {data && (
-        <div>
-          <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
-          <div className={style.detail__content}>
-            <img
-              className={style.detail__image}
-              src={
-                data.imageLink
-                  ? data.imageLink
-                  : require("../../../assets/default-cover.jpg")
-              }
-            />
+        <>
+          <div>
+            <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
+            <div className={style.detail__content}>
+              <img
+                className={style.detail__image}
+                src={
+                  data.imageLink
+                    ? data.imageLink
+                    : require("../../../assets/default-cover.jpg")
+                }
+              />
 
-            <div className={style.detail__information}>
-              <h1 className={style.detail__title}>{data.name}</h1>
-              {renderSeminarStatusLabel()}
+              <div className={style.detail__information}>
+                <h1 className={style.detail__title}>{data.name}</h1>
+                {renderSeminarStatusLabel()}
 
-              {userInfo?.role === "STAFF" && (
-                <div className={style.detail__burger}>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                  >
-                    <img
-                      src={require("../../../assets/icons/Edit_Semniar.png")}
-                    />
-                  </Button>
-                  <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    className={style.detail__dropdown}
-                  >
-                    <MenuItem
-                      onClick={() =>
-                        handleNavigate(
-                          ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
-                        )
-                      }
+                {userInfo?.role === "STAFF" && (
+                  <div className={style.detail__burger}>
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
                     >
                       <img
-                        src={require("../../../assets/icons/Semniar_Report.png")}
+                        src={require("../../../assets/icons/Edit_Semniar.png")}
                       />
-                      <span>{SEMINAR.RERORT}</span>
-                    </MenuItem>
-
-                    {moment(data.startTime) > Date.now() && (
-                      //Not show edit and delete menu for past event
-                      <div>
-                        <MenuItem
-                          onClick={() =>
-                            handleNavigate(
-                              ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
-                            )
-                          }
-                        >
-                          <img
-                            src={require("../../../assets/icons/Seminar_Edit.png")}
-                          />
-                          <span>{SEMINAR.EDIT}</span>
-                        </MenuItem>
-                        <MenuItem onClick={onOpenRemoveDialog}>
-                          <img
-                            src={require("../../../assets/icons/Seminar_Delete.png")}
-                          />
-                          <span>{SEMINAR.DELETE}</span>
-                        </MenuItem>
-                      </div>
-                    )}
-                  </Menu>
-                </div>
-              )}
-              <p>
-                <strong>{SEMINAR.AUTHOR}:</strong>{" "}
-                {data.mentors.map(
-                  (mentor, index) =>
-                    `${mentor.fullName}${
-                      data.mentors.length - 1 !== index ? ", " : ""
-                    }`
-                )}
-              </p>
-              <p>
-                <strong>{SEMINAR.TIME}: </strong>
-                {handleTimeToDisplay(data.startTime)}
-              </p>
-              <p>
-                <strong>{SEMINAR.LOCATION}: </strong> {data.location}
-              </p>
-              <p>
-                <strong>{SEMINAR.ORGANIZER}: </strong> {data.department?.name}
-              </p>
-              <div>
-                <p>
-                  <strong>{SEMINAR.CONTENT}: </strong>
-                </p>
-                {data.description ? (
-                  <>
-                    <Typography
-                      className={
-                        expandDetail
-                          ? null
-                          : `${style.detail__seminarDescription}`
-                      }
+                    </Button>
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                      className={style.detail__dropdown}
                     >
-                      {data.description}
-                    </Typography>
-                    <div className={`${style.detail__expandButton}`}>
-                      <Button
-                        onClick={() => {
-                          setExpandDetail((prev) => !prev);
-                        }}
+                      <MenuItem
+                        onClick={() =>
+                          handleNavigate(
+                            ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                          )
+                        }
                       >
-                        {expandDetail
-                          ? BUTTON_LABEL.VIEW_LESS
-                          : BUTTON_LABEL.VIEW_MORE}
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
-                )}
-              </div>
+                        <img
+                          src={require("../../../assets/icons/Semniar_Report.png")}
+                        />
+                        <span>{SEMINAR.RERORT}</span>
+                      </MenuItem>
 
-              <p>
-                <strong>{SEMINAR.ATTACHED_FILE}: </strong>
-                {data.attachmentLinks?.length > 0 ? (
-                  <ListFileDisplay
-                    mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
-                    oldItems={data.attachmentLinks}
-                  />
-                ) : (
-                  <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                      {moment(data.startTime) > Date.now() && (
+                        //Not show edit and delete menu for past event
+                        <div>
+                          <MenuItem
+                            onClick={() =>
+                              handleNavigate(
+                                ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                              )
+                            }
+                          >
+                            <img
+                              src={require("../../../assets/icons/Seminar_Edit.png")}
+                            />
+                            <span>{SEMINAR.EDIT}</span>
+                          </MenuItem>
+                          <MenuItem onClick={onOpenRemoveDialog}>
+                            <img
+                              src={require("../../../assets/icons/Seminar_Delete.png")}
+                            />
+                            <span>{SEMINAR.DELETE}</span>
+                          </MenuItem>
+                        </div>
+                      )}
+                    </Menu>
+                  </div>
                 )}
-              </p>
+                <p>
+                  <strong>{SEMINAR.AUTHOR}:</strong>{" "}
+                  {data.mentors.map(
+                    (mentor, index) =>
+                      `${mentor.fullName}${
+                        data.mentors.length - 1 !== index ? ", " : ""
+                      }`
+                  )}
+                </p>
+                <p>
+                  <strong>{SEMINAR.TIME}: </strong>
+                  {handleTimeToDisplay(data.startTime)}
+                </p>
+                <p>
+                  <strong>{SEMINAR.LOCATION}: </strong> {data.location}
+                </p>
+                <p>
+                  <strong>{SEMINAR.ORGANIZER}: </strong> {data.department?.name}
+                </p>
+                <div>
+                  <p>
+                    <strong>{SEMINAR.CONTENT}: </strong>
+                  </p>
+                  {data.description ? (
+                    <>
+                      <Typography
+                        className={
+                          expandDetail
+                            ? null
+                            : `${style.detail__seminarDescription}`
+                        }
+                      >
+                        {data.description}
+                      </Typography>
+                      <div className={`${style.detail__expandButton}`}>
+                        <Button
+                          onClick={() => {
+                            setExpandDetail((prev) => !prev);
+                          }}
+                        >
+                          {expandDetail
+                            ? BUTTON_LABEL.VIEW_LESS
+                            : BUTTON_LABEL.VIEW_MORE}
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
+                  )}
+                </div>
 
-              <div className={style.detail__buttons}>
-                {userInfo?.role === SYSTEM_ROLE.STUDENT && (
-                  <CustomizedButton variant="outlined" color="primary600">
-                    {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
-                  </CustomizedButton>
-                )}
-                {userInfo?.role !== SYSTEM_ROLE.STAFF && (
-                  <CustomizedButton
-                    onClick={onOpenModal}
-                    variant="outlined"
-                    color="primary600"
-                  >
-                    {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                  </CustomizedButton>
-                )}
+                <p>
+                  <strong>{SEMINAR.ATTACHED_FILE}: </strong>
+                  {data.attachmentLinks?.length > 0 ? (
+                    <ListFileDisplay
+                      mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
+                      oldItems={data.attachmentLinks}
+                    />
+                  ) : (
+                    <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                  )}
+                </p>
+
+                <div className={style.detail__buttons}>
+                  {userInfo?.role === SYSTEM_ROLE.STUDENT && (
+                    <CustomizedButton variant="outlined" color="primary600">
+                      {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
+                    </CustomizedButton>
+                  )}
+                  {userInfo?.role !== SYSTEM_ROLE.STAFF && (
+                    <CustomizedButton
+                      onClick={onOpenModal}
+                      variant="outlined"
+                      color="primary600"
+                    >
+                      {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                    </CustomizedButton>
+                  )}
+                </div>
               </div>
             </div>
+
+            <QRModal
+              seminarId={data.id}
+              openModal={openModal}
+              onCloseModal={onCloseModal}
+            />
+
+            <ConfirmationDialog
+              open={openRemoveDialog}
+              title="Xóa sự kiện"
+              cancelLabel={BUTTON_LABEL.CANCEL}
+              confirmLabel={BUTTON_LABEL.CONFIRM}
+              content="Bạn có chắc muốn xóa sự kiện này không? Hành động này không thể hoàn tác"
+              handleClose={onCloseRemoveDialog}
+              handleSubmit={handleRemoveSeminar}
+            />
           </div>
 
-          <QRModal
-            seminarId={data.id}
-            openModal={openModal}
-            onCloseModal={onCloseModal}
-          />
-
-          <ConfirmationDialog
-            open={openRemoveDialog}
-            title="Xóa sự kiện"
-            cancelLabel={BUTTON_LABEL.CANCEL}
-            confirmLabel={BUTTON_LABEL.CONFIRM}
-            content="Bạn có chắc muốn xóa sự kiện này không? Hành động này không thể hoàn tác"
-            handleClose={onCloseRemoveDialog}
-            handleSubmit={handleRemoveSeminar}
-          />
-        </div>
+          {data.status === SEMINAR_STATUS.PAST && (
+            <DiscussionRoom seminarId={id} />
+          )}
+        </>
       )}
-      <DiscussionRoom seminarId={id} />
     </div>
   );
 };
