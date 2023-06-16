@@ -1,0 +1,48 @@
+@import "../../theme";
+@import "../../break-point";
+
+.select {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.3vh;
+    overflow: hidden;
+
+    label {
+      align-self: flex-start;
+      font-size: $LABEL_SIZE;
+      color: $primary900;
+      font-weight: 600;
+      margin-bottom: 0.8vh;
+    }
+  }
+
+  &__input {
+    div {
+      padding-block: 0.7rem;
+      background-color: $black000;
+    }
+  }
+}
+
+@media (max-width: $bp-xl) {
+  .select {
+    &__container {
+      margin-bottom: 1.0vh;
+    }
+
+    label {
+      margin-bottom: 0.5vh;
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .select {
+    &__container {
+      label {
+        font-size: $SMALL_LABEL_SIZE;
+      }
+    }
+  }
+}

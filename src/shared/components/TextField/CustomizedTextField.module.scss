@@ -1,27 +1,75 @@
 @import "../../theme";
+@import "../../break-point";
 
 .textField {
   &__container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2vh;
+    margin-bottom: 2.3vh;
 
     label {
       align-self: flex-start;
-      font-size: 1.1rem;
+      font-size: $LABEL_SIZE;
       color: $primary900;
       font-weight: 600;
-      margin-bottom: 1vh;
+      margin-bottom: 0.8vh;
+
+      span {
+        margin-left: 0.3rem;
+        color: $black400;
+        font-weight: 500;
+      }
     }
 
     input {
-        padding-block: 0.7rem;
-        background-color: $black000;
+      padding-block: 0.7rem;
+      background-color: $black000;
+      border-radius: 5px;
     }
   }
 
-  &__required {
-    color: $systemRed;
-    margin-right: 0.2vw;
+  &__limit {
+    text-align: right;
+    margin-top: 0.2rem;
+
+    font-size: $EXTRA_SMALL_SIZE;
+  }
+}
+
+@media (max-width: $bp-xl) {
+  .textField {
+    &__container {
+      textarea {
+        padding-block: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .textField {
+    &__container {
+      label {
+        font-size: $SMALL_LABEL_SIZE;
+      }
+    }
+
+    &__limit {
+      font-size: $SMALL_LABEL_SIZE;
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .textField {
+    &__container {
+      label {
+        font-size: $EXSMALL_LABEL_SIZE;
+      }
+    }
+
+    &__limit {
+      font-size: $EXSMALL_LABEL_SIZE;
+    }
   }
 }

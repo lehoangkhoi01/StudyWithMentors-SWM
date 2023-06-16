@@ -1,137 +1,181 @@
-import { Button, Divider, TextField } from "@mui/material";
-import style from "./SignUpForm.module.scss";
-import { useForm } from "react-hook-form";
+//import hooks ...
 import { useState } from "react";
-import {
-  APP_NAME,
-  SIGN_UP_PLACEHOLDER,
-  SIGN_UP_STAGE,
-  SIGN_UP_TEXT,
-  TITLE,
-} from "../../../shared/constants";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+//import style and custom components
+import style from "./SignUpForm.module.scss";
+import { Typography } from "@mui/material";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
+import CustomDivider from "../CustomDivider/CustomDivider";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+
+//Others
+import {
+  ERROR_MESSAGES,
+  SIGN_UP_PLACEHOLDER,
+  SIGN_UP_TEXT,
+  TITLE,
+} from "../../../shared/constants/common";
+import { COLOR } from "../../../shared/constants/globalStyle";
+import { ROUTES } from "../../../shared/constants/navigation";
+import {
+  emailValidationRules,
+  passwordValidation,
+  registerFullNameValidation,
+} from "../../../shared/constants/validationRules";
+import { authenticationService } from "../../../Services/authenticationService";
+import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
+import { userAction } from "../../../Store/slices/userSlice";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const SignUp = () => {
-  const { register, handleSubmit } = useForm();
-  const [stage, setStage] = useState(SIGN_UP_STAGE.SIGN_UP);
-  const [signUpForm, setSignUpForm] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [tempEmail, setTempEmail] = useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+  const { setLoading } = useCustomLoading();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setSignUpForm(data);
-    setStage(SIGN_UP_STAGE.SENT_EMAIL);
+  const [signUpError, setSignUpError] = useState("");
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const body = {
+      email: data.email,
+      password: data.password,
+      fullName: data.fullName,
+    };
+    try {
+      const response = await authenticationService.signUp(body);
+      history.push("/confirmation", response);
+    } catch (error) {
+      if (error.status === 409) {
+        setSignUpError(ERROR_MESSAGES.DUPLICATED_EMAIL);
+      } else {
+        setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const changeTempEmailHandler = (event) => {
-    setTempEmail(event.target.value);
+  const handleSignInWithGoogle = async () => {
+    setLoading(true);
+    try {
+      const googleSignInResult = await SignInWithGoogle();
+      const response = await authenticationService.signInGoogle(
+        googleSignInResult
+      );
+      localStorage.setItem("TOKEN", response.accessToken);
+      dispatch(userAction.loginSuccess(response));
+      history.push("/home");
+    } catch (error) {
+      setSignUpError(ERROR_MESSAGES.SERVER_COMMON_ERROR);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const updateEmail = () => {
-    setSignUpForm((prevValue) => ({ ...prevValue, email: tempEmail }));
-    console.log(signUpForm);
+  const validationConfirmPassword = (val) => {
+    if (!val || val.length === 0) {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+    if (watch("password") != val) {
+      return ERROR_MESSAGES.CONFIRM_PASSWORD_NOT_MATCH;
+    }
   };
 
   return (
     <Grid2 container className={style.signUp__container}>
-      <Grid2 md={6} maxWidth={"50%"}>
-        <img alt="background" src={require("../../../assets/image1.png")} />
-      </Grid2>
-      <Grid2 md={6}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={`${style.signUp__form}`}
-        >
-          <h1>{APP_NAME}</h1>
-          <h2>{TITLE.SIGN_UP}</h2>
-          {stage === SIGN_UP_STAGE.SIGN_UP && (
-            <>
-              <CustomizedTextField
-                inputId="email"
-                name={TITLE.EMAIL}
-                placeholder={SIGN_UP_PLACEHOLDER.EMAIL}
-                required={true}
-                type={"email"}
-                options={{ ...register("email") }}
-              />
-              <CustomizedTextField
-                inputId="fullname"
-                name={TITLE.FULL_NAME}
-                placeholder={SIGN_UP_PLACEHOLDER.FULL_NAME}
-                required={true}
-                options={{ ...register("fullName") }}
-              />
-              <CustomizedTextField
-                inputId="password"
-                name={TITLE.PASSWORD}
-                placeholder={SIGN_UP_PLACEHOLDER.PASSWORD}
-                required={true}
-                type={"password"}
-                options={{ ...register("password") }}
-              />
-              <CustomizedTextField
-                inputId="confirmPassword"
-                name={TITLE.CONFIRM_PASSWORD}
-                placeholder={SIGN_UP_PLACEHOLDER.CONFIRM_PASSWORD}
-                required={true}
-                type={"password"}
-                options={{ ...register("confirmPassword") }}
-              />
-              <Button
-                type="submit"
-                className={`${style.signUp__button}`}
-                variant="contained"
-              >
-                {TITLE.SIGN_UP}
-              </Button>
-              <div className={`${style.divider__container}`}>
-                <Divider textAlign="center" sx={{ width: "100%" }} flexItem>
-                  {TITLE.OR}
-                </Divider>
-              </div>
-              <GoogleSignInButton />
-              <p>
-                {SIGN_UP_TEXT.HAD_PASSWORD}?{" "}
-                <a href={"#"}>{SIGN_UP_TEXT.SIGN_IN_NOW}!</a>
-              </p>
-            </>
-          )}
-          {stage === SIGN_UP_STAGE.SENT_EMAIL && (
-            <>
-              <p>{SIGN_UP_TEXT.EMAIL_WAS_SENT}.</p>
-              <p>
-                {SIGN_UP_TEXT.PLEASE_CHECK_EMAIL} {signUpForm.email}
-              </p>
-              <div>
-                <p>{SIGN_UP_TEXT.DID_NOT_RECEIVED_EMAIL}?</p>
-                <GoogleSignInButton />
-              </div>
-              <p>{SIGN_UP_TEXT.CHANGE_EMAIL}</p>
+      <ImageSideContainer />
+      <Grid2 xs={12} md={6} className={style.signUp__rightSide}>
+        <CustomPattern width={"50%"} />
+        <div className={style.signUp__formSection}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={`${style.signUp__form}`}
+          >
+            <CustomTopTitle title={TITLE.SIGN_UP} />
+            <CustomizedTextField
+              inputId="email"
+              name={TITLE.EMAIL}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.EMAIL}
+              options={{ ...register("email", emailValidationRules) }}
+              error={errors.email ? true : false}
+              helperText={errors?.email?.message}
+            />
+            <CustomizedTextField
+              inputId="fullname"
+              name={TITLE.FULL_NAME}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.FULL_NAME}
+              options={{ ...register("fullName", registerFullNameValidation) }}
+              error={errors.fullName ? true : false}
+              helperText={errors?.fullName?.message}
+            />
+            <CustomizedTextField
+              inputId="password"
+              name={TITLE.PASSWORD}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.PASSWORD}
+              type={"password"}
+              options={{ ...register("password", passwordValidation) }}
+              error={errors.password ? true : false}
+              helperText={errors?.password?.message}
+            />
+            <CustomizedTextField
+              inputId="confirmPassword"
+              name={TITLE.CONFIRM_PASSWORD}
+              required={true}
+              placeholder={SIGN_UP_PLACEHOLDER.CONFIRM_PASSWORD}
+              type={"password"}
+              options={{
+                ...register("confirmPassword", {
+                  validate: (val) => validationConfirmPassword(val),
+                }),
+              }}
+              error={errors.confirmPassword ? true : false}
+              helperText={errors?.confirmPassword?.message}
+            />
+            {signUpError && (
+              <Typography variant="subtitle1" color={COLOR.SYSTEM_RED}>
+                {signUpError}
+              </Typography>
+            )}
 
-              <TextField
-                id="email"
-                label="Email"
-                value={tempEmail}
-                onChange={changeTempEmailHandler}
-              />
-
-              <Button
-                className={`${style.signUp__button}`}
-                variant="contained"
-                onClick={updateEmail}
+            <CustomizedButton
+              type="submit"
+              variant="contained"
+              color="primary600"
+            >
+              {TITLE.SIGN_UP}
+            </CustomizedButton>
+          </form>
+          <CustomDivider text={TITLE.OR} />
+          <GoogleSignInButton onClick={handleSignInWithGoogle} />
+          <div className={`${style.smallText__container}`}>
+            <span>
+              {SIGN_UP_TEXT.HAD_ACCOUNT}{" "}
+              <a
+                href={ROUTES.SIGN_IN}
+                className={`${style.smallText__signUpLink}`}
               >
-                {TITLE.UPDATE}
-              </Button>
-            </>
-          )}
-        </form>
+                {SIGN_UP_TEXT.SIGN_IN_NOW}
+              </a>
+            </span>
+          </div>
+        </div>
       </Grid2>
     </Grid2>
   );

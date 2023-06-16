@@ -1,0 +1,49 @@
+@import "../../theme";
+@import "../../break-point";
+
+.chart {
+  &__container {
+    background-color: $black000;
+
+    width: min-content;
+
+    position: relative;
+
+    border-radius: 5px;
+    box-shadow: 0px 1.63778px 8.18892px rgba($black900, 0.1);
+
+    margin-inline: auto;
+
+    p {
+      padding: 1rem 1rem 0;
+      margin-bottom: 1.8rem;
+      font-weight: 600;
+      font-size: 1rem;
+
+      height: 4rem;
+      overflow-y: auto;
+    }
+  }
+
+  &__divider {
+    border: 1px solid $black200;
+  }
+
+  &__pie {
+    width: 20rem !important;
+    height: auto !important;
+
+    padding: 0.3rem 0.2rem 0;
+    padding-right: 3rem;
+
+    margin-top: -3rem;
+  }
+
+  &__average {
+    font-size: 1rem;
+
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}

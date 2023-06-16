@@ -1,0 +1,30 @@
+@import "../../break-point";
+@import "../../theme";
+
+.checkBox {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.3vh;
+  }
+
+  @media (max-width: $bp-md) {
+    &__container {
+      label {
+        span {
+          font-size: $SMALL_LABEL_SIZE;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $bp-sm) {
+    &__container {
+      label {
+        span {
+          font-size: $EXSMALL_LABEL_SIZE;
+        }
+      }
+    }
+  }
+}

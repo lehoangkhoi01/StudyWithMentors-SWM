@@ -1,0 +1,44 @@
+@import "../../theme";
+@import "../../break-point";
+
+.ratingInput {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0;
+  }
+  &__label {
+    font-size: $LABEL_SIZE;
+    color: $primary900;
+    font-weight: 600;
+    margin-bottom: 0.8vh;
+    align-self: flex-start;
+  }
+  &__ratingLabel {
+    color: $black400;
+    font-size: $SMALL_LABEL_SIZE;
+  }
+  &__errorText {
+    color: $systemRed;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .ratingInput {
+    &__container {
+      padding: 1rem 0;
+    }
+    &__label {
+      font-size: $SMALL_LABEL_SIZE;
+    }
+    &__ratingLabel {
+      font-size: $EXSMALL_LABEL_SIZE;
+    }
+  }
+}

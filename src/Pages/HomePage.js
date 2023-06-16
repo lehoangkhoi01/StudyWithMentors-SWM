@@ -1,7 +1,7 @@
-import ComponentTemp from "../Components/ComponentTemp";
+import SeminarList from "../Components/Seminars/SeminarList/SeminarList";
 
 const HomePage = () => {
-  return <ComponentTemp />;
+  return <SeminarList />;
 };
 
 export default HomePage;

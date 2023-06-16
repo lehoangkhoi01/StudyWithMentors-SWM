@@ -1,83 +1,65 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import style from "./SignInForm.module.scss";
-import { Button, Divider } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useForm } from "react-hook-form";
-import { BUTTON_LABEL, PLACE_HOLDER, TITLE } from "../../../shared/constants";
+import { ERROR_MESSAGES } from "../../../shared/constants/common";
+import { ROUTES } from "../../../shared/constants/navigation";
 import GoogleSignInButton from "../../../shared/components/GoogleSignInButton/GoogleSignInButton";
-import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
+import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
+import ImageSideContainer from "../ImageSideContainer/ImageSideContainer";
+import { SignInWithGoogle } from "../../../Helpers/googleAuthentication";
+import { authenticationService } from "../../../Services/authenticationService";
+import { useHistory } from "react-router-dom";
+import { userAction } from "../../../Store/slices/userSlice";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { Typography } from "@mui/material";
+import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
+import { TITLE } from "../../../shared/constants/common";
 
 const SignInForm = () => {
-  const { register, handleSubmit } = useForm();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { setLoading } = useCustomLoading();
+  const [loginError, setLoginError] = React.useState("");
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleSignInWithGoogle = async () => {
+    setLoading(true);
+    try {
+      const googleSignInResult = await SignInWithGoogle();
+      const response = await authenticationService.signInGoogle(
+        googleSignInResult
+      );
+      localStorage.setItem("TOKEN", response.accessToken);
+      dispatch(userAction.loginSuccess(response));
+      history.push(ROUTES.HOME);
+    } catch (error) {
+      if (error.status == "403") {
+        setLoginError(ERROR_MESSAGES.UNAUTHORIZED_SIGNIN);
+      } else {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Grid2 container className={`${style.signIn__container}`}>
-      <Grid2 md={6} className={`${style.signIn__formContainer}`}>
+      <Grid2 xs={12} md={6} className={`${style.signIn__formContainer}`}>
+        <CustomPattern width={"50%"} height={"95%"} />
         <div className={`${style.signIn__formSection}`}>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={`${style.signIn__form}`}
+          <CustomTopTitle title={TITLE.SIGN_IN} />
+          <GoogleSignInButton onClick={handleSignInWithGoogle} />
+          <Typography
+            variant="subtitle1"
+            className={`${style.signIn__errorText}`}
           >
-            <h1 className={`${style.signIn__title}`}>{TITLE.SIGN_IN}</h1>
-            <CustomizedTextField
-              inputId="email"
-              name="Email"
-              placeholder={PLACE_HOLDER.LOGIN_EMAIL}
-              options={{ ...register("password") }}
-            />
-            <CustomizedTextField
-              inputId="password"
-              name="Password"
-              placeholder={PLACE_HOLDER.LOGIN_PASSWORD}
-              options={{ ...register("email") }}
-            />
-          </form>
-
-          <div className={`${style.forgotPassword__container}`}>
-            <a href="#" className={`${style.forgotPassword__link}`}>
-              {TITLE.FORGOT_PASSWORD}
-            </a>
-          </div>
-
-          <Button
-            fullWidth
-            type="submit"
-            className={`${style.signIn__button}`}
-            variant="contained"
-          >
-            {BUTTON_LABEL.LOGIN}
-          </Button>
-
-          <div className={`${style.divider__container}`}>
-            <Divider
-              className={`${style.divider}`}
-              textAlign="center"
-              sx={{ width: "100%" }}
-              flexItem
-            >
-              {TITLE.OR}
-            </Divider>
-          </div>
-          <GoogleSignInButton />
-
-          <div className={`${style.registerSuggestion__container}`}>
-            <span>
-              Bạn chưa có tài khoản?{" "}
-              <a href="#" className={`${style.registerSuggestion__signUpLink}`}>
-                Hãy đăng ký tại đây!
-              </a>
-            </span>
-          </div>
+            {loginError}
+          </Typography>
         </div>
       </Grid2>
-
-      <Grid2 md={6} maxWidth={"50%"}>
-        <img alt="background" src={require("../../../assets/image1.png")} />
-      </Grid2>
+      <ImageSideContainer />
     </Grid2>
   );
 };

@@ -1,22 +1,76 @@
 @import "../../theme";
+@import "../../break-point";
 
 .navigation {
-    &__appBar {
-        background-color: $primary900;
+  &__appBar {
+    background-color: $primary900;
+    z-index: 999;
+    position: relative;
+  }
+
+  &__container {
+    width: 80%;
+  }
+
+  &__titleContainer {
+    justify-content: center;
+  }
+
+  &__link {
+    color: $primary200;
+    font-weight: 600;
+    border-radius: 0;
+    text-decoration: none;
+  }
+
+  &__title:hover,
+  &__title_active {
+    a {
+      color: $black000;
     }
 
-    &__titleContainer {
-        justify-content: center;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 1px;
+      bottom: 0;
+      left: 25%;
+      border-bottom: 3px solid $black000;
+    }
+  }
+
+  &__menuItem {
+    background-color: $primary700;
+    margin: 10px;
+    border-radius: 5px;
+
+    & p,
+    a {
+      color: $primary200;
+      font-weight: 700;
+      font-size: $SMALL_LABEL_SIZE;
+      text-decoration: none;
+    }
+  }
+  &__menuItem:hover,
+  &__menuItem_active {
+    background-color: $primary500;
+    & a {
+      color: $black000;
+    }
+  }
+
+  @media (max-width: $bp-lg) {
+    &__container {
+      width: 90%;
     }
 
-    &__title {
-        color: $primary200;
-        font-weight: 600;
+    &__link {
+      button {
+        font-size: 0.8rem;
+        padding-inline: 0.2rem;
+      }
     }
-
-    &__title:hover {
-        color: $black000;
-    }
+  }
 }
-
-

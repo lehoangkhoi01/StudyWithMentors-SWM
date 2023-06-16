@@ -1,0 +1,21 @@
+@import "../../theme";
+.filelist {
+  &__label {
+    font-size: $LABEL_SIZE;
+    text-align: start;
+    color: $primary900;
+    font-weight: 600;
+    span {
+      color: $black400;
+      font-weight: 500;
+    }
+  }
+  &__row {
+    font-size: $LABEL_SIZE;
+    justify-content: space-between;
+  }
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+}

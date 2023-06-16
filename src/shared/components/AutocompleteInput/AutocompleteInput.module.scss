@@ -1,0 +1,39 @@
+@import "../../theme";
+
+.autocomplete {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.3vh;
+
+    label {
+      align-self: flex-start;
+      font-size: $LABEL_SIZE;
+      color: $primary900;
+      font-weight: 600;
+      margin-bottom: 0.8vh;
+
+      span {
+        margin-left: 0.3rem;
+        color: $black400;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__rowDropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5px 0;
+    cursor: default;
+  }
+
+  &__rowDropdown:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  &__errorText {
+    color: $systemRed;
+  }
+}

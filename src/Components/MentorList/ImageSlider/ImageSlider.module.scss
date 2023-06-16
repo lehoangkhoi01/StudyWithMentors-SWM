@@ -1,0 +1,11 @@
+@import "../../../shared/theme";
+
+.imageSlider {
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        flex: none !important;
+        margin-bottom: 1rem;
+    }
+}

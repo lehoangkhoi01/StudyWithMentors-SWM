@@ -1,0 +1,70 @@
+@import "../../../shared/theme";
+
+.container {
+    background: $primaryBackground;
+    color: $primary900;
+    font-weight: 500;
+    font-size: $NORMAL_FONT_SIZE;
+    height: 100%;
+}
+
+.rightSide {
+    position: relative;
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__container {
+        z-index: 999;
+        width: 70%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.textCenter {
+    text-align: center;
+    margin: 1.5vh 0;
+}
+
+.email {
+    font-weight: 700;
+}
+
+.divider {
+    width: 50%;
+    background-color: $primary900;
+}
+
+.paragraphText {
+    margin: 1.5vh 0;
+}
+
+.link {
+    text-decoration: none;
+    color: $primary600;
+    font-weight: 600;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.bottomSide {
+    margin-top: 10vh;
+}
+
+/* --- Responsive for mobile --- */
+@media (max-width: 899px) {
+    .imageSide {
+        display: none;
+    }
+    .rightSide {
+        height: 100vh;
+    }
+    .paragraphText, .textCenter, .bottomSide {
+        font-size: 14px;
+    }
+}

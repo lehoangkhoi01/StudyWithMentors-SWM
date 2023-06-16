@@ -1,0 +1,64 @@
+@import "../../theme";
+@import "../../break-point";
+
+.datePicker {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.3vh;
+
+    label {
+      align-self: flex-start;
+      font-size: $LABEL_SIZE;
+      color: $primary900;
+      font-weight: 600;
+      margin-bottom: 0.8vh;
+
+      span {
+        margin-left: 0.3rem;
+        color: $black400;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__input {
+    div {
+      border: none;
+      background-color: $black000;
+
+      input {
+        padding-block: 0.7rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-xl) {
+  .datePicker {
+    &__input {
+      div {
+        input {
+          padding-block: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .datePicker {
+    &__container {
+      label {
+        font-size: $SMALL_LABEL_SIZE;
+      }
+    }
+    &__input {
+      div {
+        input {
+          padding-block: 0.3rem;
+        }
+      }
+    }
+  }
+}

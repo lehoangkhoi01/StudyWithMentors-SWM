@@ -1,0 +1,37 @@
+@import "../../../shared/theme";
+
+.discussionComment {
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+  &__wrapper {
+    border-radius: 20px;
+    background-color: $black000;
+    width: 70%;
+    padding: 2rem;
+  }
+  &__button {
+    width: max-content;
+    padding: 0px;
+    color: $primary600;
+    margin: 0.5rem 0;
+    font-size: $SMALL_BUTTON_TEXT_SIZE;
+  }
+  &__buttonContainer {
+    width: 30%;
+    margin: 0.5rem 0 0.5rem auto;
+  }
+  &__replyContainer {
+    width: 90%;
+    margin-left: 2rem;
+    background-color: $primary50;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  &__textbox {
+    border-radius: 10px;
+    background-color: $black000;
+  }
+}

@@ -1,0 +1,29 @@
+@import "../../../../shared/theme";
+
+.commentAction {
+  &__hide {
+    visibility: hidden;
+  }
+  &__actionContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__upvoteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $primary600;
+    font-weight: 600;
+
+    &__icon {
+      font-size: 2rem;
+    }
+    &__icon_clicked {
+      color: $black500;
+    }
+    &__icon:hover {
+      cursor: pointer;
+    }
+  }
+}

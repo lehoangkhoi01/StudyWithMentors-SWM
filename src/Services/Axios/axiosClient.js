@@ -2,10 +2,11 @@ import axios from "axios";
 import queryString from "query-string";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080/support",
-  headers: {
+  baseURL: process.env.REACT_APP_BASE_URL,
+  headers: {},
+  paramsSerializer: {
+    serialize: (params) => queryString.stringify(params),
   },
-  paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.response.use(
@@ -17,7 +18,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (err) => {
-    return err.response;
+    return Promise.reject(err.response);
   }
 );
 

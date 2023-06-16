@@ -1,0 +1,207 @@
+@import "../../../shared/theme";
+@import "../../../shared/break-point";
+
+.detail {
+  &__container {
+    width: 90%;
+    min-height: 90%;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  &__seminarStatus {
+    width: max-content;
+    padding: 0.7rem;
+    font-size: 1rem;
+    color: $black000;
+    border-radius: 5px;
+  }
+  &__futureLabel {
+    background-color: $secondary900;
+  }
+  &__pastLabel {
+    background-color: $primary400;
+  }
+
+  &__stage {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+
+    display: flex;
+    gap: 1rem;
+
+    a {
+      text-decoration: none;
+      color: rgba($black900, 0.6);
+    }
+  }
+
+  &__content {
+    border-radius: 1.2rem;
+    background-color: $black000;
+    margin: 1rem 0;
+    padding: 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    flex: unset;
+  }
+
+  &__image {
+    width: 30%;
+    height: fit-content;
+    border: 1rem;
+    border-radius: 0.8rem;
+  }
+
+  &__information {
+    padding-inline: 2.5rem;
+    position: relative;
+    width: 100%;
+  }
+
+  &__title {
+    color: $primary900;
+
+    font-size: 1.8rem;
+    margin-top: 0;
+  }
+
+  &__burger {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    img {
+      width: 25px;
+    }
+
+    button {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &__dropdown {
+    li {
+      display: flex;
+      gap: 0.8rem;
+
+      margin-inline: 0.3rem;
+      padding-inline: 0.5rem;
+
+      &:hover {
+        background-color: $primary50;
+      }
+    }
+
+    img {
+      width: 22px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    margin-top: 2rem;
+
+    button {
+      width: 40%;
+    }
+  }
+  &__expandButton {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__seminarDescription {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  @media (max-width: $bp-lg) {
+    &__container {
+      width: 85%;
+    }
+
+    &__buttons {
+      gap: 1rem;
+      margin-top: 1.2rem;
+
+      button {
+        font-size: 1rem;
+        width: 40%;
+      }
+    }
+  }
+
+  @media (max-width: $bp-md) {
+    &__information {
+      padding-inline: 1.3rem;
+
+      ul {
+        padding-left: 2rem;
+      }
+    }
+
+    &__content {
+      font-size: 0.7rem;
+      padding: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__buttons {
+      margin-top: 1rem;
+
+      button {
+        font-size: 1.5vw;
+        padding: 0.5rem;
+      }
+    }
+  }
+
+  @media (max-width: $bp-sm) {
+    &__container {
+      width: unset;
+      padding-inline: 0.8rem;
+    }
+
+    &__stage {
+      font-size: 0.8rem;
+    }
+
+    &__content {
+      padding: 0.8rem;
+      font-size: 0.6rem;
+    }
+
+    &__information {
+      padding-inline: 0.8rem;
+
+      ul {
+        padding-left: 1rem;
+      }
+    }
+
+    &__title {
+      font-size: 1.3rem;
+    }
+
+    &__buttons {
+      margin-top: 0.5rem;
+
+      button {
+        font-size: 0.6rem;
+        padding: 0.5rem;
+        width: fit-content;
+      }
+    }
+  }
+}

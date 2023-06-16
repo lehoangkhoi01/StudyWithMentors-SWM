@@ -1,0 +1,33 @@
+@import "../../../../shared/theme";
+.comment {
+  &__accordionSummary {
+    user-select: text;
+    cursor: default;
+  }
+  &__textbox {
+    background-color: $black50;
+    border-radius: 10px;
+  }
+  &__editTextbox {
+    width: 90%;
+    margin-left: 2rem;
+    background-color: $primary50;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  &__buttonContainer {
+    display: flex;
+    width: 50%;
+    margin: 0.5rem 0 0.5rem auto;
+  }
+  &__userInfo {
+    display: flex;
+  }
+  &__reply {
+    background-color: $primary50;
+    margin: 1rem 0 1rem 2rem;
+    border-radius: 10px;
+    width: 90%;
+  }
+}

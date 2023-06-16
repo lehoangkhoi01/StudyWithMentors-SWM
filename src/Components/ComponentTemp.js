@@ -1,5 +1,5 @@
 const ComponentTemp = () => {
-  return <div>Hello</div>;
+  return <div>Hello Welcome to Growth Me</div>;
 };
 
 export default ComponentTemp;

@@ -1,0 +1,22 @@
+@import "../../../shared/theme";
+
+.title {
+  font-size: $TOP_TITLE_SIZE;
+  text-align: center;
+  font-weight: 700;
+  color: $primary600;
+
+  h4 {
+    margin: 4vh 0 3vh;
+  }
+}
+
+@media (max-width: 899px) {
+  .title {
+    font-size: $SMALL_TOP_TITLE_SIZE;
+
+    h4 {
+      margin-bottom: 4vh;
+    }
+  }
+}

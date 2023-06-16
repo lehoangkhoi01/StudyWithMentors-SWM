@@ -1,0 +1,30 @@
+@import "../../../shared/theme";
+
+.imageUploader {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.3vh;
+
+    label {
+      width: 100%;
+      span {
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+    }
+
+    svg {
+      display: none;
+    }
+
+    input {
+      height: 20rem;
+    }
+
+    & > div > p {
+      //helper text
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,20 +1,25 @@
 @import "../../../shared/theme";
+@import "../../../shared//break-point";
 
 .signIn {
   &__container {
-    img {
+    background: $primaryBackground;
+    height: 100%;
+    &__background {
       width: 100%;
     }
   }
 
   &__formContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: $primaryBackground;
+    justify-content: center;
   }
 
   &__formSection {
+    z-index: 999;
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -25,76 +30,73 @@
     margin: 1em 0;
   }
 
-  &__title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: $primary600;
-  }
-
   &__button {
     margin-top: 2vh;
     background-color: $primary600;
-    font-size: 16px;
+    font-size: $BUTTON_TEXT_SIZE;
     font-weight: 600;
     text-transform: none;
     margin: 1em 0;
+    transition: ease-in 300ms;
+  }
+  &__button:hover {
+    background-color: $primary900;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12);
   }
 
   &__form {
     width: 100%;
     text-align: center;
-    // display: flex;
-    // flex-direction: column;
     gap: 2vh;
-    //padding-inline: 13vw;
+  }
+  &__errorText {
+    margin: 1rem;
+    color: $systemRed;
   }
 }
 
-.forgotPassword {
-  &__container {
-    width: 100%;
-    text-align: right;
-    margin-top: 1em;
-  }
-  &__link {
-    text-decoration: none;
-    color: $primary600;
-  }
+.imageSide {
+  background-image: url("../../../assets/image1.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
-  &__link:hover {
-    text-decoration: underline;
+//***
+@media (max-width: $bp-xl) {
+  .imageSide {
+    background-size: cover;
   }
 }
 
-.divider {
-  color: $primary900;
-  font-weight: 500;
-  font-size: 16px;
-  margin: 1em 0;
-
-  &__container {
-    width: 50%;
-  }
-}
-
-.divider::after, .divider::before {
-  border-top: thin solid $primary900;
-}
-
-.registerSuggestion {
-  &__container {
-    text-align: center;
-    margin: 1em 0;
-    color: $primary600;
+@media (max-width: $bp-md) {
+  .imageSide {
+    display: none;
   }
 
-  &__signUpLink {
-    text-decoration: none;
-    color: $primary600;
-    font-weight: 600;
+  .signIn {
+    &__container {
+      height: 100vh;
+    }
+    &__button {
+      font-size: $SMALL_BUTTON_TEXT_SIZE;
+    }
+
+    &__formSection {
+      margin-top: 10vh;
+    }
   }
 
-  &__signUpLink:hover {
-    text-decoration: underline;
+  .forgotPassword {
+    &__link {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
+  }
+
+  .registerSuggestion {
+    &__signUpLink,
+    &__container {
+      font-size: $SMALL_NORMAL_FONT_SIZE;
+    }
   }
 }

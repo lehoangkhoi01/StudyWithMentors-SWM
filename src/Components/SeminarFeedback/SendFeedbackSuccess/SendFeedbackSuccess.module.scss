@@ -1,0 +1,36 @@
+@import "/src/shared/theme";
+@import "/src/shared/break-point";
+
+.seminarFeedbackSuccess {
+  &__container {
+    background: $primaryBackground;
+    height: 100%;
+    flex-direction: row !important;
+  }
+  &__rightSide {
+    position: relative;
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $primary900;
+    font-weight: 500;
+    font-size: $NORMAL_FONT_SIZE;
+    &__container {
+      z-index: 999;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: -5vh;
+    }
+  }
+}
+
+.textCenter {
+  text-align: center;
+  margin: 1.5vh 0;
+  font-size: 1.5rem;
+}

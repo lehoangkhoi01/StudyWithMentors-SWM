@@ -1,38 +1,75 @@
-$primary900: #1A237E;
+$primary900: #1a237e;
 $primary800: #283493;
-$primary700: #303E9F;
-$primary600: #3948AB;
-$primary500: #3F50B5;
-$primary400: #5C6AC0;
-$primary300: #7986CB;
-$primary200: #9FA8DA;
-$primary100: #C5CAE9;
-$primary50: #E8EAF6;
+$primary700: #303e9f;
+$primary600: #3948ab;
+$primary500: #3f50b5;
+$primary400: #5c6ac0;
+$primary300: #7986cb;
+$primary200: #9fa8da;
+$primary100: #c5cae9;
+$primary50: #e8eaf6;
 
-$secondary900: #FF6700;
-$secondary800: #FF8900;
-$secondary700: #FE9B00;
-$secondary600: #FEAE00;
-$secondary500: #FDBC00;
-$secondary400: #FDC600;
-$secondary300: #FDD241;
-$secondary200: #FEDE7A;
-$secondary100: #FFEBAF;
-$secondary50: #FFF7DF;
+$secondary900: #ff6700;
+$secondary800: #ff8900;
+$secondary700: #fe9b00;
+$secondary600: #feae00;
+$secondary500: #fdbc00;
+$secondary400: #fdc600;
+$secondary300: #fdd241;
+$secondary200: #fede7a;
+$secondary100: #ffebaf;
+$secondary50: #fff7df;
 
-$systemRed: #FF5252;
-$systemGreen: #4CAF50;
+$systemRed: #ff5252;
+$systemGreen: #4caf50;
 
 $black900: #000000;
 $black800: #262626;
 $black800: #434343;
 $black600: #555555;
-$black500: #7B7B7B;
-$black400: #9D9D9D;
-$black300: #C4C4C4;
-$black200: #D9D9D9;
-$black100: #E9E9E9;
-$black50: #F5F5F5;
-$black000: #FFFFFF;
+$black500: #7b7b7b;
+$black400: #9d9d9d;
+$black300: #c4c4c4;
+$black200: #d9d9d9;
+$black100: #e9e9e9;
+$black50: #f5f5f5;
+$black000: #ffffff;
 
-$primaryBackground: linear-gradient(207.72deg, #FFFFFF 6.48%, #E8EAF6 45.45%, #D8DEFF 91.95%);
+$primaryBackground: linear-gradient(
+  207.72deg,
+  #ffffff 6.48%,
+  #e8eaf6 45.45%,
+  #d8deff 91.95%
+);
+$gradientUnderline: linear-gradient(180deg, #ffffff -300%, #7986cb 100%);
+$secondaryBackground: linear-gradient(
+  207.1deg,
+  #f4f6ff 6.37%,
+  #fafaff 6.37%,
+  #e8eaf6 33.14%,
+  #d8deff 48.77%,
+  #f0f1f9 66.33%,
+  #ffffff 90.65%
+);
+
+//TEXT SIZE
+$TOP_TITLE_SIZE: 2em;
+$LABEL_SIZE: 1.2vw;
+$BUTTON_TEXT_SIZE: 2.2vh;
+$NORMAL_FONT_SIZE: 1.2vw;
+$EXTRA_SMALL_SIZE: 0.8vw;
+
+//MEDIUM SIZE
+$MEDIUM_TOP_TITLE_SIZE: 1.5rem;
+
+//SMALL SIZE
+$SMALL_TOP_TITLE_SIZE: 1.3rem;
+$SMALL_BUTTON_TEXT_SIZE: 12px;
+$SMALL_LABEL_SIZE: 1rem;
+$SMALL_NORMAL_FONT_SIZE: 11px;
+
+//EXTRA SMALL SIZE
+$EXSMALL_TOP_TITLE_SIZE: 1.2rem;
+$EXSMALL_BUTTON_TEXT_SIZE: 8px;
+$EXSMALL_LABEL_SIZE: 0.9rem;
+$EXSMALL_NORMAL_FONT_SIZE: 9px;

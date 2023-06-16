@@ -1,0 +1,111 @@
+@import "../../../shared/theme";
+@import "../../../shared/break-point";
+
+.container {
+  position: absolute;
+  z-index: 9999999;
+}
+
+.confirmImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  width: 27%;
+  min-height: 50vh;
+  max-height: 95vh;
+  overflow-x: hidden;
+
+  box-shadow: 0px 0px 10px rgba($black900, 0.2);
+  background-color: $black000;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  padding: 0rem 0rem;
+
+  animation-duration: 0.5s;
+  animation-name: slidedown;
+
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__cancelIcon {
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 1.5rem;
+    width: 20px;
+  }
+
+  &__crop {
+    width: 70%;
+    border-radius: 5px;
+
+    border: 1px solid $black300;
+  }
+
+  &__cropedImgage {
+    margin: 0 auto 2rem;
+    border-radius: 5px;
+
+    canvas {
+      border-radius: 5px;
+      width: 70%;
+
+      border: 1px solid $black300;
+    }
+  }
+
+  &__button {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+
+    width: 30%;
+  }
+
+  @media only screen and (max-width: $bp-xl) {
+    width: 33%;
+    min-height: 70vh;
+  }
+
+  @media only screen and (max-width: $bp-lg) {
+    width: 43%;
+    min-height: 65vh;
+  }
+
+  @media only screen and (max-width: $bp-md) {
+    width: 53%;
+    min-height: 65vh;
+  }
+
+  @media only screen and (max-width: $bp-sm) {
+    top: 50%;
+    width: 70%;
+    min-height: 45vh;
+
+    &__cancelIcon {
+      right: 1.2rem;
+      top: 1.2rem;
+      width: 15px;
+    }
+
+    &__button {
+      font-size: 2.2rem;
+    }
+  }
+}
+
+@keyframes slidedown {
+  from {
+    transform: translate(-50%, -55%);
+  }
+
+  to {
+    transform: translateY(-50%, -50%);
+  }
+}
