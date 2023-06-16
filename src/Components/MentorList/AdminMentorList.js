@@ -310,7 +310,7 @@ const AdminMentorList = () => {
   };
 
   return (
-    <>
+    <div>
       <div className={style.list__container}>
         <div className={style.list__actions}>
           <CustomizedButton
@@ -508,7 +508,7 @@ const AdminMentorList = () => {
         existedData={existedData}
         onSuccess={adjustMentorList}
       />
-    </>
+    </div>
   );
 };
 
