@@ -4,7 +4,7 @@
   &__container {
     background-color: $black000;
     width: 90%;
-    min-height: 80vh;
+    min-height: 80vh;g
     padding: 2rem;
     margin: 1rem auto;
 
@@ -55,6 +55,10 @@
 
     &_icon {
       width: 45px;
+
+      &_disable {
+        filter: grayscale(100%);
+      }
     }
 
     a {
