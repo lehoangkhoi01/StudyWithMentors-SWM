@@ -304,7 +304,7 @@ const SeminarDetail = () => {
                   {data.attachmentLinks?.length > 0 ? (
                     <ListFileDisplay
                       mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
-                      oldItems={data.attachmentLinks}
+                      oldItems={data.attachments}
                     />
                   ) : (
                     <Typography color="GrayText" fontStyle="italic">
