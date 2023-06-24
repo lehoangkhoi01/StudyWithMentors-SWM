@@ -402,6 +402,10 @@ export const ADMIN_TABLE_HEADER = {
   ACTION: "Tác vụ",
 };
 
+export const TABLE_DETAIL = {
+  CV_MENTOR: "CV diễn giả",
+};
+
 export const SORT_DIRECTION = {
   DESC: "desc",
   ASC: "asc",
