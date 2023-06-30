@@ -36,7 +36,7 @@ const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
             id={inputId}
             required={props.required}
             type={props.type ?? "text"}
-            defaultValue={props.items ? props.items[0] : ""}
+            value={props.value}
             {...props}
           >
             {props.items.map((item, index) => {
