@@ -89,7 +89,6 @@ button.rbc-input::-moz-focus-inner {
   font-weight: bold;
   font-size: 90%;
   min-height: 0;
-  border-bottom: 1px solid #ddd;
   background-color: #3948ab !important;
 }
 .rbc-header + .rbc-header {
@@ -476,10 +475,10 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-agenda-view table.rbc-agenda-table {
   width: 100%;
-  border: 1px solid #ddd;
   border-spacing: 0;
   border-collapse: collapse;
 }
+
 .rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
   padding: 5px 10px;
   vertical-align: top;
@@ -496,13 +495,15 @@ button.rbc-input::-moz-focus-inner {
   border-left-width: 0;
   border-right: 1px solid #ddd;
 }
-.rbc-agenda-view table.rbc-agenda-table tbody > tr + tr {
-  border-top: 1px solid #ddd;
-}
+
 .rbc-agenda-view table.rbc-agenda-table thead > tr > th {
   padding: 3px 5px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  color: #fff;
+  font-size: 1rem;
+}
+.rbc-agenda-view table.rbc-agenda-table thead > tr {
+  border-left: 5px solid #3948ab;
 }
 .rbc-rtl .rbc-agenda-view table.rbc-agenda-table thead > tr > th {
   text-align: right;
@@ -523,6 +524,16 @@ button.rbc-input::-moz-focus-inner {
   white-space: nowrap;
 }
 
+/* .rbc-agenda-date-cell {
+  width: 166px;
+} */
+
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell,
+.rbc-agenda-event-cell {
+  font-size: 1rem;
+}
+
 .rbc-agenda-event-cell {
   width: 100%;
 }
@@ -536,6 +547,7 @@ button.rbc-input::-moz-focus-inner {
   -ms-flex-direction: column;
   flex-direction: column;
   min-height: 100%;
+  width: 70px;
 }
 .rbc-time-column .rbc-timeslot-group {
   -webkit-box-flex: 1;
@@ -545,10 +557,11 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-timeslot-group {
   border-bottom: 1px solid #ddd;
-  min-height: 40px;
+  min-height: 60px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: flex-end;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
@@ -560,6 +573,11 @@ button.rbc-input::-moz-focus-inner {
   -webkit-box-flex: 0;
   -ms-flex: none;
   flex: none;
+}
+
+.rbc-time-gutter > .rbc-timeslot-group {
+  border-bottom: none;
+  font-size: 1rem;
 }
 
 .rbc-label {
@@ -618,6 +636,10 @@ button.rbc-input::-moz-focus-inner {
   line-height: 1;
   height: 100%;
   min-height: 1em;
+}
+.rbc-event-label,
+.rbc-event-content {
+  font-size: 0.8rem;
 }
 .rbc-day-slot .rbc-time-slot {
   border-top: 1px solid #f7f7f7;
