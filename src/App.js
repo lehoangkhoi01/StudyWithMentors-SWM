@@ -26,6 +26,7 @@ import { Toolbar } from "@mui/material";
 import MentorListAdminPage from "./Pages/Mentor/MentorListAdminPage";
 import DiscussionPage from "./Pages/Discussion/DiscussionPage";
 import MentorListPage from "./Pages/Mentor/MentorListPage";
+import MeetingPage from "./Pages/Meeting/MeetingPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -81,6 +82,7 @@ function App() {
             />
             <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
             <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
+            <Route path={ROUTES.MEETING} component={MeetingPage} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
             <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
           </Switch>
