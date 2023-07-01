@@ -28,6 +28,7 @@ export const BUTTON_LABEL = {
   DEACTIVATE_MENTOR: "Vô hiệu hóa",
   VIEW_MORE: "Xem thêm",
   VIEW_LESS: "Thu gọn",
+  CREATE_TOPIC: "Tạo chủ đề",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -427,4 +428,11 @@ export const FEEDBACK_OVERVIEW = {
 export const CROP_IMAGE = {
   ADJUST_AVATAR: "Điều chỉnh ảnh đại diện",
   AVATAR_AFTER_ADJUST: "Ảnh đại diện sau khi điều chỉnh",
+};
+
+export const ADD_TOPIC = {
+  TOPIC: "Chủ đề",
+  SKILL_GROUP: "Nhóm chủ đề",
+  MAJOR: "Lĩnh vực",
+  COST: "Chi phí",
 };
