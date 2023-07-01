@@ -45,6 +45,7 @@ const SeminarFilter = forwardRef((props, ref) => {
         const response = await departmentService.getDepartments();
 
         setDepartments(response);
+        console.log(response);
       } catch (error) {
         console.log(error);
       }

@@ -1,37 +1,37 @@
 @import "../../../shared/theme";
 
 .customToolbar {
+  display: flex;
+  justify-content: space-between;
+
+  &__dateNavigate {
+    color: $primary900;
+    background-color: $primary50;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 3px;
+    width: 40%;
+    font-size: 1rem;
+  }
+  &__icon {
+    color: $primary900;
+  }
 
-    &__dateNavigate {
-        color: $primary900;
-        background-color: $primary50;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 10px;
-        height: fit-content;
-        padding: 3px;
-        width: 35%;
-        font-size: 1rem;
-    }
-    &__icon {
-        color: $primary900;
-    }
-
-    &__button {
-        align-self: center;
-        color: $secondary600;
-        border-color: $secondary600;
-        border-radius: 50px;
-        width: 100px;
-        height: 40px;
-        padding: 0;
-    }
-    &__button:hover {
-        background-color: $secondary700;
-        border-color: $secondary700;
-        color: $black000;
-    }
+  &__button {
+    align-self: center;
+    color: $secondary600;
+    border-color: $secondary600;
+    border-radius: 50px;
+    width: 100px;
+    height: 40px;
+    padding: 0;
+  }
+  &__button:hover {
+    background-color: $secondary700;
+    border-color: $secondary700;
+    color: $black000;
+  }
 }
