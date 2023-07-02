@@ -28,6 +28,7 @@ export const BUTTON_LABEL = {
   DEACTIVATE_MENTOR: "Vô hiệu hóa",
   VIEW_MORE: "Xem thêm",
   VIEW_LESS: "Thu gọn",
+  CREATE_TOPIC: "Tạo chủ đề",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -79,6 +80,7 @@ export const TITLE = {
   SEMINAR_INFO: "Thông tin sự kiện",
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
+  CREATE_TOPIC: "Tạo chủ đề",
 };
 
 export const OTHER_TEXT = {
@@ -344,6 +346,14 @@ export const MODAL_DELETE_PROPERTY = {
   DEACTIVATE: "Vô hiệu hóa",
 };
 
+export const MODAL_ACTIVE_PROPERTY = {
+  ACTIVE_CONFIRM: "Bạn có muốn kích hoạt lại tài khoản",
+  ACTIVE_DETAIL:
+    "Tài khoản sau khi kích hoạt sẽ được phép sử dụng các tài nguyên website của Growth Me.",
+  BACK: "Quay lại",
+  ACTIVE: "Kích hoạt",
+};
+
 export const FOLLOW = {
   FOLLOW: "Theo dõi",
   IS_FOLLOWING: "Đang theo dõi",
@@ -402,6 +412,10 @@ export const ADMIN_TABLE_HEADER = {
   ACTION: "Tác vụ",
 };
 
+export const TABLE_DETAIL = {
+  CV_MENTOR: "CV diễn giả",
+};
+
 export const SORT_DIRECTION = {
   DESC: "desc",
   ASC: "asc",
@@ -423,4 +437,28 @@ export const FEEDBACK_OVERVIEW = {
 export const CROP_IMAGE = {
   ADJUST_AVATAR: "Điều chỉnh ảnh đại diện",
   AVATAR_AFTER_ADJUST: "Ảnh đại diện sau khi điều chỉnh",
+};
+
+export const ADD_TOPIC = {
+  TOPIC: "Chủ đề",
+  SKILL_GROUP: "Nhóm chủ đề",
+  MAJOR: "Lĩnh vực",
+  COST: "Chi phí",
+};
+
+export const CLASS_NAME = {
+  SPAN_CAPTION_IS_YOU: "OSeYVFzQ3ebXxqDY9XKn",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_1: "i8ct3MPKG0I8SA9qfu6m",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_2: "Dp9dbt0Fgqf3teHekKjV",
+  DIV_ROOM_MENBERS: "n6GuqIk3cK3cSgL5gW1Z",
+  P_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  DIV_IGNORE_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  P_YOU_ARE_PRESENTING: "imtOkrRZytf3edIVDdeD",
+  DIV_STOP_PRESENTING: "t7UX3TRe4IbZBz9_mSrz",
+};
+
+export const TABLE_ACTION = {
+  EDIT: "Chỉnh sửa",
+  DEACTIVATE: "Vô hiệu hóa",
+  ACTIVATE: "Kích hoạt",
 };

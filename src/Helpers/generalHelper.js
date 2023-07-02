@@ -53,6 +53,7 @@ export const useFetchUserInfo = () => {
       try {
         userInfo = await userAccountService.getUserInfo();
         dispatch(userAction.setUserInfo(userInfo));
+        dispatch(userAction.setFirstFetch());
       } catch (error) {
         console.log(error);
       }

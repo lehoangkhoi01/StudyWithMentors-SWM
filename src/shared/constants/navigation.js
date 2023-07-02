@@ -13,17 +13,18 @@ export const ROUTES = {
   SERVER_ERROR: "/server-error",
   SEMINAR_LIST: "/seminars",
   SEMINAR_DETAIL: "/seminars/:id",
-  SEMINAR_CREATE: "/create-seminar",
-  SEMINAR_UPDATE: "/update-seminar/:id",
+  SEMINAR_CREATE: "/staff/seminar-create",
+  SEMINAR_UPDATE: "/staff/update-seminar/:id",
   FEEDBACK_OVERVIEW: "/feedback-overview/:id",
   MENTOR_LIST: "/mentors",
   ADMIN_MENTOR_LIST: "/admin/mentors",
   DISCUSSION: "/discussion/:id",
+  MEETING: "/meeting",
 };
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
-  SEMINAR_UPDATE: "/update-seminar",
+  SEMINAR_UPDATE: "/staff/update-seminar",
   FEEDBACK_OVERVIEW: "/feedback-overview",
 };
 
