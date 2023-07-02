@@ -18,7 +18,6 @@ import Footer from "./shared/components/Footer/Footer";
 import CalendarPage from "./Pages/CalendarPage";
 import SeminarsPage from "./Pages/Seminars/SeminarsPage";
 import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
-//import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
@@ -49,11 +48,16 @@ function App() {
     async function fetchUserData() {
       setLoading(true);
       const userInfoResponse = await getUserInfo();
-      if (userInfoResponse && userInfoResponse.status === "403") {
+
+      if (
+        (userInfoResponse && userInfoResponse.status === "403") ||
+        !userInfoResponse
+      ) {
         // expired token...
         console.log("expired token");
         localStorage.removeItem("TOKEN");
         dispatch(userAction.logout());
+        dispatch(userAction.setFirstFetch());
       }
       setLoading(false);
     }
@@ -119,35 +123,34 @@ function App() {
               <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
-              <Route path={ROUTES.SEMINAR_CREATE} component={SeminarCreatePage} />
-            <Route path={ROUTES.CALENDAR} component={CalendarPage} />
-            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-            <Route
-              path={ROUTES.SEMINAR_FEEDBACK}
-              component={SeminarFeedbackPage}
-            />
-            <Route
-              path={ROUTES.FEEDBACK_OVERVIEW}
-              component={FeedbackOverviewPage}
-            />
-            <Route
-              path={ROUTES.ADMIN_MENTOR_LIST}
-              component={MentorListAdminPage}
-            />
-            <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
-            <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
-            <Route path={ROUTES.MEETING} component={MeetingPage} />
-            <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-            <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
+              <Route path={ROUTES.CALENDAR} component={CalendarPage} />
+              <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+              <Route
+                path={ROUTES.SEMINAR_FEEDBACK}
+                component={SeminarFeedbackPage}
+              />
+              <Route
+                path={ROUTES.FEEDBACK_OVERVIEW}
+                component={FeedbackOverviewPage}
+              />
+              <Route
+                path={ROUTES.ADMIN_MENTOR_LIST}
+                component={MentorListAdminPage}
+              />
+              <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
+              <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
+              <Route path={ROUTES.MEETING} component={MeetingPage} />
+              <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+              <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
               <StaffRoute
-                path="/admin"
+                path="/staff"
                 component={StaffLayout}
                 roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
               />
+            </Switch>
+          </div>
           <LoadingProvider />
           <NotiSnackbar />
-            
-          </Switch>
         </div>
         <Footer />
       </BrowserRouter>

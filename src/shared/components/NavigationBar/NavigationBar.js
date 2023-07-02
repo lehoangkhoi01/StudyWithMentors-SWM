@@ -30,6 +30,7 @@ import {
 import { selectUser, userAction } from "../../../Store/slices/userSlice";
 import { useFetchUserInfo } from "../../../Helpers/generalHelper";
 import SideBar from "../SideBar/SideBar";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const settings = ACCOUNT_MENU;
 
@@ -44,6 +45,7 @@ function NavigationBar() {
   const [navigationItems, setNavigationItems] = useState(UNAUTHORIZED_NAVBAR);
 
   const location = useLocation();
+  const history = useHistory();
   const { getUserInfo } = useFetchUserInfo();
 
   useEffect(() => {
@@ -74,6 +76,7 @@ function NavigationBar() {
     localStorage.removeItem("TOKEN");
     dispatch(userAction.logout());
     setAuthenticated(false);
+    history.push("/");
   };
 
   const handleCloseUserMenu = () => {

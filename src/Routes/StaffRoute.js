@@ -15,7 +15,6 @@ const StaffRoute = ({ component, roles, ...rest }) => {
         if (!isAuthenticated || !roles.includes(user.userInfo?.role)) {
           return <Redirect to={ROUTES.NOT_FOUND} />;
         } else {
-          console.log("success");
           return React.createElement(component, props);
         }
       }}
