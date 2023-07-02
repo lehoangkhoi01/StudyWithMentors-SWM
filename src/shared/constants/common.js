@@ -80,6 +80,7 @@ export const TITLE = {
   SEMINAR_INFO: "Thông tin sự kiện",
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
+  CREATE_TOPIC: "Tạo chủ đề",
 };
 
 export const OTHER_TEXT = {
@@ -345,6 +346,14 @@ export const MODAL_DELETE_PROPERTY = {
   DEACTIVATE: "Vô hiệu hóa",
 };
 
+export const MODAL_ACTIVE_PROPERTY = {
+  ACTIVE_CONFIRM: "Bạn có muốn kích hoạt lại tài khoản",
+  ACTIVE_DETAIL:
+    "Tài khoản sau khi kích hoạt sẽ được phép sử dụng các tài nguyên website của Growth Me.",
+  BACK: "Quay lại",
+  ACTIVE: "Kích hoạt",
+};
+
 export const FOLLOW = {
   FOLLOW: "Theo dõi",
   IS_FOLLOWING: "Đang theo dõi",
@@ -446,4 +455,10 @@ export const CLASS_NAME = {
   DIV_IGNORE_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
   P_YOU_ARE_PRESENTING: "imtOkrRZytf3edIVDdeD",
   DIV_STOP_PRESENTING: "t7UX3TRe4IbZBz9_mSrz",
+};
+
+export const TABLE_ACTION = {
+  EDIT: "Chỉnh sửa",
+  DEACTIVATE: "Vô hiệu hóa",
+  ACTIVATE: "Kích hoạt",
 };

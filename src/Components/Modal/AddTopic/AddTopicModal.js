@@ -2,10 +2,20 @@ import { useForm } from "react-hook-form";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import style from "./AddTopicModal.module.scss";
-import { ADD_TOPIC, BUTTON_LABEL } from "../../../shared/constants/common";
+import {
+  ADD_TOPIC,
+  BUTTON_LABEL,
+  TITLE,
+} from "../../../shared/constants/common";
+import { Modal } from "@mui/material";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const AddTopicModal = (props) => {
-  const { register, watch } = useForm();
+  const { register, watch, handleSubmit, getValues } = useForm();
+
+  const onSubmit = () => {
+    console.log(getValues());
+  };
 
   return (
     <div className={style.container}>
@@ -16,7 +26,7 @@ const AddTopicModal = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>Tạo chủ đề</h1>
+              <h1>{TITLE.CREATE_TOPIC}</h1>
 
               <CustomizedTextField
                 name={ADD_TOPIC.TOPIC}
@@ -25,7 +35,7 @@ const AddTopicModal = (props) => {
                   ...register("topic"),
                 }}
                 multiline={true}
-                watch={watch(topic)}
+                watch={watch("topic")}
               />
 
               <CustomizedSelect
@@ -61,7 +71,7 @@ const AddTopicModal = (props) => {
                   type="submit"
                   variant="text"
                   color="primary600"
-                //   onClick={props.onDeleteProperty}
+                  //   onClick={props.onDeleteProperty}
                 >
                   {BUTTON_LABEL.CREATE_TOPIC}
                 </CustomizedButton>

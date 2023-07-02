@@ -14,8 +14,9 @@ import {
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
+  TABLE_ACTION,
 } from "../../constants/common";
-import { Button, IconButton, Pagination } from "@mui/material";
+import { Button, Menu, MenuItem, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import CustomizedButton from "../Button/CustomizedButton";
@@ -29,6 +30,7 @@ import {
   useNotification,
 } from "../../../Helpers/generalHelper";
 import UpsertMentorModal from "../../../Components/Modal/UpsertMentorModal";
+import ActivePropertyModal from "../../../Components/Modal/ActivePropertyModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,9 +72,15 @@ const CustomizedTable = (props) => {
   const [openModal, setOpenModal] = useState({
     upsert: false,
     delete: false,
+    active: false,
   });
   const [existedData, setExistedData] = useState(null);
   const [deletedData, setDeletedData] = useState(null);
+  const [activeData, setActiveData] = useState(null);
+  const [anchorElData, setAnchorElData] = useState({
+    anchorEl: null,
+    index: -1,
+  });
 
   useEffect(() => {
     getData();
@@ -106,6 +114,28 @@ const CustomizedTable = (props) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const open = (index) => {
+    if (Boolean(anchorElData.anchorEl) && index === anchorElData.index) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const handleClick = (event, index) => {
+    setAnchorElData({
+      anchorEl: event.currentTarget,
+      index,
+    });
+  };
+
+  const handleClose = () => {
+    setAnchorElData({
+      anchorEl: null,
+      index: -1,
+    });
   };
 
   const updateSort = (att) => {
@@ -192,6 +222,7 @@ const CustomizedTable = (props) => {
     setOpenModal({
       upsert: true,
       delete: false,
+      active: false,
     });
   };
 
@@ -202,6 +233,7 @@ const CustomizedTable = (props) => {
     setOpenModal({
       upsert: false,
       delete: true,
+      active: false,
     });
   };
 
@@ -210,6 +242,7 @@ const CustomizedTable = (props) => {
     setOpenModal({
       upsert: false,
       delete: false,
+      active: false,
     });
     setDeletedData(null);
   };
@@ -249,7 +282,12 @@ const CustomizedTable = (props) => {
         setDeletedData(null);
       }
 
-      getData();
+      setTimeout(async () => {
+        getData();
+        setActiveData(null);
+
+        setLoading(false);
+      }, 500);
     } catch (error) {
       console.log(error);
 
@@ -258,9 +296,51 @@ const CustomizedTable = (props) => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-    } finally {
-      setOpenModal({ upsert: false, delete: false });
+
       setLoading(false);
+    } finally {
+      setOpenModal({ upsert: false, delete: false, active: false });
+    }
+  };
+
+  const openActiveModalHandler = (item) => {
+    if (item) {
+      setActiveData(item);
+      setOpenModal({
+        upsert: false,
+        delete: false,
+        active: true,
+      });
+    }
+  };
+
+  const onActiveData = async () => {
+    try {
+      setLoading(true);
+      if (activeData) {
+        await props.onActive(activeData.id, {
+          status: "ACTIVATED",
+        });
+      }
+
+      setTimeout(async () => {
+        getData();
+        setActiveData(null);
+
+        setLoading(false);
+      }, 500);
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      setLoading(false);
+    } finally {
+      setOpenModal({ upsert: false, delete: false, active: false });
     }
   };
 
@@ -325,7 +405,7 @@ const CustomizedTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedData.map((row) => (
+              {displayedData.map((row, rowIndex) => (
                 <StyledTableRow key={`ROW_INDEX_${row.id}`}>
                   {props.headerTable.map((header, index) => (
                     <StyledTableCell
@@ -341,27 +421,73 @@ const CustomizedTable = (props) => {
                     </StyledTableCell>
                   ))}
                   <StyledTableCell align="center">
-                    <IconButton
-                      onClick={() => {
-                        openUpsertModalHandler(null, row);
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={(e) => {
+                        handleClick(e, rowIndex);
                       }}
+                      className={style.list__table_dropdown_icon}
                     >
                       <img
-                        className={style.list__table_icon}
-                        src={require("../../../assets/icons/Table_Edit.png")}
+                        src={require("../../../assets/icons/Edit_Mentor.png")}
                       />
-                    </IconButton>
-                    <IconButton
-                      disabled={row.status !== MENTOR_STATUS.ACTIVATED}
-                      onClick={() => {
-                        openDeleteModalHandler(row);
+                    </Button>
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={
+                        anchorElData.index === rowIndex
+                          ? anchorElData.anchorEl
+                          : null
+                      }
+                      open={open(rowIndex)}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
                       }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                      className={style.list__table_dropdown}
                     >
-                      <img
-                        className={style.list__table_icon}
-                        src={require("../../../assets/icons/Table_Delete.png")}
-                      />
-                    </IconButton>
+                      <MenuItem
+                        onClick={() => {
+                          openUpsertModalHandler(null, row);
+                        }}
+                      >
+                        <img src={require("../../../assets/icons/Edit.png")} />
+                        <span>{TABLE_ACTION.EDIT}</span>
+                      </MenuItem>
+                      {row.translatedStatus === MENTOR_STATUS.INVALIDATE && (
+                        <MenuItem
+                          onClick={() => {
+                            openActiveModalHandler(row);
+                          }}
+                        >
+                          <img
+                            src={require("../../../assets/icons/Deactive.png")}
+                          />
+                          <span>{TABLE_ACTION.ACTIVATE}</span>
+                        </MenuItem>
+                      )}
+                      {row.translatedStatus === MENTOR_STATUS.ACTIVATED && (
+                        <MenuItem
+                          onClick={() => {
+                            openDeleteModalHandler(row);
+                          }}
+                        >
+                          <img
+                            src={require("../../../assets/icons/Deactive.png")}
+                          />
+                          <span>{TABLE_ACTION.DEACTIVATE}</span>
+                        </MenuItem>
+                      )}
+                    </Menu>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -385,6 +511,12 @@ const CustomizedTable = (props) => {
         title={deletedData?.fullName}
         onDeleteProperty={onDeleteData}
         type={MODAL_DELETE_PROPERTY.DEACTIVATE}
+      />
+      <ActivePropertyModal
+        openModal={openModal.active}
+        onCloseModal={onCloseModal}
+        title={activeData?.fullName}
+        onActive={onActiveData}
       />
       <UpsertMentorModal
         openModal={openModal.upsert}
