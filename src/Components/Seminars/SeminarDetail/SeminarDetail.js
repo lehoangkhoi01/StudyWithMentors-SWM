@@ -263,29 +263,39 @@ const SeminarDetail = () => {
                   </p>
                   {data.description ? (
                     <>
-                      <Typography
-                        className={
-                          expandDetail
-                            ? null
-                            : `${style.detail__seminarDescription}`
-                        }
-                      >
-                        {data.description}
-                      </Typography>
-                      <div className={`${style.detail__expandButton}`}>
-                        <Button
-                          onClick={() => {
-                            setExpandDetail((prev) => !prev);
-                          }}
-                        >
-                          {expandDetail
-                            ? BUTTON_LABEL.VIEW_LESS
-                            : BUTTON_LABEL.VIEW_MORE}
-                        </Button>
-                      </div>
+                      {data.description.length > 300 ? (
+                        <>
+                          <Typography
+                            className={
+                              expandDetail
+                                ? null
+                                : `${style.detail__seminarDescription}`
+                            }
+                          >
+                            {data.description}
+                          </Typography>
+                          <div className={`${style.detail__expandButton}`}>
+                            <Button
+                              onClick={() => {
+                                setExpandDetail((prev) => !prev);
+                              }}
+                            >
+                              {expandDetail
+                                ? BUTTON_LABEL.VIEW_LESS
+                                : BUTTON_LABEL.VIEW_MORE}
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography>{data.description}</Typography>
+                        </>
+                      )}
                     </>
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_DESCRIPTION}
+                    </Typography>
                   )}
                 </div>
 
@@ -294,10 +304,12 @@ const SeminarDetail = () => {
                   {data.attachmentLinks?.length > 0 ? (
                     <ListFileDisplay
                       mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
-                      oldItems={data.attachmentLinks}
+                      oldItems={data.attachments}
                     />
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_ATTACHMENTS}
+                    </Typography>
                   )}
                 </p>
 

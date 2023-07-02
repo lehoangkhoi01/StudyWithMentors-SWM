@@ -24,14 +24,17 @@ const MenuProps = {
 };
 
 const CustomToolbar = (props) => {
-  const { view, views, onNavigate, label } = props;
+  const { views, onNavigate, label } = props;
   const viewMap = [
     { name: "Tuần", value: views[0] },
     { name: "Lịch biểu", value: views[1] },
   ];
+  const [currentView, setCurrentView] = React.useState(viewMap[0]);
 
   const handleChange = (event) => {
-    props.onView(event.target.value);
+    const view = event.target.value;
+    setCurrentView(view);
+    props.onView(view.value);
   };
 
   return (
@@ -72,10 +75,11 @@ const CustomToolbar = (props) => {
           <CustomizedSelect
             inputId="calendarView"
             items={viewMap}
-            value={view}
+            value={currentView}
             isMultipleSelect={false}
             onChange={handleChange}
             MenuProps={MenuProps}
+            renderValue={(selected) => selected.name}
             required={true}
             name=""
           />

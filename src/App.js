@@ -36,6 +36,7 @@ import LoadingPage from "./Pages/LoadingPage";
 import { SYSTEM_ROLE } from "./shared/constants/systemType";
 import StaffRoute from "./Routes/StaffRoute";
 import StaffLayout from "./Layout/StaffLayout";
+import MeetingPage from "./Pages/Meeting/MeetingPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -118,15 +119,35 @@ function App() {
               <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
+              <Route path={ROUTES.SEMINAR_CREATE} component={SeminarCreatePage} />
+            <Route path={ROUTES.CALENDAR} component={CalendarPage} />
+            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route
+              path={ROUTES.SEMINAR_FEEDBACK}
+              component={SeminarFeedbackPage}
+            />
+            <Route
+              path={ROUTES.FEEDBACK_OVERVIEW}
+              component={FeedbackOverviewPage}
+            />
+            <Route
+              path={ROUTES.ADMIN_MENTOR_LIST}
+              component={MentorListAdminPage}
+            />
+            <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
+            <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
+            <Route path={ROUTES.MEETING} component={MeetingPage} />
+            <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+            <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
               <StaffRoute
                 path="/admin"
                 component={StaffLayout}
                 roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
               />
-            </Switch>
-          </div>
           <LoadingProvider />
           <NotiSnackbar />
+            
+          </Switch>
         </div>
         <Footer />
       </BrowserRouter>

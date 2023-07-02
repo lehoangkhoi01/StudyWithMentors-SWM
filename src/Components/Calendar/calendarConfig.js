@@ -31,6 +31,15 @@ const MyCustomHeader = ({ label }) => (
   </div>
 );
 
+const AgendaHeader = ({ label }) => {
+  console.log(label);
+  return (
+    <div>
+      <div>{label}</div>
+    </div>
+  );
+};
+
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
     className: style.cell,
@@ -75,6 +84,9 @@ export const components = {
     };
     return <div style={style}>{eventWrapperProps.children}</div>;
   },
+  agenda: {
+    agendaHeader: AgendaHeader,
+  },
   toolbar: CustomToolbar,
 };
 
@@ -104,3 +116,10 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
     className: style.freeEvent,
   }),
 });
+
+export const messages = {
+  date: "Ngày",
+  time: "Giờ",
+  event: "Sự kiện",
+  noEventsInRange: "Không có dữ liệu",
+};

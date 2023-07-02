@@ -59,6 +59,7 @@ import { useSelector } from "react-redux";
 import { selectMentorList } from "../../../Store/slices/mentorSlice";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import UpsertMentorModal from "../../Modal/UpsertMentorModal";
+import { convertObjectToArray } from "../../../Helpers/arrayHelper";
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -85,6 +86,7 @@ const SeminarForm = () => {
     handleSubmit,
     register,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -127,6 +129,7 @@ const SeminarForm = () => {
 
   const handleDocumentsChange = (e) => {
     const files = e.target.files;
+    console.log(files);
     let tempDocuments = [...documents];
     tempDocuments = [...tempDocuments, ...Array.from(files)];
     setDocuments(tempDocuments);
@@ -305,9 +308,6 @@ const SeminarForm = () => {
       if (convertBytesToMB(documents[i].size) > LENGTH.FILE_MAX_SIZE) {
         return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
       }
-      // if(VALID_DOCS_FILE_TYPLE.indexOf(documents[i].type) < 0) {
-      //   return
-      // }
     }
   };
 
@@ -362,7 +362,11 @@ const SeminarForm = () => {
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
       setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
-      setOldDocuments(seminarDetail.attachmentLinks ?? []);
+      setOldDocuments(
+        seminarDetail.attachments
+          ? convertObjectToArray(seminarDetail.attachments)
+          : []
+      );
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
       if (moment(seminarDetail.startTime).toDate() < new Date()) {
         setFormDisabled(true);
@@ -520,6 +524,7 @@ const SeminarForm = () => {
               disabled={isFormDisabled}
               required={false}
               optional={true}
+              watch={watch("seminarDescription")}
               options={{
                 ...register("seminarDescription"),
               }}

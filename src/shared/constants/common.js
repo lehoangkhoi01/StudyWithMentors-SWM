@@ -402,6 +402,10 @@ export const ADMIN_TABLE_HEADER = {
   ACTION: "Tác vụ",
 };
 
+export const TABLE_DETAIL = {
+  CV_MENTOR: "CV diễn giả",
+};
+
 export const SORT_DIRECTION = {
   DESC: "desc",
   ASC: "asc",
@@ -423,4 +427,15 @@ export const FEEDBACK_OVERVIEW = {
 export const CROP_IMAGE = {
   ADJUST_AVATAR: "Điều chỉnh ảnh đại diện",
   AVATAR_AFTER_ADJUST: "Ảnh đại diện sau khi điều chỉnh",
+};
+
+export const CLASS_NAME = {
+  SPAN_CAPTION_IS_YOU: "OSeYVFzQ3ebXxqDY9XKn",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_1: "i8ct3MPKG0I8SA9qfu6m",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_2: "Dp9dbt0Fgqf3teHekKjV",
+  DIV_ROOM_MENBERS: "n6GuqIk3cK3cSgL5gW1Z",
+  P_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  DIV_IGNORE_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  P_YOU_ARE_PRESENTING: "imtOkrRZytf3edIVDdeD",
+  DIV_STOP_PRESENTING: "t7UX3TRe4IbZBz9_mSrz",
 };
