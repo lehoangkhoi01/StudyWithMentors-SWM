@@ -2,6 +2,7 @@ import {
   ADMIN_TABLE_HEADER,
   DATE_FORMAT,
   ERROR_MESSAGES,
+  MENTOR_STATUS,
   TABLE_DETAIL,
 } from "../../shared/constants/common";
 import { handleTimeToDisplay } from "../../Helpers/dateHelper";
@@ -11,6 +12,7 @@ import {
   useNotification,
 } from "../../Helpers/generalHelper";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
+import { userAccountService } from "../../Services/userAccountService";
 
 const AdminMentorList = () => {
   const { getLatestSpeakerList } = useFetchSpeakerList();
@@ -49,6 +51,11 @@ const AdminMentorList = () => {
       property: "defaultCreatedDate",
       name: ADMIN_TABLE_HEADER.CREATED_DATE,
     },
+    {
+      sortable: true,
+      property: "translatedStatus",
+      name: ADMIN_TABLE_HEADER.STATUS,
+    },
   ];
 
   const getMentors = async () => {
@@ -68,6 +75,7 @@ const AdminMentorList = () => {
           defaultCreatedDate: mentor.createdDate,
           link: "#",
           linkName: TABLE_DETAIL.CV_MENTOR,
+          translatedStatus: MENTOR_STATUS[mentor.status],
         };
       });
 
@@ -90,7 +98,11 @@ const AdminMentorList = () => {
   };
 
   const onDeleteMentor = (mentorId) => {
-    accountService.deleteMentors([mentorId]);
+    accountService.deleteMentors(mentorId);
+  };
+
+  const onActiveMentor = (mentorId, data) => {
+    userAccountService.updateUserProfile(mentorId, data);
   };
 
   return (
@@ -99,6 +111,7 @@ const AdminMentorList = () => {
         getData={getMentors}
         onSearch={onSearchMentor}
         onDelete={onDeleteMentor}
+        onActive={onActiveMentor}
         headerTable={headerTable}
       />
     </div>

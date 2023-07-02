@@ -53,11 +53,28 @@
 
     box-shadow: 2px 4px 8px rgba(4, 30, 160, 0.1);
 
-    &_icon {
-      width: 45px;
+    &_dropdown {
+      li {
+        display: flex;
+        gap: 0.8rem;
+        font-weight: 600;
 
-      &_disable {
-        filter: grayscale(100%);
+        margin-inline: 0.3rem;
+        padding-inline: 0.5rem;
+
+        &:hover {
+          background-color: $primary50;
+        }
+      }
+
+      img {
+        width: 22px;
+      }
+
+      &_icon {
+        img {
+          height: 40px;
+        }
       }
     }
 
