@@ -9,9 +9,25 @@ import {
 } from "../../../shared/constants/common";
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { useFetchTopicFieldsAndCategories } from "../../../Helpers/generalHelper";
+import { useEffect } from "react";
 
 const AddTopicModal = (props) => {
   const { register, watch, handleSubmit, getValues } = useForm();
+  const { getTopicCategories, getTopicFields } =
+    useFetchTopicFieldsAndCategories();
+
+  const { fields, setFields } = useEffect([]);
+  const { categories, setCategories } = useEffect([]);
+
+  useEffect(() => {
+    const getFieldsAndCategories = async () => {
+      setFields(await getTopicFields());
+      setCategories(await getTopicCategories());
+    };
+
+    getFieldsAndCategories();
+  }, []);
 
   const onSubmit = () => {
     console.log(getValues());
@@ -40,13 +56,13 @@ const AddTopicModal = (props) => {
 
               <CustomizedSelect
                 name={ADD_TOPIC.SKILL_GROUP}
-                items={[]}
+                items={categories}
                 options={{ ...register("skills") }}
               />
 
               <CustomizedSelect
                 name={ADD_TOPIC.MAJOR}
-                items={[]}
+                items={fields}
                 options={{ ...register("major") }}
               />
 

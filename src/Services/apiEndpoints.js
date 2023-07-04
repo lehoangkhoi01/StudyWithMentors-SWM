@@ -40,3 +40,8 @@ export const SeminarFeedbackEndpoints = {
   SEMINAR_FEEDBACK: "feedbacks/seminar",
   SEMINAR_FEEDBACK_REPORT: "/feedbacks/seminar-feedback-report",
 };
+
+export const TopicEndpoints = {
+  GET_TOPIC_FIELDS: "admin/topic-fields",
+  GET_TOPIC_CATEGORIES: "admin/topic-categories",
+};
