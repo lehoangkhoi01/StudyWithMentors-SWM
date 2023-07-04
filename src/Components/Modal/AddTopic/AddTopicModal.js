@@ -45,32 +45,43 @@ const AddTopicModal = (props) => {
               <h1>{TITLE.CREATE_TOPIC}</h1>
 
               <CustomizedTextField
-                name={ADD_TOPIC.TOPIC}
+                name={ADD_TOPIC.TOPIC_NAME}
                 required={true}
                 options={{
-                  ...register("topic"),
+                  ...register("name"),
+                }}
+              />
+
+              <CustomizedTextField
+                name={ADD_TOPIC.DESCRIPTION}
+                required={true}
+                options={{
+                  ...register("description"),
                 }}
                 multiline={true}
-                watch={watch("topic")}
+                watch={watch("description")}
               />
 
               <CustomizedSelect
                 name={ADD_TOPIC.SKILL_GROUP}
                 items={categories}
-                options={{ ...register("skills") }}
+                required={true}
+                options={{ ...register("category") }}
               />
 
               <CustomizedSelect
                 name={ADD_TOPIC.MAJOR}
                 items={fields}
-                options={{ ...register("major") }}
+                required={true}
+                options={{ ...register("field") }}
               />
 
               <CustomizedTextField
-                name={ADD_TOPIC.COST}
+                name={ADD_TOPIC.MONEY}
                 required={true}
+                type="number"
                 options={{
-                  ...register("cost"),
+                  ...register("money"),
                 }}
               />
 

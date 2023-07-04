@@ -440,10 +440,11 @@ export const CROP_IMAGE = {
 };
 
 export const ADD_TOPIC = {
-  TOPIC: "Chủ đề",
+  TOPIC_NAME: "Tên chủ đề",
+  DESCRIPTION: "Mô tả",
   SKILL_GROUP: "Nhóm chủ đề",
   MAJOR: "Lĩnh vực",
-  COST: "Chi phí",
+  MONEY: "Chi phí",
 };
 
 export const CLASS_NAME = {

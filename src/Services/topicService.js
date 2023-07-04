@@ -12,4 +12,14 @@ export const topicService = {
 
     return axiosClient.get(url);
   },
+  getTopics: () => {
+    const url = TopicEndpoints.GET_TOPICS;
+
+    return axiosClient.get(url);
+  },
+  upsertTopic: (data) => {
+    const url = TopicEndpoints.UPSERT_TOPICS;
+
+    return axiosClient.post(url, data);
+  },
 };
