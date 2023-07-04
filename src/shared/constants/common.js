@@ -462,3 +462,8 @@ export const TABLE_ACTION = {
   DEACTIVATE: "Vô hiệu hóa",
   ACTIVATE: "Kích hoạt",
 };
+
+export const UPSERT_MENTOR = {
+  ADD_MENTOR: "Thêm diễn giả",
+  EDIT_MENTOR: "Chỉnh sửa diễn giả",
+};

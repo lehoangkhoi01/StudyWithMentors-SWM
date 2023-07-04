@@ -14,7 +14,7 @@ import {
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
-  TABLE_ACTION,
+  UPSERT_MENTOR,
 } from "../../constants/common";
 import { Button, Menu, MenuItem, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -31,6 +31,11 @@ import {
 } from "../../../Helpers/generalHelper";
 import UpsertMentorModal from "../../../Components/Modal/UpsertMentorModal";
 import ActivePropertyModal from "../../../Components/Modal/ActivePropertyModal";
+import {
+  ACTIVE_ACTION,
+  DEACTIVATE_ACTION,
+  UPSERT_ACTION,
+} from "../../constants/actionType";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -455,38 +460,56 @@ const CustomizedTable = (props) => {
                       }}
                       className={style.list__table_dropdown}
                     >
-                      <MenuItem
-                        onClick={() => {
-                          openUpsertModalHandler(null, row);
-                        }}
-                      >
-                        <img src={require("../../../assets/icons/Edit.png")} />
-                        <span>{TABLE_ACTION.EDIT}</span>
-                      </MenuItem>
-                      {row.translatedStatus === MENTOR_STATUS.INVALIDATE && (
-                        <MenuItem
-                          onClick={() => {
-                            openActiveModalHandler(row);
-                          }}
-                        >
-                          <img
-                            src={require("../../../assets/icons/Deactive.png")}
-                          />
-                          <span>{TABLE_ACTION.ACTIVATE}</span>
-                        </MenuItem>
-                      )}
-                      {row.translatedStatus === MENTOR_STATUS.ACTIVATED && (
-                        <MenuItem
-                          onClick={() => {
-                            openDeleteModalHandler(row);
-                          }}
-                        >
-                          <img
-                            src={require("../../../assets/icons/Deactive.png")}
-                          />
-                          <span>{TABLE_ACTION.DEACTIVATE}</span>
-                        </MenuItem>
-                      )}
+                      {props.actionItems.map((actionItem, index) => {
+                        switch (actionItem.action) {
+                          case UPSERT_ACTION:
+                            return (
+                              <MenuItem
+                                key={`MENU_ITEM_${index}`}
+                                onClick={() => {
+                                  return openUpsertModalHandler(null, row);
+                                }}
+                              >
+                                <img src={actionItem.imgSrc} />
+                                <span>{actionItem.label}</span>
+                              </MenuItem>
+                            );
+
+                          case DEACTIVATE_ACTION:
+                            return (
+                              row.translatedStatus ===
+                                MENTOR_STATUS.ACTIVATED && (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openDeleteModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              )
+                            );
+
+                          case ACTIVE_ACTION:
+                            return (
+                              row.translatedStatus ===
+                                MENTOR_STATUS.INVALIDATE && (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openActiveModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              )
+                            );
+                          default:
+                            return;
+                        }
+                      })}
                     </Menu>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -523,6 +546,9 @@ const CustomizedTable = (props) => {
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}
+        title={
+          existedData ? UPSERT_MENTOR.EDIT_MENTOR : UPSERT_MENTOR.ADD_MENTOR
+        }
       />
     </div>
   );

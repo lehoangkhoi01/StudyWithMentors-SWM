@@ -6,7 +6,7 @@ import { MODAL_DELETE_PROPERTY, OTHERS } from "../../shared/constants/common";
 
 const DeletePropertyModal = (props) => {
   const { type } = props;
-
+  
   return (
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>

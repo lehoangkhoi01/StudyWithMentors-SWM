@@ -3,6 +3,7 @@ import {
   DATE_FORMAT,
   ERROR_MESSAGES,
   MENTOR_STATUS,
+  TABLE_ACTION,
   TABLE_DETAIL,
 } from "../../shared/constants/common";
 import { handleTimeToDisplay } from "../../Helpers/dateHelper";
@@ -13,6 +14,11 @@ import {
 } from "../../Helpers/generalHelper";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import { userAccountService } from "../../Services/userAccountService";
+import {
+  ACTIVE_ACTION,
+  DEACTIVATE_ACTION,
+  UPSERT_ACTION,
+} from "../../shared/constants/actionType";
 
 const AdminMentorList = () => {
   const { getLatestSpeakerList } = useFetchSpeakerList();
@@ -55,6 +61,24 @@ const AdminMentorList = () => {
       sortable: true,
       property: "translatedStatus",
       name: ADMIN_TABLE_HEADER.STATUS,
+    },
+  ];
+
+  const actionItems = [
+    {
+      imgSrc: require("../../assets/icons/Edit.png"),
+      label: TABLE_ACTION.EDIT,
+      action: UPSERT_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.ACTIVATE,
+      action: ACTIVE_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.DEACTIVATE,
+      action: DEACTIVATE_ACTION,
     },
   ];
 
@@ -113,6 +137,7 @@ const AdminMentorList = () => {
         onDelete={onDeleteMentor}
         onActive={onActiveMentor}
         headerTable={headerTable}
+        actionItems={actionItems}
       />
     </div>
   );
