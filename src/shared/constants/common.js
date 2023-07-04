@@ -442,8 +442,8 @@ export const CROP_IMAGE = {
 export const ADD_TOPIC = {
   TOPIC_NAME: "Tên chủ đề",
   DESCRIPTION: "Mô tả",
-  SKILL_GROUP: "Nhóm chủ đề",
-  MAJOR: "Lĩnh vực",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
   MONEY: "Chi phí",
 };
 
@@ -467,4 +467,23 @@ export const TABLE_ACTION = {
 export const UPSERT_MENTOR = {
   ADD_MENTOR: "Thêm diễn giả",
   EDIT_MENTOR: "Chỉnh sửa diễn giả",
+};
+
+export const TOPIC_TABLE = {
+  NUMBER: "STT",
+  NAME: "Chủ đề",
+  DESCRIPTION: "Mô tả",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
+  MENTOR: "Diễn giả",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const TOPIC_STATUS = {
+  WAITING: "Đang chờ",
+  DELETED: "Đã xóa",
+  ACCEPTED: "Đã duyệt",
+  REJECTED: "Từ chối",
+  ARCHIVED: "Lưu trữ",
 };

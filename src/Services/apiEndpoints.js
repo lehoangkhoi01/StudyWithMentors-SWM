@@ -45,5 +45,6 @@ export const TopicEndpoints = {
   GET_TOPIC_FIELDS: "admin/topic-fields",
   GET_TOPIC_CATEGORIES: "admin/topic-categories",
   GET_TOPICS: "admin/topics",
-  UPSERT_TOPICS: "topics"
+  UPSERT_TOPICS: "topics",
+  UPADATE_TOPIC_STATUS: "topics/update-status",
 };

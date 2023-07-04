@@ -117,7 +117,7 @@ const AdminMentorList = () => {
 
   const onSearchMentor = (currentList, searchTerm) => {
     return currentList.filter((mentor) =>
-      mentor.fullName.toLowerCase().includes(searchTerm)
+      mentor.fullName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

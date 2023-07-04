@@ -22,4 +22,14 @@ export const topicService = {
 
     return axiosClient.post(url, data);
   },
+  updateStatus: (id, status) => {
+    const url = TopicEndpoints.UPADATE_TOPIC_STATUS;
+
+    const payload = {
+      ids: [id],
+      status,
+    };
+
+    return axiosClient.post(url, payload);
+  },
 };

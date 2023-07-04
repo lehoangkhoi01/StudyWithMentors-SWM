@@ -63,14 +63,14 @@ const AddTopicModal = (props) => {
               />
 
               <CustomizedSelect
-                name={ADD_TOPIC.SKILL_GROUP}
+                name={ADD_TOPIC.CATEGORY}
                 items={categories}
                 required={true}
                 options={{ ...register("category") }}
               />
 
               <CustomizedSelect
-                name={ADD_TOPIC.MAJOR}
+                name={ADD_TOPIC.FIELD}
                 items={fields}
                 required={true}
                 options={{ ...register("field") }}
