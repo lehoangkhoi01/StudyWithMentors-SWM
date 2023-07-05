@@ -40,3 +40,9 @@ export const SeminarFeedbackEndpoints = {
   SEMINAR_FEEDBACK: "feedbacks/seminar",
   SEMINAR_FEEDBACK_REPORT: "/feedbacks/seminar-feedback-report",
 };
+
+export const ScheduleEndpoints = {
+  GET_SCHEDULE: "schedules",
+  CREATE_SCHEDULE: "schedules/create",
+  DELETE_SCHEDULE: "schedules/delete",
+};
