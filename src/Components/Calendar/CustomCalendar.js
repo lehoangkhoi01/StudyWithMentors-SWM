@@ -18,9 +18,11 @@ import {
 } from "./calendarConfig";
 import NoteSection from "./NoteSection/NoteSection";
 import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
-import { userAccountService } from "../../Services/userAccountService";
 import { useCustomLoading } from "../../Helpers/generalHelper";
+import { scheduleService } from "../../Services/sheduleService";
 import moment from "moment/moment";
+import { format } from "date-fns";
+import { DATE_FORMAT } from "../../shared/constants/common";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
@@ -52,31 +54,31 @@ const CustomCalendar = () => {
     console.log(e);
   };
 
-  const handleNavigate = (newDate, view) => {
+  const handleNavigate = async (newDate, view) => {
     setCurrentDate(newDate);
-    triggerRangeChangeEvent(newDate, view);
+    await triggerRangeChangeEvent(newDate, view);
   };
 
-  const navigateToDate = (date) => {
+  const navigateToDate = async (date) => {
     setCurrentDate(date);
-    triggerRangeChangeEvent(date);
+    await triggerRangeChangeEvent(date);
   };
 
-  const onRangeChange = async (range) => {
-    console.log(range);
-    try {
-      setLoading(true);
-      const result = await userAccountService.getUserInfo();
-      console.log(result);
-      setEventList(events);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const onRangeChange = async (range) => {
+  //   console.log(range[0]);
+  //   try {
+  //     setLoading(true);
+  //     const result = await userAccountService.getUserInfo();
+  //     console.log(result);
+  //     setEventList(events);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const triggerRangeChangeEvent = (date, view) => {
+  const getStartEndTime = (date, view) => {
     const start = moment(date).startOf(view);
     const end = moment(date).endOf(view);
     let rangeStart = 0;
@@ -93,12 +95,47 @@ const CustomCalendar = () => {
       rangeEnd = end.clone().add(end.day(), "days");
     }
 
-    console.log(rangeStart.toDate());
-    console.log(rangeEnd.toDate());
+    let result = {
+      start: format(
+        rangeStart.toDate(),
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      ),
+      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss),
+    };
+    return result;
+  };
+
+  const triggerRangeChangeEvent = async (date, view) => {
+    setLoading(true);
+    const startEnd = getStartEndTime(date, view);
+    // const startTime = format(
+    //   startEnd.start,
+    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+    // );
+    // const endTime = format(
+    //   startEnd.end,
+    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+    // );
+
+    try {
+      const result = await scheduleService.getSchedule(
+        startEnd.start,
+        startEnd.end
+      );
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     setEventList(events);
+    const fetchSchedule = async () => {
+      await triggerRangeChangeEvent(new Date());
+    };
+    fetchSchedule();
   }, []);
 
   return (
@@ -133,7 +170,7 @@ const CustomCalendar = () => {
             selectable={true}
             onSelectEvent={handleSelectEvent}
             onSelectSlot={handleSelectSlot}
-            onRangeChange={onRangeChange}
+            //onRangeChange={onRangeChange}
             onNavigate={handleNavigate}
           />
         </Grid2>
