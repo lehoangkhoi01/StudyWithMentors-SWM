@@ -5,6 +5,7 @@ import {
   MENTOR_STATUS,
   TABLE_ACTION,
   TABLE_DETAIL,
+  TABLE_TYPE,
 } from "../../shared/constants/common";
 import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
@@ -132,6 +133,7 @@ const AdminMentorList = () => {
   return (
     <div>
       <CustomizedTable
+        type={TABLE_TYPE.MENTOR}
         getData={getMentors}
         onSearch={onSearchMentor}
         onDelete={onDeleteMentor}

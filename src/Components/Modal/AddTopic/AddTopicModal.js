@@ -10,15 +10,15 @@ import {
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { useFetchTopicFieldsAndCategories } from "../../../Helpers/generalHelper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AddTopicModal = (props) => {
   const { register, watch, handleSubmit, getValues } = useForm();
   const { getTopicCategories, getTopicFields } =
     useFetchTopicFieldsAndCategories();
 
-  const { fields, setFields } = useEffect([]);
-  const { categories, setCategories } = useEffect([]);
+  const [fields, setFields] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getFieldsAndCategories = async () => {

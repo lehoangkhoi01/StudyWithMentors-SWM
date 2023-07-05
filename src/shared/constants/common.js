@@ -487,3 +487,18 @@ export const TOPIC_STATUS = {
   REJECTED: "Từ chối",
   ARCHIVED: "Lưu trữ",
 };
+
+export const CONFIRM_TOPIC_MODAL = {
+  REJECT_CONFIRM: "Bạn có muốn từ chối",
+  ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
+  ARCHIVE_CONFIRM: "Bạn có muốn lưu trữ",
+  REJECT: "Từ chối",
+  ACCEPT: "Phê duyệt",
+  ARCHIVE: "Lưu trữ",
+  TOPIC: "chủ đề",
+};
+
+export const TABLE_TYPE = {
+  MENTOR: "MENTOR",
+  TOPIC: "TOPIC",
+};

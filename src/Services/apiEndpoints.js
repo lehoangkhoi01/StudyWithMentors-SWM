@@ -48,3 +48,9 @@ export const TopicEndpoints = {
   UPSERT_TOPICS: "topics",
   UPADATE_TOPIC_STATUS: "topics/update-status",
 };
+
+export const ScheduleEndpoints = {
+  GET_SCHEDULE: "schedules",
+  CREATE_SCHEDULE: "schedules/create",
+  DELETE_SCHEDULE: "schedules/delete",
+};

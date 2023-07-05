@@ -2,13 +2,14 @@ import { useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
-  ACTIVE_ACTION,
-  DEACTIVATE_ACTION,
+  CONFIRM_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
 import {
+  CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   TABLE_ACTION,
+  TABLE_TYPE,
   TOPIC_STATUS,
   TOPIC_TABLE,
 } from "../../shared/constants/common";
@@ -25,7 +26,7 @@ const TopicList = () => {
     },
     {
       sortable: true,
-      property: "fullName",
+      property: "name",
       name: TOPIC_TABLE.NAME,
     },
     {
@@ -65,19 +66,26 @@ const TopicList = () => {
     },
     {
       imgSrc: require("../../assets/icons/Deactive.png"),
-      label: TABLE_ACTION.ACTIVATE,
-      action: ACTIVE_ACTION,
+      label: CONFIRM_TOPIC_MODAL.ACCEPT,
+      action: CONFIRM_ACTION,
     },
     {
       imgSrc: require("../../assets/icons/Deactive.png"),
-      label: TABLE_ACTION.DEACTIVATE,
-      action: DEACTIVATE_ACTION,
+      label: CONFIRM_TOPIC_MODAL.REJECT,
+      action: CONFIRM_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: CONFIRM_TOPIC_MODAL.ARCHIVE,
+      action: CONFIRM_ACTION,
     },
   ];
 
   const getTopics = async () => {
     try {
       const topics = await topicService.getTopics();
+
+      console.log(topics);
 
       const updatedTopicList = topics.map((topic, index) => {
         return {
@@ -106,31 +114,22 @@ const TopicList = () => {
     );
   };
 
-  const onDeleteTopic = (topicId) => {
-    topicService.updateStatus(topicId, TOPIC_STATUS.DELETED);
+  const onDeleteTopic = async (topicId) => {
+    await topicService.updateStatus(topicId, TOPIC_STATUS.DELETED);
   };
 
-  const onAcceptTopic = (topicId) => {
-    topicService.updateStatus(topicId, TOPIC_STATUS.DELETED);
-  };
-
-  const onRejectTopic = (topicId) => {
-    topicService.updateStatus(topicId, TOPIC_STATUS.REJECTED);
-  };
-
-  const onArchiveTopic = (topicId) => {
-    topicService.updateStatus(topicId, TOPIC_STATUS.ARCHIVED);
+  const onUpdateTopicStatus = async (topicId, status) => {
+    await topicService.updateStatus(topicId, status);
   };
 
   return (
     <div>
       <CustomizedTable
+        type={TABLE_TYPE.TOPIC}
         getData={getTopics}
         onSearch={onSearchTopic}
         onDelete={onDeleteTopic}
-        onAccept={onAcceptTopic}
-        onReject={onRejectTopic}
-        onArchive={onArchiveTopic}
+        onUpdateTopicStatus={onUpdateTopicStatus}
         headerTable={headerTable}
         actionItems={actionItems}
       />

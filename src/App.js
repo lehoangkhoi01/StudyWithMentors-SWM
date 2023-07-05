@@ -36,6 +36,7 @@ import { SYSTEM_ROLE } from "./shared/constants/systemType";
 import StaffRoute from "./Routes/StaffRoute";
 import StaffLayout from "./Layout/StaffLayout";
 import MeetingPage from "./Pages/Meeting/MeetingPage";
+import TopicListPage from "./Pages/Topic/TopicListPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -140,6 +141,7 @@ function App() {
               <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
               <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
               <Route path={ROUTES.MEETING} component={MeetingPage} />
+              <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
               <StaffRoute

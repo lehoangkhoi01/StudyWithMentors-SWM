@@ -20,6 +20,7 @@ export const ROUTES = {
   ADMIN_MENTOR_LIST: "/admin/mentors",
   DISCUSSION: "/discussion/:id",
   MEETING: "/meeting",
+  TOPIC_LIST: "/topics",
 };
 
 export const ROUTES_STATIC = {
