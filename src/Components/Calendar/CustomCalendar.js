@@ -142,6 +142,7 @@ const CustomCalendar = () => {
       <ScheduleDialog
         open={openScheduleForm}
         selectedEvent={selectedEvent}
+        startDate={currentDate}
         handleClose={handleCloseScheduleForm}
         handleSubmitCreateSchedule={handleSubmitCreateSchedule}
       />
