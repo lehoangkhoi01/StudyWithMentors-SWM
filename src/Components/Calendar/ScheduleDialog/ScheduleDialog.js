@@ -32,7 +32,6 @@ const MenuProps = {
 };
 const ScheduleDialog = (props) => {
   const {
-    register,
     setValue,
     handleSubmit,
     getValues,
@@ -67,6 +66,26 @@ const ScheduleDialog = (props) => {
     props.handleClose();
   };
 
+  const [startTime, setStartTime] = React.useState(new Date());
+  const [endTime, setEndTime] = React.useState(
+    new Date(new Date().setHours(startTime.getHours() + 1))
+  );
+  const [loopOption, setLoopOption] = React.useState(loopOptions[0]);
+
+  const onLoopOptionChange = (e) => {
+    console.log(e.target.value);
+    setLoopOption(e.target.value);
+  };
+
+  const handleOnChangeStartTime = (e) => {
+    const startTime = new Date(e);
+    const endTime = new Date(e.setHours(e.getHours() + 1));
+    console.log(startTime);
+    console.log(endTime);
+    setStartTime(startTime);
+    setEndTime(endTime);
+  };
+
   return (
     <div>
       <Dialog fullWidth open={props.open}>
@@ -81,7 +100,7 @@ const ScheduleDialog = (props) => {
               formName="freeTime"
               views={["year", "month", "day"]}
               format={DATE_FORMAT.DD_MM_YYYY}
-              value={props.selectedEvent?.start ?? new Date()}
+              value={props.startDate}
               setValue={setValue}
               getValues={getValues}
               error={errors.freeTime ? true : false}
@@ -94,23 +113,22 @@ const ScheduleDialog = (props) => {
                   placeholder="From"
                   formName="From"
                   required={true}
-                  options={{ ...register("fromTime") }}
                   error={errors.fromTime ? true : false}
-                  defaultValue={props.selectedEvent?.start ?? new Date()}
+                  defaultValue={startTime}
+                  value={startTime}
+                  onChange={handleOnChangeStartTime}
                 />
               </Grid2>
               <Grid2 xs={6}>
                 <CustomizedTimePicker
+                  disabled={true}
                   name="Đến"
                   placeholder="To"
                   formName="To"
                   required={true}
-                  options={{ ...register("toTime") }}
                   error={errors.toTime ? true : false}
-                  defaultValue={
-                    props.selectedEvent?.end ??
-                    new Date(new Date().setHours(new Date().getHours() + 1))
-                  }
+                  defaultValue={endTime}
+                  value={endTime}
                 />
               </Grid2>
             </Grid2>
@@ -119,11 +137,26 @@ const ScheduleDialog = (props) => {
                 inputId="loopOption"
                 isMultipleSelect={false}
                 items={loopOptions}
+                value={loopOption}
+                onChange={onLoopOptionChange}
                 required={true}
                 name="Lặp lại"
                 MenuProps={MenuProps}
               />
             </FormControl>
+            <CustomizedDatePicker
+              name="Lặp đến"
+              placeholder="Lặp đến"
+              formName="endDateTime"
+              views={["year", "month", "day"]}
+              format={DATE_FORMAT.DD_MM_YYYY}
+              value={props.startDate}
+              setValue={setValue}
+              getValues={getValues}
+              error={errors.freeTime ? true : false}
+              required={true}
+              disabled={loopOption.value === "noloop" ? true : false}
+            />
           </DialogContent>
 
           <DialogActions>
