@@ -17,8 +17,8 @@ export const topicService = {
 
     return axiosClient.get(url);
   },
-  upsertTopic: (data) => {
-    const url = TopicEndpoints.UPSERT_TOPICS;
+  upsertTopic: (data, id) => {
+    const url = TopicEndpoints.UPSERT_TOPICS + (id ? `/${id}` : "");
 
     return axiosClient.post(url, data);
   },

@@ -29,6 +29,9 @@ export const BUTTON_LABEL = {
   VIEW_MORE: "Xem thêm",
   VIEW_LESS: "Thu gọn",
   CREATE_TOPIC: "Tạo chủ đề",
+  ADD_TOPIC: "Thêm chủ đề",
+  SEARCH_MENTOR: "Tìm kiếm diễn giả",
+  SEARCH_TOPIC: "Tìm kiếm chủ đề",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -81,6 +84,7 @@ export const TITLE = {
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
   CREATE_TOPIC: "Tạo chủ đề",
+  EDIT_TOPIC: "Chỉnh sửa chủ đề",
 };
 
 export const OTHER_TEXT = {

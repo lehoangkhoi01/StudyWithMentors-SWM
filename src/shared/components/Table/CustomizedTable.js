@@ -48,7 +48,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: 3,
+    paddingBlock: 3,
   },
 }));
 
@@ -395,10 +395,18 @@ const CustomizedTable = (props) => {
             onClick={openUpsertModalHandler}
           >
             <img src={require("../../../assets/icons/Add_Mentor.png")} />
-            <p>{BUTTON_LABEL.ADD_MENTOR}</p>
+            <p>
+              {props.type === TABLE_TYPE.MENTOR
+                ? BUTTON_LABEL.ADD_MENTOR
+                : BUTTON_LABEL.ADD_TOPIC}
+            </p>
           </CustomizedButton>
           <CustomizedTextField
-            placeholder="Tìm kiếm diễn giả"
+            placeholder={
+              props.type === TABLE_TYPE.MENTOR
+                ? BUTTON_LABEL.SEARCH_MENTOR
+                : BUTTON_LABEL.SEARCH_TOPIC
+            }
             className={style.list__input}
             required={true}
             options={{ ...register("searchTerm") }}

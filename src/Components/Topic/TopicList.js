@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
@@ -13,50 +14,66 @@ import {
   TOPIC_STATUS,
   TOPIC_TABLE,
 } from "../../shared/constants/common";
+import { selectUserInfo } from "../../Store/slices/userSlice";
+import { SYSTEM_ROLE } from "../../shared/constants/systemType";
+import { useEffect, useState } from "react";
+
+const HEADER_TABLE = [
+  {
+    sortable: true,
+    center: true,
+    property: "number",
+    name: TOPIC_TABLE.NUMBER,
+  },
+  {
+    sortable: true,
+    property: "name",
+    name: TOPIC_TABLE.NAME,
+  },
+  {
+    sortable: true,
+    property: "description",
+    name: TOPIC_TABLE.DESCRIPTION,
+  },
+  {
+    sortable: true,
+    center: true,
+    property: "field",
+    name: TOPIC_TABLE.FIELD,
+  },
+  {
+    sortable: true,
+    center: true,
+    property: "category",
+    name: TOPIC_TABLE.CATEGORY,
+  },
+  {
+    sortable: true,
+    property: "mentorName",
+    name: TOPIC_TABLE.MENTOR,
+  },
+  {
+    sortable: true,
+    property: "translatedStatus",
+    name: TOPIC_TABLE.STATUS,
+  },
+];
 
 const TopicList = () => {
   const { setNotification } = useNotification();
+  const userInfo = useSelector(selectUserInfo);
 
-  const headerTable = [
-    {
-      sortable: true,
-      center: true,
-      property: "number",
-      name: TOPIC_TABLE.NUMBER,
-    },
-    {
-      sortable: true,
-      property: "name",
-      name: TOPIC_TABLE.NAME,
-    },
-    {
-      sortable: true,
-      property: "description",
-      name: TOPIC_TABLE.DESCRIPTION,
-    },
-    {
-      sortable: true,
-      center: true,
-      property: "field",
-      name: TOPIC_TABLE.FIELD,
-    },
-    {
-      sortable: true,
-      center: true,
-      property: "category",
-      name: TOPIC_TABLE.CATEGORY,
-    },
-    {
-      sortable: true,
-      property: "mentorName",
-      name: TOPIC_TABLE.MENTOR,
-    },
-    {
-      sortable: true,
-      property: "translatedStatus",
-      name: TOPIC_TABLE.STATUS,
-    },
-  ];
+  const [headerTable, setHeaderTable] = useState([]);
+
+  useEffect(() => {
+    const header = HEADER_TABLE;
+
+    if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+      header.splice(5, 1);
+    }
+
+    setHeaderTable(header);
+  }, []);
 
   const actionItems = [
     {
@@ -85,9 +102,7 @@ const TopicList = () => {
     try {
       const topics = await topicService.getTopics();
 
-      console.log(topics);
-
-      const updatedTopicList = topics.map((topic, index) => {
+      let updatedTopicList = topics.map((topic, index) => {
         return {
           ...topic,
           number: index + 1,
@@ -95,6 +110,14 @@ const TopicList = () => {
           mentorName: topic.mentor.fullName,
         };
       });
+
+      console.log(userInfo.role)
+
+      if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+        updatedTopicList = updatedTopicList.filter(
+          (item) => item.mentor.id === userInfo.accountId
+        );
+      }
 
       return updatedTopicList;
     } catch (error) {
