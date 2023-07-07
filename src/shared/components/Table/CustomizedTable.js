@@ -123,6 +123,7 @@ const CustomizedTable = (props) => {
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
     } finally {
+      onCloseModal();
       setLoading(false);
     }
   };

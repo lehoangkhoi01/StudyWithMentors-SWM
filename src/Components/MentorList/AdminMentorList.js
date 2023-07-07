@@ -135,7 +135,7 @@ const AdminMentorList = () => {
       <CustomizedTable
         type={TABLE_TYPE.MENTOR}
         getData={getMentors}
-        onSearch={onSearchMentor}
+        filterData={onSearchMentor}
         onDelete={onDeleteMentor}
         onActive={onActiveMentor}
         headerTable={headerTable}

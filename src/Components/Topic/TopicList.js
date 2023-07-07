@@ -150,7 +150,7 @@ const TopicList = () => {
       <CustomizedTable
         type={TABLE_TYPE.TOPIC}
         getData={getTopics}
-        onSearch={onSearchTopic}
+        filterData={onSearchTopic}
         onDelete={onDeleteTopic}
         onUpdateTopicStatus={onUpdateTopicStatus}
         headerTable={headerTable}

@@ -492,6 +492,14 @@ export const TOPIC_STATUS = {
   ARCHIVED: "Lưu trữ",
 };
 
+export const TOPIC_STATUS_BACKEND = {
+  WAITING: "WAITING",
+  DELETED: "DELETED",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+  ARCHIVED: "ARCHIVED",
+};
+
 export const CONFIRM_TOPIC_MODAL = {
   REJECT_CONFIRM: "Bạn có muốn từ chối",
   ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",

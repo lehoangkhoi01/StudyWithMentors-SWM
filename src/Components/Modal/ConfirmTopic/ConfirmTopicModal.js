@@ -5,6 +5,7 @@ import {
   ERROR_MESSAGES,
   MODAL_ACTIVE_PROPERTY,
   OTHERS,
+  TOPIC_STATUS_BACKEND,
 } from "../../../shared/constants/common";
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -22,11 +23,12 @@ const ConfirmTopicModal = (props) => {
     confirmButton: "",
     confirm: "",
   });
+  const [englishType, setEnglishType] = useState();
 
   const onUpdateTopicStatus = async () => {
     try {
       setLoading(true);
-      await topicService.updateStatus(props.existedData.id, props.type);
+      await topicService.updateStatus(props.existedData.id, englishType);
 
       props.onSuccess();
 
@@ -49,18 +51,21 @@ const ConfirmTopicModal = (props) => {
           confirmButton: CONFIRM_TOPIC_MODAL.ACCEPT,
           confirm: CONFIRM_TOPIC_MODAL.ACCEPT_CONFIRM,
         });
+        setEnglishType(TOPIC_STATUS_BACKEND.ACCEPTED);
         break;
       case CONFIRM_TOPIC_MODAL.REJECT:
         setProperties({
           confirmButton: CONFIRM_TOPIC_MODAL.REJECT,
           confirm: CONFIRM_TOPIC_MODAL.REJECT_CONFIRM,
         });
+        setEnglishType(TOPIC_STATUS_BACKEND.REJECTED);
         break;
       case CONFIRM_TOPIC_MODAL.ARCHIVE:
         setProperties({
           confirmButton: CONFIRM_TOPIC_MODAL.ARCHIVE,
           confirm: CONFIRM_TOPIC_MODAL.ARCHIVE_CONFIRM,
         });
+        setEnglishType(TOPIC_STATUS_BACKEND.ARCHIVED);
         break;
       default:
         break;
