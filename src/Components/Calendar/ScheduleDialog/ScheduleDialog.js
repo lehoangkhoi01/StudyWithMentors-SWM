@@ -14,6 +14,7 @@ import CustomizedTimePicker from "../../../shared/components/TimePicker/Customiz
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import { format } from "date-fns";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -38,39 +39,38 @@ const ScheduleDialog = (props) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    const dateExtracted = data.freeTime.split("/");
-    const newFromDate = new Date(
-      dateExtracted[2],
-      Number.parseInt(dateExtracted[1]) - 1,
-      dateExtracted[0],
-      data.fromTime.split(":")[0],
-      data.fromTime.split(":")[1]
-    );
-    const newEndDate = new Date(
-      dateExtracted[2],
-      Number.parseInt(dateExtracted[1]) - 1,
-      dateExtracted[0],
-      data.toTime.split(":")[0],
-      data.toTime.split(":")[1]
-    );
-
-    const newEvent = {
-      id: 20,
-      title: "Free schedule",
-      start: newFromDate,
-      end: newEndDate,
-    };
-    props.handleSubmitCreateSchedule(newEvent);
-    props.handleClose();
-  };
-
   const [startTime, setStartTime] = React.useState(new Date());
   const [endTime, setEndTime] = React.useState(
     new Date(new Date().setHours(startTime.getHours() + 1))
   );
   const [loopOption, setLoopOption] = React.useState(loopOptions[0]);
+
+  const onSubmit = (data) => {
+    const dateExtracted = data.freeTime.split("/");
+    const newFromDate = new Date(
+      dateExtracted[2],
+      Number.parseInt(dateExtracted[1]) - 1,
+      dateExtracted[0]
+    );
+    console.log(newFromDate);
+    // const newEndDate = new Date(
+    //   dateExtracted[2],
+    //   Number.parseInt(dateExtracted[1]) - 1,
+    //   dateExtracted[0],
+    //   data.toTime.split(":")[0],
+    //   data.toTime.split(":")[1]
+    // );
+
+    const newEvent = {
+      startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
+      startDate: format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD),
+      daily: false,
+      weekly: false,
+    };
+    console.log(newEvent);
+    props.handleSubmitCreateSchedule(newEvent);
+    props.handleClose();
+  };
 
   const onLoopOptionChange = (e) => {
     console.log(e.target.value);

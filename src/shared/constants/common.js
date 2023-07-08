@@ -323,6 +323,7 @@ export const DATE_FORMAT = {
   BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   BACK_END_DD_MM_YYYY__HH_mm_ss: "dd-MM-yyyy HH:mm:ss",
   BACK_END_YYYY_MM_DD__HH_mm_ss: "yyyy-MM-dd HH:mm:ss",
+  BACK_END_HH_mm_ss: "HH:mm:ss",
 };
 
 export const CV_REGISTER_NAME_PREFIX = {

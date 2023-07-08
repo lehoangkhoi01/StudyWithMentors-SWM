@@ -39,10 +39,15 @@ const CustomCalendar = () => {
     setOpenScheduleForm(true);
   };
 
-  const handleSubmitCreateSchedule = (newSchedule) => {
-    console.log(newSchedule);
-    setEventList((prev) => [...prev, newSchedule]);
-    console.log(eventList);
+  const handleSubmitCreateSchedule = async (newSchedule) => {
+    setLoading(true);
+    try {
+      await scheduleService.createSchedule(newSchedule);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectEvent = (e) => {
@@ -63,20 +68,6 @@ const CustomCalendar = () => {
     setCurrentDate(date);
     await triggerRangeChangeEvent(date);
   };
-
-  // const onRangeChange = async (range) => {
-  //   console.log(range[0]);
-  //   try {
-  //     setLoading(true);
-  //     const result = await userAccountService.getUserInfo();
-  //     console.log(result);
-  //     setEventList(events);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const getStartEndTime = (date, view) => {
     const start = moment(date).startOf(view);
