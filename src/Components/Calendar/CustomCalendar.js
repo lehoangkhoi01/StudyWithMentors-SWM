@@ -4,7 +4,6 @@ import { Calendar as BigCalendar, Views } from "react-big-calendar";
 import "./react-big-calendar.css";
 import MiniCalendar from "./MiniCalendar/MiniCalendar";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import events from "./customEvents";
 import style from "./CustomCalendar.module.scss";
 import {
   components,
@@ -18,18 +17,21 @@ import {
 } from "./calendarConfig";
 import NoteSection from "./NoteSection/NoteSection";
 import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
-import { useCustomLoading } from "../../Helpers/generalHelper";
+import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { scheduleService } from "../../Services/sheduleService";
 import moment from "moment/moment";
 import { format } from "date-fns";
-import { DATE_FORMAT } from "../../shared/constants/common";
+import { COMMON_MESSAGE, DATE_FORMAT } from "../../shared/constants/common";
+import EventInfoDialog from "./EventInfoDialog/EventInfoDialog";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
+  const [openEventInfoDialog, setOpenEventInfoDialog] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   const handleCloseScheduleForm = () => {
     setOpenScheduleForm(false);
@@ -52,7 +54,31 @@ const CustomCalendar = () => {
 
   const handleSelectEvent = (e) => {
     setSelectedEvent(e);
-    setOpenScheduleForm(true);
+    setOpenEventInfoDialog(true);
+  };
+
+  const handleRemoveSchedule = async (id) => {
+    if (id) {
+      setLoading(true);
+      try {
+        await scheduleService.deleteSchedule(id);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.REMOVE_SCHEDULE_SUCCESS,
+        });
+        triggerRangeChangeEvent(new Date());
+      } catch (error) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.REMOVE_SCHEDULE_FAIL,
+        });
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const handleSelectSlot = (e) => {
@@ -87,33 +113,43 @@ const CustomCalendar = () => {
     }
 
     let result = {
-      start: format(
-        rangeStart.toDate(),
-        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-      ),
-      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss),
+      start: format(rangeStart.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
+      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
     };
+    return result;
+  };
+
+  const processSchedules = (schedules) => {
+    let result = [];
+
+    if (schedules && schedules.timeSlots.length > 0) {
+      schedules.timeSlots.map((schedule, index) => {
+        if (schedule.enable) {
+          const newSchedule = {
+            id: index,
+            scheduleId: schedule.scheduleId,
+            title: "Nhận tư vấn",
+            start: new Date(schedule.startTime),
+            end: new Date(schedule.endTime),
+          };
+          result.push(newSchedule);
+        }
+      });
+    }
+
     return result;
   };
 
   const triggerRangeChangeEvent = async (date, view) => {
     setLoading(true);
     const startEnd = getStartEndTime(date, view);
-    // const startTime = format(
-    //   startEnd.start,
-    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    // );
-    // const endTime = format(
-    //   startEnd.end,
-    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    // );
-
     try {
       const result = await scheduleService.getSchedule(
         startEnd.start,
         startEnd.end
       );
-      console.log(result);
+      const schedules = processSchedules(result);
+      setEventList(schedules);
     } catch (error) {
       console.log(error);
     } finally {
@@ -122,7 +158,6 @@ const CustomCalendar = () => {
   };
 
   useEffect(() => {
-    setEventList(events);
     const fetchSchedule = async () => {
       await triggerRangeChangeEvent(new Date());
     };
@@ -173,6 +208,12 @@ const CustomCalendar = () => {
         startDate={currentDate}
         handleClose={handleCloseScheduleForm}
         handleSubmitCreateSchedule={handleSubmitCreateSchedule}
+      />
+      <EventInfoDialog
+        open={openEventInfoDialog}
+        handleClose={() => setOpenEventInfoDialog(false)}
+        handleRemoveSchedule={handleRemoveSchedule}
+        event={selectedEvent}
       />
     </div>
   );

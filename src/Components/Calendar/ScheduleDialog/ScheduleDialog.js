@@ -45,13 +45,22 @@ const ScheduleDialog = (props) => {
   );
   const [loopOption, setLoopOption] = React.useState(loopOptions[0]);
 
+  const convertToDateTime = (date) => {
+    if (date) {
+      console.log(date);
+      const dateExtracted = date.split("/");
+      const newDate = new Date(
+        dateExtracted[2],
+        Number.parseInt(dateExtracted[1]) - 1,
+        dateExtracted[0]
+      );
+      return newDate;
+    } else return null;
+  };
+
   const onSubmit = (data) => {
-    const dateExtracted = data.freeTime.split("/");
-    const newFromDate = new Date(
-      dateExtracted[2],
-      Number.parseInt(dateExtracted[1]) - 1,
-      dateExtracted[0]
-    );
+    const newFromDate = convertToDateTime(data.freeTime);
+    const newEndDate = convertToDateTime(data.endDateTime);
     console.log(newFromDate);
     // const newEndDate = new Date(
     //   dateExtracted[2],
@@ -63,17 +72,22 @@ const ScheduleDialog = (props) => {
 
     const newEvent = {
       startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
-      startDate: format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD),
-      daily: false,
-      weekly: false,
+      startDate: newFromDate
+        ? format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
+        : null,
+      daily: loopOption.value === loopOptions[1].value,
+      weekly: loopOption.value === loopOptions[2].value,
+      endDate:
+        loopOption.value !== loopOptions[0] && newEndDate
+          ? format(newEndDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
+          : null,
     };
     console.log(newEvent);
-    props.handleSubmitCreateSchedule(newEvent);
+    //props.handleSubmitCreateSchedule(newEvent);
     props.handleClose();
   };
 
   const onLoopOptionChange = (e) => {
-    console.log(e.target.value);
     setLoopOption(e.target.value);
   };
 
@@ -85,6 +99,10 @@ const ScheduleDialog = (props) => {
     setStartTime(startTime);
     setEndTime(endTime);
   };
+
+  React.useEffect(() => {
+    setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+  }, []);
 
   return (
     <div>

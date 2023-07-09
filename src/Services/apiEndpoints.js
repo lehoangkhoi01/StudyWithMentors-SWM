@@ -42,7 +42,5 @@ export const SeminarFeedbackEndpoints = {
 };
 
 export const ScheduleEndpoints = {
-  GET_SCHEDULE: "schedules",
-  CREATE_SCHEDULE: "schedules/create",
-  DELETE_SCHEDULE: "schedules/delete",
+  SCHEDULE: "schedules",
 };
