@@ -41,6 +41,14 @@ export const SeminarFeedbackEndpoints = {
   SEMINAR_FEEDBACK_REPORT: "/feedbacks/seminar-feedback-report",
 };
 
+export const TopicEndpoints = {
+  GET_TOPIC_FIELDS: "admin/topic-fields",
+  GET_TOPIC_CATEGORIES: "admin/topic-categories",
+  GET_TOPICS: "admin/topics",
+  UPSERT_TOPICS: "topics",
+  UPADATE_TOPIC_STATUS: "topics/update-status",
+};
+
 export const ScheduleEndpoints = {
   SCHEDULE: "schedules",
 };
