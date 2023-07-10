@@ -4,7 +4,6 @@ import { Calendar as BigCalendar, Views } from "react-big-calendar";
 import "./react-big-calendar.css";
 import MiniCalendar from "./MiniCalendar/MiniCalendar";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import events from "./customEvents";
 import style from "./CustomCalendar.module.scss";
 import {
   components,
@@ -18,18 +17,21 @@ import {
 } from "./calendarConfig";
 import NoteSection from "./NoteSection/NoteSection";
 import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
-import { useCustomLoading } from "../../Helpers/generalHelper";
+import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { scheduleService } from "../../Services/sheduleService";
 import moment from "moment/moment";
 import { format } from "date-fns";
-import { DATE_FORMAT } from "../../shared/constants/common";
+import { COMMON_MESSAGE, DATE_FORMAT } from "../../shared/constants/common";
+import EventInfoDialog from "./EventInfoDialog/EventInfoDialog";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
+  const [openEventInfoDialog, setOpenEventInfoDialog] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   const handleCloseScheduleForm = () => {
     setOpenScheduleForm(false);
@@ -39,15 +41,94 @@ const CustomCalendar = () => {
     setOpenScheduleForm(true);
   };
 
-  const handleSubmitCreateSchedule = (newSchedule) => {
+  const handleSubmitCreateSchedule = async (newSchedule) => {
+    setLoading(true);
+    try {
+      await scheduleService.createSchedule(newSchedule);
+      await triggerRangeChangeEvent(currentDate);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.ADD_SCHEDULE_SUCCESS,
+      });
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitUpdateSchedule = async (scheduleId, newSchedule) => {
+    setLoading(true);
     console.log(newSchedule);
-    setEventList((prev) => [...prev, newSchedule]);
-    console.log(eventList);
+    try {
+      if (!newSchedule.daily && !newSchedule.weekly) {
+        const data = {
+          parentId: scheduleId,
+          exceptionDate: newSchedule.startDate,
+          startTime: newSchedule.startTime,
+          remove: false,
+        };
+        await scheduleService.createException(data);
+      } else {
+        await scheduleService.updateSchedule(scheduleId, newSchedule);
+      }
+
+      await triggerRangeChangeEvent(currentDate);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.UPDATE_SCHEDULE_SUCCESS,
+      });
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectEvent = (e) => {
     setSelectedEvent(e);
-    setOpenScheduleForm(true);
+    setOpenEventInfoDialog(true);
+  };
+
+  const handleRemoveSchedule = async (id, isSingle = false, data) => {
+    if (id) {
+      setLoading(true);
+      try {
+        if (isSingle) {
+          await scheduleService.createException(data);
+        } else {
+          await scheduleService.deleteSchedule(id);
+        }
+
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.REMOVE_SCHEDULE_SUCCESS,
+        });
+        triggerRangeChangeEvent(currentDate);
+      } catch (error) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.REMOVE_SCHEDULE_FAIL,
+        });
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const handleSelectSlot = (e) => {
@@ -63,20 +144,6 @@ const CustomCalendar = () => {
     setCurrentDate(date);
     await triggerRangeChangeEvent(date);
   };
-
-  // const onRangeChange = async (range) => {
-  //   console.log(range[0]);
-  //   try {
-  //     setLoading(true);
-  //     const result = await userAccountService.getUserInfo();
-  //     console.log(result);
-  //     setEventList(events);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const getStartEndTime = (date, view) => {
     const start = moment(date).startOf(view);
@@ -96,33 +163,45 @@ const CustomCalendar = () => {
     }
 
     let result = {
-      start: format(
-        rangeStart.toDate(),
-        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-      ),
-      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss),
+      start: format(rangeStart.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
+      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
     };
+    return result;
+  };
+
+  const processSchedules = (schedules) => {
+    let result = [];
+
+    if (schedules && schedules.timeSlots.length > 0) {
+      schedules.timeSlots.map((schedule, index) => {
+        if (schedule.enable) {
+          const newSchedule = {
+            id: index,
+            exceptionId: schedule.exceptionId,
+            scheduleId: schedule.scheduleId,
+            title: "Nhận tư vấn",
+            start: new Date(schedule.startTime),
+            end: new Date(schedule.endTime),
+            belongToSeries: schedule.belongToSeries,
+          };
+          result.push(newSchedule);
+        }
+      });
+    }
+
     return result;
   };
 
   const triggerRangeChangeEvent = async (date, view) => {
     setLoading(true);
     const startEnd = getStartEndTime(date, view);
-    // const startTime = format(
-    //   startEnd.start,
-    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    // );
-    // const endTime = format(
-    //   startEnd.end,
-    //   DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
-    // );
-
     try {
       const result = await scheduleService.getSchedule(
         startEnd.start,
         startEnd.end
       );
-      console.log(result);
+      const schedules = processSchedules(result);
+      setEventList(schedules);
     } catch (error) {
       console.log(error);
     } finally {
@@ -131,9 +210,8 @@ const CustomCalendar = () => {
   };
 
   useEffect(() => {
-    setEventList(events);
     const fetchSchedule = async () => {
-      await triggerRangeChangeEvent(new Date());
+      await triggerRangeChangeEvent(currentDate);
     };
     fetchSchedule();
   }, []);
@@ -182,6 +260,14 @@ const CustomCalendar = () => {
         startDate={currentDate}
         handleClose={handleCloseScheduleForm}
         handleSubmitCreateSchedule={handleSubmitCreateSchedule}
+        isUpdate={false}
+      />
+      <EventInfoDialog
+        open={openEventInfoDialog}
+        handleClose={() => setOpenEventInfoDialog(false)}
+        handleRemoveSchedule={handleRemoveSchedule}
+        handleSubmitUpdateSchedule={handleSubmitUpdateSchedule}
+        event={selectedEvent}
       />
     </div>
   );

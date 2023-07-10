@@ -111,6 +111,12 @@ export const COMMON_MESSAGE = {
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
+  REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
+  REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
+  ADD_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
+  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
 };
 
 export const SIGN_UP_STAGE = {
@@ -327,6 +333,8 @@ export const DATE_FORMAT = {
   BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   BACK_END_DD_MM_YYYY__HH_mm_ss: "dd-MM-yyyy HH:mm:ss",
   BACK_END_YYYY_MM_DD__HH_mm_ss: "yyyy-MM-dd HH:mm:ss",
+  BACK_END_HH_mm_ss: "HH:mm:ss",
+  HH_mm: "HH:mm",
 };
 
 export const CV_REGISTER_NAME_PREFIX = {

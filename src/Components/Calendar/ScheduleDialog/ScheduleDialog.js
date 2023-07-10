@@ -14,6 +14,9 @@ import CustomizedTimePicker from "../../../shared/components/TimePicker/Customiz
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import { format } from "date-fns";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { useRef } from "react";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -38,58 +41,92 @@ const ScheduleDialog = (props) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    const dateExtracted = data.freeTime.split("/");
-    const newFromDate = new Date(
-      dateExtracted[2],
-      Number.parseInt(dateExtracted[1]) - 1,
-      dateExtracted[0],
-      data.fromTime.split(":")[0],
-      data.fromTime.split(":")[1]
-    );
-    const newEndDate = new Date(
-      dateExtracted[2],
-      Number.parseInt(dateExtracted[1]) - 1,
-      dateExtracted[0],
-      data.toTime.split(":")[0],
-      data.toTime.split(":")[1]
-    );
-
-    const newEvent = {
-      id: 20,
-      title: "Free schedule",
-      start: newFromDate,
-      end: newEndDate,
-    };
-    props.handleSubmitCreateSchedule(newEvent);
-    props.handleClose();
-  };
-
+  const formRef = useRef();
   const [startTime, setStartTime] = React.useState(new Date());
   const [endTime, setEndTime] = React.useState(
     new Date(new Date().setHours(startTime.getHours() + 1))
   );
   const [loopOption, setLoopOption] = React.useState(loopOptions[0]);
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    React.useState(false);
+
+  const convertToDateTime = (date) => {
+    if (date) {
+      const dateExtracted = date.split("/");
+      const newDate = new Date(
+        dateExtracted[2],
+        Number.parseInt(dateExtracted[1]) - 1,
+        dateExtracted[0]
+      );
+      return newDate;
+    } else return null;
+  };
+
+  const onSubmit = (data) => {
+    const newFromDate = convertToDateTime(data.freeTime);
+    const newEndDate = convertToDateTime(data.endDateTime);
+
+    const newEvent = {
+      startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
+      startDate: newFromDate
+        ? format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
+        : null,
+      daily: loopOption.value === loopOptions[1].value,
+      weekly: loopOption.value === loopOptions[2].value,
+      endDate:
+        loopOption.value !== loopOptions[0] && newEndDate
+          ? format(newEndDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
+          : null,
+    };
+
+    if (props.isUpdate) {
+      props.handleUpdateSchedule(newEvent);
+    } else {
+      props.handleSubmitCreateSchedule(newEvent);
+    }
+
+    props.handleClose();
+  };
 
   const onLoopOptionChange = (e) => {
-    console.log(e.target.value);
     setLoopOption(e.target.value);
   };
 
   const handleOnChangeStartTime = (e) => {
     const startTime = new Date(e);
     const endTime = new Date(e.setHours(e.getHours() + 1));
-    console.log(startTime);
-    console.log(endTime);
     setStartTime(startTime);
     setEndTime(endTime);
   };
 
+  const onClickUpdate = () => {
+    setOpenConfirmationDialog(true);
+  };
+
+  const handleUpdate = () => {
+    formRef?.current.dispatchEvent(
+      new Event("submit", { cancelable: true, bubbles: true })
+    );
+    setOpenConfirmationDialog(false);
+  };
+
+  React.useEffect(() => {
+    setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+  }, [props.startDate]);
+
+  React.useEffect(() => {
+    setStartTime(props.startDate);
+    setEndTime(
+      new Date(
+        new Date(props.startDate).setHours(props.startDate.getHours() + 1)
+      )
+    );
+  }, [props.startDate]);
+
   return (
     <div>
       <Dialog fullWidth open={props.open}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle>
             <Typography variant="h5">Lịch nhận cố vấn</Typography>
           </DialogTitle>
@@ -161,14 +198,31 @@ const ScheduleDialog = (props) => {
 
           <DialogActions>
             <Button variant="outlined" autoFocus onClick={props.handleClose}>
-              Hủy Lưu
+              Trở lại
             </Button>
-            <Button variant="contained" type="submit">
-              Lưu lịch
-            </Button>
+
+            {props.isUpdate ? (
+              <Button variant="contained" onClick={onClickUpdate}>
+                Cập nhật
+              </Button>
+            ) : (
+              <Button variant="contained" type="submit">
+                Tạo lịch
+              </Button>
+            )}
           </DialogActions>
         </form>
       </Dialog>
+
+      <ConfirmationDialog
+        open={openConfirmationDialog}
+        title="Cập nhật lịch"
+        content="Việc cập nhật sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
+        confirmLabel="Xác nhận"
+        cancelLabel="Trở về"
+        handleSubmit={handleUpdate}
+        handleClose={() => setOpenConfirmationDialog(false)}
+      />
     </div>
   );
 };
