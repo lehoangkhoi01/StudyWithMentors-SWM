@@ -14,4 +14,8 @@ export const scheduleService = {
     const url = ScheduleEndpoints.SCHEDULE + "/" + id;
     return axiosClient.delete(url);
   },
+  createException: (data) => {
+    const url = ScheduleEndpoints.SCHEDULE + "/create-exception";
+    return axiosClient.post(url, data);
+  },
 };

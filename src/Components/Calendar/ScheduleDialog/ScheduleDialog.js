@@ -47,7 +47,6 @@ const ScheduleDialog = (props) => {
 
   const convertToDateTime = (date) => {
     if (date) {
-      console.log(date);
       const dateExtracted = date.split("/");
       const newDate = new Date(
         dateExtracted[2],
@@ -61,14 +60,6 @@ const ScheduleDialog = (props) => {
   const onSubmit = (data) => {
     const newFromDate = convertToDateTime(data.freeTime);
     const newEndDate = convertToDateTime(data.endDateTime);
-    console.log(newFromDate);
-    // const newEndDate = new Date(
-    //   dateExtracted[2],
-    //   Number.parseInt(dateExtracted[1]) - 1,
-    //   dateExtracted[0],
-    //   data.toTime.split(":")[0],
-    //   data.toTime.split(":")[1]
-    // );
 
     const newEvent = {
       startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
@@ -82,8 +73,8 @@ const ScheduleDialog = (props) => {
           ? format(newEndDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
           : null,
     };
-    console.log(newEvent);
-    //props.handleSubmitCreateSchedule(newEvent);
+
+    props.handleSubmitCreateSchedule(newEvent);
     props.handleClose();
   };
 
@@ -94,8 +85,6 @@ const ScheduleDialog = (props) => {
   const handleOnChangeStartTime = (e) => {
     const startTime = new Date(e);
     const endTime = new Date(e.setHours(e.getHours() + 1));
-    console.log(startTime);
-    console.log(endTime);
     setStartTime(startTime);
     setEndTime(endTime);
   };

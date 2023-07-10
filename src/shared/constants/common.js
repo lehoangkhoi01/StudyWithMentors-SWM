@@ -109,6 +109,8 @@ export const COMMON_MESSAGE = {
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
   REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
   REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
+  ADD_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
 };
 
 export const SIGN_UP_STAGE = {

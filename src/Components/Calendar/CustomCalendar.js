@@ -45,7 +45,18 @@ const CustomCalendar = () => {
     setLoading(true);
     try {
       await scheduleService.createSchedule(newSchedule);
+      await triggerRangeChangeEvent(currentDate);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.ADD_SCHEDULE_SUCCESS,
+      });
     } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+      });
       console.log(error);
     } finally {
       setLoading(false);
@@ -57,17 +68,22 @@ const CustomCalendar = () => {
     setOpenEventInfoDialog(true);
   };
 
-  const handleRemoveSchedule = async (id) => {
+  const handleRemoveSchedule = async (id, isSingle = false, data) => {
     if (id) {
       setLoading(true);
       try {
-        await scheduleService.deleteSchedule(id);
+        if (isSingle) {
+          await scheduleService.createException(data);
+        } else {
+          await scheduleService.deleteSchedule(id);
+        }
+
         setNotification({
           isOpen: true,
           type: "success",
           message: COMMON_MESSAGE.REMOVE_SCHEDULE_SUCCESS,
         });
-        triggerRangeChangeEvent(new Date());
+        triggerRangeChangeEvent(currentDate);
       } catch (error) {
         setNotification({
           isOpen: true,
@@ -127,10 +143,12 @@ const CustomCalendar = () => {
         if (schedule.enable) {
           const newSchedule = {
             id: index,
+            exceptionId: schedule.exceptionId,
             scheduleId: schedule.scheduleId,
             title: "Nhận tư vấn",
             start: new Date(schedule.startTime),
             end: new Date(schedule.endTime),
+            belongToSeries: schedule.belongToSeries,
           };
           result.push(newSchedule);
         }
@@ -159,7 +177,7 @@ const CustomCalendar = () => {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      await triggerRangeChangeEvent(new Date());
+      await triggerRangeChangeEvent(currentDate);
     };
     fetchSchedule();
   }, []);

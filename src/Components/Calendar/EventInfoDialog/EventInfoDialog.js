@@ -12,8 +12,15 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import style from "./EventInfoDialog.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import RemoveOptionScheduleDialog from "../RemoveOptionScheduleDialog.js/RemoveOptionScheduleDialog";
 
 const EventInfoDialog = (props) => {
+  const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
+
+  const handleOpenDeleteOption = (status) => {
+    setOpenDeleteOption(status);
+  };
+
   const formatedEventDateTime = (startTime, endTime) => {
     if (startTime && endTime) {
       return (
@@ -27,8 +34,12 @@ const EventInfoDialog = (props) => {
   };
 
   const onRemoveSchedule = async () => {
-    await props.handleRemoveSchedule(props.event?.scheduleId);
-    props.handleClose();
+    if (props.event?.belongToSeries) {
+      handleOpenDeleteOption(true);
+    } else {
+      await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
+      props.handleClose();
+    }
   };
 
   return (
@@ -57,6 +68,14 @@ const EventInfoDialog = (props) => {
           <Button variant="contained">Chỉnh sửa</Button>
         </DialogActions>
       </Dialog>
+
+      <RemoveOptionScheduleDialog
+        open={openDeleteOption}
+        handleOpenDeleteOption={handleOpenDeleteOption}
+        handleRemoveSchedule={props.handleRemoveSchedule}
+        handleCloseEventInfoDialog={props.handleClose}
+        event={props.event}
+      />
     </div>
   );
 };
