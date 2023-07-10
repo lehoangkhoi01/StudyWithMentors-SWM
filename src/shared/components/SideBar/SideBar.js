@@ -74,7 +74,7 @@ const SideBar = (props) => {
           <Link to={ROUTES.ADMIN_MENTOR_LIST}>Quản lí mentor</Link>
         </ListItem>
         <ListItem className={`${style.sidebar__listitem}`}>
-          <Link>Quản lí mentor</Link>
+          <Link to={ROUTES.TOPIC_LIST}>Quản lí chủ đề</Link>
         </ListItem>
         <ListItem className={`${style.sidebar__listitem}`}>
           <Link to={ROUTES.SEMINAR_LIST}>Quản lí sự kiện</Link>

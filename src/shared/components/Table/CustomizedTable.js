@@ -14,7 +14,8 @@ import {
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
-  TABLE_ACTION,
+  TABLE_TYPE,
+  UPSERT_MENTOR,
 } from "../../constants/common";
 import { Button, Menu, MenuItem, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -31,6 +32,14 @@ import {
 } from "../../../Helpers/generalHelper";
 import UpsertMentorModal from "../../../Components/Modal/UpsertMentorModal";
 import ActivePropertyModal from "../../../Components/Modal/ActivePropertyModal";
+import {
+  ACTIVE_ACTION,
+  CONFIRM_ACTION,
+  DEACTIVATE_ACTION,
+  UPSERT_ACTION,
+} from "../../constants/actionType";
+import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
+import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,7 +48,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: 3,
+    paddingBlock: 3,
   },
 }));
 
@@ -73,6 +82,7 @@ const CustomizedTable = (props) => {
     upsert: false,
     delete: false,
     active: false,
+    confirm: false,
   });
   const [existedData, setExistedData] = useState(null);
   const [deletedData, setDeletedData] = useState(null);
@@ -81,6 +91,7 @@ const CustomizedTable = (props) => {
     anchorEl: null,
     index: -1,
   });
+  const [confirmType, setConfirmType] = useState(null);
 
   useEffect(() => {
     getData();
@@ -112,6 +123,7 @@ const CustomizedTable = (props) => {
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
     } finally {
+      onCloseModal();
       setLoading(false);
     }
   };
@@ -223,6 +235,7 @@ const CustomizedTable = (props) => {
       upsert: true,
       delete: false,
       active: false,
+      confirm: false,
     });
   };
 
@@ -234,7 +247,23 @@ const CustomizedTable = (props) => {
       upsert: false,
       delete: true,
       active: false,
+      confirm: false,
     });
+  };
+
+  const openConfirmModalHandler = (data, type) => {
+    if (data) {
+      setExistedData(data);
+    }
+
+    setOpenModal({
+      upsert: false,
+      delete: false,
+      active: false,
+      confirm: true,
+    });
+
+    setConfirmType(type);
   };
 
   const onCloseModal = () => {
@@ -243,8 +272,10 @@ const CustomizedTable = (props) => {
       upsert: false,
       delete: false,
       active: false,
+      confirm: false,
     });
     setDeletedData(null);
+    setConfirmType(null);
   };
 
   const onPaginate = (page, initData) => {
@@ -299,7 +330,12 @@ const CustomizedTable = (props) => {
 
       setLoading(false);
     } finally {
-      setOpenModal({ upsert: false, delete: false, active: false });
+      setOpenModal({
+        upsert: false,
+        delete: false,
+        active: false,
+        confirm: false,
+      });
     }
   };
 
@@ -310,6 +346,7 @@ const CustomizedTable = (props) => {
         upsert: false,
         delete: false,
         active: true,
+        confirm: false,
       });
     }
   };
@@ -340,7 +377,12 @@ const CustomizedTable = (props) => {
 
       setLoading(false);
     } finally {
-      setOpenModal({ upsert: false, delete: false, active: false });
+      setOpenModal({
+        upsert: false,
+        delete: false,
+        active: false,
+        confirm: false,
+      });
     }
   };
 
@@ -354,10 +396,18 @@ const CustomizedTable = (props) => {
             onClick={openUpsertModalHandler}
           >
             <img src={require("../../../assets/icons/Add_Mentor.png")} />
-            <p>{BUTTON_LABEL.ADD_MENTOR}</p>
+            <p>
+              {props.type === TABLE_TYPE.MENTOR
+                ? BUTTON_LABEL.ADD_MENTOR
+                : BUTTON_LABEL.ADD_TOPIC}
+            </p>
           </CustomizedButton>
           <CustomizedTextField
-            placeholder="Tìm kiếm diễn giả"
+            placeholder={
+              props.type === TABLE_TYPE.MENTOR
+                ? BUTTON_LABEL.SEARCH_MENTOR
+                : BUTTON_LABEL.SEARCH_TOPIC
+            }
             className={style.list__input}
             required={true}
             options={{ ...register("searchTerm") }}
@@ -455,38 +505,72 @@ const CustomizedTable = (props) => {
                       }}
                       className={style.list__table_dropdown}
                     >
-                      <MenuItem
-                        onClick={() => {
-                          openUpsertModalHandler(null, row);
-                        }}
-                      >
-                        <img src={require("../../../assets/icons/Edit.png")} />
-                        <span>{TABLE_ACTION.EDIT}</span>
-                      </MenuItem>
-                      {row.translatedStatus === MENTOR_STATUS.INVALIDATE && (
-                        <MenuItem
-                          onClick={() => {
-                            openActiveModalHandler(row);
-                          }}
-                        >
-                          <img
-                            src={require("../../../assets/icons/Deactive.png")}
-                          />
-                          <span>{TABLE_ACTION.ACTIVATE}</span>
-                        </MenuItem>
-                      )}
-                      {row.translatedStatus === MENTOR_STATUS.ACTIVATED && (
-                        <MenuItem
-                          onClick={() => {
-                            openDeleteModalHandler(row);
-                          }}
-                        >
-                          <img
-                            src={require("../../../assets/icons/Deactive.png")}
-                          />
-                          <span>{TABLE_ACTION.DEACTIVATE}</span>
-                        </MenuItem>
-                      )}
+                      {props.actionItems.map((actionItem, index) => {
+                        switch (actionItem.action) {
+                          case UPSERT_ACTION:
+                            return (
+                              <MenuItem
+                                key={`MENU_ITEM_${index}`}
+                                onClick={() => {
+                                  return openUpsertModalHandler(null, row);
+                                }}
+                              >
+                                <img src={actionItem.imgSrc} />
+                                <span>{actionItem.label}</span>
+                              </MenuItem>
+                            );
+
+                          case DEACTIVATE_ACTION:
+                            return (
+                              row.translatedStatus ===
+                                MENTOR_STATUS.ACTIVATED && (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openDeleteModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              )
+                            );
+
+                          case ACTIVE_ACTION:
+                            return (
+                              row.translatedStatus ===
+                                MENTOR_STATUS.INVALIDATE && (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openActiveModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              )
+                            );
+
+                          case CONFIRM_ACTION:
+                            return (
+                              <MenuItem
+                                key={`MENU_ITEM_${index}`}
+                                onClick={() => {
+                                  return openConfirmModalHandler(
+                                    row,
+                                    actionItem.label
+                                  );
+                                }}
+                              >
+                                <img src={actionItem.imgSrc} />
+                                <span>{actionItem.label}</span>
+                              </MenuItem>
+                            );
+                          default:
+                            return;
+                        }
+                      })}
                     </Menu>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -519,9 +603,26 @@ const CustomizedTable = (props) => {
         onActive={onActiveData}
       />
       <UpsertMentorModal
-        openModal={openModal.upsert}
+        openModal={openModal.upsert && props.type === TABLE_TYPE.MENTOR}
         onCloseModal={onCloseModal}
         existedData={existedData}
+        onSuccess={getData}
+        title={
+          existedData ? UPSERT_MENTOR.EDIT_MENTOR : UPSERT_MENTOR.ADD_MENTOR
+        }
+      />
+      <AddTopicModal
+        openModal={openModal.upsert && props.type === TABLE_TYPE.TOPIC}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <ConfirmTopicModal
+        type={confirmType}
+        title={existedData?.name}
+        openModal={openModal.confirm}
+        existedData={existedData}
+        onCloseModal={onCloseModal}
         onSuccess={getData}
       />
     </div>

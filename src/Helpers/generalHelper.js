@@ -5,6 +5,12 @@ import { selectUserInfo, userAction } from "../Store/slices/userSlice";
 import { userAccountService } from "../Services/userAccountService";
 import { mentorAcion, selectMentorList } from "../Store/slices/mentorSlice";
 import { accountService } from "../Services/accountService";
+import {
+  selectTopicCategories,
+  selectTopicFields,
+  topicAction,
+} from "../Store/slices/topicSlice";
+import { topicService } from "../Services/topicService";
 
 // reason: want to specify delay time for loading for smoothier
 export const useCustomLoading = () => {
@@ -94,5 +100,39 @@ export const useFetchSpeakerList = () => {
   return {
     getLatestSpeakerList,
     getSpeakerList,
+  };
+};
+
+export const useFetchTopicFieldsAndCategories = () => {
+  const dispatch = useDispatch();
+  let topicFields = useSelector(selectTopicFields);
+  let topicCategories = useSelector(selectTopicCategories);
+
+  const getTopicFields = async () => {
+    if (!topicFields || topicFields.length === 0) {
+      try {
+        topicFields = await topicService.getFields();
+        dispatch(topicAction.setTopicFields(topicFields));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return topicFields;
+  };
+
+  const getTopicCategories = async () => {
+    if (!topicCategories || topicCategories.length === 0) {
+      try {
+        topicCategories = await topicService.getCategories();
+        dispatch(topicAction.setTopicCategories(topicCategories));
+      } catch (error) {
+        console.log(error);
+      }
+      return topicCategories;
+    }
+  };
+  return {
+    getTopicFields,
+    getTopicCategories,
   };
 };

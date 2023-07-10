@@ -87,7 +87,7 @@ const UpsertMentorModal = (props) => {
             className={`${style.modal__form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h2>Thêm diễn giả</h2>
+            <h2>{props.CustomizedTextField}</h2>
             <CustomizedTextField
               name={"Họ và tên"}
               required={true}

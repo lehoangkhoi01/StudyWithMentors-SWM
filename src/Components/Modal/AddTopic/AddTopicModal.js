@@ -5,16 +5,114 @@ import style from "./AddTopicModal.module.scss";
 import {
   ADD_TOPIC,
   BUTTON_LABEL,
+  ERROR_MESSAGES,
   TITLE,
 } from "../../../shared/constants/common";
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { useCustomLoading, useFetchTopicFieldsAndCategories, useNotification } from "../../../Helpers/generalHelper";
+import { useEffect, useState } from "react";
+import { topicService } from "../../../Services/topicService";
 
 const AddTopicModal = (props) => {
-  const { register, watch, handleSubmit, getValues } = useForm();
+  const { register, watch, handleSubmit, getValues, reset, setValue } =
+    useForm();
+  const { getTopicCategories, getTopicFields } =
+    useFetchTopicFieldsAndCategories();
+    const { setLoading } = useCustomLoading();
+    const { setNotification } = useNotification();
 
-  const onSubmit = () => {
-    console.log(getValues());
+  const [fields, setFields] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedField, setSelectedField] = useState();
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [topicId, setTopicId] = useState();
+
+  useEffect(() => {
+    const getFieldsAndCategories = async () => {
+      setFields(await getTopicFields());
+      setCategories(await getTopicCategories());
+    };
+
+    getFieldsAndCategories();
+  }, []);
+
+  console.log(selectedField)
+
+  useEffect(() => {
+    clearData();
+
+    if (props.existedData) {
+      setValue("name", props.existedData.name);
+      setValue("description", props.existedData.description);
+      setValue("monney", +props.existedData.money);
+
+      setSelectedCategory({
+        id: props.existedData.categoryId,
+        name: props.existedData.category,
+      });
+      setSelectedField({
+        id: props.existedData.fieldId,
+        name: props.existedData.field,
+      });
+
+      setTopicId(props.existedData.id);
+    }
+  }, [props.openModal]);
+
+  const clearData = () => {
+    reset();
+    setSelectedCategory();
+    setSelectedField();
+  };
+
+  const handleCategoryChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setSelectedCategory(value);
+  };
+
+  const handleFieldChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setSelectedField(value);
+  };
+
+  const onSubmit = async () => {
+    const formValue = getValues();
+
+    console.log(selectedCategory)
+
+    let topic = {
+      name: formValue.name,
+      description: formValue.description,
+      fieldId: selectedField.id,
+      categoryId: selectedCategory.id,
+      money: formValue.money,
+    };
+
+    try {
+      setLoading(true);
+
+      await topicService.upsertTopic(topic, topicId)
+
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+
+    console.log(topic);
   };
 
   return (
@@ -26,42 +124,59 @@ const AddTopicModal = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{TITLE.CREATE_TOPIC}</h1>
+              <h1>{topicId ? TITLE.EDIT_TOPIC : TITLE.CREATE_TOPIC}</h1>
 
               <CustomizedTextField
-                name={ADD_TOPIC.TOPIC}
+                name={ADD_TOPIC.TOPIC_NAME}
                 required={true}
                 options={{
-                  ...register("topic"),
+                  ...register("name"),
+                }}
+              />
+
+              <CustomizedTextField
+                name={ADD_TOPIC.DESCRIPTION}
+                required={true}
+                options={{
+                  ...register("description"),
                 }}
                 multiline={true}
-                watch={watch("topic")}
+                watch={watch("description")}
               />
 
               <CustomizedSelect
-                name={ADD_TOPIC.SKILL_GROUP}
-                items={[]}
-                options={{ ...register("skills") }}
+                inputId={"category"}
+                name={ADD_TOPIC.CATEGORY}
+                items={categories}
+                required={true}
+                value={selectedCategory?.name ?? ""}
+                onChange={handleCategoryChange}
+                renderValue={() => selectedCategory.name}
               />
 
               <CustomizedSelect
-                name={ADD_TOPIC.MAJOR}
-                items={[]}
-                options={{ ...register("major") }}
+                inputId={"field"}
+                name={ADD_TOPIC.FIELD}
+                items={fields}
+                required={true}
+                value={selectedField?.name ?? ""}
+                onChange={handleFieldChange}
+                renderValue={() => selectedField.name}
               />
 
               <CustomizedTextField
-                name={ADD_TOPIC.COST}
+                name={ADD_TOPIC.MONEY}
                 required={true}
+                type="number"
                 options={{
-                  ...register("cost"),
+                  ...register("money"),
                 }}
               />
 
               <div className={style.modal__buttons}>
                 <CustomizedButton
                   type="submit"
-                  variant="text"
+                  variant="outlined"
                   color="primary600"
                   onClick={props.onCloseModal}
                 >
@@ -69,11 +184,11 @@ const AddTopicModal = (props) => {
                 </CustomizedButton>
                 <CustomizedButton
                   type="submit"
-                  variant="text"
+                  variant="contained"
                   color="primary600"
                   //   onClick={props.onDeleteProperty}
                 >
-                  {BUTTON_LABEL.CREATE_TOPIC}
+                  {topicId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_TOPIC}
                 </CustomizedButton>
               </div>
             </form>
