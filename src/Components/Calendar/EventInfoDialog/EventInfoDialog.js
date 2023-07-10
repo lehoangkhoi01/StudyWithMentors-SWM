@@ -13,12 +13,18 @@ import style from "./EventInfoDialog.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import RemoveOptionScheduleDialog from "../RemoveOptionScheduleDialog.js/RemoveOptionScheduleDialog";
+import ScheduleDialog from "../ScheduleDialog/ScheduleDialog";
 
 const EventInfoDialog = (props) => {
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
+  const [openScheduleDialog, setOpenScheduleDialog] = React.useState(false);
 
   const handleOpenDeleteOption = (status) => {
     setOpenDeleteOption(status);
+  };
+
+  const handleOpenScheduleDialog = (status) => {
+    setOpenScheduleDialog(status);
   };
 
   const formatedEventDateTime = (startTime, endTime) => {
@@ -40,6 +46,11 @@ const EventInfoDialog = (props) => {
       await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
       props.handleClose();
     }
+  };
+
+  const handleUpdateSchedule = (data) => {
+    props.handleSubmitUpdateSchedule(props.event?.scheduleId, data);
+    props.handleClose();
   };
 
   return (
@@ -65,7 +76,12 @@ const EventInfoDialog = (props) => {
           <Button variant="outlined" onClick={onRemoveSchedule}>
             Xóa
           </Button>
-          <Button variant="contained">Chỉnh sửa</Button>
+          <Button
+            variant="contained"
+            onClick={() => handleOpenScheduleDialog(true)}
+          >
+            Chỉnh sửa
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -75,6 +91,13 @@ const EventInfoDialog = (props) => {
         handleRemoveSchedule={props.handleRemoveSchedule}
         handleCloseEventInfoDialog={props.handleClose}
         event={props.event}
+      />
+      <ScheduleDialog
+        open={openScheduleDialog}
+        handleClose={() => handleOpenScheduleDialog(false)}
+        startDate={props.event?.start ?? new Date()}
+        handleUpdateSchedule={handleUpdateSchedule}
+        isUpdate={true}
       />
     </div>
   );

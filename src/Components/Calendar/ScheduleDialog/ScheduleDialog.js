@@ -15,6 +15,8 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import { format } from "date-fns";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { useRef } from "react";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -39,11 +41,14 @@ const ScheduleDialog = (props) => {
     formState: { errors },
   } = useForm();
 
+  const formRef = useRef();
   const [startTime, setStartTime] = React.useState(new Date());
   const [endTime, setEndTime] = React.useState(
     new Date(new Date().setHours(startTime.getHours() + 1))
   );
   const [loopOption, setLoopOption] = React.useState(loopOptions[0]);
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    React.useState(false);
 
   const convertToDateTime = (date) => {
     if (date) {
@@ -74,7 +79,12 @@ const ScheduleDialog = (props) => {
           : null,
     };
 
-    props.handleSubmitCreateSchedule(newEvent);
+    if (props.isUpdate) {
+      props.handleUpdateSchedule(newEvent);
+    } else {
+      props.handleSubmitCreateSchedule(newEvent);
+    }
+
     props.handleClose();
   };
 
@@ -89,14 +99,34 @@ const ScheduleDialog = (props) => {
     setEndTime(endTime);
   };
 
+  const onClickUpdate = () => {
+    setOpenConfirmationDialog(true);
+  };
+
+  const handleUpdate = () => {
+    formRef?.current.dispatchEvent(
+      new Event("submit", { cancelable: true, bubbles: true })
+    );
+    setOpenConfirmationDialog(false);
+  };
+
   React.useEffect(() => {
     setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
-  }, []);
+  }, [props.startDate]);
+
+  React.useEffect(() => {
+    setStartTime(props.startDate);
+    setEndTime(
+      new Date(
+        new Date(props.startDate).setHours(props.startDate.getHours() + 1)
+      )
+    );
+  }, [props.startDate]);
 
   return (
     <div>
       <Dialog fullWidth open={props.open}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle>
             <Typography variant="h5">Lịch nhận cố vấn</Typography>
           </DialogTitle>
@@ -168,14 +198,31 @@ const ScheduleDialog = (props) => {
 
           <DialogActions>
             <Button variant="outlined" autoFocus onClick={props.handleClose}>
-              Hủy Lưu
+              Trở lại
             </Button>
-            <Button variant="contained" type="submit">
-              Lưu lịch
-            </Button>
+
+            {props.isUpdate ? (
+              <Button variant="contained" onClick={onClickUpdate}>
+                Cập nhật
+              </Button>
+            ) : (
+              <Button variant="contained" type="submit">
+                Tạo lịch
+              </Button>
+            )}
           </DialogActions>
         </form>
       </Dialog>
+
+      <ConfirmationDialog
+        open={openConfirmationDialog}
+        title="Cập nhật lịch"
+        content="Việc cập nhật sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
+        confirmLabel="Xác nhận"
+        cancelLabel="Trở về"
+        handleSubmit={handleUpdate}
+        handleClose={() => setOpenConfirmationDialog(false)}
+      />
     </div>
   );
 };

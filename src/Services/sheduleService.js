@@ -18,4 +18,8 @@ export const scheduleService = {
     const url = ScheduleEndpoints.SCHEDULE + "/create-exception";
     return axiosClient.post(url, data);
   },
+  updateSchedule: (id, data) => {
+    const url = ScheduleEndpoints.SCHEDULE + "/" + id;
+    return axiosClient.post(url, data);
+  },
 };

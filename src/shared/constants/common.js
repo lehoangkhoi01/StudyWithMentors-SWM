@@ -115,6 +115,8 @@ export const COMMON_MESSAGE = {
   REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
   ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
   ADD_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
+  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
 };
 
 export const SIGN_UP_STAGE = {

@@ -63,6 +63,40 @@ const CustomCalendar = () => {
     }
   };
 
+  const handleSubmitUpdateSchedule = async (scheduleId, newSchedule) => {
+    setLoading(true);
+    console.log(newSchedule);
+    try {
+      if (!newSchedule.daily && !newSchedule.weekly) {
+        const data = {
+          parentId: scheduleId,
+          exceptionDate: newSchedule.startDate,
+          startTime: newSchedule.startTime,
+          remove: false,
+        };
+        await scheduleService.createException(data);
+      } else {
+        await scheduleService.updateSchedule(scheduleId, newSchedule);
+      }
+
+      await triggerRangeChangeEvent(currentDate);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.UPDATE_SCHEDULE_SUCCESS,
+      });
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSelectEvent = (e) => {
     setSelectedEvent(e);
     setOpenEventInfoDialog(true);
@@ -226,11 +260,13 @@ const CustomCalendar = () => {
         startDate={currentDate}
         handleClose={handleCloseScheduleForm}
         handleSubmitCreateSchedule={handleSubmitCreateSchedule}
+        isUpdate={false}
       />
       <EventInfoDialog
         open={openEventInfoDialog}
         handleClose={() => setOpenEventInfoDialog(false)}
         handleRemoveSchedule={handleRemoveSchedule}
+        handleSubmitUpdateSchedule={handleSubmitUpdateSchedule}
         event={selectedEvent}
       />
     </div>
