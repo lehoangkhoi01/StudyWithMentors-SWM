@@ -4,16 +4,47 @@ import style from "./MentorList.module.scss";
 import FilterSection from "./FilterSection/FilterSection";
 import MentorCard from "./MentorCard/MentorCard";
 import { Grid, Pagination } from "@mui/material";
-import { FILTER_SEMINAR } from "../../shared/constants/common";
+import { ERROR_MESSAGES, FILTER_SEMINAR } from "../../shared/constants/common";
 import { useState } from "react";
+import { useEffect } from "react";
+import { accountService } from "../../Services/accountService";
+import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 
 const MentorList = () => {
+  const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
+
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: 12,
     totalPage: 1,
   });
+  const [mentors, setMentors] = useState([]);
+  console.log(mentors);
+  const getMentors = async () => {
+    try {
+      setLoading(true);
+      const mentorsData = await accountService.getAllMoreInfoMentors();
+      console.log(mentorsData.mentorCards);
+
+      setMentors(mentorsData.mentorCards);
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getMentors();
+  }, []);
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
@@ -68,18 +99,11 @@ const MentorList = () => {
         </div>
       </div>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <MentorCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <MentorCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <MentorCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4} xl={3}>
-          <MentorCard />
-        </Grid>
+        {mentors.map((mentor, index) => (
+          <Grid key={`MENTOR_CARD_${index}`} item xs={12} md={6} lg={4} xl={3}>
+            <MentorCard data={mentor} />
+          </Grid>
+        ))}
       </Grid>
       <Pagination
         className={style.list__pagination}
