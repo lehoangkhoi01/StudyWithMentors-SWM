@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
   FormControl,
   Typography,
 } from "@mui/material";
@@ -17,6 +16,7 @@ import { DATE_FORMAT } from "../../../shared/constants/common";
 import { format } from "date-fns";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import { useRef } from "react";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -212,19 +212,36 @@ const ScheduleDialog = (props) => {
             />
           </DialogContent>
 
-          <DialogActions>
-            <Button variant="outlined" autoFocus onClick={props.handleClose}>
+          <DialogActions
+            sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
+          >
+            <CustomizedButton
+              color="primary600"
+              variant="outlined"
+              size="small"
+              onClick={props.handleClose}
+            >
               Trở lại
-            </Button>
+            </CustomizedButton>
 
             {props.isUpdate ? (
-              <Button variant="contained" onClick={onClickUpdate}>
+              <CustomizedButton
+                color="primary600"
+                variant="contained"
+                size="small"
+                onClick={onClickUpdate}
+              >
                 Cập nhật
-              </Button>
+              </CustomizedButton>
             ) : (
-              <Button variant="contained" type="submit">
+              <CustomizedButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                type="submit"
+              >
                 Tạo lịch
-              </Button>
+              </CustomizedButton>
             )}
           </DialogActions>
         </form>

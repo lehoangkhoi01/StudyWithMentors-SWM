@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,6 +13,7 @@ import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import RemoveOptionScheduleDialog from "../RemoveOptionScheduleDialog.js/RemoveOptionScheduleDialog";
 import ScheduleDialog from "../ScheduleDialog/ScheduleDialog";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const EventInfoDialog = (props) => {
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
@@ -72,16 +72,25 @@ const EventInfoDialog = (props) => {
             </Typography>
           </div>
         </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={onRemoveSchedule}>
+        <DialogActions
+          sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
+        >
+          <CustomizedButton
+            color="primary600"
+            variant="outlined"
+            size="small"
+            onClick={onRemoveSchedule}
+          >
             Xóa
-          </Button>
-          <Button
+          </CustomizedButton>
+          <CustomizedButton
+            color="primary600"
             variant="contained"
+            size="small"
             onClick={() => handleOpenScheduleDialog(true)}
           >
             Chỉnh sửa
-          </Button>
+          </CustomizedButton>
         </DialogActions>
       </Dialog>
 
