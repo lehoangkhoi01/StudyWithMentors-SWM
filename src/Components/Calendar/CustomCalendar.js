@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "moment/locale/vi";
-import { Calendar as BigCalendar, Views } from "react-big-calendar";
-import "./react-big-calendar.css";
+import { CustomBigCalendar } from "../../shared/components/CustomBigCalendar/CustomBigCalendar";
 import MiniCalendar from "./MiniCalendar/MiniCalendar";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import style from "./CustomCalendar.module.scss";
-import {
-  components,
-  formats,
-  mLocalizer,
-  max,
-  views,
-  customDayPropGetter,
-  eventPropGetter,
-  messages,
-} from "./calendarConfig";
 import NoteSection from "./NoteSection/NoteSection";
 import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
@@ -230,25 +219,11 @@ const CustomCalendar = () => {
           className={`${style.calendar__wrapper} ${style.calendar__bigCalendar}`}
           xs={8}
         >
-          <BigCalendar
-            components={components}
-            defaultView={Views.WEEK}
+          <CustomBigCalendar
             date={currentDate}
-            dayPropGetter={customDayPropGetter}
-            eventPropGetter={eventPropGetter}
             events={eventList}
-            messages={messages}
-            localizer={mLocalizer}
-            formats={formats}
-            max={max}
-            showMultiDayTimes
-            step={60}
-            timeslots={1}
-            views={views}
-            selectable={true}
             onSelectEvent={handleSelectEvent}
             onSelectSlot={handleSelectSlot}
-            //onRangeChange={onRangeChange}
             onNavigate={handleNavigate}
           />
         </Grid2>
