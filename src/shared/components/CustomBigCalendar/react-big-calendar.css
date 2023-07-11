@@ -149,10 +149,6 @@ button.rbc-input::-moz-focus-inner {
   display: none;
 }
 
-.rbc-today {
-  background-color: #eaf6ff;
-}
-
 .rbc-toolbar {
   display: -webkit-box;
   display: -ms-flexbox;
