@@ -1,5 +1,5 @@
-@import "../../shared/theme";
-@import "../../shared/break-point";
+@import "../../../shared/theme";
+@import "../../../shared/break-point";
 
 .container {
   position: absolute;
@@ -29,6 +29,11 @@
 
   &__form {
     width: 100%;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
   }
 
   &__buttons {

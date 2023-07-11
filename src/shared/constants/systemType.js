@@ -16,6 +16,7 @@ export const SYSTEM_ROLE = {
   STAFF: "STAFF",
   ADMIN: "ADMIN",
   STUDENT: "STUDENT",
+  MENTOR: "MENTOR",
 };
 
 export const SEMINAR_STATUS = {

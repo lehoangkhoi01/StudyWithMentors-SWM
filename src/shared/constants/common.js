@@ -29,6 +29,9 @@ export const BUTTON_LABEL = {
   VIEW_MORE: "Xem thêm",
   VIEW_LESS: "Thu gọn",
   CREATE_TOPIC: "Tạo chủ đề",
+  ADD_TOPIC: "Thêm chủ đề",
+  SEARCH_MENTOR: "Tìm kiếm diễn giả",
+  SEARCH_TOPIC: "Tìm kiếm chủ đề",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -81,6 +84,7 @@ export const TITLE = {
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
   CREATE_TOPIC: "Tạo chủ đề",
+  EDIT_TOPIC: "Chỉnh sửa chủ đề",
 };
 
 export const OTHER_TEXT = {
@@ -107,6 +111,12 @@ export const COMMON_MESSAGE = {
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
+  REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
+  REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
+  ADD_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
+  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
 };
 
 export const SIGN_UP_STAGE = {
@@ -323,6 +333,8 @@ export const DATE_FORMAT = {
   BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   BACK_END_DD_MM_YYYY__HH_mm_ss: "dd-MM-yyyy HH:mm:ss",
   BACK_END_YYYY_MM_DD__HH_mm_ss: "yyyy-MM-dd HH:mm:ss",
+  BACK_END_HH_mm_ss: "HH:mm:ss",
+  HH_mm: "HH:mm",
 };
 
 export const CV_REGISTER_NAME_PREFIX = {
@@ -440,10 +452,11 @@ export const CROP_IMAGE = {
 };
 
 export const ADD_TOPIC = {
-  TOPIC: "Chủ đề",
-  SKILL_GROUP: "Nhóm chủ đề",
-  MAJOR: "Lĩnh vực",
-  COST: "Chi phí",
+  TOPIC_NAME: "Tên chủ đề",
+  DESCRIPTION: "Mô tả",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
+  MONEY: "Chi phí",
 };
 
 export const CLASS_NAME = {
@@ -461,4 +474,51 @@ export const TABLE_ACTION = {
   EDIT: "Chỉnh sửa",
   DEACTIVATE: "Vô hiệu hóa",
   ACTIVATE: "Kích hoạt",
+};
+
+export const UPSERT_MENTOR = {
+  ADD_MENTOR: "Thêm diễn giả",
+  EDIT_MENTOR: "Chỉnh sửa diễn giả",
+};
+
+export const TOPIC_TABLE = {
+  NUMBER: "STT",
+  NAME: "Chủ đề",
+  DESCRIPTION: "Mô tả",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
+  MENTOR: "Diễn giả",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const TOPIC_STATUS = {
+  WAITING: "Đang chờ",
+  DELETED: "Đã xóa",
+  ACCEPTED: "Đã duyệt",
+  REJECTED: "Từ chối",
+  ARCHIVED: "Lưu trữ",
+};
+
+export const TOPIC_STATUS_BACKEND = {
+  WAITING: "WAITING",
+  DELETED: "DELETED",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+  ARCHIVED: "ARCHIVED",
+};
+
+export const CONFIRM_TOPIC_MODAL = {
+  REJECT_CONFIRM: "Bạn có muốn từ chối",
+  ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
+  ARCHIVE_CONFIRM: "Bạn có muốn lưu trữ",
+  REJECT: "Từ chối",
+  ACCEPT: "Phê duyệt",
+  ARCHIVE: "Lưu trữ",
+  TOPIC: "chủ đề",
+};
+
+export const TABLE_TYPE = {
+  MENTOR: "MENTOR",
+  TOPIC: "TOPIC",
 };

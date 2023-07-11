@@ -3,7 +3,9 @@ import {
   DATE_FORMAT,
   ERROR_MESSAGES,
   MENTOR_STATUS,
+  TABLE_ACTION,
   TABLE_DETAIL,
+  TABLE_TYPE,
 } from "../../shared/constants/common";
 import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
@@ -13,6 +15,11 @@ import {
 } from "../../Helpers/generalHelper";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import { userAccountService } from "../../Services/userAccountService";
+import {
+  ACTIVE_ACTION,
+  DEACTIVATE_ACTION,
+  UPSERT_ACTION,
+} from "../../shared/constants/actionType";
 
 const AdminMentorList = () => {
   const { getLatestSpeakerList } = useFetchSpeakerList();
@@ -58,6 +65,24 @@ const AdminMentorList = () => {
     },
   ];
 
+  const actionItems = [
+    {
+      imgSrc: require("../../assets/icons/Edit.png"),
+      label: TABLE_ACTION.EDIT,
+      action: UPSERT_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.ACTIVATE,
+      action: ACTIVE_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.DEACTIVATE,
+      action: DEACTIVATE_ACTION,
+    },
+  ];
+
   const getMentors = async () => {
     try {
       const mentors = await getLatestSpeakerList();
@@ -93,7 +118,7 @@ const AdminMentorList = () => {
 
   const onSearchMentor = (currentList, searchTerm) => {
     return currentList.filter((mentor) =>
-      mentor.fullName.toLowerCase().includes(searchTerm)
+      mentor.fullName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
@@ -108,11 +133,13 @@ const AdminMentorList = () => {
   return (
     <div>
       <CustomizedTable
+        type={TABLE_TYPE.MENTOR}
         getData={getMentors}
-        onSearch={onSearchMentor}
+        filterData={onSearchMentor}
         onDelete={onDeleteMentor}
         onActive={onActiveMentor}
         headerTable={headerTable}
+        actionItems={actionItems}
       />
     </div>
   );

@@ -7,6 +7,9 @@
     border-radius: 1rem;
 
     background-color: $black000;
+
+    height: 52vh;
+    overflow-y: auto;
   }
 
   &__header {
@@ -36,7 +39,7 @@
       180deg,
       rgba($secondary900, 0.6) 0%,
       rgba($secondary900, 0.9) 100%
-    );
+    ); 
     backdrop-filter: blur(4px);
   }
 
