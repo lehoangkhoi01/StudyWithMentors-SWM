@@ -38,6 +38,8 @@ const ScheduleDialog = (props) => {
     setValue,
     handleSubmit,
     getValues,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm();
 
@@ -66,6 +68,17 @@ const ScheduleDialog = (props) => {
     const newFromDate = convertToDateTime(data.freeTime);
     const newEndDate = convertToDateTime(data.endDateTime);
 
+    if (
+      loopOption.value !== loopOptions[0].value &&
+      newEndDate.getTime() <= newFromDate.getTime()
+    ) {
+      setError("endDateTime", {
+        type: "custom",
+        message: "Ngày kết thúc không hợp lệ",
+      });
+      return;
+    }
+
     const newEvent = {
       startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
       startDate: newFromDate
@@ -90,6 +103,7 @@ const ScheduleDialog = (props) => {
 
   const onLoopOptionChange = (e) => {
     setLoopOption(e.target.value);
+    clearErrors("endDateTime");
   };
 
   const handleOnChangeStartTime = (e) => {
@@ -112,6 +126,7 @@ const ScheduleDialog = (props) => {
 
   React.useEffect(() => {
     setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+    setValue("endDateTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
   }, [props.startDate]);
 
   React.useEffect(() => {
@@ -185,12 +200,13 @@ const ScheduleDialog = (props) => {
               name="Lặp đến"
               placeholder="Lặp đến"
               formName="endDateTime"
+              onChange={() => clearErrors("endDateTime")}
               views={["year", "month", "day"]}
               format={DATE_FORMAT.DD_MM_YYYY}
               value={props.startDate}
               setValue={setValue}
               getValues={getValues}
-              error={errors.freeTime ? true : false}
+              error={errors.endDateTime}
               required={true}
               disabled={loopOption.value === "noloop" ? true : false}
             />

@@ -31,7 +31,6 @@ export const CustomBigCalendar = (props) => {
       views={views}
       selectable={true}
       onSelectEvent={props.onSelectEvent}
-      onSelectSlot={props.onSelectSlot}
       onNavigate={props.onNavigate}
     />
   );

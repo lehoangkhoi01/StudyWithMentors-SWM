@@ -229,14 +229,17 @@ const CustomCalendar = () => {
         </Grid2>
       </Grid2>
 
-      <ScheduleDialog
-        open={openScheduleForm}
-        selectedEvent={selectedEvent}
-        startDate={currentDate}
-        handleClose={handleCloseScheduleForm}
-        handleSubmitCreateSchedule={handleSubmitCreateSchedule}
-        isUpdate={false}
-      />
+      {openScheduleForm && (
+        <ScheduleDialog
+          open={openScheduleForm}
+          selectedEvent={selectedEvent}
+          startDate={currentDate}
+          handleClose={handleCloseScheduleForm}
+          handleSubmitCreateSchedule={handleSubmitCreateSchedule}
+          isUpdate={false}
+        />
+      )}
+
       <EventInfoDialog
         open={openEventInfoDialog}
         handleClose={() => setOpenEventInfoDialog(false)}
