@@ -1,7 +1,7 @@
 import { DatePicker } from "@mui/x-date-pickers";
 import style from "./CustomizedDatePicker.module.scss";
 import { DATE_FORMAT, OPTIONAL } from "../../constants/common";
-import { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { convertISOToFormat } from "../../../Helpers/dateHelper";
 
 const CustomizedDatePicker = (props) => {
@@ -32,9 +32,13 @@ const CustomizedDatePicker = (props) => {
         slotProps={{
           textField: {
             helperText: props?.error?.message,
+            error: props?.error?.message,
           },
         }}
         onChange={(e) => {
+          if (props.onChange) {
+            props.onChange();
+          }
           const datevalue = convertISOToFormat(dateFormat, e);
           setValue(e);
           props.setValue(props.formName, datevalue);

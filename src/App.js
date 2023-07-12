@@ -37,6 +37,7 @@ import StaffRoute from "./Routes/StaffRoute";
 import StaffLayout from "./Layout/StaffLayout";
 import MeetingPage from "./Pages/Meeting/MeetingPage";
 import TopicListPage from "./Pages/Topic/TopicListPage";
+import BookingPage from "./Pages/Booking/BookingPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -143,6 +144,7 @@ function App() {
               <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
               <Route path={ROUTES.MEETING} component={MeetingPage} />
               <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
+              <Route path={ROUTES.BOOKING} component={BookingPage} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
               <StaffRoute

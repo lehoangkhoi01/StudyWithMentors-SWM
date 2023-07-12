@@ -3,7 +3,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
   Typography,
   FormControl,
   RadioGroup,
@@ -13,6 +12,7 @@ import {
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import React from "react";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const removeOptions = [
   { label: "Chỉ lịch này", value: "Single" },
@@ -71,16 +71,25 @@ const RemoveOptionScheduleDialog = (props) => {
             </RadioGroup>
           </FormControl>
         </DialogContent>
-        <DialogActions>
-          <Button
+        <DialogActions
+          sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
+        >
+          <CustomizedButton
+            color="primary600"
+            size="small"
             variant="outlined"
             onClick={() => props.handleOpenDeleteOption(false)}
           >
             Quay lại
-          </Button>
-          <Button variant="contained" onClick={onSubmitDelete}>
+          </CustomizedButton>
+          <CustomizedButton
+            color="primary600"
+            size="small"
+            variant="contained"
+            onClick={onSubmitDelete}
+          >
             Xóa
-          </Button>
+          </CustomizedButton>
         </DialogActions>
       </Dialog>
     </div>

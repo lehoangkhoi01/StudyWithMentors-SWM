@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
   FormControl,
   Typography,
 } from "@mui/material";
@@ -17,6 +16,7 @@ import { DATE_FORMAT } from "../../../shared/constants/common";
 import { format } from "date-fns";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import { useRef } from "react";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -38,6 +38,8 @@ const ScheduleDialog = (props) => {
     setValue,
     handleSubmit,
     getValues,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm();
 
@@ -66,6 +68,17 @@ const ScheduleDialog = (props) => {
     const newFromDate = convertToDateTime(data.freeTime);
     const newEndDate = convertToDateTime(data.endDateTime);
 
+    if (
+      loopOption.value !== loopOptions[0].value &&
+      newEndDate.getTime() <= newFromDate.getTime()
+    ) {
+      setError("endDateTime", {
+        type: "custom",
+        message: "Ngày kết thúc không hợp lệ",
+      });
+      return;
+    }
+
     const newEvent = {
       startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
       startDate: newFromDate
@@ -90,6 +103,7 @@ const ScheduleDialog = (props) => {
 
   const onLoopOptionChange = (e) => {
     setLoopOption(e.target.value);
+    clearErrors("endDateTime");
   };
 
   const handleOnChangeStartTime = (e) => {
@@ -112,6 +126,7 @@ const ScheduleDialog = (props) => {
 
   React.useEffect(() => {
     setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+    setValue("endDateTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
   }, [props.startDate]);
 
   React.useEffect(() => {
@@ -185,30 +200,48 @@ const ScheduleDialog = (props) => {
               name="Lặp đến"
               placeholder="Lặp đến"
               formName="endDateTime"
+              onChange={() => clearErrors("endDateTime")}
               views={["year", "month", "day"]}
               format={DATE_FORMAT.DD_MM_YYYY}
               value={props.startDate}
               setValue={setValue}
               getValues={getValues}
-              error={errors.freeTime ? true : false}
+              error={errors.endDateTime}
               required={true}
               disabled={loopOption.value === "noloop" ? true : false}
             />
           </DialogContent>
 
-          <DialogActions>
-            <Button variant="outlined" autoFocus onClick={props.handleClose}>
+          <DialogActions
+            sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
+          >
+            <CustomizedButton
+              color="primary600"
+              variant="outlined"
+              size="small"
+              onClick={props.handleClose}
+            >
               Trở lại
-            </Button>
+            </CustomizedButton>
 
             {props.isUpdate ? (
-              <Button variant="contained" onClick={onClickUpdate}>
+              <CustomizedButton
+                color="primary600"
+                variant="contained"
+                size="small"
+                onClick={onClickUpdate}
+              >
                 Cập nhật
-              </Button>
+              </CustomizedButton>
             ) : (
-              <Button variant="contained" type="submit">
+              <CustomizedButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                type="submit"
+              >
                 Tạo lịch
-              </Button>
+              </CustomizedButton>
             )}
           </DialogActions>
         </form>

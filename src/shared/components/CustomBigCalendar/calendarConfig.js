@@ -1,9 +1,9 @@
 import React from "react";
 import moment from "moment/moment";
-import style from "./CustomCalendar.module.scss";
+import style from "./CustomBigCalendar.module.scss";
 import "moment/locale/vi";
 import { Views, momentLocalizer } from "react-big-calendar";
-import * as dates from "../../Helpers/dateHelper";
+import * as dates from "../../../Helpers/dateHelper";
 import CustomToolbar from "./CustomToolbar/CustomToolbar";
 
 moment.locale("vi");
@@ -98,13 +98,13 @@ export const customDayPropGetter = () => {
 
 export const eventPropGetter = (event, start, end, isSelected) => ({
   ...(isSelected &&
-    event.title.includes("Free") && {
+    event.title.includes("Nhận tư vấn") && {
       style: {
-        backgroundColor: "#5C6AC0",
+        backgroundColor: "#5c6ac0",
       },
     }),
   ...(isSelected &&
-    !event.title.includes("Free") && {
+    !event.title.includes("Nhận tư vấn") && {
       style: {
         backgroundColor: "#FFF7DF",
       },
@@ -112,7 +112,7 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
   ...(event && {
     className: style.defaultEvent,
   }),
-  ...(event.title.includes("Free") && {
+  ...(event.title.includes("Nhận tư vấn") && {
     className: style.freeEvent,
   }),
 });
