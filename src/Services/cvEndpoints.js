@@ -13,4 +13,9 @@ export const cvEndpoints = {
     const url = UserAccountEndpoints.USER_CV;
     return axiosClient.post(url, cv);
   },
+  getMentorCV: (id) => {
+    const url = `user-profile/${id}/cv`;
+
+    return axiosClient.get(url);
+  },
 };

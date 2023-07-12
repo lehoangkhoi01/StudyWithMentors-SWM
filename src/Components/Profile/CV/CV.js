@@ -27,6 +27,11 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ConfirmImage from "../../Modal/ImageCrop/ConfirmImage";
 import { userAccountService } from "../../../Services/userAccountService";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const TEXT_FIELDS = [
   {
@@ -244,11 +249,23 @@ const CV = () => {
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
+  const { id } = useParams();
+  const history = useHistory();
+
   const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
-    const getCVData = async () => {
-      let CVDataFromBE = await cvEndpoints.getUserCV();
+    getCVData();
+  }, []);
+
+  const getCVData = async () => {
+    try {
+      let CVDataFromBE = {};
+      if (id) {
+        CVDataFromBE = await cvEndpoints.getMentorCV(id);
+      } else {
+        CVDataFromBE = await cvEndpoints.getUserCV();
+      }
 
       if (CVDataFromBE.data === "" || CVDataFromBE.data || CVDataFromBE.data) {
         CVDataFromBE = INIT_CV;
@@ -263,10 +280,20 @@ const CV = () => {
       setPosition(lastedPosition);
 
       setCVData(CVDataFromBE);
-    };
+    } catch (error) {
+      console.log(error);
 
-    getCVData();
-  }, []);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const upsertHandler = async (data, prefix) => {
     let prevCV = cvData;
@@ -425,7 +452,8 @@ const CV = () => {
           <div className={style.cv__detail__profile}>
             {!detail && (
               <>
-                <ProgressImage cvData={cvData} />
+                {!id && cvData && <ProgressImage cvData={cvData} />}
+
                 {Object.keys(cvData).map((key, index) => {
                   return (
                     <CVSection
@@ -438,6 +466,7 @@ const CV = () => {
                       textFields={TEXT_FIELDS[index].fields}
                       title={TEXT_FIELDS[index].title}
                       handleSubmit={upsertHandler}
+                      editable={!id}
                     />
                   );
                 })}

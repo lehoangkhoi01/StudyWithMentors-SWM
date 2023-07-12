@@ -89,7 +89,8 @@ function App() {
                 path={ROUTES.SIGN_UP_CONFIRMATION}
                 component={SignUpConfirmationPage}
               />
-              <Route path={ROUTES.CV} component={CVPage} />
+              <Route exact path={`${ROUTES.CV}`} component={CVPage} />
+              <Route path={`${ROUTES.CV}/:id`} component={CVPage} />
               <Route
                 exact
                 path={ROUTES.SEMINAR_LIST}
