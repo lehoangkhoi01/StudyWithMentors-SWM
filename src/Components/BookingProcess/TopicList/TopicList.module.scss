@@ -1,0 +1,10 @@
+@import "../../../shared/theme";
+
+.booking__topicList {
+  &__title {
+    color: $primary900;
+  }
+  &__detail {
+    margin: 0.5rem;
+  }
+}

@@ -21,6 +21,7 @@ export const ROUTES = {
   DISCUSSION: "/discussion/:id",
   MEETING: "/meeting",
   TOPIC_LIST: "/topics",
+  BOOKING: "/booking",
 };
 
 export const ROUTES_STATIC = {
