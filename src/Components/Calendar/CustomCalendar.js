@@ -120,10 +120,6 @@ const CustomCalendar = () => {
     }
   };
 
-  const handleSelectSlot = (e) => {
-    console.log(e);
-  };
-
   const handleNavigate = async (newDate, view) => {
     setCurrentDate(newDate);
     await triggerRangeChangeEvent(newDate, view);
@@ -223,7 +219,6 @@ const CustomCalendar = () => {
             date={currentDate}
             events={eventList}
             onSelectEvent={handleSelectEvent}
-            onSelectSlot={handleSelectSlot}
             onNavigate={handleNavigate}
           />
         </Grid2>
