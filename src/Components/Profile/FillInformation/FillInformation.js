@@ -3,22 +3,24 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import {
   BUTTON_LABEL,
   FILL_INFORMATION,
-  GENDER,
   PLACE_HOLDER,
   TITLE,
 } from "../../../shared/constants/common";
-import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
-import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import style from "./FillInformation.module.scss";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import CustomizedDatePicker from "../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-
-const GENDERS = [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER];
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const FillInformation = () => {
   const { register, handleSubmit, setValue } = useForm();
+  const userInfo = useSelector(selectUserInfo);
+
+  useEffect(() => {
+    setValue("fullname", userInfo.fullName)
+    setValue("phone", userInfo.phone)
+  }, [])
 
   const onSubmit = (data) => {
     console.log(data);
@@ -31,7 +33,7 @@ const FillInformation = () => {
         className={style.fillInformation__formSection}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <CustomTopTitle title={FILL_INFORMATION.WELCOME} />
+        <h1>{FILL_INFORMATION.WELCOME} </h1>
         <p>{FILL_INFORMATION.PLEASE_FILL_INFORMATION}</p>
         <CustomizedTextField
           className={style.fillInformation__input}
@@ -41,6 +43,7 @@ const FillInformation = () => {
           required={true}
           type={"email"}
           options={{ ...register("email") }}
+          disabled={true}
         />
         <CustomizedTextField
           className={style.fillInformation__input}
@@ -60,39 +63,13 @@ const FillInformation = () => {
           type={"text"}
           options={{ ...register("phone") }}
         />
-        <Grid2
-          container
-          className={`${style.fillInformation__input} ${style.fillInformation__grid}`}
-        >
-          <Grid2 xs={6}>
-            <CustomizedDatePicker
-              name={TITLE.DOB}
-              placeholder={PLACE_HOLDER.DEFAULT_DOB}
-              options={{ ...register("dob") }}
-              formName={"dob"}
-              setValue={setValue}
-            />
-          </Grid2>
-          <Grid2 xs={6}>
-            <CustomizedSelect
-              inputId="gender"
-              name={TITLE.GENDER}
-              type={"text"}
-              items={GENDERS}
-              options={{ ...register("gender") }}
-            />
-          </Grid2>
-        </Grid2>
         <div className={style.fillInformation__button}>
-          <CustomizedButton type="submit" variant="outlined" color="primary600">
-            {BUTTON_LABEL.LATER}
-          </CustomizedButton>
           <CustomizedButton
             type="submit"
             variant="contained"
             color="primary600"
           >
-            {BUTTON_LABEL.SAVE}
+            {BUTTON_LABEL.CONFIRM}
           </CustomizedButton>
         </div>
       </form>

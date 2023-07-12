@@ -38,6 +38,7 @@ import StaffLayout from "./Layout/StaffLayout";
 import MeetingPage from "./Pages/Meeting/MeetingPage";
 import TopicListPage from "./Pages/Topic/TopicListPage";
 import BookingPage from "./Pages/Booking/BookingPage";
+import FillInformationPage from "./Pages/Profile/FillInformationPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -91,7 +92,7 @@ function App() {
                 component={SignUpConfirmationPage}
               />
               <Route exact path={`${ROUTES.CV}`} component={CVPage} />
-              <Route path={`${ROUTES.CV}/:id`} component={CVPage} />
+              <Route exact path={`${ROUTES.CV}/:id`} component={CVPage} />
               <Route
                 exact
                 path={ROUTES.SEMINAR_LIST}
@@ -102,6 +103,11 @@ function App() {
                 path={ROUTES.SEMINAR_DETAIL}
                 component={SeminarDetailPage}
               />
+              <Route
+                path={ROUTES.FILL_INFORMATION}
+                component={FillInformationPage}
+              />
+              \
               {/* <Route
               exact
               path={ROUTES.SEMINAR_UPDATE}
@@ -146,7 +152,7 @@ function App() {
               <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
               <Route path={ROUTES.BOOKING} component={BookingPage} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-              <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
+              <Route path={ROUTES.SERVER_ERROR} component={ServerError} />\
               <StaffRoute
                 path="/staff"
                 component={StaffLayout}

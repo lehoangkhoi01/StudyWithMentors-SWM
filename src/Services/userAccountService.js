@@ -10,4 +10,8 @@ export const userAccountService = {
     const url = `${UserAccountEndpoints.UPDATE_PROFILE}/${id}`;
     return axiosClient.post(url, data);
   },
+  confirmUserProfile: (data) => {
+    const url = UserAccountEndpoints.CONFIRM_PROFILE;
+    return axiosClient.post(url, data);
+  },
 };

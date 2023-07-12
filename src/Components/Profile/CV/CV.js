@@ -417,28 +417,30 @@ const CV = () => {
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
                 />
-                <div className={style.cv__detail__information_edit}>
-                  <>
-                    <input
-                      style={{
-                        display: "none",
-                      }}
-                      accept={VALID_IMAGE_FILE_TYPE.toString()}
-                      id="choose-file"
-                      type="file"
-                      onChange={(e) => {
-                        onSelectImage(e);
-                        setEventFile(e);
-                      }}
-                    />
-                    <label htmlFor="choose-file">
-                      <img
-                        // onClick={onOpenCropImage}
-                        src={require("../../../assets/icons/pen-icon.png")}
+                {!id && (
+                  <div className={style.cv__detail__information_edit}>
+                    <>
+                      <input
+                        style={{
+                          display: "none",
+                        }}
+                        accept={VALID_IMAGE_FILE_TYPE.toString()}
+                        id="choose-file"
+                        type="file"
+                        onChange={(e) => {
+                          onSelectImage(e);
+                          setEventFile(e);
+                        }}
                       />
-                    </label>
-                  </>
-                </div>
+                      <label htmlFor="choose-file">
+                        <img
+                          // onClick={onOpenCropImage}
+                          src={require("../../../assets/icons/pen-icon.png")}
+                        />
+                      </label>
+                    </>
+                  </div>
+                )}
               </div>
               <div>
                 <h2>{userInfo?.fullName}</h2>

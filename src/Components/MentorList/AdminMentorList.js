@@ -98,7 +98,7 @@ const AdminMentorList = () => {
             " -"
           ),
           defaultCreatedDate: mentor.createdDate,
-          link: "#",
+          link: `/cv/${mentor.id}`,
           linkName: TABLE_DETAIL.CV_MENTOR,
           translatedStatus: MENTOR_STATUS[mentor.status],
         };
