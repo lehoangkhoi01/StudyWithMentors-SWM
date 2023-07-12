@@ -13,6 +13,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import style from "./BookingStepper.module.scss";
 import { styled } from "@mui/material/styles";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import StudentNoteStep from "../StudentNoteStep/StudentNoteStep";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
 const topics = [
@@ -47,6 +48,7 @@ const BookingStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [selectedTopic, setSelectedTopic] = React.useState(topics[0]);
   const [currentDate, setCurrentDate] = React.useState(new Date());
+  const [studentNote, setStudentNote] = React.useState(null);
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -82,6 +84,14 @@ const BookingStepper = () => {
         <TopicList topics={topics} setSelectedTopic={setSelectedTopic} />
       </>
     );
+  };
+
+  const onStudentNoteChange = (e) => {
+    setStudentNote(e.target.value);
+  };
+
+  const renderStudentNoteStep = () => {
+    return <StudentNoteStep onTextFieldChange={onStudentNoteChange} />;
   };
 
   const renderSelectSlotUI = () => {
@@ -136,6 +146,8 @@ const BookingStepper = () => {
           <React.Fragment>
             {activeStep === 0 && renderSelectTopicUI()}
             {activeStep === 1 && renderSelectSlotUI()}
+            {activeStep === 2 && renderStudentNoteStep()}
+            {activeStep === 3 && <Typography>{studentNote}</Typography>}
 
             <Box
               sx={{
