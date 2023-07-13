@@ -1,0 +1,12 @@
+@import "../../../shared/theme";
+
+.booking {
+  &__title {
+    color: $primary900;
+  }
+  &__calendar {
+    height: 70vh;
+    width: 90%;
+    margin: 0 auto;
+  }
+}

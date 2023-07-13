@@ -16,44 +16,46 @@ const ListItem = styled(ListItemButton)`
 `;
 
 const TopicList = (props) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleListItemClick = (event, topic) => {
+  const handleListItemClick = (event, topic, index) => {
     props.setSelectedTopic(topic);
-    setSelectedIndex(topic.id);
+    setSelectedIndex(index);
   };
 
-  return (
-    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-      <List component="nav" aria-label="secondary mailbox folder">
-        {props.topics?.map((topic) => (
-          <ListItem
-            key={topic.id}
-            selected={selectedIndex === topic.id}
-            onClick={(event) => handleListItemClick(event, topic)}
-          >
-            <div>
-              <Typography
-                className={`${style.booking__topicList__title}`}
-                variant="h6"
-              >
-                {topic.title}
-              </Typography>
+  if (props.topics?.length > 0) {
+    return (
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <List component="nav" aria-label="secondary mailbox folder">
+          {props.topics?.map((topic, index) => (
+            <ListItem
+              key={topic.id}
+              selected={selectedIndex === index}
+              onClick={(event) => handleListItemClick(event, topic, index)}
+            >
               <div>
-                <span className={style.booking__topicList__detail}>
-                  Nhóm: {topic.field}
-                </span>{" "}
-                |{" "}
-                <span className={style.booking__topicList__detail}>
-                  Lĩnh vực: {topic.category}
-                </span>
+                <Typography
+                  className={`${style.booking__topicList__title}`}
+                  variant="h6"
+                >
+                  {topic.name}
+                </Typography>
+                <div>
+                  <span className={style.booking__topicList__detail}>
+                    Nhóm: {topic.field}
+                  </span>{" "}
+                  |{" "}
+                  <span className={style.booking__topicList__detail}>
+                    Lĩnh vực: {topic.category}
+                  </span>
+                </div>
               </div>
-            </div>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    );
+  } else return null;
 };
 
 export default TopicList;

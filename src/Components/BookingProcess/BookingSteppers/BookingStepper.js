@@ -8,34 +8,19 @@ import {
   Button,
 } from "@mui/material";
 import TopicList from "../TopicList/TopicList";
-import { CustomBigCalendar } from "../../../shared/components/CustomBigCalendar/CustomBigCalendar";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import style from "./BookingStepper.module.scss";
 import { styled } from "@mui/material/styles";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import StudentNoteStep from "../StudentNoteStep/StudentNoteStep";
+import SelectSlotUIStep from "../SelectSlotUIStep/SelectSlotUIStep";
+import SummaryStep from "../SummaryStep/SummaryStep";
+import { DATE_FORMAT } from "../../../shared/constants/common";
+import { format } from "date-fns";
+import { bookingService } from "../../../Services/bookingService";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
-const topics = [
-  {
-    id: 1,
-    title: "Phỏng vấn thực tập",
-    field: "Kỹ năng mềm",
-    category: "Phát triển bản thân",
-  },
-  {
-    id: 2,
-    title: "Quản lý thời gian",
-    field: "Kỹ năng mềm",
-    category: "Phát triển bản thân",
-  },
-  {
-    id: 3,
-    title: "Hướng nghiệp",
-    field: "Kỹ năng mềm",
-    category: "Phát triển bản thân",
-  },
-];
 
 const CustomStepLabel = styled(StepLabel)`
   & > .Mui-active > svg,
@@ -44,11 +29,12 @@ const CustomStepLabel = styled(StepLabel)`
   }
 `;
 
-const BookingStepper = () => {
+const BookingStepper = (props) => {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [selectedTopic, setSelectedTopic] = React.useState(topics[0]);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
+  const [selectedTopic, setSelectedTopic] = React.useState(null);
   const [studentNote, setStudentNote] = React.useState(null);
+  const [selectSlot, setSelectSlot] = React.useState(null);
+  const { setLoading } = useCustomLoading();
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -60,15 +46,9 @@ const BookingStepper = () => {
   const handleReset = () => {
     setActiveStep(0);
   };
-
-  const handleSelectEvent = (e) => {
-    console.log(e);
-  };
-
-  const handleNavigate = async (newDate, view) => {
-    setCurrentDate(newDate);
-    console.log(newDate);
-    console.log(view);
+  const handleSelectSlot = (slot) => {
+    setSelectSlot(slot);
+    handleNext();
   };
 
   const renderSelectTopicUI = () => {
@@ -81,7 +61,7 @@ const BookingStepper = () => {
         >
           Hãy chọn 1 chủ đề mà bạn mong muốn được tư vấn:
         </Typography>
-        <TopicList topics={topics} setSelectedTopic={setSelectedTopic} />
+        <TopicList topics={props.topics} setSelectedTopic={setSelectedTopic} />
       </>
     );
   };
@@ -96,24 +76,54 @@ const BookingStepper = () => {
 
   const renderSelectSlotUI = () => {
     return (
-      <>
-        <Typography className={`${style.booking__title}`}>
-          Hãy chọn 1 khung giờ cố vấn từ lịch của mentor
-        </Typography>
-        <Typography className={`${style.booking__title}`}>
-          Chủ đề: {selectedTopic.title}
-        </Typography>
-        <div className={`${style.booking__calendar}`}>
-          <CustomBigCalendar
-            date={currentDate}
-            events={[]}
-            onSelectEvent={handleSelectEvent}
-            onNavigate={handleNavigate}
-          />
-        </div>
-      </>
+      <SelectSlotUIStep
+        selectedTopic={selectedTopic}
+        mentorId={props.mentorId}
+        handleSelectSlot={handleSelectSlot}
+      />
     );
   };
+
+  const renderSummaryStep = () => {
+    return (
+      <SummaryStep
+        studentNote={studentNote}
+        selectedSlot={selectSlot}
+        selectedTopic={selectedTopic}
+      />
+    );
+  };
+
+  const handleSubmitBooking = async () => {
+    console.log(selectSlot);
+    setLoading(true);
+    try {
+      const data = {
+        mentorId: props.mentorId,
+        startTime: format(selectSlot.start, DATE_FORMAT.BACK_END_HH_mm_ss),
+        endTime: format(selectSlot.end, DATE_FORMAT.BACK_END_HH_mm_ss),
+        startDate: format(selectSlot.start, DATE_FORMAT.BACK_END_YYYY_MM_DD),
+        scheduleId: selectSlot.scheduleId,
+        topicId: selectedTopic.id,
+        description: studentNote,
+        participants: [],
+      };
+      console.log(data);
+      await bookingService.createBooking(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+
+    //props.handleCloseDialog();
+  };
+
+  React.useEffect(() => {
+    if (props.topics?.length > 0 && !selectedTopic) {
+      setSelectedTopic(props.topics[0]);
+    }
+  }, [props.topics]);
 
   return (
     <div>
@@ -147,7 +157,7 @@ const BookingStepper = () => {
             {activeStep === 0 && renderSelectTopicUI()}
             {activeStep === 1 && renderSelectSlotUI()}
             {activeStep === 2 && renderStudentNoteStep()}
-            {activeStep === 3 && <Typography>{studentNote}</Typography>}
+            {activeStep === 3 && renderSummaryStep()}
 
             <Box
               sx={{
@@ -179,16 +189,25 @@ const BookingStepper = () => {
                   )}
 
                   <Grid2 xs={12} md={activeStep === 0 ? 12 : 6}>
-                    <CustomizedButton
-                      variant="contained"
-                      color="primary600"
-                      size="small"
-                      onClick={handleNext}
-                    >
-                      {activeStep === steps.length - 1
-                        ? "Hoàn thành"
-                        : "Tiếp tục"}
-                    </CustomizedButton>
+                    {activeStep === steps.length - 1 ? (
+                      <CustomizedButton
+                        variant="contained"
+                        color="primary600"
+                        size="small"
+                        onClick={handleSubmitBooking}
+                      >
+                        Đặt lịch
+                      </CustomizedButton>
+                    ) : (
+                      <CustomizedButton
+                        variant="contained"
+                        color="primary600"
+                        size="small"
+                        onClick={handleNext}
+                      >
+                        Tiếp tục
+                      </CustomizedButton>
+                    )}
                   </Grid2>
                 </Grid2>
               </Box>
