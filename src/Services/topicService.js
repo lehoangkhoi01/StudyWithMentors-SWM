@@ -17,19 +17,20 @@ export const topicService = {
 
     return axiosClient.get(url);
   },
+  getTopicsByMentor: (id) => {
+    const url = TopicEndpoints.TOPICS_MENTOR + "/" + id;
+    return axiosClient.get(url);
+  },
   upsertTopic: (data, id) => {
-    const url = TopicEndpoints.UPSERT_TOPICS + (id ? `/${id}` : "");
-
+    const url = TopicEndpoints.TOPICS + (id ? `/${id}` : "");
     return axiosClient.post(url, data);
   },
   updateStatus: (id, status) => {
     const url = TopicEndpoints.UPADATE_TOPIC_STATUS;
-
     const payload = {
       ids: [id],
       status,
     };
-
     return axiosClient.post(url, payload);
   },
 };
