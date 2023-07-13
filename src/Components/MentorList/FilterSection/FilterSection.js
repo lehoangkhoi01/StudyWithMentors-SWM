@@ -21,14 +21,6 @@ const MAJOR_NAMES = [
   { name: "Marketing", value: "Marketing" },
 ];
 
-const CATEGORY_NAMES = [
-  { name: "Kỹ năng mềm", value: "Kỹ năng mềm" },
-  { name: "Kiến thức chuyên môn", value: "Kiến thức chuyên môn" },
-  { name: "Nghề nghiệp", value: "Nghề nghiệp" },
-  { name: "Feedback và Lời khuyên", value: "eedback và Lời khuyên" },
-  { name: "Học bổng", value: "Học bổng" },
-  { name: "Các cuộc thi", value: "Các cuộc thi" },
-];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -50,7 +42,6 @@ const FilterSection = (props) => {
   const { register, reset } = useForm();
 
   const [majorName, setMajorName] = useState([]);
-  const [categoryName, setCategoryName] = useState([]);
 
   const handleMajoreChange = (event) => {
     const {
@@ -60,16 +51,9 @@ const FilterSection = (props) => {
     setMajorName(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleCategoryChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setCategoryName(typeof value === "string" ? value.split(",") : value);
-  };
 
   const clearFilter = () => {
     setMajorName([]);
-    setCategoryName([]);
     reset({
       searchTerm: "",
     });
@@ -83,7 +67,7 @@ const FilterSection = (props) => {
         container
         columnSpacing={{ sm: 2 }}
       >
-        <Grid item xs={3.5}>
+        <Grid item xs={5.5}>
           <CustomizedTextField
             fullWidth
             inputId="search"
@@ -94,7 +78,7 @@ const FilterSection = (props) => {
             }}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
               {PLACE_HOLDER.ALL_MAJOR}
@@ -106,30 +90,6 @@ const FilterSection = (props) => {
               isMultipleSelect={true}
               value={majorName}
               onChange={handleMajoreChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
-              renderValue={(selected) => {
-                return selected.map(
-                  (item, index) =>
-                    `${item.name}${index < selected.length - 1 ? ", " : ""}`
-                );
-              }}
-              MenuProps={MenuProps}
-              required={true}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={3}>
-          <FormControl fullWidth>
-            <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_CATEGORY}
-            </StyledLabelSelect>
-            <CustomizedSelect
-              fullWidth
-              items={CATEGORY_NAMES}
-              inputId="majorSelect"
-              isMultipleSelect={true}
-              value={categoryName}
-              onChange={handleCategoryChange}
               placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => {
                 return selected.map(

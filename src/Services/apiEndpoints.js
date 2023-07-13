@@ -11,6 +11,7 @@ export const UserAccountEndpoints = {
   GET_USER_INFO: "user-profile/current",
   USER_CV: "user-profile/current/cv",
   UPDATE_PROFILE: "user-profile/mentors",
+  CONFIRM_PROFILE: "user-profile/current",
 };
 
 export const SeminarEndpoints = {
@@ -25,6 +26,7 @@ export const AccountEndpoints = {
   ACCONT_MENTOR: "accounts/mentors",
   DELETE_MENTOR: "accounts/mentors/invalidate",
   CREATE_MENTOR: "accounts/mentors",
+  GET_MORE_DETAIL_MENTOR: "booking/mentors",
 };
 
 export const StaticResourceEndpoints = {

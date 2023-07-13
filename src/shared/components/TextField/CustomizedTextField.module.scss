@@ -28,6 +28,12 @@
     }
   }
 
+  &__disable {
+    input {
+      background-color: $black200;
+    }
+  }
+
   &__limit {
     text-align: right;
     margin-top: 0.2rem;

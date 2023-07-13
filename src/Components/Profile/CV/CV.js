@@ -1,4 +1,6 @@
 import {
+  BUTTON_LABEL,
+  CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
   ERROR_MESSAGES,
   INPUT_TYPES,
@@ -27,6 +29,13 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import ConfirmImage from "../../Modal/ImageCrop/ConfirmImage";
 import { userAccountService } from "../../../Services/userAccountService";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES } from "../../../shared/constants/navigation";
+import { Divider } from "@mui/material";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const TEXT_FIELDS = [
   {
@@ -244,11 +253,23 @@ const CV = () => {
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
+  const { id } = useParams();
+  const history = useHistory();
+
   const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
-    const getCVData = async () => {
-      let CVDataFromBE = await cvEndpoints.getUserCV();
+    getCVData();
+  }, []);
+
+  const getCVData = async () => {
+    try {
+      let CVDataFromBE = {};
+      if (id) {
+        CVDataFromBE = await cvEndpoints.getMentorCV(id);
+      } else {
+        CVDataFromBE = await cvEndpoints.getUserCV();
+      }
 
       if (CVDataFromBE.data === "" || CVDataFromBE.data || CVDataFromBE.data) {
         CVDataFromBE = INIT_CV;
@@ -263,10 +284,20 @@ const CV = () => {
       setPosition(lastedPosition);
 
       setCVData(CVDataFromBE);
-    };
+    } catch (error) {
+      console.log(error);
 
-    getCVData();
-  }, []);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const upsertHandler = async (data, prefix) => {
     let prevCV = cvData;
@@ -390,28 +421,30 @@ const CV = () => {
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
                 />
-                <div className={style.cv__detail__information_edit}>
-                  <>
-                    <input
-                      style={{
-                        display: "none",
-                      }}
-                      accept={VALID_IMAGE_FILE_TYPE.toString()}
-                      id="choose-file"
-                      type="file"
-                      onChange={(e) => {
-                        onSelectImage(e);
-                        setEventFile(e);
-                      }}
-                    />
-                    <label htmlFor="choose-file">
-                      <img
-                        // onClick={onOpenCropImage}
-                        src={require("../../../assets/icons/pen-icon.png")}
+                {!id && (
+                  <div className={style.cv__detail__information_edit}>
+                    <>
+                      <input
+                        style={{
+                          display: "none",
+                        }}
+                        accept={VALID_IMAGE_FILE_TYPE.toString()}
+                        id="choose-file"
+                        type="file"
+                        onChange={(e) => {
+                          onSelectImage(e);
+                          setEventFile(e);
+                        }}
                       />
-                    </label>
-                  </>
-                </div>
+                      <label htmlFor="choose-file">
+                        <img
+                          // onClick={onOpenCropImage}
+                          src={require("../../../assets/icons/pen-icon.png")}
+                        />
+                      </label>
+                    </>
+                  </div>
+                )}
               </div>
               <div>
                 <h2>{userInfo?.fullName}</h2>
@@ -425,7 +458,8 @@ const CV = () => {
           <div className={style.cv__detail__profile}>
             {!detail && (
               <>
-                <ProgressImage cvData={cvData} />
+                {!id && cvData && <ProgressImage cvData={cvData} />}
+
                 {Object.keys(cvData).map((key, index) => {
                   return (
                     <CVSection
@@ -438,6 +472,7 @@ const CV = () => {
                       textFields={TEXT_FIELDS[index].fields}
                       title={TEXT_FIELDS[index].title}
                       handleSubmit={upsertHandler}
+                      editable={!id}
                     />
                   );
                 })}
@@ -462,7 +497,36 @@ const CV = () => {
         </div>
       )}
 
-      <div className={style.cv__booking}></div>
+      <div className={style.cv__booking}>
+        <div className={style.cv__booking__section}>
+          <h3>{CV_MENTOR.HOT_TOPIC}</h3>
+
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+          <Divider />
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+          <Divider />
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+        </div>
+
+        <div className={style.cv__booking__section}>
+          <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
+          <CustomizedButton variant="contained" color="primary600">
+            {BUTTON_LABEL.BOOKING_NOW}
+          </CustomizedButton>
+        </div>
+      </div>
       <ConfirmImage
         openModal={openModal}
         onCloseModal={onCloseModal}

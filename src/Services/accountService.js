@@ -16,4 +16,8 @@ export const accountService = {
     const url = AccountEndpoints.CREATE_MENTOR;
     return axiosClient.post(url, data);
   },
+  getAllMoreInfoMentors: () => {
+    const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
+    return axiosClient.get(url);
+  },
 };

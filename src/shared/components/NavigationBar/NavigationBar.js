@@ -25,6 +25,7 @@ import {
   ROUTES,
   ACCOUNT_MENU,
   AUTHENTICATION_MENU,
+  COMMON_NAVBAR,
 } from "../../constants/navigation";
 
 import { selectUser, userAction } from "../../../Store/slices/userSlice";
@@ -95,7 +96,11 @@ function NavigationBar() {
       } else {
         setAuthenticated(user.isAuthenticated);
         setUserInfo(userInfoResponse);
-        if (userInfoResponse?.role) {
+        if (userInfoResponse?.role === "STUDENT") {
+          setNavigationItems(COMMON_NAVBAR);
+        }
+
+        else if (userInfoResponse?.role) {
           setNavigationItems(MENTOR_NAVBAR);
         }
       }

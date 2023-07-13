@@ -1,7 +1,7 @@
 import style from "./MentorCard.module.scss";
-import { FOLLOW, PROFILE_TITLES } from "../../../shared/constants/common";
+import { FOLLOW } from "../../../shared/constants/common";
 
-const MentorCard = () => {
+const MentorCard = (props) => {
   return (
     <div className={style.card__container}>
       <div className={style.card__follow}>
@@ -15,12 +15,20 @@ const MentorCard = () => {
         <img src={require("../../../assets/Mentor-cover.png")} />
       </div>
       <div className={style.card__avatar}>
-        <img src={require("../../../assets/Mentor_img.png")} />
+        <img
+          src={
+            props.data.avatarUrl &&
+            props.data.avatarUrl !== "avatarUrl" &&
+            props.data.avatarUrl !== "string"
+              ? props.data.avatarUrl
+              : require("../../../assets/Mentor_img.png")
+          }
+        />
       </div>
       <div className={style.card__information}>
         <div className={style.card__name}>
-          <p>Hoàng Lê Khang</p>
-          <p>Software Engineer tại FPT software</p>
+          <p>{props.data.fullName}</p>
+          <p>{props.data.occupation}</p>
         </div>
         <div className={style.card__rating}>
           <div>
@@ -30,25 +38,39 @@ const MentorCard = () => {
             <span>4.8 sao</span>
           </div>
           <span>|</span>
-          <span>100 Mentee</span>
-          <span>|</span>
           <span>10 người theo dõi</span>
         </div>
         <div className={style.card__topic}>
-          <div className={style.card__topic_item}>
-            <img src={require("../../../assets/icons/mentor-pen.png")} />
-            <span>Software Engineer - Nên bắt đầu từ đâu?</span>
-          </div>
-          <div className={style.card__topic_item}>
-            <img src={require("../../../assets/icons/mentor-pen.png")} />
-            <span>Phát triển bản thân trong thời kì 5.0</span>
-          </div>
-        </div>
-        <div className={style.card__skill}>
-          <p>{PROFILE_TITLES.SKILLS}: </p>
-          <p className={style.card__skill_yellow}>FE Developer</p>
-          <p className={style.card__skill_white}>Leadership</p>
-          <p className={style.card__skill_gray}>+5</p>
+          {!props.data.topics.length && (
+            <div className={style.card__topic_item}>
+              <span>Chưa có chủ đề</span>
+            </div>
+          )}
+          {props.data.topics.map((topic, index) => (
+            <>
+              <div
+                key={`MENTOR_CARD_${index}`}
+                className={style.card__topic_item}
+              >
+                <img src={require("../../../assets/icons/mentor-pen.png")} />
+                <span>{topic.name}</span>
+              </div>
+              <div
+                key={`MENTOR_CARD_${index}`}
+                className={style.card__topic_item}
+              >
+                <img src={require("../../../assets/icons/mentor-pen.png")} />
+                <span>{topic.name}</span>
+              </div>
+              <div
+                key={`MENTOR_CARD_${index}`}
+                className={style.card__topic_item}
+              >
+                <img src={require("../../../assets/icons/mentor-pen.png")} />
+                <span>{topic.name}</span>
+              </div>
+            </>
+          ))}
         </div>
       </div>
     </div>

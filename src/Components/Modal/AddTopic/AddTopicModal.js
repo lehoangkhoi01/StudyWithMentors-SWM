@@ -10,7 +10,11 @@ import {
 } from "../../../shared/constants/common";
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-import { useCustomLoading, useFetchTopicFieldsAndCategories, useNotification } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useFetchTopicFieldsAndCategories,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
 
@@ -19,8 +23,8 @@ const AddTopicModal = (props) => {
     useForm();
   const { getTopicCategories, getTopicFields } =
     useFetchTopicFieldsAndCategories();
-    const { setLoading } = useCustomLoading();
-    const { setNotification } = useNotification();
+  const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   const [fields, setFields] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -36,8 +40,6 @@ const AddTopicModal = (props) => {
 
     getFieldsAndCategories();
   }, []);
-
-  console.log(selectedField)
 
   useEffect(() => {
     clearData();
@@ -85,8 +87,6 @@ const AddTopicModal = (props) => {
   const onSubmit = async () => {
     const formValue = getValues();
 
-    console.log(selectedCategory)
-
     let topic = {
       name: formValue.name,
       description: formValue.description,
@@ -98,8 +98,9 @@ const AddTopicModal = (props) => {
     try {
       setLoading(true);
 
-      await topicService.upsertTopic(topic, topicId)
+      await topicService.upsertTopic(topic, topicId);
 
+      props.onSuccess();
     } catch (error) {
       console.log(error);
 

@@ -2,26 +2,68 @@ import { useForm } from "react-hook-form";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   FILL_INFORMATION,
-  GENDER,
   PLACE_HOLDER,
   TITLE,
 } from "../../../shared/constants/common";
-import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
-import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
 import style from "./FillInformation.module.scss";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import CustomizedDatePicker from "../../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
-
-const GENDERS = [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserInfo, userAction } from "../../../Store/slices/userSlice";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
+import { userAccountService } from "../../../Services/userAccountService";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const FillInformation = () => {
   const { register, handleSubmit, setValue } = useForm();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
+
+  const userInfo = useSelector(selectUserInfo);
+
+  useEffect(() => {
+    setValue("fullName", userInfo.fullName);
+    setValue("phone", userInfo.phone);
+    setValue("email", userInfo.email);
+  }, []);
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+
+      const updatedUserInfo = { ...userInfo, ...data, activateAccount: true };
+
+      const newProfile = await userAccountService.confirmUserProfile(
+        updatedUserInfo
+      );
+
+      dispatch(userAction.setUserInfo(newProfile));
+
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.UPDATE_PROFILE_SUCCESS,
+      });
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: COMMON_MESSAGE.UPDATE_PROFILE_FAIL,
+      });
+    } finally {
+      setLoading(false);
+      history.push(ROUTES.HOME);
+    }
   };
 
   return (
@@ -31,7 +73,7 @@ const FillInformation = () => {
         className={style.fillInformation__formSection}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <CustomTopTitle title={FILL_INFORMATION.WELCOME} />
+        <h1>{FILL_INFORMATION.WELCOME} </h1>
         <p>{FILL_INFORMATION.PLEASE_FILL_INFORMATION}</p>
         <CustomizedTextField
           className={style.fillInformation__input}
@@ -41,6 +83,7 @@ const FillInformation = () => {
           required={true}
           type={"email"}
           options={{ ...register("email") }}
+          disabled={true}
         />
         <CustomizedTextField
           className={style.fillInformation__input}
@@ -60,39 +103,13 @@ const FillInformation = () => {
           type={"text"}
           options={{ ...register("phone") }}
         />
-        <Grid2
-          container
-          className={`${style.fillInformation__input} ${style.fillInformation__grid}`}
-        >
-          <Grid2 xs={6}>
-            <CustomizedDatePicker
-              name={TITLE.DOB}
-              placeholder={PLACE_HOLDER.DEFAULT_DOB}
-              options={{ ...register("dob") }}
-              formName={"dob"}
-              setValue={setValue}
-            />
-          </Grid2>
-          <Grid2 xs={6}>
-            <CustomizedSelect
-              inputId="gender"
-              name={TITLE.GENDER}
-              type={"text"}
-              items={GENDERS}
-              options={{ ...register("gender") }}
-            />
-          </Grid2>
-        </Grid2>
         <div className={style.fillInformation__button}>
-          <CustomizedButton type="submit" variant="outlined" color="primary600">
-            {BUTTON_LABEL.LATER}
-          </CustomizedButton>
           <CustomizedButton
             type="submit"
             variant="contained"
             color="primary600"
           >
-            {BUTTON_LABEL.SAVE}
+            {BUTTON_LABEL.CONFIRM}
           </CustomizedButton>
         </div>
       </form>
