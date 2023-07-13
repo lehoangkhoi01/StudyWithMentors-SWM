@@ -32,6 +32,7 @@ export const BUTTON_LABEL = {
   ADD_TOPIC: "Thêm chủ đề",
   SEARCH_MENTOR: "Tìm kiếm diễn giả",
   SEARCH_TOPIC: "Tìm kiếm chủ đề",
+  BOOKING_NOW: "Đặt lịch ngay",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -528,4 +529,9 @@ export const TABLE_TYPE = {
 export const USER_STATUS = {
   ACTIVATED: "ACTIVATED",
   WATTING: "WAITING",
+};
+
+export const CV_MENTOR = {
+  HOT_TOPIC: "Chủ đề nổi bật",
+  AVAILABLE_TIME: "Xem trước thời gian khả dụng",
 };

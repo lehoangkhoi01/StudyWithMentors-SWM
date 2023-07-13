@@ -1,4 +1,6 @@
 import {
+  BUTTON_LABEL,
+  CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
   ERROR_MESSAGES,
   INPUT_TYPES,
@@ -32,6 +34,8 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { ROUTES } from "../../../shared/constants/navigation";
+import { Divider } from "@mui/material";
+import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 
 const TEXT_FIELDS = [
   {
@@ -493,7 +497,36 @@ const CV = () => {
         </div>
       )}
 
-      <div className={style.cv__booking}></div>
+      <div className={style.cv__booking}>
+        <div className={style.cv__booking__section}>
+          <h3>{CV_MENTOR.HOT_TOPIC}</h3>
+
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+          <Divider />
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+          <Divider />
+          <div className={style.cv__booking__topic}>
+            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
+            <p>Nhóm: Kỹ năng mềm</p>
+            <p>Lĩnh vực: Phát triển bản thân</p>
+          </div>
+        </div>
+
+        <div className={style.cv__booking__section}>
+          <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
+          <CustomizedButton variant="contained" color="primary600">
+            {BUTTON_LABEL.BOOKING_NOW}
+          </CustomizedButton>
+        </div>
+      </div>
       <ConfirmImage
         openModal={openModal}
         onCloseModal={onCloseModal}

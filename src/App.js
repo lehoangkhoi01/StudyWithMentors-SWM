@@ -89,7 +89,7 @@ function App() {
             ) : null}
 
             <Switch className={`${style.switchContainer}`}>
-              {userInfo.status === USER_STATUS.WATTING && (
+              {userInfo?.status === USER_STATUS.WATTING && (
                 <>
                   <Route
                     path={ROUTES.FILL_INFORMATION}
@@ -100,87 +100,83 @@ function App() {
                   </Route>
                 </>
               )}
-              {userInfo.status === USER_STATUS.ACTIVATED && (
-                <>
-                  <Route exact path="/" component={HomePage} />
-                  <Route path={ROUTES.HOME} component={HomePage} />
-                  <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-                  <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-                  <Route
-                    path={ROUTES.SIGN_UP_CONFIRMATION}
-                    component={SignUpConfirmationPage}
-                  />
-                  <Route exact path={`${ROUTES.CV}`} component={CVPage} />
-                  <Route exact path={`${ROUTES.CV}/:id`} component={CVPage} />
-                  <Route
-                    exact
-                    path={ROUTES.SEMINAR_LIST}
-                    component={SeminarsPage}
-                  />
-                  <Route
-                    exact
-                    path={ROUTES.SEMINAR_DETAIL}
-                    component={SeminarDetailPage}
-                  />
-                  {/* <Route
+              <>
+                <Route exact path="/" component={HomePage} />
+                <Route path={ROUTES.HOME} component={HomePage} />
+                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+                <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+                <Route
+                  path={ROUTES.SIGN_UP_CONFIRMATION}
+                  component={SignUpConfirmationPage}
+                />
+                <Route exact path={`${ROUTES.CV}`} component={CVPage} />
+                <Route exact path={`${ROUTES.CV}/:id`} component={CVPage} />
+                <Route
+                  exact
+                  path={ROUTES.SEMINAR_LIST}
+                  component={SeminarsPage}
+                />
+                <Route
+                  exact
+                  path={ROUTES.SEMINAR_DETAIL}
+                  component={SeminarDetailPage}
+                />
+                {/* <Route
               exact
               path={ROUTES.SEMINAR_UPDATE}
               component={SeminarCreatePage}
             />
             <Route path={ROUTES.SEMINAR_CREATE} component={SeminarCreatePage} /> */}
-                  <Route path={ROUTES.CALENDAR} component={CalendarPage} />
-                  <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-                  <Route
-                    path={ROUTES.SEMINAR_FEEDBACK}
-                    component={SeminarFeedbackPage}
-                  />
-                  <Route
-                    path={ROUTES.FEEDBACK_OVERVIEW}
-                    component={FeedbackOverviewPage}
-                  />
-                  <Route
-                    path={ROUTES.ADMIN_MENTOR_LIST}
-                    component={MentorListAdminPage}
-                  />
-                  <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
-                  <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
-                  <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-                  <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
-                  <Route path={ROUTES.CALENDAR} component={CalendarPage} />
-                  <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-                  <Route
-                    path={ROUTES.SEMINAR_FEEDBACK}
-                    component={SeminarFeedbackPage}
-                  />
-                  <Route
-                    path={ROUTES.FEEDBACK_OVERVIEW}
-                    component={FeedbackOverviewPage}
-                  />
-                  <Route
-                    path={ROUTES.ADMIN_MENTOR_LIST}
-                    component={MentorListAdminPage}
-                  />
-                  <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
-                  <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
-                  <Route path={ROUTES.MEETING} component={MeetingPage} />
-                  <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
-                  <Route path={ROUTES.BOOKING} component={BookingPage} />
-                  <Route
-                    path={ROUTES.BOOKING_LIST}
-                    component={BookingListPage}
-                  />
-                  <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-                  <Route path={ROUTES.SERVER_ERROR} component={ServerError} />\
-                  <StaffRoute
-                    path="/staff"
-                    component={StaffLayout}
-                    roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
-                  />
-                  <Route exact path="*">
-                    <Redirect to={ROUTES.HOME} />
-                  </Route>
-                </>
-              )}
+                <Route path={ROUTES.CALENDAR} component={CalendarPage} />
+                <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+                <Route
+                  path={ROUTES.SEMINAR_FEEDBACK}
+                  component={SeminarFeedbackPage}
+                />
+                <Route
+                  path={ROUTES.FEEDBACK_OVERVIEW}
+                  component={FeedbackOverviewPage}
+                />
+                <Route
+                  path={ROUTES.ADMIN_MENTOR_LIST}
+                  component={MentorListAdminPage}
+                />
+                <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
+                <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
+                <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+                <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
+                <Route path={ROUTES.CALENDAR} component={CalendarPage} />
+                <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+                <Route
+                  path={ROUTES.SEMINAR_FEEDBACK}
+                  component={SeminarFeedbackPage}
+                />
+                <Route
+                  path={ROUTES.FEEDBACK_OVERVIEW}
+                  component={FeedbackOverviewPage}
+                />
+                <Route
+                  path={ROUTES.ADMIN_MENTOR_LIST}
+                  component={MentorListAdminPage}
+                />
+                <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
+                <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
+                <Route path={ROUTES.MEETING} component={MeetingPage} />
+                <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
+                <Route path={ROUTES.BOOKING} component={BookingPage} />
+                <Route path={ROUTES.BOOKING_LIST} component={BookingListPage} />
+                <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+                <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
+                \
+                <StaffRoute
+                  path="/staff"
+                  component={StaffLayout}
+                  roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
+                />
+                <Route exact path="*">
+                  <Redirect to={ROUTES.HOME} />
+                </Route>
+              </>
             </Switch>
           </div>
           <LoadingProvider />
