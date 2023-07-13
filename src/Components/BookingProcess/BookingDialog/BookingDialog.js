@@ -1,7 +1,5 @@
 import {
   Dialog,
-  //   Button,
-  //   DialogActions,
   DialogContent,
   DialogTitle,
   Typography,
@@ -10,8 +8,13 @@ import {
 import React from "react";
 import BookingStepper from "../BookingSteppers/BookingStepper";
 import CloseIcon from "@mui/icons-material/Close";
+import { topicService } from "../../../Services/topicService";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
 
 const BookingDialog = (props) => {
+  const [topicList, setTopicList] = React.useState([]);
+  const { setLoading } = useCustomLoading();
+
   function CustomDialogTitle(props) {
     const { children, onClose, ...other } = props;
 
@@ -36,18 +39,36 @@ const BookingDialog = (props) => {
     );
   }
 
+  React.useEffect(() => {
+    const fetchTopicByMentor = async (mentorId) => {
+      try {
+        setLoading(true);
+        const topics = await topicService.getTopicsByMentor(mentorId);
+        setTopicList(topics);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (props.mentorId) {
+      fetchTopicByMentor(props.mentorId);
+    }
+  }, []);
+
   return (
     <Dialog fullWidth open={props.open} maxWidth="none">
       <CustomDialogTitle onClose={() => props.handleOpenDialog(false)}>
         <Typography variant="h5">Đặt lịch cố vấn</Typography>
       </CustomDialogTitle>
       <DialogContent>
-        <BookingStepper />
+        <BookingStepper
+          topics={topicList}
+          mentorId={props.mentorId}
+          handleCloseDialog={() => props.handleOpenDialog(false)}
+        />
       </DialogContent>
-      {/* <DialogActions>
-        <Button onClick={() => props.handleOpenDialog(false)}>Trở về</Button>
-        <Button onClick={() => props.handleOpenDialog(false)}>Tiếp tục</Button>
-      </DialogActions> */}
     </Dialog>
   );
 };

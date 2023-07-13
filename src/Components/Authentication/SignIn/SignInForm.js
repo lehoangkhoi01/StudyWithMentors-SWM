@@ -15,6 +15,7 @@ import { useCustomLoading } from "../../../Helpers/generalHelper";
 import { Typography } from "@mui/material";
 import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import { TITLE } from "../../../shared/constants/common";
+import { userAccountService } from "../../../Services/userAccountService";
 
 const SignInForm = () => {
   const history = useHistory();
@@ -30,7 +31,9 @@ const SignInForm = () => {
         googleSignInResult
       );
       localStorage.setItem("TOKEN", response.accessToken);
-      dispatch(userAction.loginSuccess(response));
+
+      const userInfo = await userAccountService.getUserInfo();
+      dispatch(userAction.loginSuccess(userInfo));
       history.push(ROUTES.HOME);
     } catch (error) {
       if (error.status == "403") {

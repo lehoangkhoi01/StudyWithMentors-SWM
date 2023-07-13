@@ -47,10 +47,16 @@ export const TopicEndpoints = {
   GET_TOPIC_FIELDS: "admin/topic-fields",
   GET_TOPIC_CATEGORIES: "admin/topic-categories",
   GET_TOPICS: "admin/topics",
-  UPSERT_TOPICS: "topics",
+  TOPICS: "topics",
+  TOPICS_MENTOR: "topics/by-mentor",
   UPADATE_TOPIC_STATUS: "topics/update-status",
 };
 
 export const ScheduleEndpoints = {
   SCHEDULE: "schedules",
+  SCHEDULE_MENTOR: "schedules/by-mentor",
+};
+
+export const BookingEndpoints = {
+  BOOKING: "boooking",
 };

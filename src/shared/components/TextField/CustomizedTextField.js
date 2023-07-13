@@ -12,7 +12,11 @@ const CustomizedTextField = (props) => {
   const isMD = useMediaQuery({ query: `(min-width: ${BREAK_POINT.MD}px)` });
 
   return (
-    <div className={`${style.textField__container} ${props.className} ${props.disabled ? style.textField__disable : ""}`}>
+    <div
+      className={`${style.textField__container} ${props.className} ${
+        props.disabled ? style.textField__disable : ""
+      }`}
+    >
       <label htmlFor={props.inputId}>
         {props.name}
         {!props.required ? <span>({OPTIONAL})</span> : ""}
@@ -25,6 +29,7 @@ const CustomizedTextField = (props) => {
         id={props.inputId}
         placeholder={props.placeholder}
         type={props.type ?? "text"}
+        required={props.required}
         {...props.options}
         disabled={props.disabled ?? false}
         onChange={props.onChange ?? null}

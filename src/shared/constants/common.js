@@ -117,6 +117,8 @@ export const COMMON_MESSAGE = {
   ADD_SCHEDULE_FAIL: "Thêm lịch thất bại. Xin vui lòng thử lại sau",
   UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
   UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
+  UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
+  UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
 };
 
 export const SIGN_UP_STAGE = {
@@ -521,4 +523,9 @@ export const CONFIRM_TOPIC_MODAL = {
 export const TABLE_TYPE = {
   MENTOR: "MENTOR",
   TOPIC: "TOPIC",
+};
+
+export const USER_STATUS = {
+  ACTIVATED: "ACTIVATED",
+  WATTING: "WAITING",
 };

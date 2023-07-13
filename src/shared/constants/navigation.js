@@ -22,6 +22,7 @@ export const ROUTES = {
   MEETING: "/meeting",
   TOPIC_LIST: "/topics",
   BOOKING: "/booking",
+  BOOKING_LIST: "/booking-list",
 };
 
 export const ROUTES_STATIC = {
