@@ -19,7 +19,7 @@ export const ROUTES = {
   MENTOR_LIST: "/mentors",
   ADMIN_MENTOR_LIST: "/admin/mentors",
   DISCUSSION: "/discussion/:id",
-  MEETING: "/meeting",
+  MEETING: "/meeting-room/:id",
   TOPIC_LIST: "/topics",
   BOOKING: "/booking",
   BOOKING_LIST: "/booking-list",
@@ -55,10 +55,12 @@ export const COMMON_NAVBAR = [
     ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
-    TITLE: "Về Growth Me",
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
   },
   {
     TITLE: "Tìm Mentor",
+    ROUTE: ROUTES.MENTOR_LIST,
   },
 ];
 
@@ -68,12 +70,16 @@ export const MENTOR_NAVBAR = [
     ROUTE: ROUTES.HOME,
   },
   {
-    TITLE: "Tìm mentor",
-    ROUTE: ROUTES.MENTOR_LIST,
-  },
-  {
     TITLE: "Hội thảo",
     ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
+  },
+  {
+    TITLE: "Lịch rảnh",
+    ROUTE: ROUTES.CALENDAR,
   },
   {
     TITLE: "Hồ sơ của tôi",

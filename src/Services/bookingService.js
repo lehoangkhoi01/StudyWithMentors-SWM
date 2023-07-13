@@ -10,4 +10,8 @@ export const bookingService = {
     const url = BookingEndpoints.BOOKING;
     return axiosClient.get(url);
   },
+  updateBookingStatus: (data) => {
+    const url = BookingEndpoints.BOOKING;
+    return axiosClient.put(url, data);
+  },
 };

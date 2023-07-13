@@ -121,30 +121,6 @@ function App() {
                   path={ROUTES.SEMINAR_DETAIL}
                   component={SeminarDetailPage}
                 />
-                {/* <Route
-              exact
-              path={ROUTES.SEMINAR_UPDATE}
-              component={SeminarCreatePage}
-            />
-            <Route path={ROUTES.SEMINAR_CREATE} component={SeminarCreatePage} /> */}
-                <Route path={ROUTES.CALENDAR} component={CalendarPage} />
-                <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-                <Route
-                  path={ROUTES.SEMINAR_FEEDBACK}
-                  component={SeminarFeedbackPage}
-                />
-                <Route
-                  path={ROUTES.FEEDBACK_OVERVIEW}
-                  component={FeedbackOverviewPage}
-                />
-                <Route
-                  path={ROUTES.ADMIN_MENTOR_LIST}
-                  component={MentorListAdminPage}
-                />
-                <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
-                <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
-                <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-                <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
                 <Route path={ROUTES.CALENDAR} component={CalendarPage} />
                 <Route path={ROUTES.ACCOUNT} component={AccountPage} />
                 <Route
@@ -167,15 +143,12 @@ function App() {
                 <Route path={ROUTES.BOOKING_LIST} component={BookingListPage} />
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
-                \
+
                 <StaffRoute
                   path="/staff"
                   component={StaffLayout}
                   roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
                 />
-                <Route exact path="*">
-                  <Redirect to={ROUTES.HOME} />
-                </Route>
               </>
             </Switch>
           </div>

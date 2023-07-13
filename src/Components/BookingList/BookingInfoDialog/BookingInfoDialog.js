@@ -12,7 +12,10 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
-import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
+import {
+  BOOKING_STATUS,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizeButton from "../../../shared/components/Button/CustomizedButton";
 
@@ -88,6 +91,20 @@ const BookingInfoDialog = (props) => {
     );
   };
 
+  const handleCancel = () => {
+    props.setOpenBookingInfo(false);
+  };
+
+  const handleAccept = async () => {
+    const data = {
+      bookingIds: [props.bookingInfo?.id],
+      reason: "Approved",
+      status: BOOKING_STATUS.ACCEPTED,
+    };
+
+    await props.handleApproveBooking(data);
+  };
+
   const renderActionButton = (status) => {
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       switch (status) {
@@ -135,6 +152,65 @@ const BookingInfoDialog = (props) => {
           return <Button>Hủy lịch</Button>;
       }
     }
+
+    if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+      switch (status) {
+        case "ACCEPTED":
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="center"
+              margin={0}
+            >
+              <Grid2 xs={6}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  onClick={handleCancel}
+                >
+                  Hủy lịch
+                </CustomizeButton>
+              </Grid2>
+            </Grid2>
+          );
+        case "REQUESTED":
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="space-around"
+              margin={0}
+            >
+              <Grid2 xs={4}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="outlined"
+                  onClick={handleCancel}
+                >
+                  Hủy lịch
+                </CustomizeButton>
+              </Grid2>
+              <Grid2 xs={4}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  onClick={handleAccept}
+                >
+                  Xác nhận
+                </CustomizeButton>
+              </Grid2>
+            </Grid2>
+          );
+        default:
+          return <Button>Hủy lịch</Button>;
+      }
+    }
   };
 
   return (
@@ -169,20 +245,23 @@ const BookingInfoDialog = (props) => {
           <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
           <span>{props.bookingInfo?.description}</span>
         </div>
-        <div className={`${style.bookingSummary__detail}`}>
-          <span className={`${style.bookingSummary__subTitle}`}>
-            Link tham gia:{" "}
-          </span>
-          <span>
-            <Link
-              to={`/meeting-room/${props.bookingInfo?.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {hostname}/meeting-room/{props.bookingInfo?.id}
-            </Link>
-          </span>
-        </div>
+
+        {props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED && (
+          <div className={`${style.bookingSummary__detail}`}>
+            <span className={`${style.bookingSummary__subTitle}`}>
+              Link tham gia:{" "}
+            </span>
+            <span>
+              <Link
+                to={`/meeting-room/${props.bookingInfo?.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {hostname}/meeting-room/{props.bookingInfo?.id}
+              </Link>
+            </span>
+          </div>
+        )}
       </DialogContent>
       <div>{renderActionButton(props.bookingInfo?.status)}</div>
     </Dialog>

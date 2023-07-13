@@ -73,7 +73,9 @@
 
   &__name {
     text-align: center;
-
+    color: $primary900;
+    font-weight: 600;
+    font-size: 1.2rem;
     p {
       margin-block: 0.4rem;
     }
@@ -171,9 +173,9 @@
     }
 
     &_gray {
-        border: 1px solid $black200;
-        background-color: $black200;
-        color: $primary900;
-      }
+      border: 1px solid $black200;
+      background-color: $black200;
+      color: $primary900;
+    }
   }
 }
