@@ -56,5 +56,5 @@ export const ScheduleEndpoints = {
 };
 
 export const BookingEndpoints = {
-  BOOKING: "boooking",
+  BOOKING: "booking",
 };

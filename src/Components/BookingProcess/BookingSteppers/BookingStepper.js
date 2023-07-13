@@ -18,7 +18,12 @@ import SummaryStep from "../SummaryStep/SummaryStep";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import { format } from "date-fns";
 import { bookingService } from "../../../Services/bookingService";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
 
@@ -35,6 +40,8 @@ const BookingStepper = (props) => {
   const [studentNote, setStudentNote] = React.useState(null);
   const [selectSlot, setSelectSlot] = React.useState(null);
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
+  const userInfo = useSelector(selectUserInfo);
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -95,7 +102,6 @@ const BookingStepper = (props) => {
   };
 
   const handleSubmitBooking = async () => {
-    console.log(selectSlot);
     setLoading(true);
     try {
       const data = {
@@ -106,17 +112,25 @@ const BookingStepper = (props) => {
         scheduleId: selectSlot.scheduleId,
         topicId: selectedTopic.id,
         description: studentNote,
-        participants: [],
+        participants: [userInfo.accountId],
       };
-      console.log(data);
       await bookingService.createBooking(data);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: "Đặt lịch thành công",
+      });
+      props.handleCloseDialog();
     } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: "Đặt lịch thất bại. Xin vui lòng thử lại sau.",
+      });
       console.log(error);
     } finally {
       setLoading(false);
     }
-
-    //props.handleCloseDialog();
   };
 
   React.useEffect(() => {
