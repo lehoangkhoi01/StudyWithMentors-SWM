@@ -1,9 +1,10 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import style from "./BookingCard.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import { MoreVert } from "@mui/icons-material";
 
 const BookingCard = (props) => {
   const convertTimeToDateTime = (time, date) => {
@@ -28,7 +29,7 @@ const BookingCard = (props) => {
             Đang chờ
           </div>
         );
-      case "CANCELED":
+      case "REJECTED":
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__canceled}`}
@@ -45,6 +46,11 @@ const BookingCard = (props) => {
           </div>
         );
     }
+  };
+
+  const onSelectBooking = () => {
+    props.setOpenBookingInfo(true);
+    props.setSelectedBooking(props.bookingInfo);
   };
 
   return (
@@ -67,7 +73,7 @@ const BookingCard = (props) => {
                 )
               : null}{" "}
             -{" "}
-            {props.bookingInfo?.startTime
+            {props.bookingInfo?.endTime
               ? format(
                   convertTimeToDateTime(
                     props.bookingInfo?.endTime,
@@ -79,20 +85,26 @@ const BookingCard = (props) => {
           </Typography>
         </Grid2>
         <Grid2 xs={10} className={`${style.bookingCard__infoContainer}`}>
-          <Typography
-            variant="h5"
+          <Button
+            variant="text"
             className={`${style.bookingCard__topicTitle}`}
+            onClick={() => onSelectBooking()}
           >
-            {props.bookingInfo?.topic.name}
-          </Typography>
+            {props.bookingInfo?.topicDetailResponse.name}
+          </Button>
           <div className={`${style.bookingCard__detail}`}>
-            <span>Mentor: {props.bookingInfo?.mentor.name}</span> |{" "}
-            <span>Nhóm: {props.bookingInfo?.topic.field}</span> |{" "}
-            <span>Lĩnh vực: {props.bookingInfo?.topic.category}</span>
+            <span>Mentor: {props.bookingInfo?.mentor.fullName}</span> |{" "}
+            <span>Nhóm: {props.bookingInfo?.topicDetailResponse.field}</span> |{" "}
+            <span>
+              Lĩnh vực: {props.bookingInfo?.topicDetailResponse.category}
+            </span>
           </div>
           {renderStatusLabel(props.bookingInfo?.status)}
         </Grid2>
       </Grid2>
+      <IconButton className={`${style.bookingCard__icon}`}>
+        <MoreVert />
+      </IconButton>
     </div>
   );
 };
