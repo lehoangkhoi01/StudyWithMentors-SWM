@@ -36,6 +36,8 @@ import {
 import { ROUTES } from "../../../shared/constants/navigation";
 import { Divider } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
+import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
 
 const TEXT_FIELDS = [
   {
@@ -250,6 +252,7 @@ const CV = () => {
   const [croppingImage, setCroppingImage] = useState();
   const [eventfile, setEventFile] = useState({});
   const [position, setPosition] = useState(null);
+  const [openBookingInfoDialog, setOpenBookingInfoDialog] = useState(false);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -399,8 +402,6 @@ const CV = () => {
     }
   };
 
-  console.log(!!position);
-
   return (
     <div className={style.cv__container}>
       {!isLoading && (
@@ -520,19 +521,34 @@ const CV = () => {
           </div>
         </div>
 
-        <div className={style.cv__booking__section}>
-          <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
-          <CustomizedButton variant="contained" color="primary600">
-            {BUTTON_LABEL.BOOKING_NOW}
-          </CustomizedButton>
-        </div>
+        {userInfo.role === SYSTEM_ROLE.STUDENT && (
+          <div className={style.cv__booking__section}>
+            <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
+            <CustomizedButton
+              variant="contained"
+              color="primary600"
+              onClick={() => setOpenBookingInfoDialog(true)}
+            >
+              {BUTTON_LABEL.BOOKING_NOW}
+            </CustomizedButton>
+          </div>
+        )}
       </div>
+
       <ConfirmImage
         openModal={openModal}
         onCloseModal={onCloseModal}
         croppingImage={croppingImage}
         onUpdateImage={updateAvatar}
       />
+
+      {openBookingInfoDialog && (
+        <BookingDialog
+          open={openBookingInfoDialog}
+          handleOpenDialog={setOpenBookingInfoDialog}
+          mentorId={id}
+        />
+      )}
     </div>
   );
 };

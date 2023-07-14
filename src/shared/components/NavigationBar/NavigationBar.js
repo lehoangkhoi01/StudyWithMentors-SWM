@@ -32,6 +32,7 @@ import { selectUser, userAction } from "../../../Store/slices/userSlice";
 import { useFetchUserInfo } from "../../../Helpers/generalHelper";
 import SideBar from "../SideBar/SideBar";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { SYSTEM_ROLE } from "../../constants/systemType";
 
 const settings = ACCOUNT_MENU;
 
@@ -96,12 +97,12 @@ function NavigationBar() {
       } else {
         setAuthenticated(user.isAuthenticated);
         setUserInfo(userInfoResponse);
-        if (userInfoResponse?.role === "STUDENT") {
+        if (userInfoResponse?.role === SYSTEM_ROLE.STUDENT) {
           setNavigationItems(COMMON_NAVBAR);
-        }
-
-        else if (userInfoResponse?.role) {
+        } else if (userInfoResponse?.role === SYSTEM_ROLE.MENTOR) {
           setNavigationItems(MENTOR_NAVBAR);
+        } else {
+          setNavigationItems(UNAUTHORIZED_NAVBAR);
         }
       }
     }

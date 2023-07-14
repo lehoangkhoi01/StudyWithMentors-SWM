@@ -7,6 +7,7 @@ import BookingInfoDialog from "./BookingInfoDialog/BookingInfoDialog";
 import { useCustomLoading } from "../../Helpers/generalHelper";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../shared/constants/navigation";
+import { Typography } from "@mui/material";
 
 const BookingList = () => {
   const [openBookingInfo, setOpenBookingInfo] = React.useState(false);
@@ -40,21 +41,44 @@ const BookingList = () => {
   };
 
   React.useEffect(() => {
-    fetchBookingList();
+    const fetchBooking = async () => {
+      setLoading(true);
+      try {
+        const result = await bookingService.getBooking();
+        console.log(result);
+        if (result.bookingCards && result.bookingCards.length > 0) {
+          setBookingList(result.bookingCards);
+        }
+      } catch (error) {
+        if (error?.status == "500") {
+          history.push(ROUTES.SERVER_ERROR);
+        }
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooking();
   }, []);
 
   return (
     <div className={`${style.bookingList__container}`}>
       <CustomTopTitle title="Quản lý lịch hẹn" />
       <div className={`${style.bookingList__list}`}>
-        {bookingList.map((booking, index) => (
-          <BookingCard
-            key={`booking-cad-${index}`}
-            bookingInfo={booking}
-            setOpenBookingInfo={setOpenBookingInfo}
-            setSelectedBooking={setSelectedBooking}
-          />
-        ))}
+        {bookingList.length > 0 ? (
+          bookingList.map((booking, index) => (
+            <BookingCard
+              key={`booking-cad-${index}`}
+              bookingInfo={booking}
+              setOpenBookingInfo={setOpenBookingInfo}
+              setSelectedBooking={setSelectedBooking}
+            />
+          ))
+        ) : (
+          <Typography variant="h6" textAlign="center">
+            Chưa có dữ liệu
+          </Typography>
+        )}
       </div>
 
       <BookingInfoDialog
