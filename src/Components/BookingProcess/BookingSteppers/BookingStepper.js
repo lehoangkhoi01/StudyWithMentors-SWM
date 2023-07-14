@@ -23,7 +23,9 @@ import {
   useNotification,
 } from "../../../Helpers/generalHelper";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
 
@@ -42,6 +44,7 @@ const BookingStepper = (props) => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
+  const history = useHistory();
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -103,6 +106,7 @@ const BookingStepper = (props) => {
 
   const handleSubmitBooking = async () => {
     setLoading(true);
+    console.log(selectSlot);
     try {
       const data = {
         mentorId: props.mentorId,
@@ -114,6 +118,7 @@ const BookingStepper = (props) => {
         description: studentNote,
         participants: [userInfo.accountId],
       };
+      console.log(data);
       await bookingService.createBooking(data);
       setNotification({
         isOpen: true,
@@ -121,6 +126,7 @@ const BookingStepper = (props) => {
         message: "Đặt lịch thành công",
       });
       props.handleCloseDialog();
+      history.push(ROUTES.BOOKING_LIST);
     } catch (error) {
       setNotification({
         isOpen: true,

@@ -1,7 +1,16 @@
 import style from "./MentorCard.module.scss";
 import { FOLLOW } from "../../../shared/constants/common";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const MentorCard = (props) => {
+  const history = useHistory();
+
+  const handleNavigateProfile = (id) => {
+    history.push(ROUTES.CV + "/" + id);
+  };
+
   return (
     <div className={style.card__container}>
       <div className={style.card__follow}>
@@ -27,7 +36,15 @@ const MentorCard = (props) => {
       </div>
       <div className={style.card__information}>
         <div className={style.card__name}>
-          <p>{props.data.fullName}</p>
+          <p>
+            <Button
+              variant="text"
+              className={style.card__name}
+              onClick={() => handleNavigateProfile(props.data.id)}
+            >
+              {props.data.fullName}
+            </Button>
+          </p>
           <p>{props.data.occupation}</p>
         </div>
         <div className={style.card__rating}>

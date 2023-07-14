@@ -23,3 +23,9 @@ export const SEMINAR_STATUS = {
   FUTURE: "FUTURE",
   PAST: "PAST",
 };
+
+export const BOOKING_STATUS = {
+  ACCEPTED: "ACCEPTED",
+  REQUESTED: "REQUESTED",
+  REJECTED: "REJECTED",
+};
