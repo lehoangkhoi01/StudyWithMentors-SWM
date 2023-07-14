@@ -1,6 +1,6 @@
 import {
   BUTTON_LABEL,
-  CV_MENTOR,
+  // CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
   ERROR_MESSAGES,
   INPUT_TYPES,
@@ -34,7 +34,7 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { ROUTES } from "../../../shared/constants/navigation";
-import { Divider } from "@mui/material";
+//import { Divider } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
@@ -447,15 +447,27 @@ const CV = () => {
                   </div>
                 )}
               </div>
-              <div>
+              <div style={{ position: "relative" }}>
                 <h2>{userInfo?.fullName}</h2>
                 <p>
                   {position &&
                     `${position.position} ${OTHERS.AT} ${position.company}`}
                 </p>
+                {userInfo.role === SYSTEM_ROLE.STUDENT && (
+                  <div style={{ position: "absolute", width: "100%" }}>
+                    <CustomizedButton
+                      variant="contained"
+                      color="primary600"
+                      onClick={() => setOpenBookingInfoDialog(true)}
+                    >
+                      {BUTTON_LABEL.BOOKING_NOW}
+                    </CustomizedButton>
+                  </div>
+                )}
               </div>
             </div>
           </div>
+
           <div className={style.cv__detail__profile}>
             {!detail && (
               <>
@@ -499,7 +511,7 @@ const CV = () => {
       )}
 
       <div className={style.cv__booking}>
-        <div className={style.cv__booking__section}>
+        {/* <div className={style.cv__booking__section}>
           <h3>{CV_MENTOR.HOT_TOPIC}</h3>
 
           <div className={style.cv__booking__topic}>
@@ -532,7 +544,7 @@ const CV = () => {
               {BUTTON_LABEL.BOOKING_NOW}
             </CustomizedButton>
           </div>
-        )}
+        )} */}
       </div>
 
       <ConfirmImage

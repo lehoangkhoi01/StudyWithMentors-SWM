@@ -24,20 +24,26 @@ const SelectSlotUIStep = (props) => {
   };
 
   const triggerRangeChangeEvent = async (date, view) => {
-    setLoading(true);
-    const startEnd = getStartEndTime(date, view);
-    try {
-      const result = await scheduleService.getMentorSchedule(
-        props.mentorId,
-        startEnd.start,
-        startEnd.end
-      );
-      const schedules = processSchedules(result);
-      setEventList(schedules);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    let toDay = new Date().setHours(0, 0, 0);
+    let dateView = new Date(date).setHours(0, 0, 0);
+    if (dateView < toDay) {
+      setEventList([]);
+    } else {
+      setLoading(true);
+      const startEnd = getStartEndTime(date, view);
+      try {
+        const result = await scheduleService.getMentorSchedule(
+          props.mentorId,
+          startEnd.start,
+          startEnd.end
+        );
+        const schedules = processSchedules(result);
+        setEventList(schedules);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

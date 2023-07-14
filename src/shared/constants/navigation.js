@@ -78,6 +78,10 @@ export const MENTOR_NAVBAR = [
     ROUTE: ROUTES.BOOKING_LIST,
   },
   {
+    TITLE: "Chủ đề",
+    ROUTE: ROUTES.TOPIC_LIST,
+  },
+  {
     TITLE: "Lịch rảnh",
     ROUTE: ROUTES.CALENDAR,
   },
