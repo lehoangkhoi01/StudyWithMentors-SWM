@@ -476,6 +476,10 @@ button.rbc-input::-moz-focus-inner {
   border-collapse: collapse;
 }
 
+.rbc-agenda-table tbody > tr {
+  border: none !important;
+}
+
 .rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
   padding: 10px 15px;
   vertical-align: top;
@@ -535,6 +539,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-agenda-event-cell {
   width: 100%;
+  text-align: center;
 }
 
 .rbc-time-column {
