@@ -559,13 +559,16 @@ button.rbc-input::-moz-focus-inner {
   flex: 1;
 }
 
+.rbc-time-gutter > div {
+  justify-content: flex-start;
+}
+
 .rbc-timeslot-group {
   border-bottom: 1px solid #ddd;
   min-height: 60px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
