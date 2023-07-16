@@ -1,10 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import React from "react";
 import style from "./BookingInfoDialog.module.scss";
 import { format } from "date-fns";
@@ -94,10 +88,6 @@ const BookingInfoDialog = (props) => {
     );
   };
 
-  const handleCancel = () => {
-    props.setOpenBookingInfo(false);
-  };
-
   const handleAccept = async () => {
     const data = {
       bookingIds: [props.bookingInfo?.id],
@@ -105,7 +95,7 @@ const BookingInfoDialog = (props) => {
       status: BOOKING_STATUS.ACCEPTED,
     };
 
-    await props.handleApproveBooking(data);
+    await props.handleUpdateBookingStatus(data, BOOKING_STATUS.ACCEPTED);
   };
 
   const renderActionButton = (status) => {
@@ -153,8 +143,6 @@ const BookingInfoDialog = (props) => {
               </Grid2>
             </Grid2>
           );
-        default:
-          return <Button>Hủy lịch</Button>;
       }
     }
 
@@ -174,7 +162,7 @@ const BookingInfoDialog = (props) => {
                   color="primary600"
                   size="small"
                   variant="contained"
-                  onClick={handleCancel}
+                  onClick={() => setOpenCancelBookingDialog(true)}
                 >
                   Hủy lịch
                 </CustomizeButton>
@@ -195,7 +183,7 @@ const BookingInfoDialog = (props) => {
                   color="primary600"
                   size="small"
                   variant="outlined"
-                  onClick={handleCancel}
+                  onClick={() => setOpenCancelBookingDialog(true)}
                 >
                   Hủy lịch
                 </CustomizeButton>
@@ -212,8 +200,6 @@ const BookingInfoDialog = (props) => {
               </Grid2>
             </Grid2>
           );
-        default:
-          return <Button>Hủy lịch</Button>;
       }
     }
   };
@@ -241,7 +227,7 @@ const BookingInfoDialog = (props) => {
             <span className={`${style.bookingSummary__subTitle}`}>
               Chủ đề:{" "}
             </span>
-            <span> {props.bookingInfo?.topicDetailResponse.name}</span>
+            <span> {props.bookingInfo?.topicDetailResponse?.name}</span>
           </div>
 
           <div className={`${style.bookingSummary__detail}`}>
@@ -280,6 +266,8 @@ const BookingInfoDialog = (props) => {
         <CancelBookingDialog
           open={openCancelBookingDialog}
           setOpenCancelBookingDialog={setOpenCancelBookingDialog}
+          handleUpdateBookingStatus={props.handleUpdateBookingStatus}
+          bookingInfo={props.bookingInfo}
         />
       )}
     </>

@@ -37,14 +37,6 @@ const BookingCard = (props) => {
             Đã hủy
           </div>
         );
-      default:
-        return (
-          <div
-            className={`${style.bookingCard__label} ${style.bookingCard__label__waiting}`}
-          >
-            Đang chờ
-          </div>
-        );
     }
   };
 
@@ -90,13 +82,13 @@ const BookingCard = (props) => {
             className={`${style.bookingCard__topicTitle}`}
             onClick={() => onSelectBooking()}
           >
-            {props.bookingInfo?.topicDetailResponse.name}
+            {props.bookingInfo?.topicDetailResponse?.name}
           </Button>
           <div className={`${style.bookingCard__detail}`}>
-            <span>Mentor: {props.bookingInfo?.mentor.fullName}</span> |{" "}
-            <span>Nhóm: {props.bookingInfo?.topicDetailResponse.field}</span> |{" "}
+            <span>Mentor: {props.bookingInfo?.mentor?.fullName}</span> |{" "}
+            <span>Nhóm: {props.bookingInfo?.topicDetailResponse?.field}</span> |{" "}
             <span>
-              Lĩnh vực: {props.bookingInfo?.topicDetailResponse.category}
+              Lĩnh vực: {props.bookingInfo?.topicDetailResponse?.category}
             </span>
           </div>
           {renderStatusLabel(props.bookingInfo?.status)}

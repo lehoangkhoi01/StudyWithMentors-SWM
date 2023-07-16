@@ -8,8 +8,28 @@ import {
 } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
+import { BOOKING_STATUS } from "../../../shared/constants/systemType";
 
 const CancelBookingDialog = (props) => {
+  const [cancelReason, setCancelReason] = React.useState(null);
+
+  const onReasonChange = (e) => {
+    setCancelReason(e.target.value);
+  };
+
+  const handleCancelBooking = async () => {
+    if (!cancelReason.trim()) {
+      return;
+    }
+    const data = {
+      bookingIds: [props.bookingInfo?.id],
+      reason: cancelReason,
+      status: BOOKING_STATUS.REJECTED,
+    };
+    await props.handleUpdateBookingStatus(data, BOOKING_STATUS.REJECTED);
+    props.setOpenCancelBookingDialog(false);
+  };
+
   return (
     <Dialog
       fullWidth
@@ -25,6 +45,7 @@ const CancelBookingDialog = (props) => {
           maxRows={3}
           optional={true}
           name="Lý do hủy lịch"
+          onChange={onReasonChange}
         />
       </DialogContent>
       <DialogActions
@@ -38,7 +59,12 @@ const CancelBookingDialog = (props) => {
         >
           Trở lại
         </CustomizedButton>
-        <CustomizedButton color="primary600" variant="contained" size="small">
+        <CustomizedButton
+          color="primary600"
+          variant="contained"
+          size="small"
+          onClick={handleCancelBooking}
+        >
           Xác nhận
         </CustomizedButton>
       </DialogActions>

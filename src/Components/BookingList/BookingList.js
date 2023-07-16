@@ -8,6 +8,8 @@ import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../shared/constants/navigation";
 import { Typography } from "@mui/material";
+import { BOOKING_STATUS } from "../../shared/constants/systemType";
+import { COMMON_MESSAGE } from "../../shared/constants/common";
 
 const BookingList = () => {
   const [openBookingInfo, setOpenBookingInfo] = React.useState(false);
@@ -17,22 +19,33 @@ const BookingList = () => {
   const { setNotification } = useNotification();
   const history = useHistory();
 
+  const processData = (data) => {
+    let newData = data.map((el) => {
+      return { ...el, convertedCreateDate: new Date(el.createdDate) };
+    });
+    newData.sort((a, b) => b.convertedCreateDate - a.convertedCreateDate);
+    return newData;
+  };
+
   const fetchBookingList = async () => {
     const result = await bookingService.getBooking();
     if (result.bookingCards && result.bookingCards.length > 0) {
-      setBookingList(result.bookingCards);
+      const newResult = processData(result.bookingCards);
+      setBookingList(newResult);
     }
   };
 
-  const handleApproveBooking = async (data) => {
+  const handleUpdateBookingStatus = async (data, status) => {
     try {
       setLoading(true);
-      console.log(data);
       await bookingService.updateBookingStatus(data);
       setNotification({
         isOpen: true,
         type: "success",
-        message: "Xác nhận lịch thành công",
+        message:
+          status === BOOKING_STATUS.ACCEPTED
+            ? COMMON_MESSAGE.ACCEPT_BOOKING_SUCCESS
+            : COMMON_MESSAGE.REJECT_BOOKING_SUCCESS,
       });
       setOpenBookingInfo(false);
       await fetchBookingList();
@@ -50,10 +63,11 @@ const BookingList = () => {
     const fetchBooking = async () => {
       setLoading(true);
       try {
-        const result = await bookingService.getBooking();
-        console.log(result);
+        let result = await bookingService.getBooking();
         if (result.bookingCards && result.bookingCards.length > 0) {
-          setBookingList(result.bookingCards);
+          result.bookingCards.sort((a, b) => a.createdDate - b.createdDate);
+          const newResult = processData(result.bookingCards);
+          setBookingList(newResult);
         }
       } catch (error) {
         if (error?.status == "500") {
@@ -71,7 +85,7 @@ const BookingList = () => {
     <div className={`${style.bookingList__container}`}>
       <CustomTopTitle title="Quản lý lịch hẹn" />
       <div className={`${style.bookingList__list}`}>
-        {bookingList.length > 0 ? (
+        {bookingList?.length > 0 ? (
           bookingList.map((booking, index) => (
             <BookingCard
               key={`booking-cad-${index}`}
@@ -91,7 +105,7 @@ const BookingList = () => {
         open={openBookingInfo}
         setOpenBookingInfo={setOpenBookingInfo}
         bookingInfo={selectedBooking}
-        handleApproveBooking={handleApproveBooking}
+        handleUpdateBookingStatus={handleUpdateBookingStatus}
       />
     </div>
   );
