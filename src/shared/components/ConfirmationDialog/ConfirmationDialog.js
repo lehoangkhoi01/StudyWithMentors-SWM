@@ -27,6 +27,7 @@ import CustomizedButton from "../Button/CustomizedButton";
 const ConfirmationDialog = (props) => {
   return (
     <Dialog
+      fullWidth
       open={props.open ?? false}
       onClose={props.handleClose}
       aria-labelledby="alert-dialog-title"

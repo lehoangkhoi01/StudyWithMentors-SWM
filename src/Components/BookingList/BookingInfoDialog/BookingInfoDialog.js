@@ -20,6 +20,7 @@ const BookingInfoDialog = (props) => {
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
+  console.log(props.bookingInfo);
 
   const renderStatusLabel = (status) => {
     switch (status) {
@@ -225,6 +226,13 @@ const BookingInfoDialog = (props) => {
 
           <div className={`${style.bookingSummary__detail}`}>
             <span className={`${style.bookingSummary__subTitle}`}>
+              Người tham gia:{" "}
+            </span>
+            <span>{props.bookingInfo?.menteeNames?.toString()}</span>
+          </div>
+
+          <div className={`${style.bookingSummary__detail}`}>
+            <span className={`${style.bookingSummary__subTitle}`}>
               Chủ đề:{" "}
             </span>
             <span> {props.bookingInfo?.topicDetailResponse?.name}</span>
@@ -235,6 +243,20 @@ const BookingInfoDialog = (props) => {
               Thời gian:{" "}
             </span>
             <span>{renderDateTime()}</span>
+          </div>
+
+          <div className={`${style.bookingSummary__detail}`}>
+            <span className={`${style.bookingSummary__subTitle}`}>
+              Ngày tạo:{" "}
+            </span>
+            <span>
+              {props.bookingInfo?.convertedCreateDate
+                ? format(
+                    props.bookingInfo?.convertedCreateDate,
+                    "HH:mm:ss dd-MM-yyyy"
+                  )
+                : null}
+            </span>
           </div>
 
           <div className={`${style.bookingSummary__detail}`}>
