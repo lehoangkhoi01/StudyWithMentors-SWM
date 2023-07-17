@@ -20,20 +20,24 @@ import {
 import { userAccountService } from "../../Services/userAccountService";
 
 const UpsertMentorModal = (props) => {
-  const { handleSubmit, register, setValue, getValues } = useForm();
+  const { handleSubmit, register, setValue, getValues, reset } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const { getLatestSpeakerList } = useFetchSpeakerList();
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
+  const [isExistedEmail, setIsExistedEmail] = useState(false);
 
   useEffect(() => {
+    reset();
     if (props.existedData) {
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
       setValue("phoneNum", props.existedData.phoneNum);
 
       setType(MODAL_TYPE.EDIT);
+    } else {
+      setType(MODAL_TYPE.ADD);
     }
   }, [props.openModal]);
 
@@ -47,6 +51,14 @@ const UpsertMentorModal = (props) => {
 
     try {
       setLoading(true);
+
+      if (type === MODAL_TYPE.ADD && checkExistedEmail()) {
+        setIsExistedEmail(true);
+        return;
+      }
+
+      setIsExistedEmail(false);
+
       if (type === MODAL_TYPE.EDIT) {
         await userAccountService.updateUserProfile(
           props.existedData.id,
@@ -79,6 +91,16 @@ const UpsertMentorModal = (props) => {
     }
   };
 
+  const checkExistedEmail = () => {
+    const index = props.allMentors
+      .map((item) => item.email)
+      .indexOf(getValues("email").trim());
+
+    if (index > -1) return true;
+
+    return false;
+  };
+
   return (
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
@@ -104,6 +126,12 @@ const UpsertMentorModal = (props) => {
                 ...register("email"),
               }}
             />
+            {isExistedEmail && (
+              <p className={`${style.modal__error}`}>
+                {ERROR_MESSAGES.EXISTED_EMAIL}
+              </p>
+            )}
+
             <CustomizedTextField
               name={"Số điện thoại"}
               placeholder={PLACE_HOLDER.DEFAULT_PHONE}

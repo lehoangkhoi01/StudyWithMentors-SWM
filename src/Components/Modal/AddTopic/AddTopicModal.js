@@ -100,7 +100,6 @@ const AddTopicModal = (props) => {
 
       await topicService.upsertTopic(topic, topicId);
 
-      props.onSuccess();
     } catch (error) {
       console.log(error);
 
@@ -111,9 +110,8 @@ const AddTopicModal = (props) => {
       });
     } finally {
       setLoading(false);
+      props.onSuccess();
     }
-
-    console.log(topic);
   };
 
   return (

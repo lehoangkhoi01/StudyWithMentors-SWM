@@ -48,6 +48,11 @@
     }
   }
 
+  &__error {
+    color: $systemRed;
+    margin-top: -1rem ;
+  }
+
   h2 {
     text-align: center;
   }
