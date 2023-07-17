@@ -390,18 +390,21 @@ const CustomizedTable = (props) => {
     <div>
       <div className={style.list__container}>
         <div className={style.list__actions}>
-          <CustomizedButton
-            variant="outlined"
-            color="primary600"
-            onClick={openUpsertModalHandler}
-          >
-            <img src={require("../../../assets/icons/Add_Mentor.png")} />
-            <p>
-              {props.type === TABLE_TYPE.MENTOR
-                ? BUTTON_LABEL.ADD_MENTOR
-                : BUTTON_LABEL.ADD_TOPIC}
-            </p>
-          </CustomizedButton>
+          {!props.hideAddingAction && (
+            <CustomizedButton
+              variant="outlined"
+              color="primary600"
+              onClick={openUpsertModalHandler}
+            >
+              <img src={require("../../../assets/icons/Add_Mentor.png")} />
+              <p>
+                {props.type === TABLE_TYPE.MENTOR
+                  ? BUTTON_LABEL.ADD_MENTOR
+                  : BUTTON_LABEL.ADD_TOPIC}
+              </p>
+            </CustomizedButton>
+          )}
+
           <CustomizedTextField
             placeholder={
               props.type === TABLE_TYPE.MENTOR

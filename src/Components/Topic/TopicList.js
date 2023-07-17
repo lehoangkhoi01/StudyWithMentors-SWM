@@ -59,44 +59,51 @@ const HEADER_TABLE = [
   },
 ];
 
+const ACTION_ITEMS = [
+  {
+    imgSrc: require("../../assets/icons/Edit.png"),
+    label: TABLE_ACTION.EDIT,
+    action: UPSERT_ACTION,
+  },
+  {
+    imgSrc: require("../../assets/icons/Deactive.png"),
+    label: CONFIRM_TOPIC_MODAL.ACCEPT,
+    action: CONFIRM_ACTION,
+  },
+  {
+    imgSrc: require("../../assets/icons/Deactive.png"),
+    label: CONFIRM_TOPIC_MODAL.REJECT,
+    action: CONFIRM_ACTION,
+  },
+  {
+    imgSrc: require("../../assets/icons/Deactive.png"),
+    label: CONFIRM_TOPIC_MODAL.ARCHIVE,
+    action: CONFIRM_ACTION,
+  },
+];
+
 const TopicList = () => {
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
 
   const [headerTable, setHeaderTable] = useState([]);
+  const [actionItems, setActionItems] = useState([]);
 
   useEffect(() => {
-    const header = HEADER_TABLE;
+    let header = HEADER_TABLE;
+    let actions = ACTION_ITEMS;
+
+    console.log(userInfo.role);
 
     if (userInfo.role === SYSTEM_ROLE.MENTOR) {
       header.splice(5, 1);
+    } else if (userInfo.role === SYSTEM_ROLE.STAFF) {
+      actions.splice(0, 1);
     }
 
     setHeaderTable(header);
+    setActionItems(actions);
   }, []);
-
-  const actionItems = [
-    {
-      imgSrc: require("../../assets/icons/Edit.png"),
-      label: TABLE_ACTION.EDIT,
-      action: UPSERT_ACTION,
-    },
-    {
-      imgSrc: require("../../assets/icons/Deactive.png"),
-      label: CONFIRM_TOPIC_MODAL.ACCEPT,
-      action: CONFIRM_ACTION,
-    },
-    {
-      imgSrc: require("../../assets/icons/Deactive.png"),
-      label: CONFIRM_TOPIC_MODAL.REJECT,
-      action: CONFIRM_ACTION,
-    },
-    {
-      imgSrc: require("../../assets/icons/Deactive.png"),
-      label: CONFIRM_TOPIC_MODAL.ARCHIVE,
-      action: CONFIRM_ACTION,
-    },
-  ];
 
   const getTopics = async () => {
     try {
@@ -110,8 +117,6 @@ const TopicList = () => {
           mentorName: topic.mentor.fullName,
         };
       });
-
-      console.log(userInfo.role)
 
       if (userInfo.role === SYSTEM_ROLE.MENTOR) {
         updatedTopicList = updatedTopicList.filter(
@@ -155,6 +160,7 @@ const TopicList = () => {
         onUpdateTopicStatus={onUpdateTopicStatus}
         headerTable={headerTable}
         actionItems={actionItems}
+        hideAddingAction={userInfo.role !== SYSTEM_ROLE.MENTOR}
       />
     </div>
   );

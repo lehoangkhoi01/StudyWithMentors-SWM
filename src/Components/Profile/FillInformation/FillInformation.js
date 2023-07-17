@@ -99,7 +99,6 @@ const FillInformation = () => {
           inputId="phone"
           name={TITLE.PHONE}
           placeholder={PLACE_HOLDER.DEFAULT_PHONE}
-          required={true}
           type={"text"}
           options={{ ...register("phone") }}
         />
