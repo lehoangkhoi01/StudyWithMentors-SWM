@@ -14,10 +14,13 @@ import { DATE_FORMAT } from "../../../shared/constants/common";
 import RemoveOptionScheduleDialog from "../RemoveOptionScheduleDialog.js/RemoveOptionScheduleDialog";
 import ScheduleDialog from "../ScheduleDialog/ScheduleDialog";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const EventInfoDialog = (props) => {
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
   const [openScheduleDialog, setOpenScheduleDialog] = React.useState(false);
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    React.useState(false);
 
   const handleOpenDeleteOption = (status) => {
     setOpenDeleteOption(status);
@@ -43,9 +46,14 @@ const EventInfoDialog = (props) => {
     if (props.event?.belongToSeries) {
       handleOpenDeleteOption(true);
     } else {
-      await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
-      props.handleClose();
+      setOpenConfirmationDialog(true);
     }
+  };
+
+  const handleRemoveSingleSchedule = async () => {
+    await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
+    setOpenConfirmationDialog(false);
+    props.handleClose();
   };
 
   const handleUpdateSchedule = (data) => {
@@ -107,6 +115,15 @@ const EventInfoDialog = (props) => {
         startDate={props.event?.start ?? new Date()}
         handleUpdateSchedule={handleUpdateSchedule}
         isUpdate={true}
+      />
+      <ConfirmationDialog
+        open={openConfirmationDialog}
+        title="Xóa lịch"
+        content="Bạn có chắc muốn xóa lịch này không?"
+        confirmLabel="Xác nhận"
+        cancelLabel="Quay lại"
+        handleClose={() => setOpenConfirmationDialog(false)}
+        handleSubmit={handleRemoveSingleSchedule}
       />
     </div>
   );

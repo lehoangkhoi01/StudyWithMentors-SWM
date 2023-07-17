@@ -120,6 +120,8 @@ export const COMMON_MESSAGE = {
   UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
   UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
+  ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
+  REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
 };
 
 export const SIGN_UP_STAGE = {

@@ -26,11 +26,6 @@ const SelectSlotUIStep = (props) => {
   const triggerRangeChangeEvent = async (date, view) => {
     let toDay = new Date().setHours(0, 0, 0, 0);
     let dateView = new Date(date).setHours(0, 0, 0, 0);
-    console.log("now: " + new Date());
-    console.log("date: " + date);
-    console.log("today: " + toDay);
-    console.log("dateView: " + dateView);
-    console.log("Is today < dateView: " + dateView < toDay);
     if (dateView < toDay) {
       setEventList([]);
     } else {

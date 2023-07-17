@@ -10,6 +10,7 @@ const StudentNoteStep = (props) => {
         optional={true}
         name="Lưu ý, chú thích cho mentor"
         onChange={props.onTextFieldChange}
+        value={props.value}
       />
     </div>
   );

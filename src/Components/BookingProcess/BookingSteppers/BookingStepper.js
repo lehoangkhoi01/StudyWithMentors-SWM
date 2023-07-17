@@ -81,7 +81,12 @@ const BookingStepper = (props) => {
   };
 
   const renderStudentNoteStep = () => {
-    return <StudentNoteStep onTextFieldChange={onStudentNoteChange} />;
+    return (
+      <StudentNoteStep
+        onTextFieldChange={onStudentNoteChange}
+        value={studentNote}
+      />
+    );
   };
 
   const renderSelectSlotUI = () => {
