@@ -1,6 +1,7 @@
 import {
+  ADD_TOPIC,
   BUTTON_LABEL,
-  // CV_MENTOR,
+  CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
   ERROR_MESSAGES,
   INPUT_TYPES,
@@ -34,10 +35,11 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { ROUTES } from "../../../shared/constants/navigation";
-//import { Divider } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
+import { topicService } from "../../../Services/topicService";
+import { Divider } from "@mui/material";
 
 const TEXT_FIELDS = [
   {
@@ -253,6 +255,8 @@ const CV = () => {
   const [eventfile, setEventFile] = useState({});
   const [position, setPosition] = useState(null);
   const [openBookingInfoDialog, setOpenBookingInfoDialog] = useState(false);
+  const [mentorId, setMentorId] = useState();
+  const [hotTopics, setHotTopics] = useState([]);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -262,17 +266,25 @@ const CV = () => {
   const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
-    getCVData();
+    if (id) {
+      setMentorId(id);
+    } else {
+      setMentorId(userInfo.accountId);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!mentorId) return;
+
+    getCVData();
+    getTopics();
+  }, [mentorId]);
 
   const getCVData = async () => {
     try {
+      setLoading(true);
       let CVDataFromBE = {};
-      if (id) {
-        CVDataFromBE = await cvEndpoints.getMentorCV(id);
-      } else {
-        CVDataFromBE = await cvEndpoints.getUserCV();
-      }
+      CVDataFromBE = await cvEndpoints.getMentorCV(mentorId);
 
       if (CVDataFromBE.data === "" || CVDataFromBE.data || CVDataFromBE.data) {
         CVDataFromBE = INIT_CV;
@@ -287,6 +299,28 @@ const CV = () => {
       setPosition(lastedPosition);
 
       setCVData(CVDataFromBE);
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getTopics = async () => {
+    try {
+      setLoading(true);
+
+      const topics = await topicService.getTopicsByMentor(mentorId);
+
+      setHotTopics(topics);
     } catch (error) {
       console.log(error);
 
@@ -511,26 +545,29 @@ const CV = () => {
       )}
 
       <div className={style.cv__booking}>
-        {/* <div className={style.cv__booking__section}>
+        <div className={style.cv__booking__section}>
           <h3>{CV_MENTOR.HOT_TOPIC}</h3>
 
-          <div className={style.cv__booking__topic}>
-            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
-            <p>Nhóm: Kỹ năng mềm</p>
-            <p>Lĩnh vực: Phát triển bản thân</p>
-          </div>
-          <Divider />
-          <div className={style.cv__booking__topic}>
-            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
-            <p>Nhóm: Kỹ năng mềm</p>
-            <p>Lĩnh vực: Phát triển bản thân</p>
-          </div>
-          <Divider />
-          <div className={style.cv__booking__topic}>
-            <h4>Vừa học vừa làm - Quản lý thời gian như thế nào</h4>
-            <p>Nhóm: Kỹ năng mềm</p>
-            <p>Lĩnh vực: Phát triển bản thân</p>
-          </div>
+          {hotTopics.map((topic, index) => (
+            <>
+              {index < 3 && (
+                <div
+                  key={`TOPIC_${index}`}
+                  className={style.cv__booking__topic}
+                >
+                  <h4>{topic.name}</h4>
+                  <p>
+                    {ADD_TOPIC.CATEGORY}: {topic.category}
+                  </p>
+                  <p>
+                    {ADD_TOPIC.FIELD}: {topic.field}
+                  </p>
+                </div>
+              )}
+
+              {index < 2 && <Divider />}
+            </>
+          ))}
         </div>
 
         {userInfo.role === SYSTEM_ROLE.STUDENT && (
@@ -544,7 +581,7 @@ const CV = () => {
               {BUTTON_LABEL.BOOKING_NOW}
             </CustomizedButton>
           </div>
-        )} */}
+        )}
       </div>
 
       <ConfirmImage
