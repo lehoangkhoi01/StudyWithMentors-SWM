@@ -231,6 +231,7 @@ export const ERROR_MESSAGES = {
     "Vui lòng chọn tối đa " + LENGTH.SPEAKERS_MAX + " diễn giả.",
   COMMON_ERROR:
     "Đã có lỗi xảy ra. Máy chủ hiện không ổn định. Xin vui lòng thử lại sau",
+  EXISTED_EMAIL: "Email đã tồn tại",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];

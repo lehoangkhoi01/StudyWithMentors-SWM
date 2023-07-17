@@ -613,6 +613,7 @@ const CustomizedTable = (props) => {
         title={
           existedData ? UPSERT_MENTOR.EDIT_MENTOR : UPSERT_MENTOR.ADD_MENTOR
         }
+        allMentors={originData}
       />
       <AddTopicModal
         openModal={openModal.upsert && props.type === TABLE_TYPE.TOPIC}
