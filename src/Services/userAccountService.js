@@ -14,4 +14,8 @@ export const userAccountService = {
     const url = UserAccountEndpoints.CONFIRM_PROFILE;
     return axiosClient.post(url, data);
   },
+  getUserProfileById: (id) => {
+    const url = `${UserAccountEndpoints.GET_USER_PROFILE}/${id}`;
+    return axiosClient.get(url);
+  },
 };

@@ -83,7 +83,7 @@ function App() {
           }
         >
           <NavigationBar />
-          <div className={`${style.content}`}>
+          <div id="app_content" className={`${style.content}`}>
             {user?.userInfo?.role === "STAFF" ? (
               <Toolbar sx={{ display: "none" }} />
             ) : null}

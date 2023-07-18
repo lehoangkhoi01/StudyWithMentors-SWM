@@ -12,6 +12,7 @@ export const UserAccountEndpoints = {
   USER_CV: "user-profile/current/cv",
   UPDATE_PROFILE: "user-profile/mentors",
   CONFIRM_PROFILE: "user-profile/current",
+  GET_USER_PROFILE: "user-profile",
 };
 
 export const SeminarEndpoints = {
