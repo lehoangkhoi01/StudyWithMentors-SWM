@@ -12,6 +12,7 @@ import moment from "moment/moment";
 import { format } from "date-fns";
 import { COMMON_MESSAGE, DATE_FORMAT } from "../../shared/constants/common";
 import EventInfoDialog from "./EventInfoDialog/EventInfoDialog";
+import { BOOKING_STATUS } from "../../shared/constants/systemType";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
@@ -165,6 +166,20 @@ const CustomCalendar = () => {
             exceptionId: schedule.exceptionId,
             scheduleId: schedule.scheduleId,
             title: "Nhận tư vấn",
+            start: new Date(schedule.startTime),
+            end: new Date(schedule.endTime),
+            belongToSeries: schedule.belongToSeries,
+          };
+          result.push(newSchedule);
+        } else if (
+          !schedule.enable &&
+          schedule.bookStatus !== BOOKING_STATUS.REJECTED
+        ) {
+          const newSchedule = {
+            id: index,
+            exceptionId: schedule.exceptionId,
+            scheduleId: schedule.scheduleId,
+            title: "Đã được đặt",
             start: new Date(schedule.startTime),
             end: new Date(schedule.endTime),
             belongToSeries: schedule.belongToSeries,

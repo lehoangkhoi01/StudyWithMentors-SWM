@@ -20,7 +20,6 @@ const BookingInfoDialog = (props) => {
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
-  console.log(props.bookingInfo);
 
   const renderStatusLabel = (status) => {
     switch (status) {
@@ -100,6 +99,17 @@ const BookingInfoDialog = (props) => {
   };
 
   const renderActionButton = (status) => {
+    const bookingDate = new Date(
+      props.bookingInfo?.startDate + " " + props.bookingInfo?.startTime
+    );
+
+    const diffHour =
+      (new Date().valueOf() - bookingDate.valueOf()) / 1000 / 60 / 60;
+
+    if (diffHour >= -8) {
+      return null;
+    }
+
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       switch (status) {
         case BOOKING_STATUS.ACCEPTED:
