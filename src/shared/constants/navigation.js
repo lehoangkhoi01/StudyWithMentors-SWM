@@ -91,6 +91,38 @@ export const MENTOR_NAVBAR = [
   },
 ];
 
+export const MENTOR_NAVBAR_LARGE_SCREEN = [
+  {
+    TITLE: "Trang chủ",
+    ROUTE: ROUTES.HOME,
+  },
+  {
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
+  },
+  {
+    TITLE: "Hồ sơ của tôi",
+    ROUTE: ROUTES.CV,
+  },
+  {
+    TITLE: "Mentoring",
+    MENU: [
+      {
+        TITLE: "Chủ đề",
+        ROUTE: ROUTES.TOPIC_LIST,
+      },
+      {
+        TITLE: "Lịch rảnh",
+        ROUTE: ROUTES.CALENDAR,
+      },
+    ],
+  },
+];
+
 export const STAFF_NAVBAR = [
   {
     TITLE: "Trang chủ",
