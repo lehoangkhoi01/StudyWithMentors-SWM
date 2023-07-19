@@ -143,7 +143,9 @@ const ScheduleDialog = (props) => {
       <Dialog fullWidth open={props.open}>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle>
-            <Typography variant="h5">Lịch nhận cố vấn</Typography>
+            <Typography variant="h5" color="#1a237e">
+              Lịch nhận cố vấn
+            </Typography>
           </DialogTitle>
           <DialogContent>
             <CustomizedDatePicker
