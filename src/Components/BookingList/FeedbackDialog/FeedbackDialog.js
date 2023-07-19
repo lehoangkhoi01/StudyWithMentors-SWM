@@ -3,6 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -30,7 +31,11 @@ const FeedbackDialog = (props) => {
       onClose={() => props.setOpenFeedbackDialog(false)}
     >
       <form onSubmit={handleSubmit(submitFeedback)}>
-        <DialogTitle>Đánh giá</DialogTitle>
+        <DialogTitle>
+          <Typography variant="h5" color="#1a237e">
+            Đánh giá
+          </Typography>
+        </DialogTitle>
         <DialogContent>
           <Controller
             name="bookingRating"

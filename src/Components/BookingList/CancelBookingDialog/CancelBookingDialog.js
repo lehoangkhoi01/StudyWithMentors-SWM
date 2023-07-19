@@ -37,7 +37,9 @@ const CancelBookingDialog = (props) => {
       onClose={() => props.setOpenCancelBookingDialog(false)}
     >
       <DialogTitle>
-        <Typography variant="h5">Hủy lịch</Typography>
+        <Typography variant="h5" color="#1a237e">
+          Hủy lịch
+        </Typography>
       </DialogTitle>
       <DialogContent>
         <CustomizedTextField

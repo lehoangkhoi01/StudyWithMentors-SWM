@@ -51,7 +51,9 @@ const RemoveOptionScheduleDialog = (props) => {
     <div>
       <Dialog open={props.open} fullWidth>
         <DialogTitle>
-          <Typography variant="h5">Xóa lịch</Typography>
+          <Typography variant="h5" color="#1a237e">
+            Xóa lịch
+          </Typography>
         </DialogTitle>
         <DialogContent>
           <FormControl>
