@@ -6,8 +6,8 @@ export const scheduleService = {
     const url = `${ScheduleEndpoints.SCHEDULE}?startDate=${startDate}&endDate=${endDate}`;
     return axiosClient.get(url);
   },
-  getMentorSchedule: (id, startDate, endDate) => {
-    const url = `${ScheduleEndpoints.SCHEDULE_MENTOR}/${id}?startDate=${startDate}&endDate=${endDate}`;
+  getMentorSchedule: (id, startDate, endDate, isShowBooking = false) => {
+    const url = `${ScheduleEndpoints.SCHEDULE_MENTOR}/${id}?startDate=${startDate}&endDate=${endDate}&showBooking=${isShowBooking}`;
     return axiosClient.get(url);
   },
   createSchedule: (data) => {
