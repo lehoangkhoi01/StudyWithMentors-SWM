@@ -15,6 +15,7 @@ import {
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
   TABLE_TYPE,
+  TOPIC_STATUS,
   UPSERT_MENTOR,
 } from "../../constants/common";
 import { Button, Menu, MenuItem, Pagination } from "@mui/material";
@@ -557,18 +558,20 @@ const CustomizedTable = (props) => {
 
                           case CONFIRM_ACTION:
                             return (
-                              <MenuItem
-                                key={`MENU_ITEM_${index}`}
-                                onClick={() => {
-                                  return openConfirmModalHandler(
-                                    row,
-                                    actionItem.label
-                                  );
-                                }}
-                              >
-                                <img src={actionItem.imgSrc} />
-                                <span>{actionItem.label}</span>
-                              </MenuItem>
+                              row.translatedStatus === TOPIC_STATUS.WAITING && (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openConfirmModalHandler(
+                                      row,
+                                      actionItem.label
+                                    );
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              )
                             );
                           default:
                             return;
