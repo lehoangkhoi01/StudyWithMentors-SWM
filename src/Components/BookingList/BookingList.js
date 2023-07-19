@@ -58,6 +58,7 @@ const BookingList = () => {
             : COMMON_MESSAGE.REJECT_BOOKING_SUCCESS,
       });
       setOpenBookingInfo(false);
+      history.push(ROUTES.BOOKING_LIST);
       await fetchBookingList();
     } catch (error) {
       if (error?.status == "500") {
