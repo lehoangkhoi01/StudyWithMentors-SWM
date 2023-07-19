@@ -257,6 +257,7 @@ const CV = () => {
   const [openBookingInfoDialog, setOpenBookingInfoDialog] = useState(false);
   const [mentorId, setMentorId] = useState();
   const [hotTopics, setHotTopics] = useState([]);
+  const [mentorProfile, setMentorProfile] = useState();
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -278,6 +279,7 @@ const CV = () => {
 
     getCVData();
     getTopics();
+    getMentorProfile();
   }, [mentorId]);
 
   const getCVData = async () => {
@@ -321,6 +323,28 @@ const CV = () => {
       const topics = await topicService.getTopicsByMentor(mentorId);
 
       setHotTopics(topics);
+    } catch (error) {
+      console.log(error);
+
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+
+      history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getMentorProfile = async () => {
+    try {
+      setLoading(true);
+
+      const profile = await userAccountService.getUserProfileById(mentorId);
+
+      setMentorProfile(profile);
     } catch (error) {
       console.log(error);
 
@@ -451,8 +475,9 @@ const CV = () => {
                 <img
                   className={style.cv__detail__information_avatar}
                   src={
-                    userInfo?.avatarUrl
-                      ? userInfo.avatarUrl
+                    mentorProfile?.avatarUrl &&
+                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                      ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
                 />
@@ -482,7 +507,7 @@ const CV = () => {
                 )}
               </div>
               <div style={{ position: "relative" }}>
-                <h2>{userInfo?.fullName}</h2>
+                <h2>{mentorProfile?.fullName}</h2>
                 <p>
                   {position &&
                     `${position.position} ${OTHERS.AT} ${position.company}`}
