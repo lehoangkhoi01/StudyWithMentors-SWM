@@ -43,7 +43,8 @@ const CancelBookingDialog = (props) => {
         <CustomizedTextField
           multiline
           maxRows={3}
-          optional={true}
+          optional={false}
+          required={true}
           name="Lý do hủy lịch"
           onChange={onReasonChange}
         />
