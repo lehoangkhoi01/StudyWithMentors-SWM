@@ -13,6 +13,7 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizeButton from "../../../shared/components/Button/CustomizedButton";
 import CancelBookingDialog from "../CancelBookingDialog/CancelBookingDialog";
+import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
 
 const hostname = window.location.host;
 
@@ -20,7 +21,8 @@ const BookingInfoDialog = (props) => {
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
-  console.log(props.bookingInfo);
+
+  const [openFeedbackDialog, setOpenFeedbackDialog] = React.useState(false);
 
   const renderStatusLabel = (status) => {
     switch (status) {
@@ -100,6 +102,38 @@ const BookingInfoDialog = (props) => {
   };
 
   const renderActionButton = (status) => {
+    const bookingDate = new Date(
+      props.bookingInfo?.startDate + " " + props.bookingInfo?.startTime
+    );
+
+    const diffHour =
+      (new Date().valueOf() - bookingDate.valueOf()) / 1000 / 60 / 60;
+
+    if (diffHour >= -8) {
+      if (props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED) {
+        return (
+          <Grid2
+            container
+            rowSpacing={2}
+            width="100%"
+            justifyContent="center"
+            margin={0}
+          >
+            <Grid2 xs={6}>
+              <CustomizeButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                onClick={() => setOpenFeedbackDialog(true)}
+              >
+                Đánh giá
+              </CustomizeButton>
+            </Grid2>
+          </Grid2>
+        );
+      } else return null;
+    }
+
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       switch (status) {
         case BOOKING_STATUS.ACCEPTED:
@@ -290,6 +324,13 @@ const BookingInfoDialog = (props) => {
           setOpenCancelBookingDialog={setOpenCancelBookingDialog}
           handleUpdateBookingStatus={props.handleUpdateBookingStatus}
           bookingInfo={props.bookingInfo}
+        />
+      )}
+
+      {openFeedbackDialog && (
+        <FeedbackDialog
+          open={openFeedbackDialog}
+          setOpenFeedbackDialog={setOpenFeedbackDialog}
         />
       )}
     </>

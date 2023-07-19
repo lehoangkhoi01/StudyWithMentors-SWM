@@ -4,6 +4,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import style from "./BookingCard.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import { BOOKING_STATUS } from "../../../shared/constants/systemType";
 import { MoreVert } from "@mui/icons-material";
 
 const BookingCard = (props) => {
@@ -13,7 +14,7 @@ const BookingCard = (props) => {
 
   const renderStatusLabel = (status) => {
     switch (status) {
-      case "ACCEPTED":
+      case BOOKING_STATUS.ACCEPTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__accepted}`}
@@ -21,7 +22,7 @@ const BookingCard = (props) => {
             Đã xác nhận
           </div>
         );
-      case "REQUESTED":
+      case BOOKING_STATUS.REQUESTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__waiting}`}
@@ -29,7 +30,7 @@ const BookingCard = (props) => {
             Đang chờ
           </div>
         );
-      case "REJECTED":
+      case BOOKING_STATUS.REJECTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__canceled}`}

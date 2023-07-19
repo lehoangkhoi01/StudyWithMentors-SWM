@@ -106,7 +106,7 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
   ...(isSelected &&
     !event.title.includes("Nhận tư vấn") && {
       style: {
-        backgroundColor: "#FFF7DF",
+        backgroundColor: "#FFF7DF !important",
       },
     }),
   ...(event && {
