@@ -5,7 +5,6 @@ import style from "./BookingList.module.scss";
 import { bookingService } from "../../Services/bookingService";
 import BookingInfoDialog from "./BookingInfoDialog/BookingInfoDialog";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
-import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../shared/constants/navigation";
 import { Box, Tabs, Typography, Tab } from "@mui/material";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
@@ -27,7 +26,6 @@ const BookingList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
-  const history = useHistory();
 
   const processData = (data) => {
     let newData = data.map((el) => {
@@ -87,7 +85,6 @@ const BookingList = () => {
           } else filteredList = result.bookingCards;
 
           const newResult = processData(filteredList);
-          console.log(newResult);
           setBookingList(newResult);
         }
       } catch (error) {
@@ -101,6 +98,12 @@ const BookingList = () => {
     };
     fetchBooking();
   }, [filterValue]);
+
+  React.useEffect(() => {
+    if (!openBookingInfo) {
+      setSelectedBooking(null);
+    }
+  }, [openBookingInfo]);
 
   return (
     <div className={`${style.bookingList__container}`}>
@@ -134,12 +137,14 @@ const BookingList = () => {
         )}
       </div>
 
-      <BookingInfoDialog
-        open={openBookingInfo}
-        setOpenBookingInfo={setOpenBookingInfo}
-        bookingInfo={selectedBooking}
-        handleUpdateBookingStatus={handleUpdateBookingStatus}
-      />
+      {selectedBooking && (
+        <BookingInfoDialog
+          open={openBookingInfo}
+          setOpenBookingInfo={setOpenBookingInfo}
+          bookingInfo={selectedBooking}
+          handleUpdateBookingStatus={handleUpdateBookingStatus}
+        />
+      )}
     </div>
   );
 };

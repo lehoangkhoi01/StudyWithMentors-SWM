@@ -11,6 +11,11 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import { useForm, Controller } from "react-hook-form";
 import RatingInput from "../../../shared/components/RatingInput/RatingInput";
 import { seminarFeedbackValidationField } from "../../SeminarFeedback/seminarFeedbackValidation";
+import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 
 const FeedbackDialog = (props) => {
   const {
@@ -19,9 +24,36 @@ const FeedbackDialog = (props) => {
     control,
     formState: { errors },
   } = useForm();
+  const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
-  const submitFeedback = (data) => {
-    console.log(data);
+  const submitFeedback = async (data) => {
+    try {
+      setLoading(true);
+      const body = {
+        content: data.feedbackText,
+        rating: data.bookingRating,
+        receiver: props.bookingInfo.mentor.accountId,
+      };
+      const bookingId = props.bookingInfo.id;
+      await meetingFeedbackService.sendFeedback(bookingId, body);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: "Gửi đánh giá thành công",
+      });
+      props.setOpenFeedbackDialog(false);
+      props.setOpenBookingInfoDialog(false);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: "Gửi đánh giá thất bại. Xin vui lòng thử lại sau.",
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -13,15 +13,22 @@ import { format } from "date-fns";
 import { COMMON_MESSAGE, DATE_FORMAT } from "../../shared/constants/common";
 import EventInfoDialog from "./EventInfoDialog/EventInfoDialog";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
+import BookingInfoDialog from "../BookingList/BookingInfoDialog/BookingInfoDialog";
+import { ROUTES } from "../../shared/constants/navigation";
+import { bookingService } from "../../Services/bookingService";
+import { useHistory } from "react-router-dom";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
   const [openEventInfoDialog, setOpenEventInfoDialog] = useState(false);
+  const [openBookingInfoDialog, setOpenBookingInfoDialog] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
+
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const history = useHistory();
 
   const handleCloseScheduleForm = () => {
     setOpenScheduleForm(false);
@@ -88,8 +95,12 @@ const CustomCalendar = () => {
   };
 
   const handleSelectEvent = (e) => {
+    if (e.bookingCard) {
+      setOpenBookingInfoDialog(true);
+    } else {
+      setOpenEventInfoDialog(true);
+    }
     setSelectedEvent(e);
-    setOpenEventInfoDialog(true);
   };
 
   const handleRemoveSchedule = async (id, isSingle = false, data) => {
@@ -134,6 +145,8 @@ const CustomCalendar = () => {
   const getStartEndTime = (date, view) => {
     const start = moment(date).startOf(view);
     const end = moment(date).endOf(view);
+    console.log(start);
+    console.log(end);
     let rangeStart = 0;
     let rangeEnd = 0;
     if (start.day() !== 0) {
@@ -179,10 +192,15 @@ const CustomCalendar = () => {
             id: index,
             exceptionId: schedule.exceptionId,
             scheduleId: schedule.scheduleId,
-            title: "Đã được đặt",
+            title:
+              schedule.bookStatus === BOOKING_STATUS.REQUESTED
+                ? "Chờ xác nhận"
+                : "Đã xác nhận",
             start: new Date(schedule.startTime),
             end: new Date(schedule.endTime),
             belongToSeries: schedule.belongToSeries,
+            bookingCard: schedule.bookingCard,
+            bookStatus: schedule.bookStatus,
           };
           result.push(newSchedule);
         }
@@ -195,6 +213,7 @@ const CustomCalendar = () => {
   const triggerRangeChangeEvent = async (date, view) => {
     setLoading(true);
     const startEnd = getStartEndTime(date, view);
+    console.log(startEnd);
     try {
       const result = await scheduleService.getSchedule(
         startEnd.start,
@@ -203,6 +222,33 @@ const CustomCalendar = () => {
       const schedules = processSchedules(result);
       setEventList(schedules);
     } catch (error) {
+      console.log(error);
+      if (error?.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateBookingStatus = async (data, status) => {
+    try {
+      setLoading(true);
+      await bookingService.updateBookingStatus(data);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message:
+          status === BOOKING_STATUS.ACCEPTED
+            ? COMMON_MESSAGE.ACCEPT_BOOKING_SUCCESS
+            : COMMON_MESSAGE.REJECT_BOOKING_SUCCESS,
+      });
+      setOpenBookingInfoDialog(false);
+      history.push(ROUTES.BOOKING_LIST);
+    } catch (error) {
+      if (error?.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
       console.log(error);
     } finally {
       setLoading(false);
@@ -256,6 +302,13 @@ const CustomCalendar = () => {
         handleRemoveSchedule={handleRemoveSchedule}
         handleSubmitUpdateSchedule={handleSubmitUpdateSchedule}
         event={selectedEvent}
+      />
+
+      <BookingInfoDialog
+        open={openBookingInfoDialog}
+        bookingInfo={selectedEvent?.bookingCard}
+        setOpenBookingInfo={setOpenBookingInfoDialog}
+        handleUpdateBookingStatus={handleUpdateBookingStatus}
       />
     </div>
   );
