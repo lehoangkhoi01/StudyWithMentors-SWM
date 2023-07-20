@@ -1,13 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { CLASS_NAME } from "../../shared/constants/common";
+import { bookingService } from "../../Services/bookingService";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../Store/slices/userSlice";
 
 const PRIMARY_COLOR = "#383c6b";
 const BACKGROUND_COLOR = "#202349";
 
 const Room = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const { id } = useParams();
+  const history = useHistory();
+
+  const userInfo = useSelector(selectUserInfo);
+
   useEffect(() => {
     const appContent = document.querySelectorAll(`#app_content`).item(0);
+    const appHeader = document.querySelectorAll(`#app_header`).item(0);
+    const appFooter = document.querySelectorAll(`#app_footer`).item(0);
 
     const vietsub = setInterval(() => {
       try {
@@ -57,10 +73,27 @@ const Room = () => {
             "Dừng chia sẻ"
           );
 
-        // CONTENT
+        const notFoundMedia = document
+          .querySelectorAll(`.${CLASS_NAME.NOT_FOUND_MEDIA}`)
+          .item(0);
+
+        if (notFoundMedia && notFoundMedia.innerHTML)
+          notFoundMedia.textContent = "Không thể kết nối micro hoặc camera";
+
+        // CONTENT ==========================================
 
         if (appContent && appContent.innerHTML)
           appContent.style.backgroundColor = BACKGROUND_COLOR;
+
+        // HEADER ==========================================
+        if (appHeader && appHeader.innerHTML) {
+          appHeader.style.display = "none";
+        }
+
+        // FOOTER ==========================================
+        if (appFooter && appFooter.innerHTML) {
+          appFooter.style.display = "none";
+        }
 
         // VIDEO ==========================================
 
@@ -71,11 +104,15 @@ const Room = () => {
         if (background && background.innerHTML)
           background.style.backgroundColor = BACKGROUND_COLOR;
 
-        const video = document
-          .querySelectorAll(`.${CLASS_NAME.VIDEO_1}`)
-          .item(0);
+        const video = document.querySelectorAll(`.${CLASS_NAME.VIDEO_1}`);
 
-        if (video) video.style.backgroundColor = PRIMARY_COLOR;
+        console.log(video);
+
+        if (video && video.length) {
+          [...video].map(
+            (item) => (item.style.backgroundColor = PRIMARY_COLOR)
+          );
+        }
 
         const videoBackground = document
           .querySelectorAll(`.${CLASS_NAME.VIDEO_BACKGROUND}`)
@@ -98,7 +135,7 @@ const Room = () => {
         if (outsideVideo2)
           outsideVideo2.style.backgroundColor = BACKGROUND_COLOR;
 
-        // RIGHT SIDE Box
+        // RIGHT SIDE Box ==========================================
         const rightSideBox = document
           .querySelectorAll(`.${CLASS_NAME.RIGHT_SIDE_BOX}`)
           .item(0);
@@ -106,7 +143,7 @@ const Room = () => {
         if (rightSideBox && rightSideBox.innerHTML)
           rightSideBox.style.backgroundColor = PRIMARY_COLOR;
 
-        // FOOTER
+        // FOOTER ==========================================
         const meetingFooter = document
           .querySelectorAll(`.${CLASS_NAME.MEETING_FOOTER}`)
           .item(0);
@@ -114,7 +151,7 @@ const Room = () => {
         if (meetingFooter && meetingFooter.innerHTML)
           meetingFooter.style.backgroundColor = BACKGROUND_COLOR;
 
-        // ICON
+        // ICON ==========================================
         const microIcon = document
           .querySelectorAll(`.${CLASS_NAME.MIRCO_ICON}`)
           .item(0);
@@ -145,18 +182,98 @@ const Room = () => {
           .item(0);
 
         if (memberIcon) memberIcon.style.backgroundColor = PRIMARY_COLOR;
+
+        // LEAVE  ==========================================
+        const leaveTitle = document
+          .querySelectorAll(`.${CLASS_NAME.LEAVE_TITLE}`)
+          .item(0);
+
+        if (leaveTitle && leaveTitle.textContent)
+          leaveTitle.textContent = "Rời khỏi phòng";
+
+        const leaveConfirm = document
+          .querySelectorAll(`.${CLASS_NAME.LEAVE_CONFIRM}`)
+          .item(0);
+
+        if (leaveConfirm && leaveConfirm.textContent)
+          leaveConfirm.textContent = "Bạn có muốn rời khỏi phòng họp";
+
+        const cancelLeave = document
+          .querySelectorAll(`.${CLASS_NAME.CANCEL_LEAVE}`)
+          .item(0);
+
+        if (cancelLeave && cancelLeave.textContent)
+          cancelLeave.textContent = "Hủy";
+
+        const submitLeave = document
+          .querySelectorAll(`.${CLASS_NAME.SUBMIT_LEAVE}`)
+          .item(0);
+
+        if (submitLeave && submitLeave.textContent)
+          submitLeave.textContent = "Rời";
       } catch (error) {
         console.log(error);
       }
-    }, 100);
+    }, 50);
 
     return () => {
       clearInterval(vietsub);
 
       if (appContent && appContent.innerHTML)
         appContent.style.backgroundColor = "unset";
+
+      if (appHeader && appHeader.innerHTML) {
+        appHeader.style.display = "unset";
+      }
+
+      if (appFooter && appFooter.innerHTML) {
+        appFooter.style.display = "block";
+      }
     };
   }, []);
+
+  useEffect(() => {
+    checkParticipant();
+  }, []);
+
+  const checkParticipant = async () => {
+    try {
+      if (!userInfo || !userInfo.accountId) {
+        throw "error";
+      }
+
+      const bookingInfo = await bookingService.getBookingById(id);
+
+      const participants = [bookingInfo.mentor, ...bookingInfo.mentees];
+
+      const indexOfUser = participants
+        .map((member) => member.accountId)
+        .indexOf(userInfo.accountId);
+
+      if (indexOfUser < 0) {
+        throw "error";
+      }
+
+      setIsChecked(true);
+    } catch (error) {
+      const appContent = document.querySelectorAll(`#app_content`).item(0);
+      const appHeader = document.querySelectorAll(`#app_header`).item(0);
+      const appFooter = document.querySelectorAll(`#app_footer`).item(0);
+
+      if (appContent && appContent.innerHTML)
+        appContent.style.backgroundColor = "unset";
+
+      if (appHeader && appHeader.innerHTML) {
+        appHeader.style.display = "unset";
+      }
+
+      if (appFooter && appFooter.innerHTML) {
+        appFooter.style.display = "block";
+      }
+
+      history.push("/not-found");
+    }
+  };
 
   const meeting = async (element) => {
     const appID = 1546307871;
@@ -183,7 +300,9 @@ const Room = () => {
     });
   };
 
-  return <div ref={meeting} style={{ height: "85vh" }}></div>;
+  return (
+    <>{isChecked && <div ref={meeting} style={{ height: "85vh" }}></div>}</>
+  );
 };
 
 export default Room;
