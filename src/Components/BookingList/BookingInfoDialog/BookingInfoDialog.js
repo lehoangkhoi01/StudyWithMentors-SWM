@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import style from "./BookingInfoDialog.module.scss";
 import { format } from "date-fns";
@@ -14,6 +20,8 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizeButton from "../../../shared/components/Button/CustomizedButton";
 import CancelBookingDialog from "../CancelBookingDialog/CancelBookingDialog";
 import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
+import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
 
 const hostname = window.location.host;
 
@@ -21,8 +29,11 @@ const BookingInfoDialog = (props) => {
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
-
   const [openFeedbackDialog, setOpenFeedbackDialog] = React.useState(false);
+  const [feedbacks, setFeedbacks] = React.useState([]);
+  const [studentFeedback, setStudentFeedback] = React.useState(null);
+
+  const { setLoading } = useCustomLoading();
 
   const renderStatusLabel = (status) => {
     switch (status) {
@@ -110,7 +121,11 @@ const BookingInfoDialog = (props) => {
       (new Date().valueOf() - bookingDate.valueOf()) / 1000 / 60 / 60;
 
     if (diffHour >= -8) {
-      if (props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED) {
+      if (
+        props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED &&
+        userInfo.role === SYSTEM_ROLE.STUDENT &&
+        !studentFeedback
+      ) {
         return (
           <Grid2
             container
@@ -239,6 +254,101 @@ const BookingInfoDialog = (props) => {
     }
   };
 
+  const renderStudentViewFeedback = (feedback) => {
+    if (feedback) {
+      return (
+        <>
+          <Divider />
+          <Typography variant="h6" marginY={2}>
+            Phản hồi của sinh viên về buổi tư vấn
+          </Typography>
+          <div className={`${style.bookingSummary__detail}`}>
+            <span className={`${style.bookingSummary__subTitle}`}>
+              Đánh giá:{" "}
+            </span>
+            <span>{feedback.rating}/5</span>
+          </div>
+          <div className={`${style.bookingSummary__detail}`}>
+            <span className={`${style.bookingSummary__subTitle}`}>
+              Ý kiến của sinh viên:{" "}
+            </span>
+            <span>{feedback.content}</span>
+          </div>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderMentorViewFeedback = (feedbacks) => {
+    if (feedbacks.length > 0) {
+      return (
+        <>
+          <Divider />
+          <Typography variant="h6" marginY={2}>
+            Phản hồi của sinh viên về buổi tư vấn
+          </Typography>
+          {feedbacks.map((feedback) => (
+            <div key={feedback.id} style={{ margin: "10px 0" }}>
+              <div className={`${style.bookingSummary__detail}`}>
+                <span className={`${style.bookingSummary__subTitle}`}>
+                  Sinh viên:{" "}
+                </span>
+                <span>{feedback.giver.fullName}</span>
+              </div>
+              <div className={`${style.bookingSummary__detail}`}>
+                <span className={`${style.bookingSummary__subTitle}`}>
+                  Đánh giá:{" "}
+                </span>
+                <span>{feedback.rating}/5</span>
+              </div>
+              <div className={`${style.bookingSummary__detail}`}>
+                <span className={`${style.bookingSummary__subTitle}`}>
+                  Ý kiến của sinh viên:{" "}
+                </span>
+                <span>{feedback.content}</span>
+              </div>
+            </div>
+          ))}
+        </>
+      );
+    } else return null;
+  };
+
+  React.useState(() => {
+    const fetchFeedbacksByBooking = async () => {
+      if (props.bookingInfo?.id) {
+        try {
+          setLoading(true);
+          const result = await meetingFeedbackService.getFeedbackByBookingId(
+            props.bookingInfo?.id
+          );
+          if (result.feedbacks.length > 0) {
+            setFeedbacks(result.feedbacks);
+            setStudentFeedback(
+              result.feedbacks.find(
+                (feedback) => feedback.giver.accountId === userInfo.accountId
+              )
+            );
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    console.log(props.bookingInfo?.id);
+
+    fetchFeedbacksByBooking();
+  }, []);
+
+  React.useState(() => {
+    console.log(feedbacks);
+  }, [feedbacks]);
+
   return (
     <>
       <Dialog
@@ -316,6 +426,9 @@ const BookingInfoDialog = (props) => {
               </span>
             </div>
           )}
+          {userInfo.role === SYSTEM_ROLE.STUDENT
+            ? renderStudentViewFeedback(studentFeedback)
+            : renderMentorViewFeedback(feedbacks)}
         </DialogContent>
         <div>{renderActionButton(props.bookingInfo?.status)}</div>
       </Dialog>
@@ -332,7 +445,9 @@ const BookingInfoDialog = (props) => {
       {openFeedbackDialog && (
         <FeedbackDialog
           open={openFeedbackDialog}
+          bookingInfo={props.bookingInfo}
           setOpenFeedbackDialog={setOpenFeedbackDialog}
+          setOpenBookingInfoDialog={props.setOpenBookingInfo}
         />
       )}
     </>

@@ -85,7 +85,6 @@ const BookingList = () => {
           } else filteredList = result.bookingCards;
 
           const newResult = processData(filteredList);
-          console.log(newResult);
           setBookingList(newResult);
         }
       } catch (error) {
@@ -99,6 +98,12 @@ const BookingList = () => {
     };
     fetchBooking();
   }, [filterValue]);
+
+  React.useEffect(() => {
+    if (!openBookingInfo) {
+      setSelectedBooking(null);
+    }
+  }, [openBookingInfo]);
 
   return (
     <div className={`${style.bookingList__container}`}>
@@ -132,12 +137,14 @@ const BookingList = () => {
         )}
       </div>
 
-      <BookingInfoDialog
-        open={openBookingInfo}
-        setOpenBookingInfo={setOpenBookingInfo}
-        bookingInfo={selectedBooking}
-        handleUpdateBookingStatus={handleUpdateBookingStatus}
-      />
+      {selectedBooking && (
+        <BookingInfoDialog
+          open={openBookingInfo}
+          setOpenBookingInfo={setOpenBookingInfo}
+          bookingInfo={selectedBooking}
+          handleUpdateBookingStatus={handleUpdateBookingStatus}
+        />
+      )}
     </div>
   );
 };

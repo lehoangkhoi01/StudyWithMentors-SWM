@@ -60,3 +60,9 @@ export const ScheduleEndpoints = {
 export const BookingEndpoints = {
   BOOKING: "booking",
 };
+
+export const MeetingFeedbackEndpoints = {
+  MEETING_FEEDBACK: "meeting-feedback",
+  MEETING_FEEDBACK_BY_USER: "meeting-feedback/by-user",
+  MEETING_FEEDBACK_BY_BOOKING: "meeting-feedback/by-booking",
+};
