@@ -5,7 +5,6 @@ import style from "./BookingList.module.scss";
 import { bookingService } from "../../Services/bookingService";
 import BookingInfoDialog from "./BookingInfoDialog/BookingInfoDialog";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
-import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../shared/constants/navigation";
 import { Box, Tabs, Typography, Tab } from "@mui/material";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
@@ -27,7 +26,6 @@ const BookingList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
-  const history = useHistory();
 
   const processData = (data) => {
     let newData = data.map((el) => {
@@ -58,7 +56,6 @@ const BookingList = () => {
             : COMMON_MESSAGE.REJECT_BOOKING_SUCCESS,
       });
       setOpenBookingInfo(false);
-      history.push(ROUTES.BOOKING_LIST);
       await fetchBookingList();
     } catch (error) {
       if (error?.status == "500") {

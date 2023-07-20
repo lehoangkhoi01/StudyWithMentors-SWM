@@ -145,6 +145,8 @@ const CustomCalendar = () => {
   const getStartEndTime = (date, view) => {
     const start = moment(date).startOf(view);
     const end = moment(date).endOf(view);
+    console.log(start);
+    console.log(end);
     let rangeStart = 0;
     let rangeEnd = 0;
     if (start.day() !== 0) {
@@ -190,11 +192,15 @@ const CustomCalendar = () => {
             id: index,
             exceptionId: schedule.exceptionId,
             scheduleId: schedule.scheduleId,
-            title: "Đã được đặt",
+            title:
+              schedule.bookStatus === BOOKING_STATUS.REQUESTED
+                ? "Chờ xác nhận"
+                : "Đã xác nhận",
             start: new Date(schedule.startTime),
             end: new Date(schedule.endTime),
             belongToSeries: schedule.belongToSeries,
             bookingCard: schedule.bookingCard,
+            bookStatus: schedule.bookStatus,
           };
           result.push(newSchedule);
         }
@@ -207,6 +213,7 @@ const CustomCalendar = () => {
   const triggerRangeChangeEvent = async (date, view) => {
     setLoading(true);
     const startEnd = getStartEndTime(date, view);
+    console.log(startEnd);
     try {
       const result = await scheduleService.getSchedule(
         startEnd.start,
@@ -216,6 +223,9 @@ const CustomCalendar = () => {
       setEventList(schedules);
     } catch (error) {
       console.log(error);
+      if (error?.status == "500") {
+        history.push(ROUTES.SERVER_ERROR);
+      }
     } finally {
       setLoading(false);
     }

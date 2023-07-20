@@ -1,5 +1,6 @@
 import React from "react";
 import { Calendar, Views } from "react-big-calendar";
+import "./react-big-calendar.css";
 import {
   components,
   formats,
@@ -10,7 +11,6 @@ import {
   eventPropGetter,
   messages,
 } from "./calendarConfig";
-import "./react-big-calendar.css";
 
 export const CustomBigCalendar = (props) => {
   return (
