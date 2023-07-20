@@ -4,7 +4,7 @@ import { TITLE } from "../../constants/common";
 
 const Footer = () => {
   return (
-    <div className={`${style.footer__container}`}>
+    <div id="app_footer" className={`${style.footer__container}`}>
       <p>{TITLE.FOOTER}</p>
     </div>
   );

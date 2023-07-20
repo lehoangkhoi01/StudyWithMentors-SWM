@@ -14,4 +14,8 @@ export const bookingService = {
     const url = BookingEndpoints.BOOKING;
     return axiosClient.put(url, data);
   },
+  getBookingById: (id) => {
+    const url = `${BookingEndpoints.BOOKING}/${id}`;
+    return axiosClient.get(url);
+  },
 };

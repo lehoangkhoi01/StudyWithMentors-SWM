@@ -179,7 +179,11 @@ function NavigationBar() {
   const renderMentorNavbar = () => {
     return (
       <>
-        <AppBar position="static" className={`${style.navigation__appBar}`}>
+        <AppBar
+          id="app_header"
+          position="static"
+          className={`${style.navigation__appBar}`}
+        >
           <Container className={`${style.navigation__container}`}>
             <Toolbar disableGutters>
               <Logo
@@ -383,7 +387,11 @@ function NavigationBar() {
     } else {
       return (
         <>
-          <AppBar position="static" className={`${style.navigation__appBar}`}>
+          <AppBar
+            id="app_header"
+            position="static"
+            className={`${style.navigation__appBar}`}
+          >
             <Container className={`${style.navigation__container}`}>
               <Toolbar disableGutters>
                 <Logo
@@ -599,7 +607,13 @@ function NavigationBar() {
   };
 
   const renderSidebar = (userInfo) => {
-    return <SideBar userInfo={userInfo} handleLogout={handleLogout} />;
+    return (
+      <SideBar
+        id="app_header"
+        userInfo={userInfo}
+        handleLogout={handleLogout}
+      />
+    );
   };
 
   return managerRoles.includes(userInfo?.role)

@@ -487,6 +487,11 @@ export const CLASS_NAME = {
   SHARING_ICON: "UbpDhvufmId2nxL2l5gC",
   ROOM_DETAIL_ICON: "QbarJSxzhe6iPp6VdlAs",
   MEMBER_ICON: "qJdF_iTl1gv6JkFZmE2R",
+  LEAVE_TITLE: "YVsLErvDz5lZnY9Ce4UB",
+  LEAVE_CONFIRM: "_gK_8I1XIktCDlYp08Lg",
+  CANCEL_LEAVE: "nRumfFQWv_1Hnf9jP5qZ",
+  SUBMIT_LEAVE: "TTgLs8cpg66Z6CXgHGVA",
+  NOT_FOUND_MEDIA: "U3bw7pl2JEPgyTwLzxFa",
 };
 
 export const TABLE_ACTION = {
