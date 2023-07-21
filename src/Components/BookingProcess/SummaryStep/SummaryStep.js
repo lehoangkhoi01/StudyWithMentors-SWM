@@ -22,7 +22,7 @@ const SummaryStep = (props) => {
       </Typography>
       <div className={`${style.bookingSummary__detail}`}>
         <span className={`${style.bookingSummary__subTitle}`}>Mentor: </span>
-        <span>Khoi Le</span>
+        <span>{props.mentorInfo?.fullName}</span>
       </div>
 
       <div className={`${style.bookingSummary__detail}`}>
