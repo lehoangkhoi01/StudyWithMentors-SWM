@@ -41,6 +41,8 @@ const BookingStepper = (props) => {
   const [selectedTopic, setSelectedTopic] = React.useState(null);
   const [studentNote, setStudentNote] = React.useState(null);
   const [selectSlot, setSelectSlot] = React.useState(null);
+  const [selectedStudents, setSelectedStudents] = React.useState([]);
+
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
@@ -84,6 +86,8 @@ const BookingStepper = (props) => {
     return (
       <StudentNoteStep
         onTextFieldChange={onStudentNoteChange}
+        selectedStudents={selectedStudents}
+        setSelectedStudents={setSelectedStudents}
         value={studentNote}
       />
     );
@@ -105,13 +109,20 @@ const BookingStepper = (props) => {
         studentNote={studentNote}
         selectedSlot={selectSlot}
         selectedTopic={selectedTopic}
+        selectedStudents={selectedStudents}
       />
     );
   };
 
   const handleSubmitBooking = async () => {
     setLoading(true);
-    console.log(selectSlot);
+    let participants = [userInfo.accountId];
+    if (selectedStudents.length > 0) {
+      const participantIds = selectedStudents.map(
+        (speaker) => speaker.accountId
+      );
+      participants = participants.concat(participantIds);
+    }
     try {
       const data = {
         mentorId: props.mentorId,
@@ -121,9 +132,8 @@ const BookingStepper = (props) => {
         scheduleId: selectSlot.scheduleId,
         topicId: selectedTopic.id,
         description: studentNote,
-        participants: [userInfo.accountId],
+        participants: participants,
       };
-      console.log(data);
       await bookingService.createBooking(data);
       setNotification({
         isOpen: true,

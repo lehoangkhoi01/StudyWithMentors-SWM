@@ -18,4 +18,8 @@ export const userAccountService = {
     const url = `${UserAccountEndpoints.GET_USER_PROFILE}/${id}`;
     return axiosClient.get(url);
   },
+  getAllStudents: () => {
+    const url = `${UserAccountEndpoints.GET_USER_PROFILE}/mentees`;
+    return axiosClient.get(url);
+  },
 };
