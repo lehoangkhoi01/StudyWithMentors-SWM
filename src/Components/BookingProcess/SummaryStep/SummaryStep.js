@@ -39,6 +39,14 @@ const SummaryStep = (props) => {
         <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
         <span>{props.studentNote}</span>
       </div>
+      <div className={`${style.bookingSummary__detail}`}>
+        <span className={`${style.bookingSummary__subTitle}`}>
+          Người tham gia:{" "}
+        </span>
+        <span>
+          {props.selectedStudents.map((student) => student.fullName).toString()}
+        </span>
+      </div>
     </div>
   );
 };
