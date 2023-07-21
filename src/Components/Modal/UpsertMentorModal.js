@@ -79,8 +79,6 @@ const UpsertMentorModal = (props) => {
       }
       props.onCloseModal();
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

@@ -24,11 +24,16 @@ import { addDocument } from "../../../firebase/firebaseService";
 import Comment from "./Comment/Comment";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { useNotification } from "../../../Helpers/generalHelper";
+import { ERROR_MESSAGES } from "../../../shared/constants/common";
 
 const DiscussionComment = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [currentReply, setCurrentReply] = React.useState("");
   const userInfo = useSelector(selectUserInfo);
+
+  const { setNotification } = useNotification();
+
 
   const handleExpand = () => {
     setExpanded(!expanded);
@@ -63,7 +68,11 @@ const DiscussionComment = (props) => {
         addDocument("Comments", requestBody);
         setCurrentReply("");
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMENT_ERROR,
+        });
       }
     }
   };

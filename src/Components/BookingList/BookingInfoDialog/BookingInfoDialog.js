@@ -9,7 +9,7 @@ import React from "react";
 import style from "./BookingInfoDialog.module.scss";
 import { format } from "date-fns";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { DATE_FORMAT } from "../../../shared/constants/common";
+import { DATE_FORMAT, ERROR_MESSAGES } from "../../../shared/constants/common";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import {
@@ -20,7 +20,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizeButton from "../../../shared/components/Button/CustomizedButton";
 import CancelBookingDialog from "../CancelBookingDialog/CancelBookingDialog";
 import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { useCustomLoading, useNotification } from "../../../Helpers/generalHelper";
 import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
 
 const hostname = window.location.host;
@@ -34,6 +34,7 @@ const BookingInfoDialog = (props) => {
   const [studentFeedback, setStudentFeedback] = React.useState(null);
 
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   const renderStatusLabel = (status) => {
     switch (status) {
@@ -333,7 +334,11 @@ const BookingInfoDialog = (props) => {
             );
           }
         } catch (error) {
-          console.log(error);
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.COMMON_ERROR,
+          });
         } finally {
           setLoading(false);
         }

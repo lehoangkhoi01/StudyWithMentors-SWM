@@ -234,6 +234,13 @@ export const ERROR_MESSAGES = {
   COMMON_ERROR:
     "Đã có lỗi xảy ra. Máy chủ hiện không ổn định. Xin vui lòng thử lại sau",
   EXISTED_EMAIL: "Email đã tồn tại",
+  COMMENT_ERROR: "Có lỗi xảy ra khi bình luận. Xin vui lòng thử lại sau",
+  UPDATE_COMMENT_ERROR:
+    "Có lỗi xảy ra khi chỉnh sửa bình luận. Xin vui lòng thử lại sau",
+  UPVOTE_ERROR:
+    "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau",
+  DELETE_COMMENT_ERROR:
+    "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -487,11 +494,14 @@ export const CLASS_NAME = {
   SHARING_ICON: "UbpDhvufmId2nxL2l5gC",
   ROOM_DETAIL_ICON: "QbarJSxzhe6iPp6VdlAs",
   MEMBER_ICON: "qJdF_iTl1gv6JkFZmE2R",
+  CHAT_ICON: "aUBcrib1jsrHTK9vhlVZ",
   LEAVE_TITLE: "YVsLErvDz5lZnY9Ce4UB",
   LEAVE_CONFIRM: "_gK_8I1XIktCDlYp08Lg",
   CANCEL_LEAVE: "nRumfFQWv_1Hnf9jP5qZ",
   SUBMIT_LEAVE: "TTgLs8cpg66Z6CXgHGVA",
   NOT_FOUND_MEDIA: "U3bw7pl2JEPgyTwLzxFa",
+  PLACE_HOLDER: "xM8CBkrn0wtFOdOP84Bb",
+  IS_LEFT: "lflaXazrPGAK9SbOcNoC",
 };
 
 export const TABLE_ACTION = {

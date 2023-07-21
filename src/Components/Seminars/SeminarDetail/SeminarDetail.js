@@ -314,11 +314,6 @@ const SeminarDetail = () => {
                 </p>
 
                 <div className={style.detail__buttons}>
-                  {userInfo?.role === SYSTEM_ROLE.STUDENT && (
-                    <CustomizedButton variant="outlined" color="primary600">
-                      {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
-                    </CustomizedButton>
-                  )}
                   {userInfo?.role !== SYSTEM_ROLE.STAFF && (
                     <CustomizedButton
                       onClick={onOpenModal}

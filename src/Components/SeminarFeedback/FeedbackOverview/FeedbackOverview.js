@@ -1,4 +1,7 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
@@ -42,6 +45,7 @@ const FeedbackOverview = () => {
   });
 
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const getSeminarDetail = async () => {
@@ -49,8 +53,7 @@ const FeedbackOverview = () => {
         const seminar = await seminarService.getSeminarDetail(id);
         setSeminarDetail(seminar);
       } catch (error) {
-        console.log("getSeminarDetail");
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       }
     };
 
@@ -69,8 +72,7 @@ const FeedbackOverview = () => {
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
       } catch (error) {
-        console.log("getFeedbackReport");
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       }
     };
 
@@ -216,7 +218,8 @@ const FeedbackOverview = () => {
             </div>
             <div>
               <p className={style.overview__subHeader}>
-              {FEEDBACK_OVERVIEW.IMPROVEMENT}({feedbackText.displayedImprovements.length})
+                {FEEDBACK_OVERVIEW.IMPROVEMENT}(
+                {feedbackText.displayedImprovements.length})
               </p>
               {console.log(feedbackText)}
               {feedbackText.displayedImprovements.map((improvement, index) => (
@@ -239,7 +242,8 @@ const FeedbackOverview = () => {
             </div>
             <div>
               <p className={style.overview__subHeader}>
-              {FEEDBACK_OVERVIEW.OTHERS} ({feedbackText.displayedOthers.length})
+                {FEEDBACK_OVERVIEW.OTHERS} (
+                {feedbackText.displayedOthers.length})
               </p>
               {feedbackText.displayedOthers.map((other, index) => (
                 <p

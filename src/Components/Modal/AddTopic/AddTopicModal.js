@@ -101,8 +101,6 @@ const AddTopicModal = (props) => {
       await topicService.upsertTopic(topic, topicId);
 
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

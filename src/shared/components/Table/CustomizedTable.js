@@ -116,8 +116,6 @@ const CustomizedTable = (props) => {
       setOriginData([...responseData]);
       onPaginate(1, [...responseData]);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",
@@ -321,8 +319,6 @@ const CustomizedTable = (props) => {
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",
@@ -368,8 +364,6 @@ const CustomizedTable = (props) => {
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

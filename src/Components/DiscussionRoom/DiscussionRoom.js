@@ -15,10 +15,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { format } from "date-fns";
-import { DATE_FORMAT } from "../../shared/constants/common";
+import { DATE_FORMAT, ERROR_MESSAGES } from "../../shared/constants/common";
 import DiscussionComment from "./DiscussionComment/DiscussionComment";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../Store/slices/userSlice";
+import { useNotification } from "../../Helpers/generalHelper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES } from "../../shared/constants/navigation";
 
 const DiscussionRoom = (props) => {
   const [sortByDate, setSortByDate] = React.useState(true);
@@ -29,6 +32,9 @@ const DiscussionRoom = (props) => {
   localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
   const [shoudlRerender, setShouldRerender] = React.useState(true);
   const userInfo = useSelector(selectUserInfo);
+
+  const { setNotification } = useNotification();
+  const history = useHistory();
 
   const updateLocalStorage = (value) => {
     localStorage.setItem("SHOULD_RERENDER_COMMENT", value);
@@ -55,7 +61,11 @@ const DiscussionRoom = (props) => {
     try {
       await updateDocument("Comments", comment.id, updatedData);
     } catch (error) {
-      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.UPVOTE_ERROR,
+      });
     }
   };
 
@@ -77,7 +87,11 @@ const DiscussionRoom = (props) => {
         addDocument("Comments", requestBody);
         setCurrentComment("");
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMENT_ERROR,
+        });
       }
     }
   };
@@ -142,8 +156,8 @@ const DiscussionRoom = (props) => {
               );
             }
           })
-          .catch((error) => {
-            console.error("Error fetching user data:", error);
+          .catch(() => {
+            history.push(ROUTES.SERVER_ERROR);
           });
       });
     }

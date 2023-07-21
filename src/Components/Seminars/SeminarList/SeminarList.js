@@ -28,6 +28,7 @@ const SeminarList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setAppbar } = useCustomAppbar();
+
   setAppbar(APPBAR_TITLES.SEMINAR_LIST);
 
   const userInfo = useSelector(selectUserInfo);
@@ -83,7 +84,7 @@ const SeminarList = () => {
       setSeminars(data);
       setNextLink(response.nextPage);
     } catch (error) {
-      console.log(error);
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }

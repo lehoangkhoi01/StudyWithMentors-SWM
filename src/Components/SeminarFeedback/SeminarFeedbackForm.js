@@ -106,7 +106,6 @@ const SeminarFeedbackForm = () => {
       await seminarFeedbackService.send(id, requestBody);
       setIsSendSuccess(true);
     } catch (error) {
-      console.log(error);
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }

@@ -8,11 +8,14 @@ import {
 } from "../../../Helpers/calendarHelper";
 import { scheduleService } from "../../../Services/sheduleService";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const SelectSlotUIStep = (props) => {
   const [currentDate, setCurrentDate] = React.useState(new Date());
   const [eventList, setEventList] = React.useState([]);
   const { setLoading } = useCustomLoading();
+  const history = useHistory();
 
   const handleNavigate = async (newDate, view) => {
     setCurrentDate(newDate);
@@ -40,7 +43,7 @@ const SelectSlotUIStep = (props) => {
         const schedules = processSchedules(result);
         setEventList(schedules);
       } catch (error) {
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       } finally {
         setLoading(false);
       }

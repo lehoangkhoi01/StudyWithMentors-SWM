@@ -57,8 +57,6 @@ const ConfirmImage = (props) => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-
-      console.log(error);
     }
   };
 

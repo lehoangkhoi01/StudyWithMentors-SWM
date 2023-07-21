@@ -302,8 +302,6 @@ const CV = () => {
 
       setCVData(CVDataFromBE);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",
@@ -324,8 +322,6 @@ const CV = () => {
 
       setHotTopics(topics);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",
@@ -346,8 +342,6 @@ const CV = () => {
 
       setMentorProfile(profile);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",
@@ -452,8 +446,6 @@ const CV = () => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-
-      console.log(error);
     } finally {
       setLoading(false);
       onCloseModal();

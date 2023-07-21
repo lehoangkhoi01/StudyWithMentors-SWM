@@ -7,6 +7,7 @@ import CustomizedSelect from "../../../../shared/components/Select/CustomizedSel
 import {
   BUTTON_LABEL,
   DATE_FORMAT,
+  ERROR_MESSAGES,
   FILTER_SEMINAR,
   PLACE_HOLDER,
 } from "../../../../shared/constants/common";
@@ -15,6 +16,7 @@ import CustomizedDateRangePicker from "../../../../shared/components/DateRangePi
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { departmentService } from "../../../../Services/departmentService";
 import { convertISOToFormat } from "../../../../Helpers/dateHelper";
+import { useNotification } from "../../../../Helpers/generalHelper";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,6 +41,9 @@ const SeminarFilter = forwardRef((props, ref) => {
   const [selectedDepartment, setSelectedDepartment] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
 
+  const { setNotification } = useNotification();
+
+
   useEffect(() => {
     const getDepartments = async () => {
       try {
@@ -47,7 +52,11 @@ const SeminarFilter = forwardRef((props, ref) => {
         setDepartments(response);
         console.log(response);
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });
       }
     };
 
