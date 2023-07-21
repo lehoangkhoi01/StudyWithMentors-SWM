@@ -34,8 +34,6 @@ const ConfirmTopicModal = (props) => {
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

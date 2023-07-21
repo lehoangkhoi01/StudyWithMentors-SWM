@@ -31,8 +31,6 @@ const MentorList = () => {
 
       setMentors(mentorsData.mentorCards);
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

@@ -10,9 +10,13 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import style from "./StudentNote.Step.module.scss";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { ROUTES } from "../../../shared/constants/navigation";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const StudentNoteStep = (props) => {
   const { setLoading } = useCustomLoading();
+  const history = useHistory();
+
   const [studentList, setStudentList] = React.useState([]);
 
   const {
@@ -54,7 +58,7 @@ const StudentNoteStep = (props) => {
         );
         setStudentList(newResult);
       } catch (error) {
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       } finally {
         setLoading(false);
       }

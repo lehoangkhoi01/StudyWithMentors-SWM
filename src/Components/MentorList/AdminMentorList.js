@@ -106,8 +106,6 @@ const AdminMentorList = () => {
 
       return updatedMentorList;
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

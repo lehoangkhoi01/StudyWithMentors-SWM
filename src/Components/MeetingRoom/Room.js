@@ -106,8 +106,6 @@ const Room = () => {
 
         const video = document.querySelectorAll(`.${CLASS_NAME.VIDEO_1}`);
 
-        console.log(video);
-
         if (video && video.length) {
           [...video].map(
             (item) => (item.style.backgroundColor = PRIMARY_COLOR)
@@ -183,6 +181,11 @@ const Room = () => {
 
         if (memberIcon) memberIcon.style.backgroundColor = PRIMARY_COLOR;
 
+        const chatIcon = document
+          .querySelectorAll(`.${CLASS_NAME.CHAT_ICON}`)
+          .item(0);
+
+        if (chatIcon) chatIcon.style.backgroundColor = PRIMARY_COLOR;
         // LEAVE  ==========================================
         const leaveTitle = document
           .querySelectorAll(`.${CLASS_NAME.LEAVE_TITLE}`)
@@ -211,6 +214,25 @@ const Room = () => {
 
         if (submitLeave && submitLeave.textContent)
           submitLeave.textContent = "Rời";
+
+        const divChatPlaceholder = document
+          .querySelectorAll(`.${CLASS_NAME.PLACE_HOLDER}`)
+          .item(0);
+
+        if (divChatPlaceholder) {
+          const chatPlaceholder = divChatPlaceholder
+            .getElementsByTagName("input")
+            .item(0);
+
+          if (chatPlaceholder)
+            chatPlaceholder.placeholder = "Gửi tin nhắn đến mọi người";
+        }
+
+        const isLeft = document
+          .querySelectorAll(`.${CLASS_NAME.IS_LEFT}`)
+          .item(0);
+
+        if (isLeft) isLeft.textContent = "Bạn đã rời khỏi phòng";
       } catch (error) {
         console.log(error);
       }
@@ -281,9 +303,9 @@ const Room = () => {
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
-      "TestRoom",
-      Date.now().toString(),
-      "Le Hoang Khoi (K15)"
+      id,
+      userInfo.accountId,
+      userInfo.fullName
     );
     const zp = ZegoUIKitPrebuilt.create(kitToken);
 
@@ -293,7 +315,7 @@ const Room = () => {
         mode: ZegoUIKitPrebuilt.GroupCall,
       },
       showPreJoinView: false,
-      showTextChat: false,
+      showTextChat: true,
       showAudioVideoSettingsButton: false,
       showLayoutButton: false,
       roomTimerDisplayed: true,

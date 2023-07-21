@@ -334,7 +334,7 @@ const SeminarForm = () => {
         setSeminarDetail(seminar);
         setSelectedSpeakers(seminar.mentors);
       } catch (error) {
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       }
     };
 

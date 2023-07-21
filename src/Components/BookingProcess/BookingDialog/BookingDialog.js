@@ -9,13 +9,16 @@ import React from "react";
 import BookingStepper from "../BookingSteppers/BookingStepper";
 import CloseIcon from "@mui/icons-material/Close";
 import { topicService } from "../../../Services/topicService";
-import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { useCustomLoading, useNotification } from "../../../Helpers/generalHelper";
 import { userAccountService } from "../../../Services/userAccountService";
+import { ERROR_MESSAGES } from "../../../shared/constants/common";
 
 const BookingDialog = (props) => {
   const [topicList, setTopicList] = React.useState([]);
   const [mentorInfo, setMentorInfo] = React.useState(null);
+
   const { setLoading } = useCustomLoading();
+  const { setNotification } = useNotification();
 
   function CustomDialogTitle(props) {
     const { children, onClose, ...other } = props;
@@ -53,7 +56,11 @@ const BookingDialog = (props) => {
         setTopicList(topics);
         setMentorInfo(mentorInfo);
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });console.log(error);
       } finally {
         setLoading(false);
       }
