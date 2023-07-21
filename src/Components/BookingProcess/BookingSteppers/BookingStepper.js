@@ -110,6 +110,7 @@ const BookingStepper = (props) => {
         selectedSlot={selectSlot}
         selectedTopic={selectedTopic}
         selectedStudents={selectedStudents}
+        mentorInfo={props.mentorInfo}
       />
     );
   };

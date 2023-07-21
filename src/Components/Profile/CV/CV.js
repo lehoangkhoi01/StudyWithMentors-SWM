@@ -512,17 +512,6 @@ const CV = () => {
                   {position &&
                     `${position.position} ${OTHERS.AT} ${position.company}`}
                 </p>
-                {userInfo.role === SYSTEM_ROLE.STUDENT && (
-                  <div style={{ position: "absolute", width: "100%" }}>
-                    <CustomizedButton
-                      variant="contained"
-                      color="primary600"
-                      onClick={() => setOpenBookingInfoDialog(true)}
-                    >
-                      {BUTTON_LABEL.BOOKING_NOW}
-                    </CustomizedButton>
-                  </div>
-                )}
               </div>
             </div>
           </div>

@@ -10,9 +10,11 @@ import BookingStepper from "../BookingSteppers/BookingStepper";
 import CloseIcon from "@mui/icons-material/Close";
 import { topicService } from "../../../Services/topicService";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
+import { userAccountService } from "../../../Services/userAccountService";
 
 const BookingDialog = (props) => {
   const [topicList, setTopicList] = React.useState([]);
+  const [mentorInfo, setMentorInfo] = React.useState(null);
   const { setLoading } = useCustomLoading();
 
   function CustomDialogTitle(props) {
@@ -40,11 +42,16 @@ const BookingDialog = (props) => {
   }
 
   React.useEffect(() => {
-    const fetchTopicByMentor = async (mentorId) => {
+    const fetchData = async (mentorId) => {
       try {
         setLoading(true);
         const topics = await topicService.getTopicsByMentor(mentorId);
+        const mentorInfo = await userAccountService.getUserProfileById(
+          mentorId
+        );
+
         setTopicList(topics);
+        setMentorInfo(mentorInfo);
       } catch (error) {
         console.log(error);
       } finally {
@@ -53,7 +60,7 @@ const BookingDialog = (props) => {
     };
 
     if (props.mentorId) {
-      fetchTopicByMentor(props.mentorId);
+      fetchData(props.mentorId);
     }
   }, []);
 
@@ -68,6 +75,7 @@ const BookingDialog = (props) => {
         <BookingStepper
           topics={topicList}
           mentorId={props.mentorId}
+          mentorInfo={mentorInfo}
           handleCloseDialog={() => props.handleOpenDialog(false)}
         />
       </DialogContent>
