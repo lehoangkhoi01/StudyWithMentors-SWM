@@ -8,15 +8,14 @@ import NoteSection from "./NoteSection/NoteSection";
 import ScheduleDialog from "./ScheduleDialog/ScheduleDialog";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { scheduleService } from "../../Services/sheduleService";
-import moment from "moment/moment";
-import { format } from "date-fns";
-import { COMMON_MESSAGE, DATE_FORMAT } from "../../shared/constants/common";
+import { COMMON_MESSAGE } from "../../shared/constants/common";
 import EventInfoDialog from "./EventInfoDialog/EventInfoDialog";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
 import BookingInfoDialog from "../BookingList/BookingInfoDialog/BookingInfoDialog";
 import { ROUTES } from "../../shared/constants/navigation";
 import { bookingService } from "../../Services/bookingService";
 import { useHistory } from "react-router-dom";
+import { getStartEndTime } from "../../Helpers/calendarHelper";
 
 const CustomCalendar = () => {
   const [openScheduleForm, setOpenScheduleForm] = useState(false);
@@ -142,32 +141,6 @@ const CustomCalendar = () => {
     await triggerRangeChangeEvent(date);
   };
 
-  const getStartEndTime = (date, view) => {
-    const start = moment(date).startOf(view);
-    const end = moment(date).endOf(view);
-    console.log(start);
-    console.log(end);
-    let rangeStart = 0;
-    let rangeEnd = 0;
-    if (start.day() !== 0) {
-      rangeStart = start.clone().subtract(start.day() - 1, "days");
-    } else {
-      rangeStart = start.clone().subtract(6 - start.day(), "days");
-    }
-
-    if (end.day() !== 0) {
-      rangeEnd = end.clone().add(7 - end.day(), "days");
-    } else {
-      rangeEnd = end.clone().add(end.day(), "days");
-    }
-
-    let result = {
-      start: format(rangeStart.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
-      end: format(rangeEnd.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD),
-    };
-    return result;
-  };
-
   const processSchedules = (schedules) => {
     let result = [];
 
@@ -213,7 +186,6 @@ const CustomCalendar = () => {
   const triggerRangeChangeEvent = async (date, view) => {
     setLoading(true);
     const startEnd = getStartEndTime(date, view);
-    console.log(startEnd);
     try {
       const result = await scheduleService.getSchedule(
         startEnd.start,

@@ -3,20 +3,28 @@ import format from "date-fns/format";
 import { DATE_FORMAT } from "../shared/constants/common";
 
 export const getStartEndTime = (date, view) => {
-  const start = moment(date).startOf(view);
-  const end = moment(date).endOf(view);
   let rangeStart = 0;
   let rangeEnd = 0;
-  if (start.day() !== 0) {
-    rangeStart = start.clone().subtract(start.day() - 1, "days");
-  } else {
-    rangeStart = start.clone().subtract(6 - start.day(), "days");
-  }
+  let start = 0;
+  let end = 0;
 
-  if (end.day() !== 0) {
-    rangeEnd = end.clone().add(7 - end.day(), "days");
+  if (view === "agenda") {
+    rangeStart = moment(date);
+    rangeEnd = moment(date).add(30, "days");
   } else {
-    rangeEnd = end.clone().add(end.day(), "days");
+    start = moment(date).startOf(view);
+    end = moment(date).endOf(view);
+    if (start.day() !== 0) {
+      rangeStart = start.clone().subtract(start.day() - 1, "days");
+    } else {
+      rangeStart = start.clone().subtract(6 - start.day(), "days");
+    }
+
+    if (end.day() !== 0) {
+      rangeEnd = end.clone().add(7 - end.day(), "days");
+    } else {
+      rangeEnd = end.clone().add(end.day(), "days");
+    }
   }
 
   let result = {
