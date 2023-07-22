@@ -41,7 +41,6 @@ const SignInForm = () => {
       } else {
         history.push(ROUTES.SERVER_ERROR);
       }
-      console.log(error);
     } finally {
       setLoading(false);
     }

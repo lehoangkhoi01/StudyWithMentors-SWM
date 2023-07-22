@@ -120,7 +120,11 @@ const SeminarFeedbackForm = () => {
         const result = await seminarFeedbackService.getQuestion(id);
         setQuestionList(result.questions);
       } catch (error) {
-        console.log(error);
+        if (error.status == "404") {
+          history.push(ROUTES.NOT_FOUND);
+        } else {
+          history.push(ROUTES.SERVER_ERROR);
+        }
       }
     };
     const fetchSeminarDetail = async () => {
@@ -128,9 +132,11 @@ const SeminarFeedbackForm = () => {
         const seminarDetail = await seminarService.getSeminarDetail(id);
         setSeminarDetail(seminarDetail);
       } catch (error) {
-        console.log(error);
         if (error.status == "404") {
           history.push(ROUTES.NOT_FOUND);
+        }
+        if (error.status == "500") {
+          history.push(ROUTES.SERVER_ERROR);
         }
       }
     };

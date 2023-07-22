@@ -61,7 +61,6 @@ const BookingList = () => {
       if (error?.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -91,7 +90,6 @@ const BookingList = () => {
         if (error?.status == "500") {
           history.push(ROUTES.SERVER_ERROR);
         }
-        console.log(error);
       } finally {
         setLoading(false);
       }

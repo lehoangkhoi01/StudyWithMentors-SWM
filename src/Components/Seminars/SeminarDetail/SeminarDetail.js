@@ -88,7 +88,6 @@ const SeminarDetail = () => {
       });
       history.push(ROUTES.SEMINAR_LIST);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
@@ -141,7 +140,9 @@ const SeminarDetail = () => {
         if (error?.status == "404") {
           history.push(ROUTES.NOT_FOUND);
         }
-        console.log(error);
+        if (error.status == "500") {
+          history.push(ROUTES.SERVER_ERROR);
+        }
       } finally {
         setLoading(false);
       }
