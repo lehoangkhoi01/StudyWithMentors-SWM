@@ -43,14 +43,11 @@ const SeminarFilter = forwardRef((props, ref) => {
 
   const { setNotification } = useNotification();
 
-
   useEffect(() => {
     const getDepartments = async () => {
       try {
         const response = await departmentService.getDepartments();
-
         setDepartments(response);
-        console.log(response);
       } catch (error) {
         setNotification({
           isOpen: true,

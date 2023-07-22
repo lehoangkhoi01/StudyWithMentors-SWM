@@ -33,7 +33,6 @@ const MyCustomHeader = ({ label }) => (
 );
 
 const AgendaHeader = ({ label }) => {
-  console.log(label);
   return (
     <div>
       <div>{label}</div>

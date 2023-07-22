@@ -47,10 +47,8 @@ const FilterSection = (props) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
     setMajorName(typeof value === "string" ? value.split(",") : value);
   };
-
 
   const clearFilter = () => {
     setMajorName([]);

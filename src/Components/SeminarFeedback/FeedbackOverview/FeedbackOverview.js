@@ -133,7 +133,6 @@ const FeedbackOverview = () => {
     const totalPage = Math.ceil(improvementsList.length / pageSize);
 
     const adjustPage = totalPage >= pageNumber ? pageNumber : totalPage;
-    console.log(adjustPage);
     const offset = pageSize * (adjustPage - 1);
 
     const paginatedImprovements = improvementsList.slice(
@@ -221,7 +220,6 @@ const FeedbackOverview = () => {
                 {FEEDBACK_OVERVIEW.IMPROVEMENT}(
                 {feedbackText.displayedImprovements.length})
               </p>
-              {console.log(feedbackText)}
               {feedbackText.displayedImprovements.map((improvement, index) => (
                 <p
                   key={`IMPROVEMENT_${index}`}

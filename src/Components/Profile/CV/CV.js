@@ -287,19 +287,13 @@ const CV = () => {
       setLoading(true);
       let CVDataFromBE = {};
       CVDataFromBE = await cvEndpoints.getMentorCV(mentorId);
-
       if (CVDataFromBE.data === "" || CVDataFromBE.data || CVDataFromBE.data) {
         CVDataFromBE = INIT_CV;
       }
-
       delete CVDataFromBE.userProfileId;
-
       convertNullToEmptyArrayProperty(CVDataFromBE);
-
       const lastedPosition = findLastestWorkingExp(CVDataFromBE.workingExps);
-
       setPosition(lastedPosition);
-
       setCVData(CVDataFromBE);
     } catch (error) {
       setNotification({
@@ -307,7 +301,6 @@ const CV = () => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-
       history.push(ROUTES.HOME);
     } finally {
       setLoading(false);
@@ -317,9 +310,7 @@ const CV = () => {
   const getTopics = async () => {
     try {
       setLoading(true);
-
       const topics = await topicService.getTopicsByMentor(mentorId);
-
       setHotTopics(topics);
     } catch (error) {
       setNotification({
@@ -327,7 +318,6 @@ const CV = () => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-
       history.push(ROUTES.HOME);
     } finally {
       setLoading(false);
@@ -337,9 +327,7 @@ const CV = () => {
   const getMentorProfile = async () => {
     try {
       setLoading(true);
-
       const profile = await userAccountService.getUserProfileById(mentorId);
-
       setMentorProfile(profile);
     } catch (error) {
       setNotification({
@@ -347,7 +335,6 @@ const CV = () => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-
       history.push(ROUTES.HOME);
     } finally {
       setLoading(false);

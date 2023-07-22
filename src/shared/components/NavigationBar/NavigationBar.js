@@ -95,7 +95,6 @@ function NavigationBar() {
       const userInfoResponse = await getUserInfo();
       if (userInfoResponse && userInfoResponse.status === "403") {
         // expired token...
-        console.log("expired token");
         localStorage.removeItem("TOKEN");
         dispatch(userAction.logout());
         setAuthenticated(false);

@@ -92,9 +92,6 @@ const TopicList = () => {
   useEffect(() => {
     let header = HEADER_TABLE;
     let actions = ACTION_ITEMS;
-
-    console.log(userInfo.role);
-
     if (userInfo.role === SYSTEM_ROLE.MENTOR) {
       header.splice(5, 1);
     } else if (userInfo.role === SYSTEM_ROLE.STAFF) {
@@ -126,8 +123,6 @@ const TopicList = () => {
 
       return updatedTopicList;
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

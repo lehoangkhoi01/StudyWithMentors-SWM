@@ -20,7 +20,10 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizeButton from "../../../shared/components/Button/CustomizedButton";
 import CancelBookingDialog from "../CancelBookingDialog/CancelBookingDialog";
 import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
-import { useCustomLoading, useNotification } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
 
 const hostname = window.location.host;
@@ -344,15 +347,8 @@ const BookingInfoDialog = (props) => {
         }
       }
     };
-
-    console.log(props.bookingInfo?.id);
-
     fetchFeedbacksByBooking();
   }, []);
-
-  React.useState(() => {
-    console.log(feedbacks);
-  }, [feedbacks]);
 
   return (
     <>

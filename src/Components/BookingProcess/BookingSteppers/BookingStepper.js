@@ -149,7 +149,6 @@ const BookingStepper = (props) => {
         type: "error",
         message: "Đặt lịch thất bại. Xin vui lòng thử lại sau.",
       });
-      console.log(error);
     } finally {
       setLoading(false);
     }
