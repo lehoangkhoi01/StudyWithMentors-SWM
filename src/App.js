@@ -62,7 +62,6 @@ function App() {
         !userInfoResponse
       ) {
         // expired token...
-        console.log("expired token");
         localStorage.removeItem("TOKEN");
         dispatch(userAction.logout());
         dispatch(userAction.setFirstFetch());

@@ -53,7 +53,6 @@ const CustomCalendar = () => {
         type: "error",
         message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
       });
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -61,7 +60,6 @@ const CustomCalendar = () => {
 
   const handleSubmitUpdateSchedule = async (scheduleId, newSchedule) => {
     setLoading(true);
-    console.log(newSchedule);
     try {
       if (!newSchedule.daily && !newSchedule.weekly) {
         const data = {
@@ -87,7 +85,6 @@ const CustomCalendar = () => {
         type: "error",
         message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
       });
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -124,7 +121,6 @@ const CustomCalendar = () => {
           type: "error",
           message: COMMON_MESSAGE.REMOVE_SCHEDULE_FAIL,
         });
-        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -194,7 +190,6 @@ const CustomCalendar = () => {
       const schedules = processSchedules(result);
       setEventList(schedules);
     } catch (error) {
-      console.log(error);
       if (error?.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
@@ -221,7 +216,6 @@ const CustomCalendar = () => {
       if (error?.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
-      console.log(error);
     } finally {
       setLoading(false);
     }

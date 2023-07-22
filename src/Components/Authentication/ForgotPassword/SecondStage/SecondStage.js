@@ -28,7 +28,6 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
         );
         console.log(response);
       } catch (error) {
-        console.log(error);
         history.push(ROUTES.SERVER_ERROR);
       } finally {
         setLoading(false);

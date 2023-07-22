@@ -21,12 +21,6 @@ import { useEffect, useState } from "react";
 const HEADER_TABLE = [
   {
     sortable: true,
-    center: true,
-    property: "number",
-    name: TOPIC_TABLE.NUMBER,
-  },
-  {
-    sortable: true,
     property: "name",
     name: TOPIC_TABLE.NAME,
   },
@@ -107,10 +101,9 @@ const TopicList = () => {
     try {
       const topics = await topicService.getTopics();
 
-      let updatedTopicList = topics.map((topic, index) => {
+      let updatedTopicList = topics.map((topic) => {
         return {
           ...topic,
-          number: index + 1,
           translatedStatus: TOPIC_STATUS[topic.status],
           mentorName: topic.mentor.fullName,
         };
@@ -124,8 +117,6 @@ const TopicList = () => {
 
       return updatedTopicList;
     } catch (error) {
-      console.log(error);
-
       setNotification({
         isOpen: true,
         type: "error",

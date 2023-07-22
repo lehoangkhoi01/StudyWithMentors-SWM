@@ -9,7 +9,10 @@ import React from "react";
 import BookingStepper from "../BookingSteppers/BookingStepper";
 import CloseIcon from "@mui/icons-material/Close";
 import { topicService } from "../../../Services/topicService";
-import { useCustomLoading, useNotification } from "../../../Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { userAccountService } from "../../../Services/userAccountService";
 import { ERROR_MESSAGES } from "../../../shared/constants/common";
 
@@ -60,7 +63,7 @@ const BookingDialog = (props) => {
           isOpen: true,
           type: "error",
           message: ERROR_MESSAGES.COMMON_ERROR,
-        });console.log(error);
+        });
       } finally {
         setLoading(false);
       }

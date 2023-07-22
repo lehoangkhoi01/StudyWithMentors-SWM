@@ -129,7 +129,6 @@ const SeminarForm = () => {
 
   const handleDocumentsChange = (e) => {
     const files = e.target.files;
-    console.log(files);
     let tempDocuments = [...documents];
     tempDocuments = [...tempDocuments, ...Array.from(files)];
     setDocuments(tempDocuments);
@@ -235,7 +234,6 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + result.id);
     } catch (error) {
-      console.log(error);
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
@@ -290,7 +288,6 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
     } catch (error) {
-      console.log(error);
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
