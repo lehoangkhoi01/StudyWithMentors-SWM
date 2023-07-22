@@ -66,7 +66,7 @@ const ACTION_ITEMS = [
     action: UPSERT_ACTION,
   },
   {
-    imgSrc: require("../../assets/icons/Deactive.png"),
+    imgSrc: require("../../assets/icons/Accept.png"),
     label: CONFIRM_TOPIC_MODAL.ACCEPT,
     action: CONFIRM_ACTION,
   },
@@ -76,7 +76,7 @@ const ACTION_ITEMS = [
     action: CONFIRM_ACTION,
   },
   {
-    imgSrc: require("../../assets/icons/Deactive.png"),
+    imgSrc: require("../../assets/icons/Archive.png"),
     label: CONFIRM_TOPIC_MODAL.ARCHIVE,
     action: CONFIRM_ACTION,
   },
@@ -92,8 +92,6 @@ const TopicList = () => {
   useEffect(() => {
     let header = HEADER_TABLE;
     let actions = ACTION_ITEMS;
-
-    console.log(userInfo.role);
 
     if (userInfo.role === SYSTEM_ROLE.MENTOR) {
       header.splice(5, 1);

@@ -65,27 +65,15 @@ const MentorCard = (props) => {
           )}
           {props.data.topics.map((topic, index) => (
             <>
-              <div
-                key={`MENTOR_CARD_${index}`}
-                className={style.card__topic_item}
-              >
-                <img src={require("../../../assets/icons/mentor-pen.png")} />
-                <span>{topic.name}</span>
-              </div>
-              <div
-                key={`MENTOR_CARD_${index}`}
-                className={style.card__topic_item}
-              >
-                <img src={require("../../../assets/icons/mentor-pen.png")} />
-                <span>{topic.name}</span>
-              </div>
-              <div
-                key={`MENTOR_CARD_${index}`}
-                className={style.card__topic_item}
-              >
-                <img src={require("../../../assets/icons/mentor-pen.png")} />
-                <span>{topic.name}</span>
-              </div>
+              {index < 3 && (
+                <div
+                  key={`MENTOR_CARD_${index}`}
+                  className={style.card__topic_item}
+                >
+                  <img src={require("../../../assets/icons/mentor-pen.png")} />
+                  <span>{topic.name}</span>
+                </div>
+              )}
             </>
           ))}
         </div>
