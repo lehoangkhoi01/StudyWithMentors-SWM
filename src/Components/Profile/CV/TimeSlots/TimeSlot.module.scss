@@ -1,0 +1,13 @@
+@import "../.././../../shared/theme";
+
+.timeSlot {
+  &__paper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: $primary50;
+    border: 3px solid $primary200;
+  }
+}

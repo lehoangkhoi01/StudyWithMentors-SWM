@@ -238,3 +238,16 @@ export function yesterday() {
 export function tomorrow() {
   return dates.add(dates.startOf(new Date(), "day"), 1, "day");
 }
+
+export const getDayOfWeek = (date) => {
+  const weekday = [
+    "Chủ nhật",
+    "Thứ 2",
+    "Thứ 3",
+    "Thứ 4",
+    "Thứ 5",
+    "Thứ 6",
+    "Thứ 7",
+  ];
+  return weekday[date.getDay()];
+};

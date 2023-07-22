@@ -564,5 +564,5 @@ export const USER_STATUS = {
 
 export const CV_MENTOR = {
   HOT_TOPIC: "Chủ đề nổi bật",
-  AVAILABLE_TIME: "Xem trước thời gian khả dụng",
+  AVAILABLE_TIME: "Thời gian khả dụng gần nhất trong 30 ngày tiếp theo",
 };

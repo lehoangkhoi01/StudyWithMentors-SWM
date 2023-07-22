@@ -105,11 +105,7 @@ export const MENTOR_NAVBAR_LARGE_SCREEN = [
     ROUTE: ROUTES.BOOKING_LIST,
   },
   {
-    TITLE: "Hồ sơ của tôi",
-    ROUTE: ROUTES.CV,
-  },
-  {
-    TITLE: "Mentoring",
+    TITLE: "Cố vấn",
     MENU: [
       {
         TITLE: "Chủ đề",
@@ -120,6 +116,10 @@ export const MENTOR_NAVBAR_LARGE_SCREEN = [
         ROUTE: ROUTES.CALENDAR,
       },
     ],
+  },
+  {
+    TITLE: "Hồ sơ của tôi",
+    ROUTE: ROUTES.CV,
   },
 ];
 
