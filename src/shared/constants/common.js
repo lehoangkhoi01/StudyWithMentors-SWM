@@ -194,6 +194,8 @@ export const LENGTH = {
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 5,
   SPEAKERS_MAX: 3,
+  STUDENT_NOTE_MAX: 1000,
+  PARTICIPANTS_MAX: 3,
 };
 
 export const ERROR_MESSAGES = {
@@ -205,6 +207,9 @@ export const ERROR_MESSAGES = {
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
   EMPTY_PASSWORD_FIELD: "Password không được để trống.",
   MAX_LENGTH_EMAIL: "Độ dài tối đa cho email là " + LENGTH.EMAIL_MAX + " kí tự",
+  MAX_PARTICIPANTS: "Chọn tối đa " + LENGTH.PARTICIPANTS_MAX + " bạn tham gia",
+  MAX_LENGTH_STUDENT_NOTE:
+    "Độ dài tối đa cho ghi chú là " + LENGTH.STUDENT_NOTE_MAX + " kí tự",
   INVALID_PASSWORD_LENGTH:
     "Chọn mật khẩu có độ dài từ " +
     LENGTH.PASSWORD_MIN +
