@@ -19,6 +19,8 @@ import { RATING_LABEL } from "../../../shared/constants/systemType";
 import { seminarFeedbackService } from "../../../Services/seminarFeedbackService";
 import { useCustomAppbar } from "../../../Helpers/generalHelper";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const FeedbackOverview = () => {
   const { setAppbar } = useCustomAppbar();
@@ -46,11 +48,15 @@ const FeedbackOverview = () => {
 
   const { id } = useParams();
   const history = useHistory();
+  const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
+        if (userInfo.departmentId !== seminar.department.id) {
+          history.push(ROUTES.NOT_FOUND);
+        }
         setSeminarDetail(seminar);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);

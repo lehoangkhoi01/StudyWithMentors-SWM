@@ -3,6 +3,7 @@ import {
   BUTTON_LABEL,
   CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
+  DATE_FORMAT,
   ERROR_MESSAGES,
   INPUT_TYPES,
   OTHERS,
@@ -40,6 +41,10 @@ import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
 import { topicService } from "../../../Services/topicService";
 import { Divider } from "@mui/material";
+import moment from "moment";
+import { scheduleService } from "../../../Services/sheduleService";
+import { format } from "date-fns";
+import TimeSlots from "./TimeSlots/TimeSlots";
 
 const TEXT_FIELDS = [
   {
@@ -258,6 +263,7 @@ const CV = () => {
   const [mentorId, setMentorId] = useState();
   const [hotTopics, setHotTopics] = useState([]);
   const [mentorProfile, setMentorProfile] = useState();
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -280,6 +286,9 @@ const CV = () => {
     getCVData();
     getTopics();
     getMentorProfile();
+    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+      getSchedule();
+    }
   }, [mentorId]);
 
   const getCVData = async () => {
@@ -336,6 +345,33 @@ const CV = () => {
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
       history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const processScheduleData = (data) => {
+    let newData = data.map((el) => {
+      return { ...el, convertedStartDate: new Date(el.startTime) };
+    });
+    newData.sort((a, b) => a.convertedStartDate - b.convertedStartDate);
+    return newData;
+  };
+
+  const getSchedule = async () => {
+    try {
+      setLoading(true);
+      const toDay = new Date();
+      const nextMonth = moment(toDay).add(30, "days");
+      const data = await scheduleService.getMentorSchedule(
+        mentorId,
+        format(toDay, DATE_FORMAT.BACK_END_YYYY_MM_DD),
+        format(nextMonth.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD)
+      );
+      const timeSlots = processScheduleData(data.timeSlots).slice(0, 4);
+      setAvailableTimeSlots(timeSlots);
+    } catch (error) {
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }
@@ -566,6 +602,7 @@ const CV = () => {
         {userInfo.role === SYSTEM_ROLE.STUDENT && (
           <div className={style.cv__booking__section}>
             <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
+            <TimeSlots timeSlots={availableTimeSlots} />
             <CustomizedButton
               variant="contained"
               color="primary600"

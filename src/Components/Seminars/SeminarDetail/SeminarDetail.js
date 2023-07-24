@@ -171,74 +171,76 @@ const SeminarDetail = () => {
                 <h1 className={style.detail__title}>{data.name}</h1>
                 {renderSeminarStatusLabel()}
 
-                {userInfo?.role === "STAFF" && (
-                  <div className={style.detail__burger}>
-                    <Button
-                      id="basic-button"
-                      aria-controls={open ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={handleClick}
-                    >
-                      <img
-                        src={require("../../../assets/icons/Edit_Semniar.png")}
-                      />
-                    </Button>
-                    <Menu
-                      id="demo-positioned-menu"
-                      aria-labelledby="demo-positioned-button"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "left",
-                      }}
-                      className={style.detail__dropdown}
-                    >
-                      <MenuItem
-                        onClick={() =>
-                          handleNavigate(
-                            ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
-                          )
-                        }
+                {userInfo?.role === SYSTEM_ROLE.STAFF &&
+                  userInfo.departmentId === data.department.id && (
+                    <div className={style.detail__burger}>
+                      <Button
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleClick}
                       >
                         <img
-                          src={require("../../../assets/icons/Semniar_Report.png")}
+                          src={require("../../../assets/icons/Edit_Semniar.png")}
                         />
-                        <span>{SEMINAR.RERORT}</span>
-                      </MenuItem>
+                      </Button>
+                      <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        className={style.detail__dropdown}
+                      >
+                        <MenuItem
+                          onClick={() =>
+                            handleNavigate(
+                              ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                            )
+                          }
+                        >
+                          <img
+                            src={require("../../../assets/icons/Semniar_Report.png")}
+                          />
+                          <span>{SEMINAR.RERORT}</span>
+                        </MenuItem>
 
-                      {moment(data.startTime) > Date.now() && (
-                        //Not show edit and delete menu for past event
-                        <div>
-                          <MenuItem
-                            onClick={() =>
-                              handleNavigate(
-                                ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
-                              )
-                            }
-                          >
-                            <img
-                              src={require("../../../assets/icons/Seminar_Edit.png")}
-                            />
-                            <span>{SEMINAR.EDIT}</span>
-                          </MenuItem>
-                          <MenuItem onClick={onOpenRemoveDialog}>
-                            <img
-                              src={require("../../../assets/icons/Seminar_Delete.png")}
-                            />
-                            <span>{SEMINAR.DELETE}</span>
-                          </MenuItem>
-                        </div>
-                      )}
-                    </Menu>
-                  </div>
-                )}
+                        {moment(data.startTime) > Date.now() && (
+                          //Not show edit and delete menu for past event
+                          <div>
+                            <MenuItem
+                              onClick={() =>
+                                handleNavigate(
+                                  ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                                )
+                              }
+                            >
+                              <img
+                                src={require("../../../assets/icons/Seminar_Edit.png")}
+                              />
+                              <span>{SEMINAR.EDIT}</span>
+                            </MenuItem>
+                            <MenuItem onClick={onOpenRemoveDialog}>
+                              <img
+                                src={require("../../../assets/icons/Seminar_Delete.png")}
+                              />
+                              <span>{SEMINAR.DELETE}</span>
+                            </MenuItem>
+                          </div>
+                        )}
+                      </Menu>
+                    </div>
+                  )}
+
                 <p>
                   <strong>{SEMINAR.AUTHOR}:</strong>{" "}
                   {data.mentors.map(

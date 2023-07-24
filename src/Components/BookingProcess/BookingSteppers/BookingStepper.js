@@ -15,7 +15,11 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import StudentNoteStep from "../StudentNoteStep/StudentNoteStep";
 import SelectSlotUIStep from "../SelectSlotUIStep/SelectSlotUIStep";
 import SummaryStep from "../SummaryStep/SummaryStep";
-import { DATE_FORMAT } from "../../../shared/constants/common";
+import {
+  DATE_FORMAT,
+  ERROR_MESSAGES,
+  LENGTH,
+} from "../../../shared/constants/common";
 import { format } from "date-fns";
 import { bookingService } from "../../../Services/bookingService";
 import {
@@ -26,6 +30,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { ROUTES } from "../../../shared/constants/navigation";
+import { useForm } from "react-hook-form";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
 
@@ -48,16 +53,46 @@ const BookingStepper = (props) => {
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
 
+  const {
+    setError,
+    formState: { errors },
+  } = useForm();
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 2) {
+      //Validation for student note and participants
+      let isValid = true;
+      if (selectedStudents.length > LENGTH.PARTICIPANTS_MAX) {
+        isValid = false;
+        setError("participants", {
+          type: "custom",
+          message: ERROR_MESSAGES.MAX_PARTICIPANTS,
+        });
+      }
+      if (studentNote?.length > LENGTH.STUDENT_NOTE_MAX) {
+        isValid = false;
+        setError("studentNote", {
+          type: "custom",
+          message: ERROR_MESSAGES.STUDENT_NOTE_MAX,
+        });
+      }
+
+      if (isValid) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
+
   const handleReset = () => {
     setActiveStep(0);
   };
+
   const handleSelectSlot = (slot) => {
     setSelectSlot(slot);
     handleNext();
@@ -89,6 +124,7 @@ const BookingStepper = (props) => {
         selectedStudents={selectedStudents}
         setSelectedStudents={setSelectedStudents}
         value={studentNote}
+        errors={errors}
       />
     );
   };
@@ -238,6 +274,7 @@ const BookingStepper = (props) => {
                         variant="contained"
                         color="primary600"
                         size="small"
+                        disabled={activeStep === 1}
                         onClick={handleNext}
                       >
                         Tiếp tục

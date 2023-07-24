@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { LENGTH } from "../../../shared/constants/common";
 
 const StudentNoteStep = (props) => {
   const { setLoading } = useCustomLoading();
@@ -19,10 +20,7 @@ const StudentNoteStep = (props) => {
 
   const [studentList, setStudentList] = React.useState([]);
 
-  const {
-    control,
-    formState: { errors },
-  } = useForm();
+  const { control, register, watch } = useForm();
   const userInfo = useSelector(selectUserInfo);
 
   const getOptionLabel = (option) => {
@@ -68,7 +66,7 @@ const StudentNoteStep = (props) => {
   }, []);
 
   return (
-    <div>
+    <form>
       <CustomizedTextField
         multiline
         maxRows={3}
@@ -76,7 +74,15 @@ const StudentNoteStep = (props) => {
         name="Lưu ý, chú thích cho mentor"
         onChange={props.onTextFieldChange}
         value={props.value}
+        watch={watch("studentNote")}
+        options={{
+          ...register("studentNote"),
+        }}
+        error={props.errors.studentNote}
+        helperText={props.errors.studentNote?.message}
+        maxLength={LENGTH.STUDENT_NOTE_MAX}
       />
+
       <Controller
         control={control}
         name="participants"
@@ -91,7 +97,7 @@ const StudentNoteStep = (props) => {
             options={studentList}
             getOptionLabel={getOptionLabel}
             renderOption={renderOptionSpeakerAutocomplete}
-            error={errors.seminarSpeakers}
+            error={props.errors.participants}
             extractValue={extractValue}
             selectedValues={props.selectedStudents}
             setSelectedValues={props.setSelectedStudents}
@@ -99,7 +105,7 @@ const StudentNoteStep = (props) => {
           />
         )}
       />
-    </div>
+    </form>
   );
 };
 

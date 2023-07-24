@@ -37,7 +37,7 @@ const CustomizedTextField = (props) => {
       />
       {props.multiline && (
         <span className={`${style.textField__limit}`}>
-          {props.watch?.length ?? 0} / 2000
+          {props.watch?.length ?? 0} / {props.maxLength ?? 2000}
         </span>
       )}
     </div>
