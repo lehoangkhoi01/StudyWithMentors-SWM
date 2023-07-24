@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
   ERROR_MESSAGES,
   SEMINAR,
   TITLE,
+  USER_STATUS,
 } from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
@@ -241,15 +242,27 @@ const SeminarDetail = () => {
                     </div>
                   )}
 
-                <p>
+                <div>
                   <strong>{SEMINAR.AUTHOR}:</strong>{" "}
-                  {data.mentors.map(
-                    (mentor, index) =>
-                      `${mentor.fullName}${
-                        data.mentors.length - 1 !== index ? ", " : ""
-                      }`
-                  )}
-                </p>
+                  {data.mentors.map((mentor, index) => {
+                    if (mentor.status === USER_STATUS.ACTIVATED) {
+                      return <Link
+                        to={`${ROUTES.CV}/${mentor.id}`}
+                        key={`MENTOR_${index}`}
+                      >
+                        {mentor.fullName}
+                        {data.mentors.length - 1 !== index ? ", " : ""}
+                      </Link>;
+                    } else {
+                      return (
+                        <span key={`MENTOR_${index}`}>
+                          {mentor.fullName}
+                          {data.mentors.length - 1 !== index ? ", " : ""}
+                        </span>
+                      );
+                    }
+                  })}
+                </div>
                 <p>
                   <strong>{SEMINAR.TIME}: </strong>
                   {handleTimeToDisplay(data.startTime)}

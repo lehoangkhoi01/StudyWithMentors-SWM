@@ -27,6 +27,7 @@ const MentorList = () => {
     try {
       setLoading(true);
       const mentorsData = await accountService.getAllMoreInfoMentors();
+
       setMentors(mentorsData.mentorCards);
     } catch (error) {
       setNotification({
