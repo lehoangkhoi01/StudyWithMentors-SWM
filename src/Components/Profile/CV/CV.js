@@ -10,6 +10,7 @@ import {
   PROFILE_TITLES,
   REGISTER_FIELD,
   TEXTFIELD_LABEL,
+  USER_STATUS,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
 import style from "./CV.module.scss";
@@ -337,6 +338,11 @@ const CV = () => {
     try {
       setLoading(true);
       const profile = await userAccountService.getUserProfileById(mentorId);
+
+      if (profile.status !== USER_STATUS.ACTIVATED) {
+        history.push(ROUTES.NOT_FOUND);
+      }
+
       setMentorProfile(profile);
     } catch (error) {
       setNotification({

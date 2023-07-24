@@ -23,6 +23,9 @@ export const ROUTES = {
   TOPIC_LIST: "/topics",
   BOOKING: "/booking",
   BOOKING_LIST: "/booking-list",
+  CATEGORY_LIST: "/categories",
+  DEPARTMENT_LIST: "/departments",
+  FIELD_LIST: "/fields"
 };
 
 export const ROUTES_STATIC = {

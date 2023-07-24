@@ -43,6 +43,9 @@ import FillInformationPage from "./Pages/Profile/FillInformationPage";
 import { BookingListPage } from "./Pages/BookingList/BookingListPage";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { USER_STATUS } from "./shared/constants/common";
+import FieldListPage from "./Pages/Field/FieldListPage";
+import CategoryListPage from "./Pages/Category/CategoryListPage";
+import DepartmentListPage from "./Pages/Department/DepartmentListPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -140,6 +143,10 @@ function App() {
                 <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
                 <Route path={ROUTES.BOOKING} component={BookingPage} />
                 <Route path={ROUTES.BOOKING_LIST} component={BookingListPage} />
+                <Route path={ROUTES.FIELD_LIST} component={FieldListPage} />
+                <Route path={ROUTES.CATEGORY_LIST} component={CategoryListPage} />
+                <Route path={ROUTES.DEPARTMENT_LIST} component={DepartmentListPage} />
+                
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
 

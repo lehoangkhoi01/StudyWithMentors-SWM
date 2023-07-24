@@ -28,12 +28,6 @@ const AdminMentorList = () => {
   const headerTable = [
     {
       sortable: true,
-      center: true,
-      property: "number",
-      name: ADMIN_TABLE_HEADER.NUMBER,
-    },
-    {
-      sortable: true,
       property: "fullName",
       name: ADMIN_TABLE_HEADER.NAME,
     },
@@ -87,10 +81,9 @@ const AdminMentorList = () => {
     try {
       const mentors = await getLatestSpeakerList();
 
-      const updatedMentorList = mentors.map((mentor, index) => {
+      const updatedMentorList = mentors.map((mentor) => {
         return {
           ...mentor,
-          number: index + 1,
           createdDate: handleTimeToDisplay(
             mentor.createdDate,
             null,

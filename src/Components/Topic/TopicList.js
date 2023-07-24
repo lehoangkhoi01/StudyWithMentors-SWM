@@ -21,12 +21,6 @@ import { useEffect, useState } from "react";
 const HEADER_TABLE = [
   {
     sortable: true,
-    center: true,
-    property: "number",
-    name: TOPIC_TABLE.NUMBER,
-  },
-  {
-    sortable: true,
     property: "name",
     name: TOPIC_TABLE.NAME,
   },
@@ -66,7 +60,7 @@ const ACTION_ITEMS = [
     action: UPSERT_ACTION,
   },
   {
-    imgSrc: require("../../assets/icons/Deactive.png"),
+    imgSrc: require("../../assets/icons/Accept.png"),
     label: CONFIRM_TOPIC_MODAL.ACCEPT,
     action: CONFIRM_ACTION,
   },
@@ -76,7 +70,7 @@ const ACTION_ITEMS = [
     action: CONFIRM_ACTION,
   },
   {
-    imgSrc: require("../../assets/icons/Deactive.png"),
+    imgSrc: require("../../assets/icons/Archive.png"),
     label: CONFIRM_TOPIC_MODAL.ARCHIVE,
     action: CONFIRM_ACTION,
   },
@@ -92,6 +86,7 @@ const TopicList = () => {
   useEffect(() => {
     let header = HEADER_TABLE;
     let actions = ACTION_ITEMS;
+
     if (userInfo.role === SYSTEM_ROLE.MENTOR) {
       header.splice(5, 1);
     } else if (userInfo.role === SYSTEM_ROLE.STAFF) {
@@ -106,10 +101,9 @@ const TopicList = () => {
     try {
       const topics = await topicService.getTopics();
 
-      let updatedTopicList = topics.map((topic, index) => {
+      let updatedTopicList = topics.map((topic) => {
         return {
           ...topic,
-          number: index + 1,
           translatedStatus: TOPIC_STATUS[topic.status],
           mentorName: topic.mentor.fullName,
         };

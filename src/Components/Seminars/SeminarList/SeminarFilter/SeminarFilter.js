@@ -60,18 +60,24 @@ const SeminarFilter = forwardRef((props, ref) => {
     getDepartments();
   }, []);
 
-  const onFilter = () => {
+  const onFilter = (_, getAll) => {
     const seminarName = getValues("seminarName");
     const [startDateJs, endDateJs] = selectedDateRange;
     const startDate = startDateJs ? startDateJs.toDate() : "";
     const endDate = endDateJs ? endDateJs.toDate() : "";
 
-    props.onSeminarFilter(
-      seminarName,
-      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
-      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, endDate) ?? null,
-      selectedDepartment.id
-    );
+    console.log(getAll)
+
+    if (getAll) {
+      props.onSeminarFilter();
+    } else {
+      props.onSeminarFilter(
+        seminarName,
+        convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
+        convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, endDate) ?? null,
+        selectedDepartment.id
+      );
+    }
   };
 
   const handleDepartmentChange = (event) => {
@@ -90,7 +96,7 @@ const SeminarFilter = forwardRef((props, ref) => {
     });
     props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
 
-    onFilter();
+    onFilter(null, true);
   };
 
   useImperativeHandle(ref, () => ({
