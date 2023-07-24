@@ -4,26 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router";
 import { ROUTES } from "./shared/constants/navigation";
 import SignInPage from "./Pages/Authentication/SignInPage";
-import SignUpPage from "./Pages/Authentication/SignUpPage";
 import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
 import style from "./App.module.scss";
-import SignUpConfirmationPage from "./Pages/Authentication/SignUpConfirmationPage";
 import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 import CVPage from "./Pages/CV/CVPage";
 import HomePage from "./Pages/HomePage";
-import AccountPage from "./Pages/Authentication/AccountPage";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
-import CalendarPage from "./Pages/CalendarPage";
 import SeminarsPage from "./Pages/Seminars/SeminarsPage";
 import SeminarDetailPage from "./Pages/Seminars/SeminarDetailPage";
 import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
-import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
 import { Toolbar } from "@mui/material";
-import MentorListAdminPage from "./Pages/Mentor/MentorListAdminPage";
-import DiscussionPage from "./Pages/Discussion/DiscussionPage";
 import MentorListPage from "./Pages/Mentor/MentorListPage";
 import { useCustomLoading, useFetchUserInfo } from "./Helpers/generalHelper";
 import {
@@ -34,18 +27,18 @@ import {
 } from "./Store/slices/userSlice";
 import LoadingPage from "./Pages/LoadingPage";
 import { SYSTEM_ROLE } from "./shared/constants/systemType";
-import StaffRoute from "./Routes/StaffRoute";
-import StaffLayout from "./Layout/StaffLayout";
 import MeetingPage from "./Pages/Meeting/MeetingPage";
-import TopicListPage from "./Pages/Topic/TopicListPage";
-import BookingPage from "./Pages/Booking/BookingPage";
 import FillInformationPage from "./Pages/Profile/FillInformationPage";
-import { BookingListPage } from "./Pages/BookingList/BookingListPage";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { USER_STATUS } from "./shared/constants/common";
-import FieldListPage from "./Pages/Field/FieldListPage";
-import CategoryListPage from "./Pages/Category/CategoryListPage";
-import DepartmentListPage from "./Pages/Department/DepartmentListPage";
+
+import StaffRoutes from "./Layout/StaffRoutes";
+import AuthorizedRoute from "./Routes/AuthorizedRoute";
+import MentorRoutes from "./Layout/MentorRoutes";
+import AdminRoutes from "./Layout/AdminRoutes";
+import MentorStudentRoutes from "./Layout/MentorStudentRoutes";
+import AdminStaffRoutes from "./Layout/AdminStaffRoutes";
+import AdminMentorRoutes from "./Layout/AdminMentorRoutes";
 
 function App() {
   const user = useSelector(selectUser);
@@ -79,14 +72,18 @@ function App() {
       <BrowserRouter>
         <div
           className={
-            user?.userInfo?.role === "STAFF"
+            [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(
+              user?.userInfo?.role
+            )
               ? `${style.app} ${style.app__sidebar}`
               : `${style.app} ${style.app__navbar}`
           }
         >
           <NavigationBar />
           <div id="app_content" className={`${style.content}`}>
-            {user?.userInfo?.role === "STAFF" ? (
+            {[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(
+              user?.userInfo?.role
+            ) ? (
               <Toolbar sx={{ display: "none" }} />
             ) : null}
 
@@ -105,12 +102,7 @@ function App() {
               <>
                 <Route exact path="/" component={HomePage} />
                 <Route path={ROUTES.HOME} component={HomePage} />
-                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-                <Route
-                  path={ROUTES.SIGN_UP_CONFIRMATION}
-                  component={SignUpConfirmationPage}
-                />
                 <Route exact path={`${ROUTES.CV}`} component={CVPage} />
                 <Route exact path={`${ROUTES.CV}/:id`} component={CVPage} />
                 <Route
@@ -123,37 +115,47 @@ function App() {
                   path={ROUTES.SEMINAR_DETAIL}
                   component={SeminarDetailPage}
                 />
-                <Route path={ROUTES.CALENDAR} component={CalendarPage} />
-                <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+
                 <Route
                   path={ROUTES.SEMINAR_FEEDBACK}
                   component={SeminarFeedbackPage}
                 />
-                <Route
-                  path={ROUTES.FEEDBACK_OVERVIEW}
-                  component={FeedbackOverviewPage}
-                />
-                <Route
-                  path={ROUTES.ADMIN_MENTOR_LIST}
-                  component={MentorListAdminPage}
-                />
+
                 <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
-                <Route path={ROUTES.DISCUSSION} component={DiscussionPage} />
                 <Route path={ROUTES.MEETING} component={MeetingPage} />
-                <Route path={ROUTES.TOPIC_LIST} component={TopicListPage} />
-                <Route path={ROUTES.BOOKING} component={BookingPage} />
-                <Route path={ROUTES.BOOKING_LIST} component={BookingListPage} />
-                <Route path={ROUTES.FIELD_LIST} component={FieldListPage} />
-                <Route path={ROUTES.CATEGORY_LIST} component={CategoryListPage} />
-                <Route path={ROUTES.DEPARTMENT_LIST} component={DepartmentListPage} />
-                
+
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
 
-                <StaffRoute
+                <AuthorizedRoute
                   path="/staff"
-                  component={StaffLayout}
-                  roles={[SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN]}
+                  component={StaffRoutes}
+                  roles={[SYSTEM_ROLE.STAFF]}
+                />
+                <AuthorizedRoute
+                  path="/mentor"
+                  roles={[SYSTEM_ROLE.MENTOR]}
+                  component={MentorRoutes}
+                />
+                <AuthorizedRoute
+                  path="/admin"
+                  roles={[SYSTEM_ROLE.ADMIN]}
+                  component={[AdminRoutes]}
+                />
+                <AuthorizedRoute
+                  path="/booking"
+                  roles={[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.MENTOR]}
+                  component={MentorStudentRoutes}
+                />
+                <AuthorizedRoute
+                  path="/management"
+                  roles={[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF]}
+                  component={AdminStaffRoutes}
+                />
+                <AuthorizedRoute
+                  path="/topic"
+                  roles={[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.MENTOR]}
+                  component={AdminMentorRoutes}
                 />
               </>
             </Switch>
