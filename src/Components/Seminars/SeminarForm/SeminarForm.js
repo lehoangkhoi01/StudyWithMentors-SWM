@@ -60,6 +60,7 @@ import { selectMentorList } from "../../../Store/slices/mentorSlice";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import UpsertMentorModal from "../../Modal/UpsertMentorModal";
 import { convertObjectToArray } from "../../../Helpers/arrayHelper";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -95,6 +96,8 @@ const SeminarForm = () => {
       seminarSpeakers: [],
     },
   });
+
+  const userInfo = useSelector(selectUserInfo);
 
   const [openAddMentorModal, setOpenAddMentorModal] = React.useState(false);
 
@@ -328,6 +331,10 @@ const SeminarForm = () => {
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
+        if (seminar.department?.id !== userInfo.departmentId) {
+          history.push(ROUTES.NOT_FOUND);
+          return;
+        }
         setSeminarDetail(seminar);
         setSelectedSpeakers(seminar.mentors);
       } catch (error) {
