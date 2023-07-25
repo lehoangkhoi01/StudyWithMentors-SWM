@@ -144,7 +144,7 @@ function App() {
                 />
                 <AuthorizedRoute
                   path="/booking"
-                  roles={[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.MENTOR]}
+                  roles={[SYSTEM_ROLE.STUDENT, SYSTEM_ROLE.MENTOR]}
                   component={MentorStudentRoutes}
                 />
                 <AuthorizedRoute
