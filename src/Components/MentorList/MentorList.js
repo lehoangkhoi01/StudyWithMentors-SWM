@@ -53,11 +53,43 @@ const MentorList = () => {
       const mentorsData = await accountService.getAllMoreInfoMentors(
         params ?? []
       );
-      const mentorsData = await accountService.getAllMoreInfoMentors(
-        params ?? []
-      );
 
       setMentors(mentorsData.mentorCards);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getFields = async () => {
+    try {
+      setLoading(true);
+      const fieldsBE = await getTopicFields();
+      setFields(fieldsBE);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getFollowingMentors = async () => {
+    try {
+      setLoading(true);
+      let result = await followMentorService.getFollowing(userInfo.accountId);
+      result = result.map((mentor) => mentor.accountId);
+      setFollowingMentors(result);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -144,7 +176,7 @@ const MentorList = () => {
         <Grid className={`${style.mentorList__cards}`} container spacing={3}>
           {displayedMentors.map((mentor, index) => (
             <Grid
-              key={`GRID_MENTOR_CARD_${index}`}
+              key={`MENTOR_CARD_${index}`}
               item
               xs={12}
               md={6}
