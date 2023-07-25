@@ -276,8 +276,11 @@ const CV = () => {
   useEffect(() => {
     if (id) {
       setMentorId(id);
-    } else {
+    } else if (!id && userInfo.role === SYSTEM_ROLE.MENTOR) {
       setMentorId(userInfo.accountId);
+    } else {
+      //Not allow user without mentor role to access CV page without id in the url
+      history.push(ROUTES.NOT_FOUND);
     }
   }, []);
 

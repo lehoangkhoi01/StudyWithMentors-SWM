@@ -1,13 +1,10 @@
 export const ROUTES = {
   SIGN_IN: "/sign-in",
-  SIGN_UP: "/sign-up",
-  SIGN_UP_CONFIRMATION: "/confirmation",
   FILL_INFORMATION: "/fill-information",
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
-  CALENDAR: "/calendar",
-  ACCOUNT: "/account",
+  CALENDAR: "/mentor/calendar",
   SEMINAR_FEEDBACK: "/seminar-feedback/:id",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
@@ -15,23 +12,21 @@ export const ROUTES = {
   SEMINAR_DETAIL: "/seminars/:id",
   SEMINAR_CREATE: "/staff/seminar-create",
   SEMINAR_UPDATE: "/staff/update-seminar/:id",
-  FEEDBACK_OVERVIEW: "/feedback-overview/:id",
+  FEEDBACK_OVERVIEW: "/management/feedback-overview/:id",
   MENTOR_LIST: "/mentors",
   ADMIN_MENTOR_LIST: "/admin/mentors",
-  DISCUSSION: "/discussion/:id",
   MEETING: "/meeting-room/:id",
-  TOPIC_LIST: "/topics",
-  BOOKING: "/booking",
-  BOOKING_LIST: "/booking-list",
-  CATEGORY_LIST: "/categories",
-  DEPARTMENT_LIST: "/departments",
-  FIELD_LIST: "/fields"
+  TOPIC_LIST: "/topic/list",
+  BOOKING_LIST: "/booking/list",
+  CATEGORY_LIST: "/admin/categories",
+  DEPARTMENT_LIST: "/admin/departments",
+  FIELD_LIST: "/admin/fields",
 };
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
   SEMINAR_UPDATE: "/staff/update-seminar",
-  FEEDBACK_OVERVIEW: "/feedback-overview",
+  FEEDBACK_OVERVIEW: "/management/feedback-overview",
 };
 
 export const UNAUTHORIZED_NAVBAR = [

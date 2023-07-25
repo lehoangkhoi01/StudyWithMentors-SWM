@@ -19,6 +19,7 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
@@ -156,7 +157,7 @@ const SeminarList = () => {
           >
             {FILTER_SEMINAR.PAST}
           </p>
-          {userInfo?.role === "STAFF" && (
+          {userInfo?.role === SYSTEM_ROLE.STAFF && (
             <p
               className={
                 statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
@@ -170,23 +171,9 @@ const SeminarList = () => {
               {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
             </p>
           )}
-          {userInfo?.role === "STUDENT" && (
-            <p
-              className={
-                statusFilter === FILTER_SEMINAR.FOLLOWED_SEMINAR
-                  ? style.seminarList__status__filter__active
-                  : ""
-              }
-              onClick={() => {
-                onChangeStatusFilter(FILTER_SEMINAR.FOLLOWED_SEMINAR);
-              }}
-            >
-              {FILTER_SEMINAR.FOLLOWED_SEMINAR}
-            </p>
-          )}
         </div>
 
-        {userInfo?.role === "STAFF" ? (
+        {userInfo?.role === SYSTEM_ROLE.STAFF ? (
           <CustomizedButton
             variant="outlined"
             color="primary600"

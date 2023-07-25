@@ -15,7 +15,10 @@ import {
   FEEDBACK_OVERVIEW,
   FEEDBACK_TYPE,
 } from "../../../shared/constants/common";
-import { RATING_LABEL } from "../../../shared/constants/systemType";
+import {
+  RATING_LABEL,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import { seminarFeedbackService } from "../../../Services/seminarFeedbackService";
 import { useCustomAppbar } from "../../../Helpers/generalHelper";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
@@ -54,7 +57,10 @@ const FeedbackOverview = () => {
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
-        if (userInfo.departmentId !== seminar.department.id) {
+        if (
+          userInfo.role === SYSTEM_ROLE.STAFF &&
+          userInfo.departmentId !== seminar.department.id
+        ) {
           history.push(ROUTES.NOT_FOUND);
         }
         setSeminarDetail(seminar);

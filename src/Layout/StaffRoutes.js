@@ -3,9 +3,8 @@ import { Route, Switch } from "react-router";
 import NotFoundPage from "../Components/Error/NotFound/NotFoundPage";
 import SeminarCreatePage from "../Pages/Seminars/SeminarCreatePage";
 import { ROUTES } from "../shared/constants/navigation";
-//import NavigationBar from "../shared/components/NavigationBar/NavigationBar";
 
-const StaffLayout = () => {
+const StaffRoutes = () => {
   return (
     <React.Fragment>
       <Switch>
@@ -17,4 +16,4 @@ const StaffLayout = () => {
   );
 };
 
-export default StaffLayout;
+export default StaffRoutes;

@@ -100,18 +100,6 @@ const MentorList = () => {
             </p>
             <p
               className={
-                statusFilter === FILTER_SEMINAR.POPULAR
-                  ? style.mentorList__status__filter__active
-                  : ""
-              }
-              onClick={() => {
-                onChangeStatusFilter(FILTER_SEMINAR.POPULAR);
-              }}
-            >
-              {FILTER_SEMINAR.POPULAR}
-            </p>
-            <p
-              className={
                 statusFilter === FILTER_SEMINAR.FOLLOWING
                   ? style.mentorList__status__filter__active
                   : ""
