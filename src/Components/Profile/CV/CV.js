@@ -365,8 +365,8 @@ const CV = () => {
   const getFollowingMentors = async () => {
     try {
       setLoading(true);
-      const result = await followMentorService.getFollowing(userInfo.accountId);
-      console.log(result);
+      let result = await followMentorService.getFollowing(userInfo.accountId);
+      result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
     } catch (error) {
       setNotification({
@@ -472,14 +472,12 @@ const CV = () => {
 
   const onCloseModal = () => {
     setOpenModal(false);
-
     eventfile.target.value = null;
   };
 
   const onSelectImage = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setCroppingImage({ files: e.target.files });
-
       setOpenModal(true);
     }
   };
@@ -508,8 +506,13 @@ const CV = () => {
     try {
       setLoading(true);
       await followMentorService.follow(mentorId);
+      await getFollowingMentors();
     } catch (error) {
-      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
     } finally {
       setLoading(false);
     }
@@ -519,15 +522,19 @@ const CV = () => {
     try {
       setLoading(true);
       await followMentorService.unfollow(mentorId);
+      await getFollowingMentors();
     } catch (error) {
-      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const renderFollowButton = (mentorId) => {
-    console.log(followingMentors);
     if (followingMentors.includes(mentorId)) {
       return (
         <div style={{ width: "30%", marginLeft: "1rem" }}>
