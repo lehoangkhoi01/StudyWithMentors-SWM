@@ -575,3 +575,9 @@ export const CV_MENTOR = {
   HOT_TOPIC: "Chủ đề nổi bật",
   AVAILABLE_TIME: "Thời gian khả dụng gần nhất trong 30 ngày tiếp theo",
 };
+
+export const MENTOR_CARD = {
+  RATING: "sao",
+  FOLLOWERS: "người theo dõi",
+  DONT_HAVE_TOPIC: "Chưa có chủ đề",
+};
