@@ -1,5 +1,5 @@
 import style from "./MentorCard.module.scss";
-import { FOLLOW } from "../../../shared/constants/common";
+import { FOLLOW, MENTOR_CARD } from "../../../shared/constants/common";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../../shared/constants/navigation";
@@ -52,22 +52,26 @@ const MentorCard = (props) => {
             <img
               src={require("../../../assets/icons/Mentor-rating-star.png")}
             />
-            <span>4.8 sao</span>
+            <span>
+              {props.data.ratingString ?? 0} {MENTOR_CARD.RATING}
+            </span>
           </div>
           <span>|</span>
-          <span>10 người theo dõi</span>
+          <span>
+            {props.data.followers} {MENTOR_CARD.FOLLOWERS}
+          </span>
         </div>
         <div className={style.card__topic}>
           {!props.data.topics.length && (
             <div className={style.card__topic_item}>
-              <span>Chưa có chủ đề</span>
+              <span>{MENTOR_CARD.DONT_HAVE_TOPIC}</span>
             </div>
           )}
           {props.data.topics.map((topic, index) => (
             <>
               {index < 3 && (
                 <div
-                  key={`MENTOR_CARD_${index}`}
+                  key={`MENTOR_ITEM_${index}`}
                   className={style.card__topic_item}
                 >
                   <img src={require("../../../assets/icons/mentor-pen.png")} />
