@@ -31,10 +31,10 @@
       &_brief {
         position: absolute;
         display: flex;
-        gap: 4.5%;
-
+        width: 100%;
         top: 4.5vw;
         left: 2.5vw;
+        gap: 1vw;
       }
 
       &_edit {
