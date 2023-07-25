@@ -30,4 +30,31 @@ export const topicService = {
     };
     return axiosClient.post(url, payload);
   },
+  deleteField: (id) => {
+    const url = `${TopicEndpoints.DELETE_TOPIC_FIELD}/${id}`;
+
+    return axiosClient.delete(url);
+  },
+  createField: (data) => {
+    const url = TopicEndpoints.UPSERT_TOPIC_FIELD;
+    return axiosClient.post(url, data);
+  },
+  updateField: (data, id) => {
+    const url = `${TopicEndpoints.UPSERT_TOPIC_FIELD}/${id}`;
+    return axiosClient.put(url, data);
+  },
+  
+  deleteCategory: (id) => {
+    const url = `${TopicEndpoints.DELETE_TOPIC_CATEGORIES}/${id}`;
+
+    return axiosClient.delete(url);
+  },
+  createCategory: (data) => {
+    const url = TopicEndpoints.UPSERT_TOPIC_CATEGORIES;
+    return axiosClient.post(url, data);
+  },
+  updateCategory: (data, id) => {
+    const url = `${TopicEndpoints.UPSERT_TOPIC_CATEGORIES}/${id}`;
+    return axiosClient.put(url, data);
+  },
 };

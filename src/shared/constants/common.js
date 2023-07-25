@@ -33,6 +33,12 @@ export const BUTTON_LABEL = {
   SEARCH_MENTOR: "Tìm kiếm diễn giả",
   SEARCH_TOPIC: "Tìm kiếm chủ đề",
   BOOKING_NOW: "Đặt lịch ngay",
+  CREATE_FIELD: "Tạo lĩnh vực",
+  ADD_FIELD: "Thêm lĩnh vực",
+  CREATE_CATEGORY: "Tạo thể loại",
+  ADD_CATEGORY: "Thêm thể loại",
+  SEARCH_FIELD: "Tìm kiếm lĩnh vực",
+  SEARCH_CATEGORY: "Tìm kiếm thể loại",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -86,6 +92,8 @@ export const TITLE = {
   SEMINAR_PAST: "Đã diễn ra",
   CREATE_TOPIC: "Tạo chủ đề",
   EDIT_TOPIC: "Chỉnh sửa chủ đề",
+  CREATE_FIELD: "Tạo lĩnh vực",
+  EDIT_FIELD: "Chỉnh sửa lĩnh vực",
 };
 
 export const OTHER_TEXT = {
@@ -444,6 +452,7 @@ export const ADMIN_TABLE_HEADER = {
   CREATED_DATE: "Ngày tạo",
   STATUS: "Trạng thái",
   ACTION: "Tác vụ",
+  FIELD_NAME: "Lĩnh vực",
 };
 
 export const TABLE_DETAIL = {
@@ -564,6 +573,8 @@ export const CONFIRM_TOPIC_MODAL = {
 export const TABLE_TYPE = {
   MENTOR: "MENTOR",
   TOPIC: "TOPIC",
+  FIELD: "FIELD",
+  CATEGORY: "CATEGORY",
 };
 
 export const USER_STATUS = {
@@ -580,4 +591,8 @@ export const MENTOR_CARD = {
   RATING: "sao",
   FOLLOWERS: "người theo dõi",
   DONT_HAVE_TOPIC: "Chưa có chủ đề",
+};
+
+export const UPSERT_FIELD = {
+  NAME: "Tên lĩnh vực",
 };

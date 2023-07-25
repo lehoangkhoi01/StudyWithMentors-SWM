@@ -1,5 +1,7 @@
+import FieldList from "../../Components/Field/FieldList";
+
 const FieldListPage = () => {
-  return <div></div>;
+  return <FieldList />;
 };
 
 export default FieldListPage;
