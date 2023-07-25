@@ -10,6 +10,9 @@ import { scheduleService } from "../../../Services/sheduleService";
 import { useCustomLoading } from "../../../Helpers/generalHelper";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ROUTES } from "../../../shared/constants/navigation";
+import moment from "moment";
+import { format } from "date-fns";
+import { DATE_FORMAT } from "../../../shared/constants/common";
 
 const SelectSlotUIStep = (props) => {
   const [currentDate, setCurrentDate] = React.useState(new Date());
@@ -29,11 +32,18 @@ const SelectSlotUIStep = (props) => {
   const triggerRangeChangeEvent = async (date, view) => {
     let toDay = new Date().setHours(0, 0, 0, 0);
     let dateView = new Date(date).setHours(0, 0, 0, 0);
+    let dateStart = moment().add(2, "days").toDate();
+
     if (dateView < toDay) {
       setEventList([]);
     } else {
       setLoading(true);
-      const startEnd = getStartEndTime(date, view);
+      let startEnd = null;
+      startEnd = getStartEndTime(date, view);
+      if (dateView === toDay) {
+        startEnd.start = format(dateStart, DATE_FORMAT.BACK_END_YYYY_MM_DD);
+      }
+
       try {
         const result = await scheduleService.getMentorSchedule(
           props.mentorId,

@@ -145,7 +145,7 @@ const MentorCard = (props) => {
             <>
               {index < 3 && (
                 <div
-                  key={`MENTOR_CARD_${index}`}
+                  key={`MENTOR_ITEM_${index}`}
                   className={style.card__topic_item}
                 >
                   <img src={require("../../../assets/icons/mentor-pen.png")} />
