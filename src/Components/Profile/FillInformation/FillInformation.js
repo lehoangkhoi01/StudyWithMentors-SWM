@@ -3,6 +3,7 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
+  ERROR_MESSAGES,
   FILL_INFORMATION,
   PLACE_HOLDER,
   TITLE,
@@ -20,9 +21,15 @@ import {
 } from "../../../Helpers/generalHelper";
 import { userAccountService } from "../../../Services/userAccountService";
 import { ROUTES } from "../../../shared/constants/navigation";
+import { registerFullNameValidation } from "../../../shared/constants/validationRules";
 
 const FillInformation = () => {
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -36,6 +43,14 @@ const FillInformation = () => {
     setValue("phone", userInfo.phone);
     setValue("email", userInfo.email);
   }, []);
+
+  const validatePhoneNum = (phoneNum) => {
+    if (phoneNum && (phoneNum.length < 10 || phoneNum.length > 11)) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    } else if (phoneNum && /^\d+$/.test(phoneNum) === false) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -92,15 +107,22 @@ const FillInformation = () => {
           placeholder={PLACE_HOLDER.DEFAULT_NAME}
           required={true}
           type={"text"}
-          options={{ ...register("fullName") }}
+          options={{ ...register("fullName", registerFullNameValidation) }}
+          error={errors.fullname ? true : false}
+          helperText={errors?.fullname?.message}
         />
         <CustomizedTextField
           className={style.fillInformation__input}
           inputId="phone"
           name={TITLE.PHONE}
-          placeholder={PLACE_HOLDER.DEFAULT_PHONE}
           type={"text"}
-          options={{ ...register("phone") }}
+          options={{
+            ...register("phone", {
+              validate: (val) => validatePhoneNum(val),
+            }),
+          }}
+          error={errors.phone ? true : false}
+          helperText={errors?.phone?.message}
         />
         <div className={style.fillInformation__button}>
           <CustomizedButton

@@ -31,6 +31,10 @@ export const passwordValidation = {
 
 export const registerFullNameValidation = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  maxLength: {
+    value: LENGTH.FULLNAME_MAX,
+    message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
+  },
 };
 
 export const registerConfirmPassword = {

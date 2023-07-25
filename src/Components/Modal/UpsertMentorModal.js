@@ -18,6 +18,10 @@ import {
   useNotification,
 } from "../../Helpers/generalHelper";
 import { userAccountService } from "../../Services/userAccountService";
+import {
+  emailValidationRules,
+  registerFullNameValidation,
+} from "../../shared/constants/validationRules";
 
 const UpsertMentorModal = (props) => {
   const { handleSubmit, register, setValue, getValues, reset } = useForm();
@@ -99,6 +103,14 @@ const UpsertMentorModal = (props) => {
     return false;
   };
 
+  const validatePhoneNum = (phoneNum) => {
+    if (phoneNum && (phoneNum.length < 10 || phoneNum.length > 11)) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    } else if (phoneNum && /^\d+$/.test(phoneNum) === false) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    }
+  };
+
   return (
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
@@ -113,7 +125,7 @@ const UpsertMentorModal = (props) => {
               required={true}
               placeholder={PLACE_HOLDER.DEFAULT_NAME}
               options={{
-                ...register("fullName"),
+                ...register("fullName", registerFullNameValidation),
               }}
             />
             <CustomizedTextField
@@ -121,7 +133,7 @@ const UpsertMentorModal = (props) => {
               required={true}
               placeholder={PLACE_HOLDER.DEFAULT_EMAIL}
               options={{
-                ...register("email"),
+                ...register("email", emailValidationRules),
               }}
             />
             {isExistedEmail && (
@@ -134,7 +146,9 @@ const UpsertMentorModal = (props) => {
               name={"Số điện thoại"}
               placeholder={PLACE_HOLDER.DEFAULT_PHONE}
               options={{
-                ...register("phoneNum"),
+                ...register("phoneNum", {
+                  validate: (val) => validatePhoneNum(val),
+                }),
               }}
             />
             <div className={style.modal__buttons}>
