@@ -186,6 +186,7 @@ export const GENDER = {
 };
 
 export const LENGTH = {
+  FULLNAME_MAX: 200,
   PASSWORD_MAX: 100,
   PASSWORD_MIN: 8,
   EMAIL_MAX: 254,
@@ -207,6 +208,8 @@ export const ERROR_MESSAGES = {
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
   EMPTY_PASSWORD_FIELD: "Password không được để trống.",
   MAX_LENGTH_EMAIL: "Độ dài tối đa cho email là " + LENGTH.EMAIL_MAX + " kí tự",
+  MAX_LENGTH_FULLNAME:
+    "Độ dài tối đa cho tên là " + LENGTH.FULLNAME_MAX + " kí tự",
   MAX_PARTICIPANTS: "Chọn tối đa " + LENGTH.PARTICIPANTS_MAX + " bạn tham gia",
   MAX_LENGTH_STUDENT_NOTE:
     "Độ dài tối đa cho ghi chú là " + LENGTH.STUDENT_NOTE_MAX + " kí tự",
@@ -216,6 +219,7 @@ export const ERROR_MESSAGES = {
     " đến " +
     LENGTH.PASSWORD_MAX +
     " kí tự.",
+  INVALID_PHONE_NUM: "Số điện thoại từ 10 đến 11 số.",
   WRONG_EMAIL_OR_PASSWORD: "Email hoặc mật khẩu không chính xác.",
   CONFIRM_PASSWORD_NOT_MATCH: "Mật khẩu không trùng khớp.",
   WRONG_PASSWORD_FORMAT:
