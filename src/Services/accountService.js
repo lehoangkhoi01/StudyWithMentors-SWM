@@ -18,6 +18,10 @@ export const accountService = {
   },
   getAllMoreInfoMentors: () => {
     const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
-    return axiosClient.get(url);
+    return axiosClient.get(url, {
+      params: {
+        searchString: [""],
+      },
+    });
   },
 };
