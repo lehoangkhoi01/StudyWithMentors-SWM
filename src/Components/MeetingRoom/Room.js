@@ -8,6 +8,7 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../Store/slices/userSlice";
+import { ROUTES } from "../../shared/constants/navigation";
 
 const PRIMARY_COLOR = "#383c6b";
 const BACKGROUND_COLOR = "#202349";
@@ -274,6 +275,15 @@ const Room = () => {
 
       if (indexOfUser < 0) {
         throw "error";
+      } else {
+        const data = {
+          ids: [userInfo.accountId],
+        };
+        try {
+          await bookingService.logAttendance(id, data);
+        } catch (error) {
+          history.push(ROUTES.SERVER_ERROR);
+        }
       }
 
       setIsChecked(true);
