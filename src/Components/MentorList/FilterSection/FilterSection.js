@@ -12,15 +12,6 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const MAJOR_NAMES = [
-  { name: "IT - Phần mêm", value: "IT - Phần mêm" },
-  { name: "IT - Phần cứng", value: "IT - Phần cứng" },
-  { name: "Bất động sản", value: "Bất động sản" },
-  { name: "Thiết kế/Kiến trúc", value: "Thiết kế/Kiến trúc" },
-  { name: "Nhà hàng/Khách sạn", value: "Nhà hàng/Khách sạn" },
-  { name: "Marketing", value: "Marketing" },
-];
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -39,7 +30,7 @@ const StyledLabelSelect = styled(InputLabel)`
 `;
 
 const FilterSection = (props) => {
-  const { register, reset } = useForm();
+  const { register, reset, getValues } = useForm();
 
   const [majorName, setMajorName] = useState([]);
 
@@ -56,6 +47,15 @@ const FilterSection = (props) => {
       searchTerm: "",
     });
     props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
+  };
+
+  const onSearch = () => {
+    const majorOnlyNames = majorName.map((item) => item.name);
+    const searchTerm = getValues("searchTerm");
+
+    const params = [searchTerm, ...majorOnlyNames];
+
+    props.onSearch(params);
   };
 
   return (
@@ -83,7 +83,7 @@ const FilterSection = (props) => {
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
-              items={MAJOR_NAMES}
+              items={props.fields}
               inputId="majorSelect"
               isMultipleSelect={true}
               value={majorName}
@@ -106,6 +106,7 @@ const FilterSection = (props) => {
               className={`${style.filterSection__button}`}
               variant="contained"
               startIcon={<SearchIcon />}
+              onClick={onSearch}
             >
               {BUTTON_LABEL.SEARCH}
             </Button>

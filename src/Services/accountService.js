@@ -16,11 +16,11 @@ export const accountService = {
     const url = AccountEndpoints.CREATE_MENTOR;
     return axiosClient.post(url, data);
   },
-  getAllMoreInfoMentors: () => {
+  getAllMoreInfoMentors: (params) => {
     const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
     return axiosClient.get(url, {
       params: {
-        searchString: [""],
+        searchString: ["", ...params],
       },
     });
   },
