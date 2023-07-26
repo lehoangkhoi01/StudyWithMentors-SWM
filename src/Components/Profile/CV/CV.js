@@ -46,6 +46,7 @@ import moment from "moment";
 import { scheduleService } from "../../../Services/sheduleService";
 import { format } from "date-fns";
 import TimeSlots from "./TimeSlots/TimeSlots";
+import { followMentorService } from "../../../Services/followMentorService";
 
 const TEXT_FIELDS = [
   {
@@ -265,6 +266,7 @@ const CV = () => {
   const [hotTopics, setHotTopics] = useState([]);
   const [mentorProfile, setMentorProfile] = useState();
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [followingMentors, setFollowingMentors] = useState([]);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -292,6 +294,7 @@ const CV = () => {
     getMentorProfile();
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       getSchedule();
+      getFollowingMentors();
     }
   }, [mentorId]);
 
@@ -354,6 +357,23 @@ const CV = () => {
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
       history.push(ROUTES.HOME);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getFollowingMentors = async () => {
+    try {
+      setLoading(true);
+      let result = await followMentorService.getFollowing(userInfo.accountId);
+      result = result.map((mentor) => mentor.accountId);
+      setFollowingMentors(result);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
     } finally {
       setLoading(false);
     }
@@ -452,14 +472,12 @@ const CV = () => {
 
   const onCloseModal = () => {
     setOpenModal(false);
-
     eventfile.target.value = null;
   };
 
   const onSelectImage = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setCroppingImage({ files: e.target.files });
-
       setOpenModal(true);
     }
   };
@@ -481,6 +499,66 @@ const CV = () => {
     } finally {
       setLoading(false);
       onCloseModal();
+    }
+  };
+
+  const handleFollow = async (mentorId) => {
+    try {
+      setLoading(true);
+      await followMentorService.follow(mentorId);
+      await getFollowingMentors();
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnfollow = async (mentorId) => {
+    try {
+      setLoading(true);
+      await followMentorService.unfollow(mentorId);
+      await getFollowingMentors();
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderFollowButton = (mentorId) => {
+    if (followingMentors.includes(mentorId)) {
+      return (
+        <div style={{ width: "30%", marginLeft: "1rem" }}>
+          <CustomizedButton
+            variant="contained"
+            color="primary600"
+            onClick={() => handleUnfollow(mentorId)}
+          >
+            Hủy theo dõi
+          </CustomizedButton>
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ width: "30%", marginLeft: "1rem" }}>
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={() => handleFollow(mentorId)}
+          >
+            Theo dõi
+          </CustomizedButton>
+        </div>
+      );
     }
   };
 
@@ -530,12 +608,18 @@ const CV = () => {
                   </div>
                 )}
               </div>
-              <div style={{ position: "relative" }}>
-                <h2>{mentorProfile?.fullName}</h2>
-                <p>
-                  {position &&
-                    `${position.position} ${OTHERS.AT} ${position.company}`}
-                </p>
+              <div
+                style={{ position: "relative", width: "100%", display: "flex" }}
+              >
+                <div>
+                  <h2>{mentorProfile?.fullName}</h2>
+                  <p>
+                    {position &&
+                      `${position.position} ${OTHERS.AT} ${position.company}`}
+                  </p>
+                </div>
+                {userInfo.role === SYSTEM_ROLE.STUDENT &&
+                  renderFollowButton(id)}
               </div>
             </div>
           </div>

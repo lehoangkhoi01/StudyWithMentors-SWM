@@ -13,11 +13,16 @@ import {
   useFetchTopicFieldsAndCategories,
   useNotification,
 } from "../../Helpers/generalHelper";
+import { followMentorService } from "../../Services/followMentorService";
+import { useSelector } from "react-redux";
+import { SYSTEM_ROLE } from "../../shared/constants/systemType";
+import { selectUserInfo } from "../../Store/slices/userSlice";
 
 const MentorList = () => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const { getTopicFields } = useFetchTopicFieldsAndCategories();
+  const userInfo = useSelector(selectUserInfo);
 
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
   const [pagination, setPagination] = useState({
@@ -27,33 +32,20 @@ const MentorList = () => {
   });
   const [mentors, setMentors] = useState([]);
   const [displayedMentors, setDisplayedMentors] = useState([]);
+  const [followingMentors, setFollowingMentors] = useState([]);
   const [fields, setFields] = useState([]);
 
   useEffect(() => {
     getMentors();
     getFields();
+    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+      getFollowingMentors();
+    }
   }, []);
 
   useEffect(() => {
     onPaginate(1, mentors);
   }, [mentors]);
-
-  const getFields = async () => {
-    try {
-      setLoading(true);
-      const fieldsBE = await getTopicFields();
-      setFields(fieldsBE);
-    } catch (error) {
-      console.log(error);
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: ERROR_MESSAGES.COMMON_ERROR,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getMentors = async (params) => {
     try {
@@ -74,6 +66,44 @@ const MentorList = () => {
       setLoading(false);
     }
   };
+
+  const getFields = async () => {
+    try {
+      setLoading(true);
+      const fieldsBE = await getTopicFields();
+      setFields(fieldsBE);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getFollowingMentors = async () => {
+    try {
+      setLoading(true);
+      let result = await followMentorService.getFollowing(userInfo.accountId);
+      result = result.map((mentor) => mentor.accountId);
+      setFollowingMentors(result);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    onPaginate(1, mentors);
+  }, [mentors]);
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
@@ -146,14 +176,19 @@ const MentorList = () => {
         <Grid className={`${style.mentorList__cards}`} container spacing={3}>
           {displayedMentors.map((mentor, index) => (
             <Grid
-              key={`GRID_MENTOR_CARD_${index}`}
+              key={`MENTOR_CARD_${index}`}
               item
               xs={12}
               md={6}
               lg={4}
               xl={3}
             >
-              <MentorCard key={`MENTOR_CARD_${index}`} data={mentor} />
+              <MentorCard
+                key={`MENTOR_CARD_${index}`}
+                data={mentor}
+                followingMentors={followingMentors}
+                getFollowingMentors={getFollowingMentors}
+              />
             </Grid>
           ))}
         </Grid>

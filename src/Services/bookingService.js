@@ -18,4 +18,8 @@ export const bookingService = {
     const url = `${BookingEndpoints.BOOKING}/${id}`;
     return axiosClient.get(url);
   },
+  logAttendance: (id, data) => {
+    const url = `${BookingEndpoints.BOOKING}/attend/${id}`;
+    return axiosClient.post(url, data);
+  },
 };

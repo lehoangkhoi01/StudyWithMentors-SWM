@@ -71,3 +71,7 @@ export const MeetingFeedbackEndpoints = {
   MEETING_FEEDBACK_BY_USER: "meeting-feedback/by-user",
   MEETING_FEEDBACK_BY_BOOKING: "meeting-feedback/by-booking",
 };
+
+export const FollowMentorEndpoints = {
+  PROFILE: "user-profile",
+};
