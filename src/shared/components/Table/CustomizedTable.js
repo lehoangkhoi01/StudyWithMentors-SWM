@@ -43,6 +43,7 @@ import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
 import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
 import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
 import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
+import UpsertDepartment from "../../../Components/Modal/UpsertDepartment/UpsertDepartment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -393,6 +394,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.ADD_FIELD;
       case TABLE_TYPE.CATEGORY:
         return BUTTON_LABEL.ADD_CATEGORY;
+      case TABLE_TYPE.DEPARTMENT:
+        return BUTTON_LABEL.ADD_DEPARTMENT;
       default:
         return "";
     }
@@ -408,6 +411,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.SEARCH_FIELD;
       case TABLE_TYPE.CATEGORY:
         return BUTTON_LABEL.SEARCH_CATEGORY;
+      case TABLE_TYPE.DEPARTMENT:
+        return BUTTON_LABEL.SEARCH_DEPARTMENT;
       default:
         return "";
     }
@@ -653,6 +658,12 @@ const CustomizedTable = (props) => {
       />
       <UpsertCategory
         openModal={openModal.upsert && props.type === TABLE_TYPE.CATEGORY}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <UpsertDepartment
+        openModal={openModal.upsert && props.type === TABLE_TYPE.DEPARTMENT}
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}

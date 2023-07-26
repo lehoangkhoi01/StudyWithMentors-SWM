@@ -59,8 +59,8 @@ const FieldList = () => {
   };
 
   const onSearchField = (currentList, searchTerm) => {
-    return currentList.filter((mentor) =>
-      mentor.name.toLowerCase().includes(searchTerm.toLowerCase())
+    return currentList.filter((field) =>
+    field.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
