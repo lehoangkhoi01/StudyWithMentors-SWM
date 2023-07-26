@@ -54,7 +54,7 @@ export const TopicEndpoints = {
   DELETE_TOPIC_FIELD: "admin/topic-fields",
   UPSERT_TOPIC_FIELD: "admin/topic-fields",
   DELETE_TOPIC_CATEGORIES: "admin/topic-categories",
-  UPSERT_TOPIC_CATEGORIES: "admin/topic-categories"
+  UPSERT_TOPIC_CATEGORIES: "admin/topic-categories",
 };
 
 export const ScheduleEndpoints = {
@@ -64,6 +64,7 @@ export const ScheduleEndpoints = {
 
 export const BookingEndpoints = {
   BOOKING: "booking",
+  ADMIN_BOOKING: "admin/bookings",
 };
 
 export const MeetingFeedbackEndpoints = {

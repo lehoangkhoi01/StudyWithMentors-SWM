@@ -6,8 +6,8 @@ import {
   ADMIN_BOOKING_TABLE,
   ERROR_MESSAGES,
   TABLE_TYPE,
+  TRANSLATED_BOOKING_STATUS,
 } from "../../../shared/constants/common";
-import { BOOKING_STATUS } from "../../../shared/constants/systemType";
 
 const AdminBookingList = () => {
   const { setNotification } = useNotification();
@@ -45,11 +45,9 @@ const AdminBookingList = () => {
     },
   ];
 
-  const actionItems = [];
-
   const getBookings = async () => {
     try {
-      const resposne = await bookingService.getBooking();
+      const resposne = await bookingService.getBookingAdmin();
 
       const bookings = resposne.bookingCards;
 
@@ -58,7 +56,7 @@ const AdminBookingList = () => {
         topicName: booking.topicDetailResponse.name,
         mentorName: booking.mentor.fullName,
         participants: booking.mentees.map((mentee) => mentee.fullName),
-        translatedStatus: BOOKING_STATUS[booking.status],
+        translatedStatus: TRANSLATED_BOOKING_STATUS[booking.status],
         time: handleTimeToDisplay(`${booking.startDate} ${booking.startTime}`),
         bookingTime: handleTimeToDisplay(booking.createdDate),
       }));
@@ -86,7 +84,6 @@ const AdminBookingList = () => {
         getData={getBookings}
         filterData={onSearchBooking}
         headerTable={headerTable}
-        actionItems={actionItems}
         hideAddingAction={true}
       />
     </div>

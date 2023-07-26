@@ -476,9 +476,11 @@ const CustomizedTable = (props) => {
                     {header.sortable && renderSortIcon(header.property)}
                   </StyledTableCell>
                 ))}
-                <StyledTableCell align="center">
-                  {ADMIN_TABLE_HEADER.ACTION}
-                </StyledTableCell>
+                {props.actionItems && (
+                  <StyledTableCell align="center">
+                    {ADMIN_TABLE_HEADER.ACTION}
+                  </StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -497,7 +499,7 @@ const CustomizedTable = (props) => {
                       {!header.link && `${row[header.property]}`}
                     </StyledTableCell>
                   ))}
-                  {props.actionItems.length && (
+                  {props.actionItems && (
                     <StyledTableCell align="center">
                       <Button
                         id="basic-button"

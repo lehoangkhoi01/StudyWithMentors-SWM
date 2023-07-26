@@ -621,3 +621,9 @@ export const ADMIN_BOOKING_TABLE = {
   STATUS: "Trạng thái",
   BOOKING_DATE: "Ngày đặt",
 };
+
+export const TRANSLATED_BOOKING_STATUS = {
+  ACCEPTED: "Đã duyệt",
+  REQUESTED: "Đang yêu cầu",
+  REJECTED: "Đã từ chối",
+};
