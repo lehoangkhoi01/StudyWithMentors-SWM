@@ -51,6 +51,10 @@ export const TopicEndpoints = {
   TOPICS: "topics",
   TOPICS_MENTOR: "topics/by-mentor",
   UPADATE_TOPIC_STATUS: "topics/update-status",
+  DELETE_TOPIC_FIELD: "admin/topic-fields",
+  UPSERT_TOPIC_FIELD: "admin/topic-fields",
+  DELETE_TOPIC_CATEGORIES: "admin/topic-categories",
+  UPSERT_TOPIC_CATEGORIES: "admin/topic-categories"
 };
 
 export const ScheduleEndpoints = {
