@@ -492,111 +492,114 @@ const CustomizedTable = (props) => {
                       {!header.link && `${row[header.property]}`}
                     </StyledTableCell>
                   ))}
-                  <StyledTableCell align="center">
-                    <Button
-                      id="basic-button"
-                      aria-controls={open ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={(e) => {
-                        handleClick(e, rowIndex);
-                      }}
-                      className={style.list__table_dropdown_icon}
-                    >
-                      <img
-                        src={require("../../../assets/icons/Edit_Mentor.png")}
-                      />
-                    </Button>
-                    <Menu
-                      id="demo-positioned-menu"
-                      aria-labelledby="demo-positioned-button"
-                      anchorEl={
-                        anchorElData.index === rowIndex
-                          ? anchorElData.anchorEl
-                          : null
-                      }
-                      open={open(rowIndex)}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "left",
-                      }}
-                      className={style.list__table_dropdown}
-                    >
-                      {props.actionItems.map((actionItem, index) => {
-                        switch (actionItem.action) {
-                          case UPSERT_ACTION:
-                            return (
-                              <MenuItem
-                                key={`MENU_ITEM_${index}`}
-                                onClick={() => {
-                                  return openUpsertModalHandler(null, row);
-                                }}
-                              >
-                                <img src={actionItem.imgSrc} />
-                                <span>{actionItem.label}</span>
-                              </MenuItem>
-                            );
-
-                          case DEACTIVATE_ACTION:
-                            return (
-                              row.translatedStatus ===
-                                MENTOR_STATUS.ACTIVATED && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openDeleteModalHandler(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-
-                          case ACTIVE_ACTION:
-                            return (
-                              row.translatedStatus ===
-                                MENTOR_STATUS.INVALIDATE && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openActiveModalHandler(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-
-                          case CONFIRM_ACTION:
-                            return (
-                              row.translatedStatus === TOPIC_STATUS.WAITING && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openConfirmModalHandler(
-                                      row,
-                                      actionItem.label
-                                    );
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-                          default:
-                            return;
+                  {props.actionItems.length && (
+                    <StyledTableCell align="center">
+                      <Button
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={(e) => {
+                          handleClick(e, rowIndex);
+                        }}
+                        className={style.list__table_dropdown_icon}
+                      >
+                        <img
+                          src={require("../../../assets/icons/Edit_Mentor.png")}
+                        />
+                      </Button>
+                      <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={
+                          anchorElData.index === rowIndex
+                            ? anchorElData.anchorEl
+                            : null
                         }
-                      })}
-                    </Menu>
-                  </StyledTableCell>
+                        open={open(rowIndex)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        className={style.list__table_dropdown}
+                      >
+                        {props.actionItems.map((actionItem, index) => {
+                          switch (actionItem.action) {
+                            case UPSERT_ACTION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openUpsertModalHandler(null, row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              );
+
+                            case DEACTIVATE_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  MENTOR_STATUS.ACTIVATED && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openDeleteModalHandler(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+
+                            case ACTIVE_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  MENTOR_STATUS.INVALIDATE && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openActiveModalHandler(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+
+                            case CONFIRM_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  TOPIC_STATUS.WAITING && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openConfirmModalHandler(
+                                        row,
+                                        actionItem.label
+                                      );
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+                            default:
+                              return;
+                          }
+                        })}
+                      </Menu>
+                    </StyledTableCell>
+                  )}
                 </StyledTableRow>
               ))}
             </TableBody>

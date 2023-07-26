@@ -5,6 +5,7 @@ import { ROUTES } from "../shared/constants/navigation";
 import FieldListPage from "../Pages/Field/FieldListPage";
 import CategoryListPage from "../Pages/Category/CategoryListPage";
 import DepartmentListPage from "../Pages/Department/DepartmentListPage";
+import AdminBookingListPage from "../Pages/BookingList/AdminBookingListPage";
 
 const AdminRoutes = () => {
   return (
@@ -13,6 +14,10 @@ const AdminRoutes = () => {
         <Route path={ROUTES.FIELD_LIST} component={FieldListPage} />
         <Route path={ROUTES.CATEGORY_LIST} component={CategoryListPage} />
         <Route path={ROUTES.DEPARTMENT_LIST} component={DepartmentListPage} />
+        <Route
+          path={ROUTES.ADMIN_BOOKING_LIST}
+          component={AdminBookingListPage}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>
