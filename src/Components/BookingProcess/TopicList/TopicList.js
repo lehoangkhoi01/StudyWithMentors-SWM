@@ -55,7 +55,7 @@ const TopicList = (props) => {
         </List>
       </Box>
     );
-  } else return null;
+  } else return <Typography>Chưa có chủ đề</Typography>;
 };
 
 export default TopicList;
