@@ -9,7 +9,11 @@ import React from "react";
 import style from "./BookingInfoDialog.module.scss";
 import { format } from "date-fns";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { DATE_FORMAT, ERROR_MESSAGES } from "../../../shared/constants/common";
+import {
+  DATE_FORMAT,
+  ERROR_MESSAGES,
+  MIN_DURATION_ACTION_BOOKING,
+} from "../../../shared/constants/common";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import {
@@ -116,18 +120,82 @@ const BookingInfoDialog = (props) => {
     await props.handleUpdateBookingStatus(data, BOOKING_STATUS.ACCEPTED);
   };
 
-  const renderActionButton = (status) => {
+  const renderMentorActionButton = (status) => {
     const bookingDate = new Date(
       props.bookingInfo?.startDate + " " + props.bookingInfo?.startTime
     );
+    const diffHour =
+      (new Date().valueOf() - bookingDate.valueOf()) / 1000 / 60 / 60;
+    if (diffHour >= -MIN_DURATION_ACTION_BOOKING) {
+      return null;
+    }
+    switch (status) {
+      case BOOKING_STATUS.ACCEPTED:
+        return (
+          <Grid2
+            container
+            rowSpacing={2}
+            width="100%"
+            justifyContent="center"
+            margin={0}
+          >
+            <Grid2 xs={6}>
+              <CustomizeButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                onClick={() => setOpenCancelBookingDialog(true)}
+              >
+                Hủy lịch
+              </CustomizeButton>
+            </Grid2>
+          </Grid2>
+        );
+      case BOOKING_STATUS.REQUESTED:
+        return (
+          <Grid2
+            container
+            rowSpacing={2}
+            width="100%"
+            justifyContent="space-around"
+            margin={0}
+          >
+            <Grid2 xs={4}>
+              <CustomizeButton
+                color="primary600"
+                size="small"
+                variant="outlined"
+                onClick={() => setOpenCancelBookingDialog(true)}
+              >
+                Hủy lịch
+              </CustomizeButton>
+            </Grid2>
+            <Grid2 xs={4}>
+              <CustomizeButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                onClick={handleAccept}
+              >
+                Xác nhận
+              </CustomizeButton>
+            </Grid2>
+          </Grid2>
+        );
+    }
+  };
 
+  const renderStudentActionButton = (status) => {
+    const bookingDate = new Date(
+      props.bookingInfo?.startDate + " " + props.bookingInfo?.startTime
+    );
     const diffHour =
       (new Date().valueOf() - bookingDate.valueOf()) / 1000 / 60 / 60;
 
-    if (diffHour >= -8) {
+    if (diffHour > 0) {
+      // Open feedback when the meeting happened
       if (
         props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED &&
-        userInfo.role === SYSTEM_ROLE.STUDENT &&
         !studentFeedback
       ) {
         return (
@@ -150,111 +218,90 @@ const BookingInfoDialog = (props) => {
             </Grid2>
           </Grid2>
         );
-      } else return null;
+      }
     }
 
+    if (diffHour >= -MIN_DURATION_ACTION_BOOKING) {
+      return null;
+    }
+
+    console.log(props.bookingInfo);
+
+    switch (status) {
+      case BOOKING_STATUS.ACCEPTED:
+        if (userInfo.accountId === props.bookingInfo?.owner.accountId) {
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="center"
+              margin={0}
+            >
+              <Grid2 xs={6}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  onClick={() => setOpenCancelBookingDialog(true)}
+                >
+                  Hủy lịch
+                </CustomizeButton>
+              </Grid2>
+            </Grid2>
+          );
+        } else {
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="center"
+              margin={0}
+            >
+              <Grid2 xs={6}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                >
+                  Rời nhóm
+                </CustomizeButton>
+              </Grid2>
+            </Grid2>
+          );
+        }
+      case BOOKING_STATUS.REQUESTED:
+        return (
+          <Grid2
+            container
+            rowSpacing={2}
+            width="100%"
+            justifyContent="center"
+            margin={0}
+          >
+            <Grid2 xs={6}>
+              <CustomizeButton
+                color="primary600"
+                size="small"
+                variant="contained"
+                onClick={() => setOpenCancelBookingDialog(true)}
+              >
+                Hủy lịch
+              </CustomizeButton>
+            </Grid2>
+          </Grid2>
+        );
+    }
+  };
+
+  const renderActionButton = (status) => {
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
-      switch (status) {
-        case BOOKING_STATUS.ACCEPTED:
-          return (
-            <Grid2
-              container
-              rowSpacing={2}
-              width="100%"
-              justifyContent="center"
-              margin={0}
-            >
-              <Grid2 xs={6}>
-                <CustomizeButton
-                  color="primary600"
-                  size="small"
-                  variant="contained"
-                  onClick={() => setOpenCancelBookingDialog(true)}
-                >
-                  Hủy lịch
-                </CustomizeButton>
-              </Grid2>
-            </Grid2>
-          );
-        case BOOKING_STATUS.REQUESTED:
-          return (
-            <Grid2
-              container
-              rowSpacing={2}
-              width="100%"
-              justifyContent="center"
-              margin={0}
-            >
-              <Grid2 xs={6}>
-                <CustomizeButton
-                  color="primary600"
-                  size="small"
-                  variant="contained"
-                  onClick={() => setOpenCancelBookingDialog(true)}
-                >
-                  Hủy lịch
-                </CustomizeButton>
-              </Grid2>
-            </Grid2>
-          );
-      }
+      return renderStudentActionButton(status);
     }
 
     if (userInfo.role === SYSTEM_ROLE.MENTOR) {
-      switch (status) {
-        case BOOKING_STATUS.ACCEPTED:
-          return (
-            <Grid2
-              container
-              rowSpacing={2}
-              width="100%"
-              justifyContent="center"
-              margin={0}
-            >
-              <Grid2 xs={6}>
-                <CustomizeButton
-                  color="primary600"
-                  size="small"
-                  variant="contained"
-                  onClick={() => setOpenCancelBookingDialog(true)}
-                >
-                  Hủy lịch
-                </CustomizeButton>
-              </Grid2>
-            </Grid2>
-          );
-        case BOOKING_STATUS.REQUESTED:
-          return (
-            <Grid2
-              container
-              rowSpacing={2}
-              width="100%"
-              justifyContent="space-around"
-              margin={0}
-            >
-              <Grid2 xs={4}>
-                <CustomizeButton
-                  color="primary600"
-                  size="small"
-                  variant="outlined"
-                  onClick={() => setOpenCancelBookingDialog(true)}
-                >
-                  Hủy lịch
-                </CustomizeButton>
-              </Grid2>
-              <Grid2 xs={4}>
-                <CustomizeButton
-                  color="primary600"
-                  size="small"
-                  variant="contained"
-                  onClick={handleAccept}
-                >
-                  Xác nhận
-                </CustomizeButton>
-              </Grid2>
-            </Grid2>
-          );
-      }
+      return renderMentorActionButton(status);
     }
   };
 

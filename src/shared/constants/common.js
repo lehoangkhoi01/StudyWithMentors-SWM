@@ -581,3 +581,5 @@ export const MENTOR_CARD = {
   FOLLOWERS: "người theo dõi",
   DONT_HAVE_TOPIC: "Chưa có chủ đề",
 };
+
+export const MIN_DURATION_ACTION_BOOKING = 2;
