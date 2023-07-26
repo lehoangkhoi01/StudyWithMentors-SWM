@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
-import style from "./UpsertField.module.scss";
+import style from "./UpsertCategory.module.scss";
 import {
   BUTTON_LABEL,
   ERROR_MESSAGES,
   TITLE,
-  UPSERT_FIELD,
+  UPSERT_CATEGORY,
 } from "../../../shared/constants/common";
 import { Modal } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -16,13 +16,13 @@ import {
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
 
-const UpsertField = (props) => {
+const UpsertCategory = (props) => {
   const { register, handleSubmit, getValues, reset, setValue } =
     useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
-  const [fieldId, setFieldId] = useState();
+  const [categoryId, setCategoryId] = useState();
 
   useEffect(() => {
     clearData();
@@ -30,29 +30,29 @@ const UpsertField = (props) => {
     if (props.existedData) {
       setValue("name", props.existedData.name);
 
-      setFieldId(props.existedData.id);
+      setCategoryId(props.existedData.id);
     }
   }, [props.openModal]);
 
   const clearData = () => {
     reset();
-    setFieldId();
+    setCategoryId();
   };
 
   const onSubmit = async () => {
     const formValue = getValues();
 
-    let field = {
+    let category = {
       name: formValue.name,
     };
 
     try {
       setLoading(true);
 
-      if (fieldId) {
-        await topicService.updateField(field, fieldId);
+      if (categoryId) {
+        await topicService.updateCategory(category, categoryId);
       } else {
-        await topicService.createField(field);
+        await topicService.createCategory(category);
       }
     } catch (error) {
       setNotification({
@@ -75,10 +75,10 @@ const UpsertField = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{fieldId ? TITLE.EDIT_FIELD : TITLE.CREATE_FIELD}</h1>
+              <h1>{categoryId ? TITLE.EDIT_CATEGORY : TITLE.CREATE_CATEGORY}</h1>
 
               <CustomizedTextField
-                name={UPSERT_FIELD.NAME}
+                name={UPSERT_CATEGORY.NAME}
                 required={true}
                 options={{
                   ...register("name"),
@@ -99,7 +99,7 @@ const UpsertField = (props) => {
                   variant="contained"
                   color="primary600"
                 >
-                  {fieldId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_FIELD}
+                  {categoryId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_CATEGORY}
                 </CustomizedButton>
               </div>
             </form>
@@ -110,4 +110,4 @@ const UpsertField = (props) => {
   );
 };
 
-export default UpsertField;
+export default UpsertCategory;

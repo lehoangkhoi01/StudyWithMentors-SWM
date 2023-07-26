@@ -1,5 +1,7 @@
+import CategoryList from "../../Components/Category/CategoryList";
+
 const CategoryListPage = () => {
-  return <div></div>;
+  return <CategoryList />;
 };
 
 export default CategoryListPage;

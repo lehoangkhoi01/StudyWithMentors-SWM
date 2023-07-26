@@ -15,14 +15,14 @@ import {
   TABLE_TYPE,
 } from "../../shared/constants/common";
 
-const FieldList = () => {
+const CategoryList = () => {
   const { setNotification } = useNotification();
 
   const headerTable = [
     {
       sortable: true,
       property: "name",
-      name: ADMIN_TABLE_HEADER.FIELD_NAME,
+      name: ADMIN_TABLE_HEADER.CATEGORY_NAME,
     },
   ];
 
@@ -39,16 +39,16 @@ const FieldList = () => {
     },
   ];
 
-  const getFields = async () => {
+  const getCategories = async () => {
     try {
-      const fields = await topicService.getFields();
+      const categories = await topicService.getCategories();
 
-      const updatedFields = fields.map((field) => ({
+      const updatedCategories = categories.map((field) => ({
         ...field,
         translatedStatus: MENTOR_STATUS.ACTIVATED,
       }));
 
-      return updatedFields;
+      return updatedCategories;
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -58,23 +58,23 @@ const FieldList = () => {
     }
   };
 
-  const onSearchField = (currentList, searchTerm) => {
+  const onSearchCategory = (currentList, searchTerm) => {
     return currentList.filter((mentor) =>
       mentor.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
-  const onDeleteField = async (fieldId) => {
-    await topicService.deleteField(fieldId[0]);
+  const onDeleteCategory = async (categoryId) => {
+    await topicService.deleteField(categoryId[0]);
   };
 
   return (
     <div>
       <CustomizedTable
-        type={TABLE_TYPE.FIELD}
-        getData={getFields}
-        filterData={onSearchField}
-        onDelete={onDeleteField}
+        type={TABLE_TYPE.CATEGORY}
+        getData={getCategories}
+        filterData={onSearchCategory}
+        onDelete={onDeleteCategory}
         headerTable={headerTable}
         actionItems={actionItems}
       />
@@ -82,4 +82,4 @@ const FieldList = () => {
   );
 };
 
-export default FieldList;
+export default CategoryList;

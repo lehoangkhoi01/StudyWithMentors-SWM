@@ -42,6 +42,7 @@ import {
 import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
 import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
 import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
+import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -615,7 +616,7 @@ const CustomizedTable = (props) => {
       <DeletePropertyModal
         openModal={openModal.delete}
         onCloseModal={onCloseModal}
-        title={deletedData?.fullName}
+        title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
         type={MODAL_DELETE_PROPERTY.DEACTIVATE}
       />
@@ -643,6 +644,12 @@ const CustomizedTable = (props) => {
       />
       <UpsertField
         openModal={openModal.upsert && props.type === TABLE_TYPE.FIELD}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <UpsertCategory
+        openModal={openModal.upsert && props.type === TABLE_TYPE.CATEGORY}
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}

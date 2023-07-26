@@ -129,8 +129,8 @@ function App() {
 
                 <AuthorizedRoute
                   path="/staff"
-                  component={StaffRoutes}
                   roles={[SYSTEM_ROLE.STAFF]}
+                  component={StaffRoutes}
                 />
                 <AuthorizedRoute
                   path="/mentor"
@@ -140,7 +140,7 @@ function App() {
                 <AuthorizedRoute
                   path="/admin"
                   roles={[SYSTEM_ROLE.ADMIN]}
-                  component={[AdminRoutes]}
+                  component={AdminRoutes}
                 />
                 <AuthorizedRoute
                   path="/booking"

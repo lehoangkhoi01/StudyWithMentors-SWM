@@ -94,6 +94,8 @@ export const TITLE = {
   EDIT_TOPIC: "Chỉnh sửa chủ đề",
   CREATE_FIELD: "Tạo lĩnh vực",
   EDIT_FIELD: "Chỉnh sửa lĩnh vực",
+  CREATE_CATEGORY: "Tạo thể loại",
+  EDIT_CATEGORY: "Chỉnh sửa thể loại",
 };
 
 export const OTHER_TEXT = {
@@ -453,6 +455,7 @@ export const ADMIN_TABLE_HEADER = {
   STATUS: "Trạng thái",
   ACTION: "Tác vụ",
   FIELD_NAME: "Lĩnh vực",
+  CATEGORY_NAME: "Thể loại",
 };
 
 export const TABLE_DETAIL = {
@@ -595,4 +598,8 @@ export const MENTOR_CARD = {
 
 export const UPSERT_FIELD = {
   NAME: "Tên lĩnh vực",
+};
+
+export const UPSERT_CATEGORY = {
+  NAME: "Tên thể loại",
 };
