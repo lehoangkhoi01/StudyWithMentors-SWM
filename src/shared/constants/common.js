@@ -596,6 +596,8 @@ export const MENTOR_CARD = {
   DONT_HAVE_TOPIC: "Chưa có chủ đề",
 };
 
+export const MIN_DURATION_ACTION_BOOKING = 2;
+
 export const UPSERT_FIELD = {
   NAME: "Tên lĩnh vực",
 };

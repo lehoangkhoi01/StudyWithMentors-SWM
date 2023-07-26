@@ -1,0 +1,15 @@
+@import "../../../../shared/theme";
+
+.ratingSection {
+  &__container {
+    margin: 1rem 0;
+  }
+
+  &__feedbackCard {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: $primary50;
+    border-radius: 10px;
+  }
+}

@@ -41,12 +41,15 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
 import { topicService } from "../../../Services/topicService";
-import { Divider } from "@mui/material";
+import { Box, Divider, Tab, Tabs } from "@mui/material";
 import moment from "moment";
 import { scheduleService } from "../../../Services/sheduleService";
 import { format } from "date-fns";
 import TimeSlots from "./TimeSlots/TimeSlots";
 import { followMentorService } from "../../../Services/followMentorService";
+import { styled } from "@mui/material/styles";
+import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
+import RatingSection from "./RatingSection/RatingSection";
 
 const TEXT_FIELDS = [
   {
@@ -252,6 +255,18 @@ const INIT_CV = {
   skills: [],
 };
 
+const PROFILE_SECTION = {
+  PROFILE: "Profile",
+  RATING: "Rating",
+};
+
+const CustomTab = styled(Tab)`
+  color: #3948ab;
+  &.Mui-selected {
+    color: #283493;
+  }
+`;
+
 const CV = () => {
   const [detail, setDetail] = useState(null);
   const [selectedTextFields, setSelectedTextFields] = useState();
@@ -267,6 +282,8 @@ const CV = () => {
   const [mentorProfile, setMentorProfile] = useState();
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [followingMentors, setFollowingMentors] = useState([]);
+  const [currentSection, setCurrentSection] = useState(PROFILE_SECTION.PROFILE);
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -292,6 +309,7 @@ const CV = () => {
     getCVData();
     getTopics();
     getMentorProfile();
+    getFeedbacks(mentorId);
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       getSchedule();
       getFollowingMentors();
@@ -368,6 +386,23 @@ const CV = () => {
       let result = await followMentorService.getFollowing(userInfo.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getFeedbacks = async (accountId) => {
+    try {
+      setLoading(true);
+      let result = await meetingFeedbackService.getFeedbackByUser(accountId);
+      result = result.feedbacks.sort((a, b) => b.rating - a.rating);
+      setFeedbacks(result);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -482,6 +517,10 @@ const CV = () => {
     }
   };
 
+  const onChangeSection = (e, newValue) => {
+    setCurrentSection(newValue);
+  };
+
   const updateAvatar = async (url) => {
     try {
       setLoading(true);
@@ -562,6 +601,61 @@ const CV = () => {
     }
   };
 
+  const renderCVSection = () => {
+    return (
+      <>
+        {!detail && (
+          <>
+            {!id && cvData && <ProgressImage cvData={cvData} />}
+
+            {Object.keys(cvData).map((key, index) => {
+              return (
+                <CVSection
+                  cvData={cvData[key]}
+                  keyProperty={key}
+                  indexOfProperty={index}
+                  viewData={mapCVSection(cvData[key], index)}
+                  editDetailData={editDetailData}
+                  key={`CV_SECTION_${index}`}
+                  textFields={TEXT_FIELDS[index].fields}
+                  title={TEXT_FIELDS[index].title}
+                  handleSubmit={upsertHandler}
+                  editable={!id}
+                />
+              );
+            })}
+          </>
+        )}
+        {detail && (
+          <CVDetail
+            editDetailData={editDetailData}
+            onBackToList={onBackToList}
+            data={cvData[detail.key]}
+            viewData={mapCVSection(cvData[detail.key], detail.indexOfProperty)}
+            title={detail.title}
+            selectedTextFields={selectedTextFields}
+            handleSubmit={upsertHandler}
+            onDeleteProperty={onDeleteProperty}
+          />
+        )}
+      </>
+    );
+  };
+
+  const renderRatingSection = () => {
+    if (feedbacks.length > 0) {
+      return <RatingSection feedbacks={feedbacks} />;
+    } else return null;
+  };
+
+  const renderSection = () => {
+    if (currentSection === PROFILE_SECTION.PROFILE) {
+      return renderCVSection();
+    } else if (currentSection === PROFILE_SECTION.RATING) {
+      return renderRatingSection();
+    }
+  };
+
   return (
     <div className={style.cv__container}>
       {!isLoading && (
@@ -625,43 +719,17 @@ const CV = () => {
           </div>
 
           <div className={style.cv__detail__profile}>
-            {!detail && (
-              <>
-                {!id && cvData && <ProgressImage cvData={cvData} />}
-
-                {Object.keys(cvData).map((key, index) => {
-                  return (
-                    <CVSection
-                      cvData={cvData[key]}
-                      keyProperty={key}
-                      indexOfProperty={index}
-                      viewData={mapCVSection(cvData[key], index)}
-                      editDetailData={editDetailData}
-                      key={`CV_SECTION_${index}`}
-                      textFields={TEXT_FIELDS[index].fields}
-                      title={TEXT_FIELDS[index].title}
-                      handleSubmit={upsertHandler}
-                      editable={!id}
-                    />
-                  );
-                })}
-              </>
-            )}
-            {detail && (
-              <CVDetail
-                editDetailData={editDetailData}
-                onBackToList={onBackToList}
-                data={cvData[detail.key]}
-                viewData={mapCVSection(
-                  cvData[detail.key],
-                  detail.indexOfProperty
-                )}
-                title={detail.title}
-                selectedTextFields={selectedTextFields}
-                handleSubmit={upsertHandler}
-                onDeleteProperty={onDeleteProperty}
-              />
-            )}
+            <Box>
+              <Tabs
+                value={currentSection}
+                onChange={onChangeSection}
+                TabIndicatorProps={{ style: { backgroundColor: "#283493" } }}
+              >
+                <CustomTab label="Hồ sơ" value={PROFILE_SECTION.PROFILE} />
+                <CustomTab label="Đánh giá" value={PROFILE_SECTION.RATING} />
+              </Tabs>
+            </Box>
+            {renderSection()}
           </div>
         </div>
       )}
