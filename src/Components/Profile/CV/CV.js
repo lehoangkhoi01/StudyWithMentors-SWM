@@ -262,6 +262,7 @@ const PROFILE_SECTION = {
 
 const CustomTab = styled(Tab)`
   color: #3948ab;
+  font-size: 1.3rem;
   &.Mui-selected {
     color: #283493;
   }
@@ -719,7 +720,13 @@ const CV = () => {
           </div>
 
           <div className={style.cv__detail__profile}>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "1rem",
+                backgroundColor: "#e8eaf6",
+                width: "fit-content",
+              }}
+            >
               <Tabs
                 value={currentSection}
                 onChange={onChangeSection}
