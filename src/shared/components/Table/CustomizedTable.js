@@ -41,6 +41,8 @@ import {
 } from "../../constants/actionType";
 import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
 import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
+import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
+import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -381,6 +383,36 @@ const CustomizedTable = (props) => {
     }
   };
 
+  const getAddButtonLabel = () => {
+    switch (props.type) {
+      case TABLE_TYPE.MENTOR:
+        return BUTTON_LABEL.ADD_MENTOR;
+      case TABLE_TYPE.TOPIC:
+        return BUTTON_LABEL.ADD_TOPIC;
+      case TABLE_TYPE.FIELD:
+        return BUTTON_LABEL.ADD_FIELD;
+      case TABLE_TYPE.CATEGORY:
+        return BUTTON_LABEL.ADD_CATEGORY;
+      default:
+        return "";
+    }
+  };
+
+  const getSearchButtonLabel = () => {
+    switch (props.type) {
+      case TABLE_TYPE.MENTOR:
+        return BUTTON_LABEL.SEARCH_MENTOR;
+      case TABLE_TYPE.TOPIC:
+        return BUTTON_LABEL.SEARCH_TOPIC;
+      case TABLE_TYPE.FIELD:
+        return BUTTON_LABEL.SEARCH_FIELD;
+      case TABLE_TYPE.CATEGORY:
+        return BUTTON_LABEL.SEARCH_CATEGORY;
+      default:
+        return "";
+    }
+  };
+
   return (
     <div>
       <div className={style.list__container}>
@@ -392,20 +424,12 @@ const CustomizedTable = (props) => {
               onClick={openUpsertModalHandler}
             >
               <img src={require("../../../assets/icons/Add_Mentor.png")} />
-              <p>
-                {props.type === TABLE_TYPE.MENTOR
-                  ? BUTTON_LABEL.ADD_MENTOR
-                  : BUTTON_LABEL.ADD_TOPIC}
-              </p>
+              <p>{getAddButtonLabel()}</p>
             </CustomizedButton>
           )}
 
           <CustomizedTextField
-            placeholder={
-              props.type === TABLE_TYPE.MENTOR
-                ? BUTTON_LABEL.SEARCH_MENTOR
-                : BUTTON_LABEL.SEARCH_TOPIC
-            }
+            placeholder={getSearchButtonLabel()}
             className={style.list__input}
             required={true}
             options={{ ...register("searchTerm") }}
@@ -592,7 +616,7 @@ const CustomizedTable = (props) => {
       <DeletePropertyModal
         openModal={openModal.delete}
         onCloseModal={onCloseModal}
-        title={deletedData?.fullName}
+        title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
         type={MODAL_DELETE_PROPERTY.DEACTIVATE}
       />
@@ -614,6 +638,18 @@ const CustomizedTable = (props) => {
       />
       <AddTopicModal
         openModal={openModal.upsert && props.type === TABLE_TYPE.TOPIC}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <UpsertField
+        openModal={openModal.upsert && props.type === TABLE_TYPE.FIELD}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <UpsertCategory
+        openModal={openModal.upsert && props.type === TABLE_TYPE.CATEGORY}
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}

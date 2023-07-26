@@ -113,12 +113,12 @@ const AdminMentorList = () => {
     );
   };
 
-  const onDeleteMentor = (mentorId) => {
-    accountService.deleteMentors(mentorId);
+  const onDeleteMentor = async (mentorId) => {
+    await accountService.deleteMentors(mentorId);
   };
 
-  const onActiveMentor = (mentorId, data) => {
-    userAccountService.updateUserProfile(mentorId, data);
+  const onActiveMentor = async (mentorId, data) => {
+    await userAccountService.updateUserProfile(mentorId, data);
   };
 
   return (
