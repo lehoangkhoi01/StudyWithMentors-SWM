@@ -578,6 +578,7 @@ export const TABLE_TYPE = {
   TOPIC: "TOPIC",
   FIELD: "FIELD",
   CATEGORY: "CATEGORY",
+  BOOKING: "BOOKING",
 };
 
 export const USER_STATUS = {
@@ -604,4 +605,13 @@ export const UPSERT_FIELD = {
 
 export const UPSERT_CATEGORY = {
   NAME: "Tên thể loại",
+};
+
+export const ADMIN_BOOKING_TABLE = {
+  TOPIC_NAME: "Chủ đề",
+  MENTOR_NAME: "Diễn giả",
+  PARTICIPANTS: "Người tham gia",
+  TIME: "Thời gian",
+  STATUS: "Trạng thái",
+  BOOKING_DATE: "Ngày đặt",
 };

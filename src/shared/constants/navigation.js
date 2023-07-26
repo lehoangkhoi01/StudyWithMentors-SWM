@@ -21,6 +21,7 @@ export const ROUTES = {
   CATEGORY_LIST: "/admin/categories",
   DEPARTMENT_LIST: "/admin/departments",
   FIELD_LIST: "/admin/fields",
+  ADMIN_BOOKING_LIST: "/admin/bookings",
 };
 
 export const ROUTES_STATIC = {
