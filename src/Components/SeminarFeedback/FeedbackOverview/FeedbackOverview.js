@@ -20,7 +20,10 @@ import {
   SYSTEM_ROLE,
 } from "../../../shared/constants/systemType";
 import { seminarFeedbackService } from "../../../Services/seminarFeedbackService";
-import { useCustomAppbar } from "../../../Helpers/generalHelper";
+import {
+  useCustomAppbar,
+  useCustomLoading,
+} from "../../../Helpers/generalHelper";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
@@ -52,10 +55,12 @@ const FeedbackOverview = () => {
   const { id } = useParams();
   const history = useHistory();
   const userInfo = useSelector(selectUserInfo);
+  const { setLoading } = useCustomLoading();
 
   useEffect(() => {
     const getSeminarDetail = async () => {
       try {
+        setLoading(true);
         const seminar = await seminarService.getSeminarDetail(id);
         if (
           userInfo.role === SYSTEM_ROLE.STAFF &&
@@ -66,11 +71,14 @@ const FeedbackOverview = () => {
         setSeminarDetail(seminar);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
+      } finally {
+        setLoading(false);
       }
     };
 
     const getFeedbackReport = async () => {
       try {
+        setLoading(true);
         const seminar = await seminarFeedbackService.getReport(id);
         const { reportStatistic, improvements, others } = seminar;
         convertFeedbackBEToFE(reportStatistic);
@@ -85,6 +93,8 @@ const FeedbackOverview = () => {
         onPaginateOthers(1, others);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
+      } finally {
+        setLoading(false);
       }
     };
 
