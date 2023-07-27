@@ -12,7 +12,7 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
 import { APP_NAME, BUTTON_LABEL } from "../../constants/common";
 import {
@@ -33,16 +33,19 @@ import { SYSTEM_ROLE } from "../../constants/systemType";
 
 const SideBar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [currentRouter, setCurrentRoute] = React.useState("/");
+
   const appbarTitle = useSelector(selectAppbarTitle);
   const userInfo = useSelector(selectUserInfo);
+  const location = useLocation();
 
   const SYSTEM_MANAGE_MENU =
-    userInfo.role === SYSTEM_ROLE.ADMIN
+    userInfo?.role === SYSTEM_ROLE.ADMIN
       ? ADMIN_MANAGE_SYSTEM_MENU
       : STAFF_MANAGE_SYSTEM_MENU;
 
   const ACCOUNT_MANAGE_MENU =
-    userInfo.role === SYSTEM_ROLE.ADMIN
+    userInfo?.role === SYSTEM_ROLE.ADMIN
       ? ADMIN_MANAGE_ACCOUNT_MENU
       : STAFF_MANAGE_ACCOUNT_MENU;
 
@@ -92,7 +95,9 @@ const SideBar = (props) => {
         {SYSTEM_MANAGE_MENU.map((item, index) => (
           <ListItem
             key={`system-menu${index}`}
-            className={`${style.sidebar__listitem}`}
+            className={`${style.sidebar__listitem} ${
+              currentRouter === item.ROUTE ? style.sidebar__active : ""
+            }`}
           >
             <Link to={item.ROUTE}>{item.TITLE}</Link>
           </ListItem>
@@ -133,6 +138,10 @@ const SideBar = (props) => {
       </div>
     </>
   );
+
+  React.useEffect(() => {
+    setCurrentRoute(location.pathname);
+  }, [location]);
 
   return (
     <>

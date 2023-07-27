@@ -368,6 +368,7 @@ const BookingInfoDialog = (props) => {
   };
 
   React.useState(() => {
+    console.log(props.bookingInfo);
     const fetchFeedbacksByBooking = async () => {
       if (props.bookingInfo?.id) {
         try {
@@ -457,6 +458,19 @@ const BookingInfoDialog = (props) => {
             <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
             <span>{props.bookingInfo?.description}</span>
           </div>
+
+          {props.bookingInfo?.reasonToCancel && (
+            <div className={`${style.bookingSummary__detail}`}>
+              <span className={`${style.bookingSummary__subTitle}`}>
+                Lí do hủy:{" "}
+              </span>
+              <span>
+                {props.bookingInfo?.reasonToCancel +
+                  " - " +
+                  props.bookingInfo?.cancelBy?.fullName}
+              </span>
+            </div>
+          )}
 
           {props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED && (
             <div className={`${style.bookingSummary__detail}`}>
