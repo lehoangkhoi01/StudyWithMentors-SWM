@@ -336,8 +336,7 @@ const BookingInfoDialog = (props) => {
     if (feedbacks.length > 0) {
       return (
         <>
-          <Divider />
-          <Typography variant="h6" marginY={2}>
+          <Typography variant="h6" marginTop={5}>
             Phản hồi của sinh viên về buổi tư vấn
           </Typography>
           {feedbacks.map((feedback) => (
@@ -360,6 +359,7 @@ const BookingInfoDialog = (props) => {
                 </span>
                 <span>{feedback.content}</span>
               </div>
+              <Divider />
             </div>
           ))}
         </>

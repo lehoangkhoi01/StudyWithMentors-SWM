@@ -5,3 +5,5 @@ export const ACTIVE_ACTION = "ACTIVE";
 export const DEACTIVATE_ACTION = "DEACTIVE";
 
 export const CONFIRM_ACTION = "CONFIRM";
+
+export const BOOKING_DETAIL_ACTION = "BOOKING_DETAL";
