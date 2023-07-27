@@ -43,6 +43,7 @@ import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
 import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
 import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
 import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
+import UpsertDepartment from "../../../Components/Modal/UpsertDepartment/UpsertDepartment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -393,6 +394,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.ADD_FIELD;
       case TABLE_TYPE.CATEGORY:
         return BUTTON_LABEL.ADD_CATEGORY;
+      case TABLE_TYPE.DEPARTMENT:
+        return BUTTON_LABEL.ADD_DEPARTMENT;
       default:
         return "";
     }
@@ -408,6 +411,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.SEARCH_FIELD;
       case TABLE_TYPE.CATEGORY:
         return BUTTON_LABEL.SEARCH_CATEGORY;
+      case TABLE_TYPE.DEPARTMENT:
+        return BUTTON_LABEL.SEARCH_DEPARTMENT;
       default:
         return "";
     }
@@ -471,9 +476,11 @@ const CustomizedTable = (props) => {
                     {header.sortable && renderSortIcon(header.property)}
                   </StyledTableCell>
                 ))}
-                <StyledTableCell align="center">
-                  {ADMIN_TABLE_HEADER.ACTION}
-                </StyledTableCell>
+                {props.actionItems && (
+                  <StyledTableCell align="center">
+                    {ADMIN_TABLE_HEADER.ACTION}
+                  </StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -492,111 +499,114 @@ const CustomizedTable = (props) => {
                       {!header.link && `${row[header.property]}`}
                     </StyledTableCell>
                   ))}
-                  <StyledTableCell align="center">
-                    <Button
-                      id="basic-button"
-                      aria-controls={open ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={(e) => {
-                        handleClick(e, rowIndex);
-                      }}
-                      className={style.list__table_dropdown_icon}
-                    >
-                      <img
-                        src={require("../../../assets/icons/Edit_Mentor.png")}
-                      />
-                    </Button>
-                    <Menu
-                      id="demo-positioned-menu"
-                      aria-labelledby="demo-positioned-button"
-                      anchorEl={
-                        anchorElData.index === rowIndex
-                          ? anchorElData.anchorEl
-                          : null
-                      }
-                      open={open(rowIndex)}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "left",
-                      }}
-                      className={style.list__table_dropdown}
-                    >
-                      {props.actionItems.map((actionItem, index) => {
-                        switch (actionItem.action) {
-                          case UPSERT_ACTION:
-                            return (
-                              <MenuItem
-                                key={`MENU_ITEM_${index}`}
-                                onClick={() => {
-                                  return openUpsertModalHandler(null, row);
-                                }}
-                              >
-                                <img src={actionItem.imgSrc} />
-                                <span>{actionItem.label}</span>
-                              </MenuItem>
-                            );
-
-                          case DEACTIVATE_ACTION:
-                            return (
-                              row.translatedStatus ===
-                                MENTOR_STATUS.ACTIVATED && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openDeleteModalHandler(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-
-                          case ACTIVE_ACTION:
-                            return (
-                              row.translatedStatus ===
-                                MENTOR_STATUS.INVALIDATE && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openActiveModalHandler(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-
-                          case CONFIRM_ACTION:
-                            return (
-                              row.translatedStatus === TOPIC_STATUS.WAITING && (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openConfirmModalHandler(
-                                      row,
-                                      actionItem.label
-                                    );
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                              )
-                            );
-                          default:
-                            return;
+                  {props.actionItems && (
+                    <StyledTableCell align="center">
+                      <Button
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={(e) => {
+                          handleClick(e, rowIndex);
+                        }}
+                        className={style.list__table_dropdown_icon}
+                      >
+                        <img
+                          src={require("../../../assets/icons/Edit_Mentor.png")}
+                        />
+                      </Button>
+                      <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={
+                          anchorElData.index === rowIndex
+                            ? anchorElData.anchorEl
+                            : null
                         }
-                      })}
-                    </Menu>
-                  </StyledTableCell>
+                        open={open(rowIndex)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        className={style.list__table_dropdown}
+                      >
+                        {props.actionItems.map((actionItem, index) => {
+                          switch (actionItem.action) {
+                            case UPSERT_ACTION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openUpsertModalHandler(null, row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              );
+
+                            case DEACTIVATE_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  MENTOR_STATUS.ACTIVATED && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openDeleteModalHandler(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+
+                            case ACTIVE_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  MENTOR_STATUS.INVALIDATE && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openActiveModalHandler(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+
+                            case CONFIRM_ACTION:
+                              return (
+                                row.translatedStatus ===
+                                  TOPIC_STATUS.WAITING && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openConfirmModalHandler(
+                                        row,
+                                        actionItem.label
+                                      );
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
+                              );
+                            default:
+                              return;
+                          }
+                        })}
+                      </Menu>
+                    </StyledTableCell>
+                  )}
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -650,6 +660,12 @@ const CustomizedTable = (props) => {
       />
       <UpsertCategory
         openModal={openModal.upsert && props.type === TABLE_TYPE.CATEGORY}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+      />
+      <UpsertDepartment
+        openModal={openModal.upsert && props.type === TABLE_TYPE.DEPARTMENT}
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}

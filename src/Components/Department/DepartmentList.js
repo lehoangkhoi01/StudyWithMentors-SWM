@@ -1,7 +1,5 @@
-import {
-  useNotification,
-} from "../../Helpers/generalHelper";
-import { topicService } from "../../Services/topicService";
+import { useNotification } from "../../Helpers/generalHelper";
+import { departmentService } from "../../Services/departmentService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   DEACTIVATE_ACTION,
@@ -15,7 +13,7 @@ import {
   TABLE_TYPE,
 } from "../../shared/constants/common";
 
-const FieldList = () => {
+const DepartmentList = () => {
   const { setNotification } = useNotification();
 
   const headerTable = [
@@ -39,16 +37,16 @@ const FieldList = () => {
     },
   ];
 
-  const getFields = async () => {
+  const getDepartments = async () => {
     try {
-      const fields = await topicService.getFields();
+      const departments = await departmentService.getDepartments();
 
-      const updatedFields = fields.map((field) => ({
-        ...field,
+      const updatedDepartments = departments.map((department) => ({
+        ...department,
         translatedStatus: MENTOR_STATUS.ACTIVATED,
       }));
 
-      return updatedFields;
+      return updatedDepartments;
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -58,23 +56,22 @@ const FieldList = () => {
     }
   };
 
-  const onSearchField = (currentList, searchTerm) => {
-    return currentList.filter((field) =>
-    field.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const onSearchDepartment = (currentList, searchTerm) => {
+    return currentList.filter((department) =>
+      department.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
-  const onDeleteField = async (fieldId) => {
-    await topicService.deleteField(fieldId[0]);
+  const onDeleteDepartment = async (fieldId) => {
+    await departmentService.deleteDepartment(fieldId[0]);
   };
-
   return (
     <div>
       <CustomizedTable
-        type={TABLE_TYPE.FIELD}
-        getData={getFields}
-        filterData={onSearchField}
-        onDelete={onDeleteField}
+        type={TABLE_TYPE.DEPARTMENT}
+        getData={getDepartments}
+        filterData={onSearchDepartment}
+        onDelete={onDeleteDepartment}
         headerTable={headerTable}
         actionItems={actionItems}
       />
@@ -82,4 +79,4 @@ const FieldList = () => {
   );
 };
 
-export default FieldList;
+export default DepartmentList;

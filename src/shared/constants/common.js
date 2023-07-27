@@ -39,6 +39,9 @@ export const BUTTON_LABEL = {
   ADD_CATEGORY: "Thêm thể loại",
   SEARCH_FIELD: "Tìm kiếm lĩnh vực",
   SEARCH_CATEGORY: "Tìm kiếm thể loại",
+  CREATE_DEPARTMENT: "Tạo phòng ban",
+  ADD_DEPARTMENT: "Thêm phòng ban",
+  SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -96,6 +99,8 @@ export const TITLE = {
   EDIT_FIELD: "Chỉnh sửa lĩnh vực",
   CREATE_CATEGORY: "Tạo thể loại",
   EDIT_CATEGORY: "Chỉnh sửa thể loại",
+  CREATE_DEPARTMENT: "Tạo phòng ban",
+  EDIT_DEPARTMENT: "Chỉnh sửa phòng ban",
 };
 
 export const OTHER_TEXT = {
@@ -578,6 +583,8 @@ export const TABLE_TYPE = {
   TOPIC: "TOPIC",
   FIELD: "FIELD",
   CATEGORY: "CATEGORY",
+  BOOKING: "BOOKING",
+  DEPARTMENT: "DEPARTMENT",
 };
 
 export const USER_STATUS = {
@@ -604,4 +611,19 @@ export const UPSERT_FIELD = {
 
 export const UPSERT_CATEGORY = {
   NAME: "Tên thể loại",
+};
+
+export const ADMIN_BOOKING_TABLE = {
+  TOPIC_NAME: "Chủ đề",
+  MENTOR_NAME: "Diễn giả",
+  PARTICIPANTS: "Người tham gia",
+  TIME: "Thời gian",
+  STATUS: "Trạng thái",
+  BOOKING_DATE: "Ngày đặt",
+};
+
+export const TRANSLATED_BOOKING_STATUS = {
+  ACCEPTED: "Đã duyệt",
+  REQUESTED: "Đang yêu cầu",
+  REJECTED: "Đã từ chối",
 };
