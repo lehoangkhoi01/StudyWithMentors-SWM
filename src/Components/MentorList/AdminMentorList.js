@@ -66,7 +66,7 @@ const AdminMentorList = () => {
       action: UPSERT_ACTION,
     },
     {
-      imgSrc: require("../../assets/icons/Deactive.png"),
+      imgSrc: require("../../assets/icons/Accept.png"),
       label: TABLE_ACTION.ACTIVATE,
       action: ACTIVE_ACTION,
     },
@@ -109,7 +109,7 @@ const AdminMentorList = () => {
 
   const onSearchMentor = (currentList, searchTerm) => {
     return currentList.filter((mentor) =>
-      mentor.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+      mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

@@ -22,6 +22,7 @@ export const ROUTES = {
   DEPARTMENT_LIST: "/admin/departments",
   FIELD_LIST: "/admin/fields",
   ADMIN_BOOKING_LIST: "/admin/bookings",
+  STAFF_LIST: "/admin/staffs"
 };
 
 export const ROUTES_STATIC = {
