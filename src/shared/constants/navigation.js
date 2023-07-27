@@ -155,3 +155,45 @@ export const AUTHENTICATION_MENU = [
     ROUTE: ROUTES.SIGN_IN,
   },
 ];
+
+export const ADMIN_MANAGE_SYSTEM_MENU = [
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.ADMIN_BOOKING_LIST,
+  },
+  {
+    TITLE: "Sự kiện",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Chủ đề",
+    ROUTE: ROUTES.TOPIC_LIST,
+  },
+  {
+    TITLE: "Lĩnh vực",
+    ROUTE: ROUTES.FIELD_LIST,
+  },
+  { TITLE: "Thể loại", ROUTE: ROUTES.CATEGORY_LIST },
+  { TITLE: "Phòng ban", ROUTE: ROUTES.DEPARTMENT_LIST },
+];
+
+export const STAFF_MANAGE_SYSTEM_MENU = [
+  {
+    TITLE: "Sự kiện",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+];
+
+export const ADMIN_MANAGE_ACCOUNT_MENU = [
+  {
+    TITLE: "Diễn giả",
+    ROUTE: ROUTES.ADMIN_MENTOR_LIST,
+  },
+];
+
+export const STAFF_MANAGE_ACCOUNT_MENU = [
+  {
+    TITLE: "Diễn giả",
+    ROUTE: ROUTES.ADMIN_MENTOR_LIST,
+  },
+];
