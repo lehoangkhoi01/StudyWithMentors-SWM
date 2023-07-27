@@ -115,7 +115,9 @@ const SideBar = (props) => {
         {ACCOUNT_MANAGE_MENU.map((item, index) => (
           <ListItem
             key={`account-manage${index}`}
-            className={`${style.sidebar__listitem}`}
+            className={`${style.sidebar__listitem} ${
+              currentRouter === item.ROUTE ? style.sidebar__active : ""
+            }`}
           >
             <Link to={item.ROUTE}>{item.TITLE}</Link>
           </ListItem>
