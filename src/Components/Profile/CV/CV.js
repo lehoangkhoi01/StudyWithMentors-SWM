@@ -41,7 +41,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
 import { topicService } from "../../../Services/topicService";
-import { Box, Divider, Tab, Tabs } from "@mui/material";
+import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import moment from "moment";
 import { scheduleService } from "../../../Services/sheduleService";
 import { format } from "date-fns";
@@ -262,6 +262,7 @@ const PROFILE_SECTION = {
 
 const CustomTab = styled(Tab)`
   color: #3948ab;
+  font-size: 1.3rem;
   &.Mui-selected {
     color: #283493;
   }
@@ -645,7 +646,7 @@ const CV = () => {
   const renderRatingSection = () => {
     if (feedbacks.length > 0) {
       return <RatingSection feedbacks={feedbacks} />;
-    } else return null;
+    } else return <Typography>Chưa có đánh giá</Typography>;
   };
 
   const renderSection = () => {
@@ -719,7 +720,13 @@ const CV = () => {
           </div>
 
           <div className={style.cv__detail__profile}>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "1rem",
+                backgroundColor: "#e8eaf6",
+                width: "fit-content",
+              }}
+            >
               <Tabs
                 value={currentSection}
                 onChange={onChangeSection}

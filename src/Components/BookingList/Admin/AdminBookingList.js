@@ -1,16 +1,36 @@
+import React from "react";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { useNotification } from "../../../Helpers/generalHelper";
 import { bookingService } from "../../../Services/bookingService";
 import CustomizedTable from "../../../shared/components/Table/CustomizedTable";
+import { BOOKING_DETAIL_ACTION } from "../../../shared/constants/actionType";
 import {
   ADMIN_BOOKING_TABLE,
   ERROR_MESSAGES,
   TABLE_TYPE,
   TRANSLATED_BOOKING_STATUS,
 } from "../../../shared/constants/common";
+import BookingInfoDialog from "../BookingInfoDialog/BookingInfoDialog";
+import BookingAttendanceDialog from "./BookingAttendanceDialog/BookingAttendanceDialog";
 
 const AdminBookingList = () => {
   const { setNotification } = useNotification();
+  const [openBookingInfoDialog, setOpenBookingInfoDialog] =
+    React.useState(false);
+
+  const [openLogAttendance, setOpenLogAttendance] = React.useState(false);
+
+  const [selectedBooking, setSelectedBooking] = React.useState(null);
+
+  const handleViewDetail = (selectBooking) => {
+    setSelectedBooking(selectBooking);
+    setOpenBookingInfoDialog(true);
+  };
+
+  const handleViewLog = (selectedBooking) => {
+    setSelectedBooking(selectedBooking);
+    setOpenLogAttendance(true);
+  };
 
   const headerTable = [
     {
@@ -42,6 +62,25 @@ const AdminBookingList = () => {
       sortable: true,
       property: "bookingTime",
       name: ADMIN_BOOKING_TABLE.BOOKING_DATE,
+    },
+  ];
+
+  const actionItems = [
+    {
+      imgSrc: require("../../../assets/icons/Edit.png"),
+      label: "Xem chi tiết",
+      action: BOOKING_DETAIL_ACTION,
+      functionAction: function (selectedBooking) {
+        handleViewDetail(selectedBooking);
+      },
+    },
+    {
+      imgSrc: require("../../../assets/icons/Edit.png"),
+      label: "Xem ghi chú tham gia",
+      action: BOOKING_DETAIL_ACTION,
+      functionAction: function (selectedBooking) {
+        handleViewLog(selectedBooking);
+      },
     },
   ];
 
@@ -85,7 +124,24 @@ const AdminBookingList = () => {
         filterData={onSearchBooking}
         headerTable={headerTable}
         hideAddingAction={true}
+        actionItems={actionItems}
       />
+
+      {openBookingInfoDialog && (
+        <BookingInfoDialog
+          open={openBookingInfoDialog}
+          setOpenBookingInfo={setOpenBookingInfoDialog}
+          bookingInfo={selectedBooking}
+        />
+      )}
+
+      {openLogAttendance && (
+        <BookingAttendanceDialog
+          open={openLogAttendance}
+          setOpenDialog={setOpenLogAttendance}
+          bookingId={selectedBooking.id}
+        />
+      )}
     </div>
   );
 };

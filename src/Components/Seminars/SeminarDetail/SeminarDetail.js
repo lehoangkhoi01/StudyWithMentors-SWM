@@ -37,6 +37,8 @@ import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import moment from "moment";
 
 const SeminarDetail = () => {
+  const AUTHORIZED_ROLE_ACTION = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
+
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -172,7 +174,7 @@ const SeminarDetail = () => {
                 <h1 className={style.detail__title}>{data.name}</h1>
                 {renderSeminarStatusLabel()}
 
-                {userInfo?.role === SYSTEM_ROLE.STAFF &&
+                {AUTHORIZED_ROLE_ACTION.includes(userInfo?.role) &&
                   userInfo.departmentId === data.department.id && (
                     <div className={style.detail__burger}>
                       <Button
@@ -246,13 +248,15 @@ const SeminarDetail = () => {
                   <strong>{SEMINAR.AUTHOR}:</strong>{" "}
                   {data.mentors.map((mentor, index) => {
                     if (mentor.status === USER_STATUS.ACTIVATED) {
-                      return <Link
-                        to={`${ROUTES.CV}/${mentor.id}`}
-                        key={`MENTOR_${index}`}
-                      >
-                        {mentor.fullName}
-                        {data.mentors.length - 1 !== index ? ", " : ""}
-                      </Link>;
+                      return (
+                        <Link
+                          to={`${ROUTES.CV}/${mentor.id}`}
+                          key={`MENTOR_${index}`}
+                        >
+                          {mentor.fullName}
+                          {data.mentors.length - 1 !== index ? ", " : ""}
+                        </Link>
+                      );
                     } else {
                       return (
                         <span key={`MENTOR_${index}`}>

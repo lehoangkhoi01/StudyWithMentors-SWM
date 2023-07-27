@@ -336,8 +336,7 @@ const BookingInfoDialog = (props) => {
     if (feedbacks.length > 0) {
       return (
         <>
-          <Divider />
-          <Typography variant="h6" marginY={2}>
+          <Typography variant="h6" marginTop={5}>
             Phản hồi của sinh viên về buổi tư vấn
           </Typography>
           {feedbacks.map((feedback) => (
@@ -360,6 +359,7 @@ const BookingInfoDialog = (props) => {
                 </span>
                 <span>{feedback.content}</span>
               </div>
+              <Divider />
             </div>
           ))}
         </>
@@ -368,6 +368,7 @@ const BookingInfoDialog = (props) => {
   };
 
   React.useState(() => {
+    console.log(props.bookingInfo);
     const fetchFeedbacksByBooking = async () => {
       if (props.bookingInfo?.id) {
         try {
@@ -457,6 +458,19 @@ const BookingInfoDialog = (props) => {
             <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
             <span>{props.bookingInfo?.description}</span>
           </div>
+
+          {props.bookingInfo?.reasonToCancel && (
+            <div className={`${style.bookingSummary__detail}`}>
+              <span className={`${style.bookingSummary__subTitle}`}>
+                Lí do hủy:{" "}
+              </span>
+              <span>
+                {props.bookingInfo?.reasonToCancel +
+                  " - " +
+                  props.bookingInfo?.cancelBy?.fullName}
+              </span>
+            </div>
+          )}
 
           {props.bookingInfo?.status === BOOKING_STATUS.ACCEPTED && (
             <div className={`${style.bookingSummary__detail}`}>

@@ -12,20 +12,42 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoPath from "../../../assets/logo.png";
 import { APP_NAME, BUTTON_LABEL } from "../../constants/common";
-import { ROUTES } from "../../constants/navigation";
+import {
+  ADMIN_MANAGE_ACCOUNT_MENU,
+  ADMIN_MANAGE_SYSTEM_MENU,
+  ROUTES,
+  STAFF_MANAGE_ACCOUNT_MENU,
+  STAFF_MANAGE_SYSTEM_MENU,
+} from "../../constants/navigation";
 import Logo from "../Logo/Logo";
 import style from "./Sidebar.module.scss";
 import { drawerWidth } from "../../constants/globalStyle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useSelector } from "react-redux";
 import { selectAppbarTitle } from "../../../Store/slices/helperSlice";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { SYSTEM_ROLE } from "../../constants/systemType";
 
 const SideBar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [currentRouter, setCurrentRoute] = React.useState("/");
+
   const appbarTitle = useSelector(selectAppbarTitle);
+  const userInfo = useSelector(selectUserInfo);
+  const location = useLocation();
+
+  const SYSTEM_MANAGE_MENU =
+    userInfo?.role === SYSTEM_ROLE.ADMIN
+      ? ADMIN_MANAGE_SYSTEM_MENU
+      : STAFF_MANAGE_SYSTEM_MENU;
+
+  const ACCOUNT_MANAGE_MENU =
+    userInfo?.role === SYSTEM_ROLE.ADMIN
+      ? ADMIN_MANAGE_ACCOUNT_MENU
+      : STAFF_MANAGE_ACCOUNT_MENU;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -70,15 +92,16 @@ const SideBar = (props) => {
         >
           Quản lí hệ thống
         </ListItem>
-        <ListItem className={`${style.sidebar__listitem}`}>
-          <Link to={ROUTES.ADMIN_MENTOR_LIST}>Quản lí mentor</Link>
-        </ListItem>
-        <ListItem className={`${style.sidebar__listitem}`}>
-          <Link to={ROUTES.TOPIC_LIST}>Quản lí chủ đề</Link>
-        </ListItem>
-        <ListItem className={`${style.sidebar__listitem}`}>
-          <Link to={ROUTES.SEMINAR_LIST}>Quản lí sự kiện</Link>
-        </ListItem>
+        {SYSTEM_MANAGE_MENU.map((item, index) => (
+          <ListItem
+            key={`system-menu${index}`}
+            className={`${style.sidebar__listitem} ${
+              currentRouter === item.ROUTE ? style.sidebar__active : ""
+            }`}
+          >
+            <Link to={item.ROUTE}>{item.TITLE}</Link>
+          </ListItem>
+        ))}
       </List>
       <Divider />
 
@@ -89,9 +112,14 @@ const SideBar = (props) => {
         >
           Quản lí tài khoản
         </ListItem>
-        <ListItem key="account" className={`${style.sidebar__listitem}`}>
-          <Link>Tài khoản</Link>
-        </ListItem>
+        {ACCOUNT_MANAGE_MENU.map((item, index) => (
+          <ListItem
+            key={`account-manage${index}`}
+            className={`${style.sidebar__listitem}`}
+          >
+            <Link to={item.ROUTE}>{item.TITLE}</Link>
+          </ListItem>
+        ))}
       </List>
 
       <div className={`${style.sidebar__infoSection}`}>
@@ -110,6 +138,10 @@ const SideBar = (props) => {
       </div>
     </>
   );
+
+  React.useEffect(() => {
+    setCurrentRoute(location.pathname);
+  }, [location]);
 
   return (
     <>
@@ -141,13 +173,12 @@ const SideBar = (props) => {
         sx={{ width: { xl: drawerWidth }, flexShrink: { xl: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", xl: "none" },

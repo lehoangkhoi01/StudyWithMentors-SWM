@@ -26,4 +26,8 @@ export const bookingService = {
     const url = `${BookingEndpoints.BOOKING}/attend/${id}`;
     return axiosClient.post(url, data);
   },
+  getLogAttendance: (id) => {
+    const url = `${BookingEndpoints.BOOKING}/${id}/logs`;
+    return axiosClient.get(url);
+  },
 };

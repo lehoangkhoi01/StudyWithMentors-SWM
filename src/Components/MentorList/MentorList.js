@@ -47,13 +47,23 @@ const MentorList = () => {
     onPaginate(1, mentors);
   }, [mentors]);
 
+  useEffect(() => {
+    if (statusFilter === FILTER_SEMINAR.ALL) {
+      getMentors();
+    } else if (statusFilter === FILTER_SEMINAR.FOLLOWING) {
+      const newMentorList = mentors.filter((mentor) =>
+        followingMentors.includes(mentor.mentorId)
+      );
+      setMentors(newMentorList);
+    }
+  }, [statusFilter]);
+
   const getMentors = async (params) => {
     try {
       setLoading(true);
       const mentorsData = await accountService.getAllMoreInfoMentors(
         params ?? []
       );
-
       setMentors(mentorsData.mentorCards);
     } catch (error) {
       console.log(error);
@@ -100,10 +110,6 @@ const MentorList = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    onPaginate(1, mentors);
-  }, [mentors]);
 
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);

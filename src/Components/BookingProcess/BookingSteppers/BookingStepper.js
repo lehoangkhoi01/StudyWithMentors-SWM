@@ -180,11 +180,19 @@ const BookingStepper = (props) => {
       props.handleCloseDialog();
       history.push(ROUTES.BOOKING_LIST);
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: "Đặt lịch thất bại. Xin vui lòng thử lại sau.",
-      });
+      if (error.status === 400) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: "Bạn đã đặt lịch vào khung giờ này. Không thể tiếp tục đặt",
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: "Đặt lịch thất bại. Xin vui lòng thử lại sau.",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -274,7 +282,7 @@ const BookingStepper = (props) => {
                         variant="contained"
                         color="primary600"
                         size="small"
-                        disabled={activeStep === 1}
+                        disabled={activeStep === 1 || props.topics.length === 0}
                         onClick={handleNext}
                       >
                         Tiếp tục

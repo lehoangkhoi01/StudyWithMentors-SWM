@@ -35,6 +35,7 @@ import UpsertMentorModal from "../../../Components/Modal/UpsertMentorModal";
 import ActivePropertyModal from "../../../Components/Modal/ActivePropertyModal";
 import {
   ACTIVE_ACTION,
+  BOOKING_DETAIL_ACTION,
   CONFIRM_ACTION,
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
@@ -493,7 +494,7 @@ const CustomizedTable = (props) => {
                     >
                       {header.link && (
                         <Link to={row.link}>
-                          {row.linkName ?? "CV diễn giả"}
+                          {row.linkName ?? "Hồ sơ diễn giả"}
                         </Link>
                       )}
                       {!header.link && `${row[header.property]}`}
@@ -599,6 +600,18 @@ const CustomizedTable = (props) => {
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
                                 )
+                              );
+                            case BOOKING_DETAIL_ACTION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    actionItem.functionAction(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
                               );
                             default:
                               return;

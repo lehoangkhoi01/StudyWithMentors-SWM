@@ -2,14 +2,15 @@
 
 .ratingSection {
   &__container {
-    margin: 1rem 0;
+    margin: 2rem 0;
   }
 
   &__feedbackCard {
     display: flex;
-    justify-content: space-between;
     padding: 1rem;
     background-color: $primary50;
     border-radius: 10px;
+    gap: 1rem;
+    margin: 1rem 0;
   }
 }
