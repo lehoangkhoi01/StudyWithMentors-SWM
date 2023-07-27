@@ -723,7 +723,6 @@ const CV = () => {
             <Box
               sx={{
                 marginBottom: "1rem",
-                backgroundColor: "#e8eaf6",
                 width: "fit-content",
               }}
             >

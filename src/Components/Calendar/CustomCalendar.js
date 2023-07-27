@@ -231,7 +231,7 @@ const CustomCalendar = () => {
   return (
     <div className={`${style.calendar__page}`}>
       <Grid2 container className={`${style.calendar__container}`}>
-        <Grid2 className={`${style.calendar__wrapper}`} xs={4}>
+        <Grid2 className={`${style.calendar__wrapper}`} xs={3}>
           <MiniCalendar
             handleOpen={handleOpenScheduleForm}
             navigateToDate={navigateToDate}
@@ -240,7 +240,7 @@ const CustomCalendar = () => {
         </Grid2>
         <Grid2
           className={`${style.calendar__wrapper} ${style.calendar__bigCalendar}`}
-          xs={8}
+          xs={9}
         >
           <CustomBigCalendar
             date={currentDate}
