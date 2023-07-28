@@ -49,12 +49,12 @@
 
   &__avatar {
     position: absolute;
-    top: 12%;
+    top: 13%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    width: 35%;
-    height: 35%;
+    width: 8rem;
+    height: 8rem;
 
     border-radius: 2rem;
     border: 1px solid $black000;
