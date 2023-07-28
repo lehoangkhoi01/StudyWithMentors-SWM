@@ -41,7 +41,9 @@ export const BUTTON_LABEL = {
   SEARCH_CATEGORY: "Tìm kiếm thể loại",
   CREATE_DEPARTMENT: "Tạo phòng ban",
   ADD_DEPARTMENT: "Thêm phòng ban",
+  ADD_STAFF: "Thêm nhân viên",
   SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
+  SEARCH_STAFF: "Tim kiếm nhân viên",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -105,7 +107,8 @@ export const TITLE = {
 
 export const OTHER_TEXT = {
   FREE_SCHEDULE: "Lịch chưa được đặt",
-  BOOKED_SCHEDULE: "Lịch đã được đặt",
+  BOOKED_SCHEDULE: "Lịch đang chờ xác nhận",
+  ACCEPTED_SCHEDULE: "Lịch đã xác nhận",
 };
 
 export const COMMON_MESSAGE = {
@@ -650,7 +653,7 @@ export const STAFF_STATUS = {
   INVALIDATE: "INVALIDATE",
   WAITING: "WAITING",
   ACTIVATED: "ACTIVATED",
-}
+};
 
 export const UPSERT_STAFF = {
   ADD_STAFF: "Thêm staff",

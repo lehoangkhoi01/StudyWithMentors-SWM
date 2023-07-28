@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../../shared/constants/common";
 
 const RatingSection = (props) => {
+  console.log(props.feedbacks);
   return (
     <div className={`${style.ratingSection__container}`}>
       {props.feedbacks.map((feedback) => (
@@ -20,11 +21,16 @@ const RatingSection = (props) => {
             <Rating value={feedback.rating} readOnly />
             <Typography>{feedback.content}</Typography>
           </div>
-          <Typography marginLeft="auto">
-            {format(new Date(feedback.feedbackDate), "HH:mm") +
-              " " +
-              format(new Date(feedback.feedbackDate), DATE_FORMAT.DD_MM_YYYY)}
-          </Typography>
+          <div className={`${style.ratingSection__rightInfo}`}>
+            <Typography color="#7b7b7b">
+              {format(new Date(feedback.feedbackDate), "HH:mm") +
+                " " +
+                format(new Date(feedback.feedbackDate), DATE_FORMAT.DD_MM_YYYY)}
+            </Typography>
+            <Typography color="#7b7b7b">
+              Chủ đề: {feedback.bookingCard.topicDetailResponse.name}
+            </Typography>
+          </div>
         </div>
       ))}
     </div>

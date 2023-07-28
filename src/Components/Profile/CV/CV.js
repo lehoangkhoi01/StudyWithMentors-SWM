@@ -578,7 +578,7 @@ const CV = () => {
   const renderFollowButton = (mentorId) => {
     if (followingMentors.includes(mentorId)) {
       return (
-        <div style={{ width: "30%", marginLeft: "1rem" }}>
+        <div style={{ width: "30%", marginLeft: "auto", marginRight: "4rem" }}>
           <CustomizedButton
             variant="contained"
             color="primary600"

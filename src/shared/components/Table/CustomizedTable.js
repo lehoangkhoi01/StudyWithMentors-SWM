@@ -399,6 +399,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.ADD_CATEGORY;
       case TABLE_TYPE.DEPARTMENT:
         return BUTTON_LABEL.ADD_DEPARTMENT;
+      case TABLE_TYPE.STAFF:
+        return BUTTON_LABEL.ADD_STAFF;
       default:
         return "";
     }
@@ -416,6 +418,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.SEARCH_CATEGORY;
       case TABLE_TYPE.DEPARTMENT:
         return BUTTON_LABEL.SEARCH_DEPARTMENT;
+      case TABLE_TYPE.STAFF:
+        return BUTTON_LABEL.SEARCH_STAFF;
       default:
         return "";
     }
@@ -698,9 +702,7 @@ const CustomizedTable = (props) => {
         onCloseModal={onCloseModal}
         existedData={existedData}
         onSuccess={getData}
-        title={
-          existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF
-        }
+        title={existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF}
         allStaffs={originData}
       />
     </div>

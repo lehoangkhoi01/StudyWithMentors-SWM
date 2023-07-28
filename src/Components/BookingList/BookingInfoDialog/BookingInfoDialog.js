@@ -45,7 +45,7 @@ const BookingInfoDialog = (props) => {
 
   const renderStatusLabel = (status) => {
     switch (status) {
-      case "ACCEPTED":
+      case BOOKING_STATUS.ACCEPTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__accepted}`}
@@ -53,7 +53,7 @@ const BookingInfoDialog = (props) => {
             Đã xác nhận
           </div>
         );
-      case "REQUESTED":
+      case BOOKING_STATUS.REQUESTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__waiting}`}
@@ -61,7 +61,7 @@ const BookingInfoDialog = (props) => {
             Đang chờ
           </div>
         );
-      case "REJECTED":
+      case BOOKING_STATUS.REJECTED:
         return (
           <div
             className={`${style.bookingCard__label} ${style.bookingCard__label__canceled}`}
@@ -225,8 +225,6 @@ const BookingInfoDialog = (props) => {
       return null;
     }
 
-    console.log(props.bookingInfo);
-
     switch (status) {
       case BOOKING_STATUS.ACCEPTED:
         if (userInfo.accountId === props.bookingInfo?.owner.accountId) {
@@ -264,6 +262,7 @@ const BookingInfoDialog = (props) => {
                   color="primary600"
                   size="small"
                   variant="contained"
+                  onClick={() => setOpenCancelBookingDialog(true)}
                 >
                   Rời nhóm
                 </CustomizeButton>

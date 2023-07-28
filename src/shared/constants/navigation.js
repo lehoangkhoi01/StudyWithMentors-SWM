@@ -22,7 +22,7 @@ export const ROUTES = {
   DEPARTMENT_LIST: "/admin/departments",
   FIELD_LIST: "/admin/fields",
   ADMIN_BOOKING_LIST: "/admin/bookings",
-  STAFF_LIST: "/admin/staffs"
+  STAFF_LIST: "/admin/staffs",
 };
 
 export const ROUTES_STATIC = {
@@ -55,12 +55,12 @@ export const COMMON_NAVBAR = [
     ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
-    TITLE: "Lịch hẹn",
-    ROUTE: ROUTES.BOOKING_LIST,
-  },
-  {
     TITLE: "Tìm Mentor",
     ROUTE: ROUTES.MENTOR_LIST,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
   },
 ];
 
@@ -74,10 +74,6 @@ export const MENTOR_NAVBAR = [
     ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
-    TITLE: "Lịch hẹn",
-    ROUTE: ROUTES.BOOKING_LIST,
-  },
-  {
     TITLE: "Chủ đề",
     ROUTE: ROUTES.TOPIC_LIST,
   },
@@ -88,6 +84,10 @@ export const MENTOR_NAVBAR = [
   {
     TITLE: "Hồ sơ của tôi",
     ROUTE: ROUTES.CV,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
   },
 ];
 
@@ -189,6 +189,10 @@ export const ADMIN_MANAGE_ACCOUNT_MENU = [
   {
     TITLE: "Diễn giả",
     ROUTE: ROUTES.ADMIN_MENTOR_LIST,
+  },
+  {
+    TITLE: "Nhân viên",
+    ROUTE: ROUTES.STAFF_LIST,
   },
 ];
 

@@ -1,12 +1,19 @@
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarCard.module.scss";
+import { ROUTES_STATIC } from "../../../shared/constants/navigation";
 
 const SeminarCard = ({ data }) => {
+  const history = useHistory();
+
+  const handleNavigate = () => {
+    history.push(`${ROUTES_STATIC.SEMINAR_DETAIL}/${data.id}`);
+  };
+
   return (
     <div className={style.card__container}>
-      <div className={style.card__header}>
+      <div className={style.card__header} onClick={handleNavigate}>
         <img
           className={style.card__image}
           src={
