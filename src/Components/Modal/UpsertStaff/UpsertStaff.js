@@ -35,6 +35,20 @@ const UpsertStaff = (props) => {
   const [selectedDepartment, setSelectedDepartment] = useState(departments[0]);
 
   useEffect(() => {
+    if (props.existedData) {
+      const departmentId = props.existedData.departmentId;
+
+      const exitedDepartment = departments.filter(
+        (department) => department.id === departmentId
+      )[0];
+
+      setSelectedDepartment(exitedDepartment);
+    } else {
+      setSelectedDepartment(departments[0]);
+    }
+  }, [departments]);
+
+  useEffect(() => {
     reset();
     if (props.existedData) {
       const departmentId = props.existedData.departmentId;
@@ -43,11 +57,10 @@ const UpsertStaff = (props) => {
         (department) => department.id === departmentId
       )[0];
 
-      
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
       setValue("phoneNum", props.existedData.phoneNum);
-      
+
       setSelectedDepartment(exitedDepartment);
       setType(MODAL_TYPE.EDIT);
     } else {
@@ -79,10 +92,7 @@ const UpsertStaff = (props) => {
       setIsExistedEmail(false);
 
       if (type === MODAL_TYPE.EDIT) {
-        // await userAccountService.updateUserProfile(
-        //   props.existedData.id,
-        //   specificForm
-        // );
+        await accountService.updateStaff(specificForm, props.existedData.id);
       } else if (type === MODAL_TYPE.ADD) {
         await accountService.createStaff(specificForm);
       }

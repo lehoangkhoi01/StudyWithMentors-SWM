@@ -28,4 +28,8 @@ export const seminarService = {
     const url = `${SeminarEndpoints.SEMINAR}/${id}`;
     return axiosClient.delete(url);
   },
+  getSeminarByMentor: (id) => {
+    const url = `${SeminarEndpoints.GET_SEMINARS_BY_MENTOR}/${id}`;
+    return axiosClient.get(url);
+  },
 };

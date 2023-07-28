@@ -20,6 +20,7 @@ export const SeminarEndpoints = {
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
   GET_SEMINAR_DETAIL: "seminars",
   SEMINAR: "seminars",
+  GET_SEMINARS_BY_MENTOR: "seminars/byMentor"
 };
 
 export const AccountEndpoints = {
@@ -29,7 +30,8 @@ export const AccountEndpoints = {
   CREATE_MENTOR: "accounts/mentors",
   GET_MORE_DETAIL_MENTOR: "booking/mentors",
   ACCOUNT_STATUS: "admin/accounts",
-  CREATE_STAFF: "admin/staffs"
+  CREATE_STAFF: "admin/staffs",
+  UPDATE_STAFF: "user-profile/staffs"
 };
 
 export const StaticResourceEndpoints = {

@@ -68,6 +68,7 @@ const SeminarList = () => {
       endDate: filterInfo?.endDate,
       departmentId: filterDepartmentId,
       status: statusFilter,
+      ownSeminar: status === FILTER_SEMINAR.OWN_SEMINAR,
     });
   };
 
@@ -169,6 +170,20 @@ const SeminarList = () => {
               }}
             >
               {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
+            </p>
+          )}
+          {userInfo?.role === SYSTEM_ROLE.MENTOR && (
+            <p
+              className={
+                statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
+                  ? style.seminarList__status__filter__active
+                  : ""
+              }
+              onClick={() => {
+                onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
+              }}
+            >
+              {FILTER_SEMINAR.OWN_SEMINAR}
             </p>
           )}
         </div>
