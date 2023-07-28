@@ -13,4 +13,11 @@
     gap: 1rem;
     margin: 1rem 0;
   }
+  &__rightInfo {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 }

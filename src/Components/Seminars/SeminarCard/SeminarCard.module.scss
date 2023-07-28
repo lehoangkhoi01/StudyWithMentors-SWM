@@ -16,6 +16,9 @@
     position: relative;
     text-align: center;
   }
+  &__header:hover {
+    cursor: pointer;
+  }
 
   &__image {
     width: auto;

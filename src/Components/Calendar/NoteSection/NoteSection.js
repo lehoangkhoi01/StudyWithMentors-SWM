@@ -22,6 +22,13 @@ const NoteSection = () => {
         />{" "}
         {OTHER_TEXT.BOOKED_SCHEDULE}
       </div>
+      <div className={`${style.noteSection__label}`}>
+        <SquareIcon
+          fontSize="large"
+          className={`${style.noteSection__acceptedLabel}`}
+        />{" "}
+        {OTHER_TEXT.ACCEPTED_SCHEDULE}
+      </div>
     </div>
   );
 };

@@ -54,7 +54,7 @@ function App() {
       const userInfoResponse = await getUserInfo();
 
       if (
-        (userInfoResponse && userInfoResponse.status === "403") ||
+        (userInfoResponse && userInfoResponse.status === 403) ||
         !userInfoResponse
       ) {
         // expired token...
