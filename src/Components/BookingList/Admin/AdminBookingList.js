@@ -45,7 +45,7 @@ const AdminBookingList = () => {
     },
     {
       sortable: true,
-      property: "participants",
+      property: "ownerName",
       name: ADMIN_BOOKING_TABLE.PARTICIPANTS,
     },
     {
@@ -94,10 +94,10 @@ const AdminBookingList = () => {
         ...booking,
         topicName: booking.topicDetailResponse.name,
         mentorName: booking.mentor.fullName,
-        participants: booking.mentees.map((mentee) => mentee.fullName),
         translatedStatus: TRANSLATED_BOOKING_STATUS[booking.status],
         time: handleTimeToDisplay(`${booking.startDate} ${booking.startTime}`),
         bookingTime: handleTimeToDisplay(booking.createdDate),
+        ownerName: booking.owner.fullName,
       }));
 
       return updatedBookings;
@@ -112,7 +112,7 @@ const AdminBookingList = () => {
 
   const onSearchBooking = (currentList, searchTerm) => {
     return currentList.filter((booking) =>
-      booking.topicName.toLowerCase().includes(searchTerm.toLowerCase())
+      booking.topicName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

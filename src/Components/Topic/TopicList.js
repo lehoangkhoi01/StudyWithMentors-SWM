@@ -127,7 +127,7 @@ const TopicList = () => {
 
   const onSearchTopic = (currentList, searchTerm) => {
     return currentList.filter((topic) =>
-      topic.name.toLowerCase().includes(searchTerm.toLowerCase())
+      topic.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

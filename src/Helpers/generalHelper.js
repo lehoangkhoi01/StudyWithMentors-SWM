@@ -11,6 +11,11 @@ import {
   topicAction,
 } from "../Store/slices/topicSlice";
 import { topicService } from "../Services/topicService";
+import {
+  departmentAction,
+  selectDepartments,
+} from "../Store/slices/departmentSlice";
+import { departmentService } from "../Services/departmentService";
 
 // reason: want to specify delay time for loading for smoothier
 export const useCustomLoading = () => {
@@ -135,4 +140,23 @@ export const useFetchTopicFieldsAndCategories = () => {
     getTopicFields,
     getTopicCategories,
   };
+};
+
+export const useFetchDepartments = () => {
+  const dispatch = useDispatch();
+  let departments = useSelector(selectDepartments);
+
+  const getDepartments = async () => {
+    if (!departments || departments.length === 0) {
+      try {
+        departments = await departmentService.getDepartments();
+        dispatch(departmentAction.setDepartments(departments));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return departments;
+  };
+
+  return { getDepartments };
 };

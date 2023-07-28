@@ -17,6 +17,7 @@ import {
   TABLE_TYPE,
   TOPIC_STATUS,
   UPSERT_MENTOR,
+  UPSERT_STAFF,
 } from "../../constants/common";
 import { Button, Menu, MenuItem, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -45,6 +46,7 @@ import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTop
 import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
 import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
 import UpsertDepartment from "../../../Components/Modal/UpsertDepartment/UpsertDepartment";
+import UpsertStaff from "../../../Components/Modal/UpsertStaff/UpsertStaff";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -690,6 +692,16 @@ const CustomizedTable = (props) => {
         existedData={existedData}
         onCloseModal={onCloseModal}
         onSuccess={getData}
+      />
+      <UpsertStaff
+        openModal={openModal.upsert && props.type === TABLE_TYPE.STAFF}
+        onCloseModal={onCloseModal}
+        existedData={existedData}
+        onSuccess={getData}
+        title={
+          existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF
+        }
+        allStaffs={originData}
       />
     </div>
   );

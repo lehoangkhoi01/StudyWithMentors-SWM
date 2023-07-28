@@ -60,7 +60,7 @@ const CategoryList = () => {
 
   const onSearchCategory = (currentList, searchTerm) => {
     return currentList.filter((mentor) =>
-      mentor.name.toLowerCase().includes(searchTerm.toLowerCase())
+      mentor.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

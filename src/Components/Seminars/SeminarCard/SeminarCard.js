@@ -43,7 +43,7 @@ const SeminarCard = ({ data }) => {
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Location_Semniar.png")} />
-          <p>{data.location}</p>
+          <p>{data.location} </p>
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Organizer_Seminar.png")} />

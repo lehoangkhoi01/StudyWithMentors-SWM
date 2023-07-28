@@ -60,7 +60,7 @@ const FieldList = () => {
 
   const onSearchField = (currentList, searchTerm) => {
     return currentList.filter((field) =>
-    field.name.toLowerCase().includes(searchTerm.toLowerCase())
+    field.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

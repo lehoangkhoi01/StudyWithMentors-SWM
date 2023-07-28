@@ -24,4 +24,19 @@ export const accountService = {
       },
     });
   },
+  getAllStaffs: () => {
+    const url = AccountEndpoints.ACCOUNT_STAFF;
+    return axiosClient.get(url);
+  },
+  createStaff: (data) => {
+    const url = AccountEndpoints.CREATE_STAFF;
+    return axiosClient.post(url, data);
+  },
+  updateAccountStatus: (id, status) => {
+    const url = `${AccountEndpoints.ACCOUNT_STATUS}/${id}`;
+
+    return axiosClient.post(url, {
+      status,
+    });
+  },
 };

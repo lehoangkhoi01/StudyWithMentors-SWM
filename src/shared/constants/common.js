@@ -137,6 +137,7 @@ export const COMMON_MESSAGE = {
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
   REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
+  ADD_STAFF_SUCCESS: "Thêm staff thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -585,6 +586,7 @@ export const TABLE_TYPE = {
   CATEGORY: "CATEGORY",
   BOOKING: "BOOKING",
   DEPARTMENT: "DEPARTMENT",
+  STAFF: "STAFF",
 };
 
 export const USER_STATUS = {
@@ -626,4 +628,31 @@ export const TRANSLATED_BOOKING_STATUS = {
   ACCEPTED: "Đã duyệt",
   REQUESTED: "Đang yêu cầu",
   REJECTED: "Đã hủy",
+};
+
+export const STAFF_TABLE = {
+  NAME: "Tên",
+  EMAIL: "Email",
+  PHONE: "Số điện thoại",
+  DEPARTMENT: "Phòng ban",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const TRANSLATED_STAFF_STATUS = {
+  NOT_DEFINE: "Không xác định",
+  INVALIDATE: "Vô hiệu hóa",
+  WAITING: "Đang chờ",
+  ACTIVATED: "Hoạt động",
+};
+
+export const STAFF_STATUS = {
+  INVALIDATE: "INVALIDATE",
+  WAITING: "WAITING",
+  ACTIVATED: "ACTIVATED",
+}
+
+export const UPSERT_STAFF = {
+  ADD_STAFF: "Thêm staff",
+  EDIT_STAFF: "Chỉnh sửa staff",
 };

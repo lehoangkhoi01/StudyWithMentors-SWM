@@ -21,7 +21,7 @@
     overflow: hidden;
 
     &__information {
-      background: url("../../../assets/default-cover.jpg") no-repeat;
+      background: url("../../../assets/CV_Background.png") no-repeat;
       background-size: cover;
       height: 11vw;
       position: relative;
@@ -32,7 +32,7 @@
         position: absolute;
         display: flex;
         width: 100%;
-        top: 4.5vw;
+        top: 5.5vw;
         left: 2.5vw;
         gap: 1vw;
       }
@@ -113,7 +113,7 @@
 
     &__profile {
       margin-inline: 4vw;
-      margin-top: 11%;
+      margin-top: 13%;
       padding-bottom: 2.3rem;
 
       &_title {

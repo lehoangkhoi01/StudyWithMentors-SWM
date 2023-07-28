@@ -58,7 +58,7 @@ const DepartmentList = () => {
 
   const onSearchDepartment = (currentList, searchTerm) => {
     return currentList.filter((department) =>
-      department.name.toLowerCase().includes(searchTerm.toLowerCase())
+      department.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

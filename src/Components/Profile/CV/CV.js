@@ -266,6 +266,7 @@ const CustomTab = styled(Tab)`
   &.Mui-selected {
     color: #283493;
   }
+  background: white;
 `;
 
 const CV = () => {
@@ -661,12 +662,7 @@ const CV = () => {
     <div className={style.cv__container}>
       {!isLoading && (
         <div className={style.cv__detail}>
-          <div
-            className={style.cv__detail__information}
-            style={{
-              backgroundImage: null,
-            }}
-          >
+          <div className={style.cv__detail__information}>
             <div className={style.cv__detail__information_brief}>
               <div className={style.cv__detail__information_img}>
                 <img

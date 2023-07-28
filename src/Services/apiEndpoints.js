@@ -28,6 +28,8 @@ export const AccountEndpoints = {
   DELETE_MENTOR: "accounts/mentors/invalidate",
   CREATE_MENTOR: "accounts/mentors",
   GET_MORE_DETAIL_MENTOR: "booking/mentors",
+  ACCOUNT_STATUS: "admin/accounts",
+  CREATE_STAFF: "admin/staffs"
 };
 
 export const StaticResourceEndpoints = {

@@ -6,6 +6,7 @@ import FieldListPage from "../Pages/Field/FieldListPage";
 import CategoryListPage from "../Pages/Category/CategoryListPage";
 import DepartmentListPage from "../Pages/Department/DepartmentListPage";
 import AdminBookingListPage from "../Pages/BookingList/AdminBookingListPage";
+import StaffListPage from "../Pages/Staff/StaffListPage";
 
 const AdminRoutes = () => {
   return (
@@ -17,6 +18,10 @@ const AdminRoutes = () => {
         <Route
           path={ROUTES.ADMIN_BOOKING_LIST}
           component={AdminBookingListPage}
+        />
+        <Route
+          path={ROUTES.STAFF_LIST}
+          component={StaffListPage}
         />
         <Route component={NotFoundPage} />
       </Switch>
