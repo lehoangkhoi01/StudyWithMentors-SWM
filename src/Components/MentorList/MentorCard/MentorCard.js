@@ -8,7 +8,7 @@ import {
   useCustomLoading,
   useNotification,
 } from "../../../Helpers/generalHelper";
-import { followMentorService } from "../../../Services/followMentorService";
+// import { followMentorService } from "../../../Services/followMentorService";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
@@ -26,8 +26,8 @@ const MentorCard = (props) => {
   const handleFollow = async (mentorId) => {
     try {
       setLoading(true);
-      await followMentorService.follow(mentorId);
-      await props.getFollowingMentors();
+      // await followMentorService.follow(mentorId);
+      props.onFollowSuccessfully(mentorId);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -42,8 +42,8 @@ const MentorCard = (props) => {
   const handleUnfollow = async (mentorId) => {
     try {
       setLoading(true);
-      await followMentorService.unfollow(mentorId);
-      await props.getFollowingMentors();
+      // await followMentorService.unfollow(mentorId);
+      props.onUnfollowSuccessfully(mentorId);
     } catch (error) {
       setNotification({
         isOpen: true,

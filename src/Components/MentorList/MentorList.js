@@ -111,6 +111,27 @@ const MentorList = () => {
     }
   };
 
+  const onFollowSuccessfully = (mentorId) => {
+    console.log(mentorId)
+    setFollowingMentors((prevValue) => {
+      return [...prevValue, mentorId];
+    });
+  };
+
+  const onUnfollowSuccessfully = (mentorId) => {
+    setFollowingMentors((prevValue) => {
+      const selectedMentorIndex = mentors.findIndex(
+        (mentor) => mentor.mentorId === mentorId
+      );
+
+      console.log(prevValue)
+      console.log(mentorId)
+
+      prevValue.splice(selectedMentorIndex + 1, 1);
+      return [...prevValue];
+    });
+  };
+
   const onChangeStatusFilter = (status) => {
     setStatusFilter(status);
   };
@@ -193,7 +214,8 @@ const MentorList = () => {
                 key={`MENTOR_CARD_${index}`}
                 data={mentor}
                 followingMentors={followingMentors}
-                getFollowingMentors={getFollowingMentors}
+                onFollowSuccessfully={onFollowSuccessfully}
+                onUnfollowSuccessfully={onUnfollowSuccessfully}
               />
             </Grid>
           ))}
