@@ -140,7 +140,7 @@ export const COMMON_MESSAGE = {
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
   REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
-  ADD_STAFF_SUCCESS: "Thêm staff thành công",
+  ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -436,6 +436,7 @@ export const FILTER_SEMINAR = {
   FOLLOWED_SEMINAR: "Quan tâm",
   POPULAR: "Nổi bật",
   FOLLOWING: "Đang theo dõi",
+  OWN_SEMINAR: "Sự kiện của tôi",
 };
 
 export const QR_TEXT = {

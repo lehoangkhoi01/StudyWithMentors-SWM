@@ -39,4 +39,8 @@ export const accountService = {
       status,
     });
   },
+  updateStaff: (data, id) => {
+    const url = `${AccountEndpoints.UPDATE_STAFF}/${id}`;
+    return axiosClient.post(url, data);
+  },
 };
