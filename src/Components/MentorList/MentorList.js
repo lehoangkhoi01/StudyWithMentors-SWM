@@ -112,7 +112,6 @@ const MentorList = () => {
   };
 
   const onFollowSuccessfully = (mentorId) => {
-    console.log(mentorId)
     setFollowingMentors((prevValue) => {
       return [...prevValue, mentorId];
     });
@@ -120,15 +119,14 @@ const MentorList = () => {
 
   const onUnfollowSuccessfully = (mentorId) => {
     setFollowingMentors((prevValue) => {
-      const selectedMentorIndex = mentors.findIndex(
-        (mentor) => mentor.mentorId === mentorId
+      const selectedMentorIndex = prevValue.findIndex(
+        (currentMentorId) => currentMentorId === mentorId
       );
+      let newFollowingMentors = [...prevValue];
 
-      console.log(prevValue)
-      console.log(mentorId)
-
-      prevValue.splice(selectedMentorIndex + 1, 1);
-      return [...prevValue];
+      newFollowingMentors.splice(selectedMentorIndex, 1);
+      
+      return [...newFollowingMentors];
     });
   };
 
