@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import { useRef } from "react";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
+import moment from "moment";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -44,6 +45,7 @@ const ScheduleDialog = (props) => {
   } = useForm();
 
   const formRef = useRef();
+  const [startDate, setStartDate] = React.useState(null);
   const [startTime, setStartTime] = React.useState(new Date());
   const [endTime, setEndTime] = React.useState(
     new Date(new Date().setHours(startTime.getHours() + 1))
@@ -74,7 +76,7 @@ const ScheduleDialog = (props) => {
     ) {
       setError("endDateTime", {
         type: "custom",
-        message: "Ngày kết thúc không hợp lệ",
+        message: "Ngày kết thúc phải lớn hơn ngày bắt đầu",
       });
       return;
     }
@@ -125,129 +127,155 @@ const ScheduleDialog = (props) => {
   };
 
   React.useEffect(() => {
-    setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
-    setValue("endDateTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
-  }, [props.startDate]);
+    let newStartDate = props.startDate;
 
-  React.useEffect(() => {
-    setStartTime(props.startDate);
-    setEndTime(
-      new Date(
-        new Date(props.startDate).setHours(props.startDate.getHours() + 1)
+    if (
+      new Date(props.startDate).setHours(0, 0, 0, 0) ===
+      new Date().setHours(0, 0, 0, 0)
+    ) {
+      newStartDate = moment().add(2, "days").toDate();
+      setStartDate(newStartDate);
+    }
+    setValue("freeTime", format(newStartDate, DATE_FORMAT.DD_MM_YYYY));
+    setValue(
+      "endDateTime",
+      format(
+        moment(newStartDate).add(1, "days").toDate(),
+        DATE_FORMAT.DD_MM_YYYY
       )
+    );
+
+    setStartTime(newStartDate);
+    setEndTime(
+      new Date(new Date(newStartDate).setHours(newStartDate.getHours() + 1))
     );
   }, [props.startDate]);
 
+  // React.useEffect(() => {
+  //   setStartTime(props.startDate);
+  //   setEndTime(
+  //     new Date(
+  //       new Date(props.startDate).setHours(props.startDate.getHours() + 1)
+  //     )
+  //   );
+  // }, [props.startDate]);
+
   return (
     <div>
-      <Dialog fullWidth open={props.open}>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-          <DialogTitle>
-            <Typography variant="h5" color="#1a237e">
-              Lịch nhận cố vấn
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <CustomizedDatePicker
-              name="Thời gian"
-              placeholder="Thời gian"
-              formName="freeTime"
-              views={["year", "month", "day"]}
-              format={DATE_FORMAT.DD_MM_YYYY}
-              value={props.startDate}
-              setValue={setValue}
-              getValues={getValues}
-              error={errors.freeTime ? true : false}
-              required={true}
-            />
-            <Grid2 container spacing={2}>
-              <Grid2 xs={6}>
-                <CustomizedTimePicker
-                  name="Từ"
-                  placeholder="From"
-                  formName="From"
-                  required={true}
-                  error={errors.fromTime ? true : false}
-                  defaultValue={startTime}
-                  value={startTime}
-                  onChange={handleOnChangeStartTime}
-                />
-              </Grid2>
-              <Grid2 xs={6}>
-                <CustomizedTimePicker
-                  disabled={true}
-                  name="Đến"
-                  placeholder="To"
-                  formName="To"
-                  required={true}
-                  error={errors.toTime ? true : false}
-                  defaultValue={endTime}
-                  value={endTime}
-                />
-              </Grid2>
-            </Grid2>
-            <FormControl style={{ width: "100%" }}>
-              <CustomizedSelect
-                inputId="loopOption"
-                isMultipleSelect={false}
-                items={loopOptions}
-                value={loopOption}
-                onChange={onLoopOptionChange}
+      {startDate && (
+        <Dialog fullWidth open={props.open}>
+          <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+            <DialogTitle>
+              <Typography variant="h5" color="#1a237e">
+                Lịch nhận cố vấn
+              </Typography>
+            </DialogTitle>
+            <DialogContent>
+              <CustomizedDatePicker
+                name="Thời gian"
+                placeholder="Thời gian"
+                formName="freeTime"
+                views={["year", "month", "day"]}
+                format={DATE_FORMAT.DD_MM_YYYY}
+                value={startDate}
+                setValue={setValue}
+                getValues={getValues}
+                error={errors.freeTime ? true : false}
                 required={true}
-                name="Lặp lại"
-                MenuProps={MenuProps}
+                disablePast={true}
+                minDate={startDate}
               />
-            </FormControl>
-            <CustomizedDatePicker
-              name="Lặp đến"
-              placeholder="Lặp đến"
-              formName="endDateTime"
-              onChange={() => clearErrors("endDateTime")}
-              views={["year", "month", "day"]}
-              format={DATE_FORMAT.DD_MM_YYYY}
-              value={props.startDate}
-              setValue={setValue}
-              getValues={getValues}
-              error={errors.endDateTime}
-              required={true}
-              disabled={loopOption.value === "noloop" ? true : false}
-            />
-          </DialogContent>
+              <Grid2 container spacing={2}>
+                <Grid2 xs={6}>
+                  <CustomizedTimePicker
+                    name="Từ"
+                    placeholder="From"
+                    formName="From"
+                    required={true}
+                    error={errors.fromTime ? true : false}
+                    defaultValue={startTime}
+                    value={startTime}
+                    onChange={handleOnChangeStartTime}
+                  />
+                </Grid2>
+                <Grid2 xs={6}>
+                  <CustomizedTimePicker
+                    disabled={true}
+                    name="Đến"
+                    placeholder="To"
+                    formName="To"
+                    required={true}
+                    error={errors.toTime ? true : false}
+                    defaultValue={endTime}
+                    value={endTime}
+                  />
+                </Grid2>
+              </Grid2>
+              <FormControl style={{ width: "100%" }}>
+                <CustomizedSelect
+                  inputId="loopOption"
+                  isMultipleSelect={false}
+                  items={loopOptions}
+                  value={loopOption}
+                  onChange={onLoopOptionChange}
+                  required={true}
+                  name="Lặp lại"
+                  MenuProps={MenuProps}
+                />
+              </FormControl>
+              <CustomizedDatePicker
+                name="Lặp đến"
+                placeholder="Lặp đến"
+                formName="endDateTime"
+                onChange={() => clearErrors("endDateTime")}
+                views={["year", "month", "day"]}
+                format={DATE_FORMAT.DD_MM_YYYY}
+                value={moment(startDate).add(1, "days").toDate()}
+                setValue={setValue}
+                getValues={getValues}
+                error={errors.endDateTime}
+                required={true}
+                disabled={loopOption.value === "noloop" ? true : false}
+                disablePast={true}
+                minDate={moment(startDate).add(1, "days").toDate()}
+              />
+            </DialogContent>
 
-          <DialogActions
-            sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
-          >
-            <CustomizedButton
-              color="primary600"
-              variant="outlined"
-              size="small"
-              onClick={props.handleClose}
+            <DialogActions
+              sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
             >
-              Trở lại
-            </CustomizedButton>
+              <CustomizedButton
+                color="primary600"
+                variant="outlined"
+                size="small"
+                onClick={props.handleClose}
+              >
+                Trở lại
+              </CustomizedButton>
 
-            {props.isUpdate ? (
-              <CustomizedButton
-                color="primary600"
-                variant="contained"
-                size="small"
-                onClick={onClickUpdate}
-              >
-                Cập nhật
-              </CustomizedButton>
-            ) : (
-              <CustomizedButton
-                color="primary600"
-                size="small"
-                variant="contained"
-                type="submit"
-              >
-                Tạo lịch
-              </CustomizedButton>
-            )}
-          </DialogActions>
-        </form>
-      </Dialog>
+              {props.isUpdate ? (
+                <CustomizedButton
+                  color="primary600"
+                  variant="contained"
+                  size="small"
+                  onClick={onClickUpdate}
+                >
+                  Cập nhật
+                </CustomizedButton>
+              ) : (
+                <CustomizedButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  type="submit"
+                >
+                  Tạo lịch
+                </CustomizedButton>
+              )}
+            </DialogActions>
+          </form>
+        </Dialog>
+      )}
 
       <ConfirmationDialog
         open={openConfirmationDialog}

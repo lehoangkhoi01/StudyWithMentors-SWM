@@ -54,7 +54,14 @@ const SeminarSection = (props) => {
             spacing={5}
             className={`${style.seminarSection__infoContainer}`}
           >
-            <Grid2 xs={6}>
+            <Grid2
+              xs={6}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <div className={`${style.seminarSection__info}`}>
                 <AccountBox />
                 <Typography>{seminar.speakerList.join(", ")}</Typography>
@@ -70,7 +77,14 @@ const SeminarSection = (props) => {
               </div>
             </Grid2>
 
-            <Grid2 xs={6}>
+            <Grid2
+              xs={6}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <div className={`${style.seminarSection__info}`}>
                 <Place />
                 <Typography>{seminar.location}</Typography>
