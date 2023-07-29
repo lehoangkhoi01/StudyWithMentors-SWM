@@ -50,6 +50,8 @@ import { followMentorService } from "../../../Services/followMentorService";
 import { styled } from "@mui/material/styles";
 import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
 import RatingSection from "./RatingSection/RatingSection";
+import { seminarService } from "../../../Services/seminarService";
+import SeminarSection from "./SeminarSection/SeminarSection";
 
 const TEXT_FIELDS = [
   {
@@ -258,6 +260,7 @@ const INIT_CV = {
 const PROFILE_SECTION = {
   PROFILE: "Profile",
   RATING: "Rating",
+  SEMINAR: "Seminar",
 };
 
 const CustomTab = styled(Tab)`
@@ -286,6 +289,7 @@ const CV = () => {
   const [followingMentors, setFollowingMentors] = useState([]);
   const [currentSection, setCurrentSection] = useState(PROFILE_SECTION.PROFILE);
   const [feedbacks, setFeedbacks] = useState([]);
+  const [seminars, setSeminars] = useState([]);
 
   const { setNotification } = useNotification();
   const { setLoading } = useCustomLoading();
@@ -312,6 +316,7 @@ const CV = () => {
     getTopics();
     getMentorProfile();
     getFeedbacks(mentorId);
+    getSeminarByMentors(mentorId);
     if (userInfo.role === SYSTEM_ROLE.STUDENT) {
       getSchedule();
       getFollowingMentors();
@@ -388,6 +393,22 @@ const CV = () => {
       let result = await followMentorService.getFollowing(userInfo.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSeminarByMentors = async (id) => {
+    try {
+      setLoading(true);
+      const result = await seminarService.getSeminarByMentor(id);
+      setSeminars(result);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -650,11 +671,19 @@ const CV = () => {
     } else return <Typography>Chưa có đánh giá</Typography>;
   };
 
+  const renderSeminarSection = () => {
+    if (seminars.length > 0) {
+      return <SeminarSection seminars={seminars} />;
+    } else return <Typography>Chưa có dữ liệu</Typography>;
+  };
+
   const renderSection = () => {
     if (currentSection === PROFILE_SECTION.PROFILE) {
       return renderCVSection();
     } else if (currentSection === PROFILE_SECTION.RATING) {
       return renderRatingSection();
+    } else if (currentSection === PROFILE_SECTION.SEMINAR) {
+      return renderSeminarSection();
     }
   };
 
@@ -729,6 +758,10 @@ const CV = () => {
               >
                 <CustomTab label="Hồ sơ" value={PROFILE_SECTION.PROFILE} />
                 <CustomTab label="Đánh giá" value={PROFILE_SECTION.RATING} />
+                <CustomTab
+                  label="Sự kiện đã tham gia"
+                  value={PROFILE_SECTION.SEMINAR}
+                />
               </Tabs>
             </Box>
             {renderSection()}

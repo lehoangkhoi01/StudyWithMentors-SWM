@@ -10,5 +10,10 @@
     display: flex;
     flex-direction: column;
     width: 80%;
+    height: 70vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-top: 1rem;
+    padding: 0 0.5rem;
   }
 }
