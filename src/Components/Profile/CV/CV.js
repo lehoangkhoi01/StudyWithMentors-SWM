@@ -608,7 +608,7 @@ const CV = () => {
       <>
         {!detail && (
           <>
-            {cvData && <ProgressImage cvData={cvData} />}
+            {!id && cvData && <ProgressImage cvData={cvData} />}
 
             {Object.keys(cvData).map((key, index) => {
               return (
