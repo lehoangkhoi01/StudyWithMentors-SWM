@@ -141,6 +141,7 @@ export const COMMON_MESSAGE = {
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
   REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
+  EXISTED_EMAIL: "Email đã tồn tại",
 };
 
 export const SIGN_UP_STAGE = {

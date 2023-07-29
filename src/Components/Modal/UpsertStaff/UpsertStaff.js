@@ -79,16 +79,8 @@ const UpsertStaff = (props) => {
 
     specificForm = { ...specificForm, departmentId: selectedDepartment.id };
 
-    console.log(specificForm);
-
     try {
       setLoading(true);
-
-      if (type === MODAL_TYPE.ADD && checkExistedEmail()) {
-        setIsExistedEmail(true);
-        return;
-      }
-
       setIsExistedEmail(false);
 
       if (type === MODAL_TYPE.EDIT) {
@@ -107,24 +99,18 @@ const UpsertStaff = (props) => {
       }
       props.onCloseModal();
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: ERROR_MESSAGES.COMMON_ERROR,
-      });
+      if (error.data.includes("already exists")) {
+        setIsExistedEmail(true);
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });
+      }
     } finally {
       setLoading(false);
     }
-  };
-
-  const checkExistedEmail = () => {
-    const index = props.allStaffs
-      .map((item) => item.email)
-      .indexOf(getValues("email").trim());
-
-    if (index > -1) return true;
-
-    return false;
   };
 
   const validatePhoneNum = (phoneNum) => {
