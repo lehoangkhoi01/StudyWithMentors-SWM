@@ -79,8 +79,6 @@ const UpsertStaff = (props) => {
 
     specificForm = { ...specificForm, departmentId: selectedDepartment.id };
 
-    console.log(specificForm);
-
     try {
       setLoading(true);
       setIsExistedEmail(false);

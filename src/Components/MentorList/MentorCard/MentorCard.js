@@ -27,7 +27,7 @@ const MentorCard = (props) => {
     try {
       setLoading(true);
       await followMentorService.follow(mentorId);
-      await props.getFollowingMentors();
+      props.onFollowSuccessfully(mentorId);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -43,7 +43,7 @@ const MentorCard = (props) => {
     try {
       setLoading(true);
       await followMentorService.unfollow(mentorId);
-      await props.getFollowingMentors();
+      props.onUnfollowSuccessfully(mentorId);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -114,7 +114,7 @@ const MentorCard = (props) => {
               className={style.card__name}
               onClick={() => handleNavigateProfile(props.data.mentorId)}
             >
-              {props.data.fullName}
+              {props.data.mentorId}
             </Button>
           </p>
           <p>{props.data.occupation}</p>
@@ -142,17 +142,14 @@ const MentorCard = (props) => {
             </div>
           )}
           {props.data.topics.map((topic, index) => (
-            <>
+            <div key={`MENTOR_ITEM_${index}`}>
               {index < 3 && (
-                <div
-                  key={`MENTOR_ITEM_${index}`}
-                  className={style.card__topic_item}
-                >
+                <div className={style.card__topic_item}>
                   <img src={require("../../../assets/icons/mentor-pen.png")} />
                   <span>{topic.name}</span>
                 </div>
               )}
-            </>
+            </div>
           ))}
         </div>
       </div>
