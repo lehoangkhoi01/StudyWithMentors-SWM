@@ -10,7 +10,7 @@ const ProgressImage = (props) => {
     let numberOfNullCVData = 0;
 
     Object.keys(props.cvData).forEach((key) => {
-      if (!props.cvData[key].length) numberOfNullCVData++;
+      if (props.cvData[key].length) numberOfNullCVData++;
     });
 
     if (numberOfNullCVData < 4) {
