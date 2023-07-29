@@ -114,7 +114,7 @@ const MentorCard = (props) => {
               className={style.card__name}
               onClick={() => handleNavigateProfile(props.data.mentorId)}
             >
-              {props.data.mentorId}
+              {props.data.fullName}
             </Button>
           </p>
           <p>{props.data.occupation}</p>
