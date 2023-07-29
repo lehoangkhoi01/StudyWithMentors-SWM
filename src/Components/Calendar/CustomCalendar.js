@@ -221,6 +221,10 @@ const CustomCalendar = () => {
     }
   };
 
+  const onView = async (view) => {
+    await triggerRangeChangeEvent(currentDate, view);
+  };
+
   useEffect(() => {
     const fetchSchedule = async () => {
       await triggerRangeChangeEvent(currentDate);
@@ -247,6 +251,7 @@ const CustomCalendar = () => {
             events={eventList}
             onSelectEvent={handleSelectEvent}
             onNavigate={handleNavigate}
+            onView={onView}
           />
         </Grid2>
       </Grid2>
