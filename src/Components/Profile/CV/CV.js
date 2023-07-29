@@ -407,7 +407,15 @@ const CV = () => {
   const getSeminarByMentors = async (id) => {
     try {
       setLoading(true);
-      const result = await seminarService.getSeminarByMentor(id);
+      let result = await seminarService.getSeminarByMentor(id);
+      result = result.map((seminar) => {
+        return {
+          ...seminar,
+          speakerList: seminar.mentors.map((mentor) => mentor.fullName),
+          convertedStartDate: new Date(seminar.startTime),
+        };
+      });
+      result.sort((a, b) => b.convertedStartDate - a.convertedStartDate);
       setSeminars(result);
     } catch (error) {
       setNotification({
