@@ -34,7 +34,6 @@ const DiscussionComment = (props) => {
 
   const { setNotification } = useNotification();
 
-
   const handleExpand = () => {
     setExpanded(!expanded);
   };
@@ -115,7 +114,7 @@ const DiscussionComment = (props) => {
               multiline
               rows={2}
               onChange={handleReplyChange}
-              placeholder="Phản hồi tại đây..."
+              placeholder="Gửi câu trả lời"
               className={`${style.discussionComment__textbox}`}
             />
             <div className={`${style.discussionComment__buttonContainer}`}>
@@ -124,7 +123,7 @@ const DiscussionComment = (props) => {
                 variant="contained"
                 color="primary600"
               >
-                Gửi phản hồi
+                Trả lời
               </CustomizedButton>
             </div>
           </div>
