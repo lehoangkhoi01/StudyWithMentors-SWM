@@ -737,7 +737,11 @@ const CV = () => {
                 )}
               </div>
               <div
-                style={{ position: "relative", width: "100%", display: "flex" }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  display: "flex",
+                }}
               >
                 <div>
                   <h2>{mentorProfile?.fullName}</h2>
