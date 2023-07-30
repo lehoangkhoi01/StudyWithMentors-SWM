@@ -77,8 +77,8 @@ const CustomizedTable = (props) => {
   const [originData, setOriginData] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
   const [sortData, setSortData] = useState({
-    attribute: null,
-    direction: null,
+    attribute: props.defaultSort ? props.defaultSort : null,
+    direction: props.defaultSort ? SORT_DIRECTION.DESC : null,
   });
   const [pagination, setPagination] = useState({
     page: 1,
@@ -192,10 +192,19 @@ const CustomizedTable = (props) => {
 
   const resetDefault = () => {
     setData([...originData]);
-    setSortData({
-      attribute: null,
-      direction: null,
-    });
+
+    if (props.defaultSort) {
+      setSortData({
+        attribute: props.defaultSort,
+        direction: SORT_DIRECTION.DESC,
+      });
+    } else {
+      setSortData({
+        attribute: null,
+        direction: null,
+      });
+    }
+
     setValue("searchTerm", "");
   };
 
