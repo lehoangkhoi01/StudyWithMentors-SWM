@@ -367,7 +367,6 @@ const BookingInfoDialog = (props) => {
   };
 
   React.useState(() => {
-    console.log(props.bookingInfo);
     const fetchFeedbacksByBooking = async () => {
       if (props.bookingInfo?.id) {
         try {

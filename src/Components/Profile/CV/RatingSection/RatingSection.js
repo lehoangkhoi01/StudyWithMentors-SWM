@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../../shared/constants/common";
 
 const RatingSection = (props) => {
-  console.log(props.feedbacks);
   return (
     <div className={`${style.ratingSection__container}`}>
       {props.feedbacks.map((feedback) => (

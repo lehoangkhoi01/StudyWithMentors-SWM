@@ -1,0 +1,45 @@
+@import "../../../../shared/theme";
+
+.seminarSection {
+  &__container {
+    margin: 2rem 0;
+    height: 60vh;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  &__seminarCard {
+    padding: 1rem;
+    background-color: $primary50;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 10px;
+  }
+  &__seminarCard:hover {
+    cursor: pointer;
+  }
+
+  &__seminarStatus {
+    width: max-content;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: $black000;
+    border-radius: 5px;
+  }
+  &__futureLabel {
+    background-color: $secondary900;
+  }
+  &__pastLabel {
+    background-color: $primary400;
+  }
+  &__info {
+    display: flex;
+    margin: 0.8rem 0;
+    gap: 5px;
+    color: $black900;
+  }
+
+  &__infoContainer {
+    width: 80%;
+  }
+}

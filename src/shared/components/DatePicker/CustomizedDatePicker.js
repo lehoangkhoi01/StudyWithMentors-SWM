@@ -24,6 +24,8 @@ const CustomizedDatePicker = (props) => {
       </label>
       <DatePicker
         disabled={props.disabled}
+        disablePast={props.disablePast ?? false}
+        minDate={props.minDate}
         format={dateFormat}
         views={props.views ?? ["year", "month"]}
         className={style.datePicker__input}
