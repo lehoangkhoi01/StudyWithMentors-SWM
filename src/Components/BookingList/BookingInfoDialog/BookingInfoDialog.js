@@ -10,6 +10,7 @@ import style from "./BookingInfoDialog.module.scss";
 import { format } from "date-fns";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import {
+  BUTTON_LABEL,
   DATE_FORMAT,
   ERROR_MESSAGES,
   MIN_DURATION_ACTION_BOOKING,
@@ -29,6 +30,7 @@ import {
   useNotification,
 } from "../../../Helpers/generalHelper";
 import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
+import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const hostname = window.location.host;
 
@@ -37,6 +39,8 @@ const BookingInfoDialog = (props) => {
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
   const [openFeedbackDialog, setOpenFeedbackDialog] = React.useState(false);
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    React.useState(false);
   const [feedbacks, setFeedbacks] = React.useState([]);
   const [studentFeedback, setStudentFeedback] = React.useState(null);
 
@@ -262,7 +266,7 @@ const BookingInfoDialog = (props) => {
                   color="primary600"
                   size="small"
                   variant="contained"
-                  onClick={() => setOpenCancelBookingDialog(true)}
+                  onClick={() => setOpenConfirmationDialog(true)}
                 >
                   Rời nhóm
                 </CustomizeButton>
@@ -271,26 +275,49 @@ const BookingInfoDialog = (props) => {
           );
         }
       case BOOKING_STATUS.REQUESTED:
-        return (
-          <Grid2
-            container
-            rowSpacing={2}
-            width="100%"
-            justifyContent="center"
-            margin={0}
-          >
-            <Grid2 xs={6}>
-              <CustomizeButton
-                color="primary600"
-                size="small"
-                variant="contained"
-                onClick={() => setOpenCancelBookingDialog(true)}
-              >
-                Hủy lịch
-              </CustomizeButton>
+        if (userInfo.accountId === props.bookingInfo?.owner.accountId) {
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="center"
+              margin={0}
+            >
+              <Grid2 xs={6}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  onClick={() => setOpenCancelBookingDialog(true)}
+                >
+                  Hủy lịch
+                </CustomizeButton>
+              </Grid2>
             </Grid2>
-          </Grid2>
-        );
+          );
+        } else {
+          return (
+            <Grid2
+              container
+              rowSpacing={2}
+              width="100%"
+              justifyContent="center"
+              margin={0}
+            >
+              <Grid2 xs={6}>
+                <CustomizeButton
+                  color="primary600"
+                  size="small"
+                  variant="contained"
+                  onClick={() => setOpenConfirmationDialog(true)}
+                >
+                  Rời nhóm
+                </CustomizeButton>
+              </Grid2>
+            </Grid2>
+          );
+        }
     }
   };
 
@@ -364,6 +391,15 @@ const BookingInfoDialog = (props) => {
         </>
       );
     } else return null;
+  };
+
+  const handleCancelBooking = async () => {
+    const data = {
+      bookingIds: [props.bookingInfo?.id],
+      status: BOOKING_STATUS.REJECTED,
+    };
+    await props.handleUpdateBookingStatus(data, BOOKING_STATUS.REJECTED);
+    setOpenConfirmationDialog(false);
   };
 
   React.useState(() => {
@@ -508,6 +544,18 @@ const BookingInfoDialog = (props) => {
           bookingInfo={props.bookingInfo}
           setOpenFeedbackDialog={setOpenFeedbackDialog}
           setOpenBookingInfoDialog={props.setOpenBookingInfo}
+        />
+      )}
+
+      {openConfirmationDialog && (
+        <ConfirmationDialog
+          open={openConfirmationDialog}
+          title="Xác nhận"
+          cancelLabel={BUTTON_LABEL.CANCEL}
+          confirmLabel={BUTTON_LABEL.CONFIRM}
+          content="Bạn có chắc muốn thực hiện hành động này không? Hành động này không thể hoàn tác"
+          handleClose={() => setOpenConfirmationDialog(false)}
+          handleSubmit={handleCancelBooking}
         />
       )}
     </>

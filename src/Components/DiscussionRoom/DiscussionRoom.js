@@ -42,7 +42,6 @@ const DiscussionRoom = (props) => {
   };
 
   const handleUpvoteComment = async (comment, action) => {
-    //const documentRef = doc(db, "comments", comment.id);
     let updatedData = {};
     if (action === "upvote") {
       updatedData = {
@@ -52,6 +51,7 @@ const DiscussionRoom = (props) => {
           : [userInfo?.accountId],
       };
     } else {
+      // if (comment.vote === 0) return;
       updatedData = {
         vote: (comment.vote -= 1),
         voteList: comment.voteList.filter((c) => c !== userInfo?.accountId),
