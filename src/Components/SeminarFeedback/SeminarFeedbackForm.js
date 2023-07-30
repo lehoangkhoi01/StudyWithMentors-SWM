@@ -130,6 +130,9 @@ const SeminarFeedbackForm = () => {
     const fetchSeminarDetail = async () => {
       try {
         const seminarDetail = await seminarService.getSeminarDetail(id);
+        if (new Date(seminarDetail.startTime) > new Date()) {
+          history.push(ROUTES.NOT_FOUND);
+        }
         setSeminarDetail(seminarDetail);
       } catch (error) {
         if (error.status == "404") {
