@@ -47,7 +47,6 @@ const AddTopicModal = (props) => {
     if (props.existedData) {
       setValue("name", props.existedData.name);
       setValue("description", props.existedData.description);
-      setValue("monney", +props.existedData.money);
 
       setSelectedCategory({
         id: props.existedData.categoryId,
@@ -92,7 +91,6 @@ const AddTopicModal = (props) => {
       description: formValue.description,
       fieldId: selectedField.id,
       categoryId: selectedCategory.id,
-      money: formValue.money,
     };
 
     try {
@@ -159,15 +157,6 @@ const AddTopicModal = (props) => {
                 value={selectedField?.name ?? ""}
                 onChange={handleFieldChange}
                 renderValue={() => selectedField.name}
-              />
-
-              <CustomizedTextField
-                name={ADD_TOPIC.MONEY}
-                required={true}
-                type="number"
-                options={{
-                  ...register("money"),
-                }}
               />
 
               <div className={style.modal__buttons}>
