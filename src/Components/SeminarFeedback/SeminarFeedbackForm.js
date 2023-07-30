@@ -36,6 +36,7 @@ const SeminarFeedbackForm = () => {
       case "RATING":
         return (
           <Controller
+            key={`INPUT_${index}`}
             name={`question${index}`}
             control={control}
             defaultValue={0}
@@ -44,7 +45,6 @@ const SeminarFeedbackForm = () => {
             }}
             render={({ field }) => (
               <RatingInput
-                key={index}
                 title={questionObject.question}
                 field={field}
                 name="rating"
@@ -57,6 +57,7 @@ const SeminarFeedbackForm = () => {
       case "YES/NO":
         return (
           <Controller
+            key={`INPUT_${index}`}
             control={control}
             name={`question${index}`}
             rules={{
@@ -65,7 +66,6 @@ const SeminarFeedbackForm = () => {
             defaultValue={""}
             render={({ field }) => (
               <RadioSelect
-                key={index}
                 title={questionObject.question}
                 field={field}
                 name="radio"
@@ -78,7 +78,7 @@ const SeminarFeedbackForm = () => {
       case "TEXT":
         return (
           <CustomizedTextField
-            key={index}
+            key={`INPUT_${index}`}
             optional={true}
             multiline={true}
             inputId={"question" + index}

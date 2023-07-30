@@ -17,7 +17,7 @@ const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
             id={inputId}
             {...props}
           >
-            {props.items.map((item, index) => {
+            {props.items?.map((item, index) => {
               return (
                 <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
                   <Checkbox checked={props.value.indexOf(item) > -1} />
@@ -40,7 +40,7 @@ const CustomizedSelect = ({ isMultipleSelect, inputId, ...props }) => {
             onChange={props.onChange}
             {...props}
           >
-            {props.items.map((item, index) => {
+            {props.items?.map((item, index) => {
               return (
                 <MenuItem key={`SELECT_ITEM_${index}`} value={item}>
                   {item.name}

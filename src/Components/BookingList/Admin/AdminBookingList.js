@@ -125,6 +125,7 @@ const AdminBookingList = () => {
         headerTable={headerTable}
         hideAddingAction={true}
         actionItems={actionItems}
+        defaultSort={"bookingTime"}
       />
 
       {openBookingInfoDialog && (

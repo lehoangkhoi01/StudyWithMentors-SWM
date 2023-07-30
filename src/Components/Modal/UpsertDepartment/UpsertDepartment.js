@@ -15,10 +15,17 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { departmentService } from "../../../Services/departmentService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const UpsertDepartment = (props) => {
-  const { register, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
@@ -75,14 +82,17 @@ const UpsertDepartment = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{departmentId ? TITLE.EDIT_DEPARTMENT : TITLE.CREATE_DEPARTMENT}</h1>
+              <h1>
+                {departmentId ? TITLE.EDIT_DEPARTMENT : TITLE.CREATE_DEPARTMENT}
+              </h1>
 
               <CustomizedTextField
                 name={UPSERT_FIELD.NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <div className={style.modal__buttons}>
@@ -99,7 +109,9 @@ const UpsertDepartment = (props) => {
                   variant="contained"
                   color="primary600"
                 >
-                  {departmentId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_DEPARTMENT}
+                  {departmentId
+                    ? BUTTON_LABEL.SAVE_EDIT
+                    : BUTTON_LABEL.CREATE_DEPARTMENT}
                 </CustomizedButton>
               </div>
             </form>
