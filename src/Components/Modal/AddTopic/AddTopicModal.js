@@ -17,10 +17,18 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const AddTopicModal = (props) => {
-  const { register, watch, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { getTopicCategories, getTopicFields } =
     useFetchTopicFieldsAndCategories();
   const { setLoading } = useCustomLoading();
@@ -97,7 +105,6 @@ const AddTopicModal = (props) => {
       setLoading(true);
 
       await topicService.upsertTopic(topic, topicId);
-
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -125,18 +132,20 @@ const AddTopicModal = (props) => {
                 name={ADD_TOPIC.TOPIC_NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <CustomizedTextField
                 name={ADD_TOPIC.DESCRIPTION}
                 required={true}
                 options={{
-                  ...register("description"),
+                  ...register("description", modalFieldValidation),
                 }}
                 multiline={true}
                 watch={watch("description")}
+                helperText={errors?.seminarName?.message}
               />
 
               <CustomizedSelect

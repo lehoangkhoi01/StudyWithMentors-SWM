@@ -560,7 +560,8 @@ const CustomizedTable = (props) => {
                             case DEACTIVATE_ACTION:
                               return (
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.ACTIVATED && (
+                                  MENTOR_STATUS.ACTIVATED ||
+                                (MENTOR_STATUS.WAITING && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -570,7 +571,7 @@ const CustomizedTable = (props) => {
                                     <img src={actionItem.imgSrc} />
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
-                                )
+                                ))
                               );
 
                             case ACTIVE_ACTION:

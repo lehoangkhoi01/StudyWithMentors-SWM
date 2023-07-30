@@ -15,10 +15,17 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const UpsertField = (props) => {
-  const { register, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
@@ -81,8 +88,9 @@ const UpsertField = (props) => {
                 name={UPSERT_FIELD.NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <div className={style.modal__buttons}>

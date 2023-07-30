@@ -56,3 +56,19 @@ export const seminarPlaceValidation = {
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
 };
+
+export const modalFieldValidation = {
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  maxLength: {
+    value: LENGTH.SEMINAR_PLACE,
+    message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
+  },
+}
+
+export const modalOptionalFieldValidation = {
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  maxLength: {
+    value: LENGTH.SEMINAR_PLACE,
+    message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
+  },
+}
