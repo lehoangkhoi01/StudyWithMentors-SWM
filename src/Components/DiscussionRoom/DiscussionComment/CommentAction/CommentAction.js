@@ -56,7 +56,7 @@ const CommentAction = (props) => {
           <>
             <ArrowDropUpIcon
               onClick={() => props.handleUpvoteComment(props.comment, "unvote")}
-              className={`${style.commentAction__upvoteContainer__icon} ${style.commentAction__upvoteContainer__icon_clicked}`}
+              className={`${style.commentAction__upvoteContainer__icon}`}
             />
             {props.comment.vote}
           </>
@@ -64,7 +64,7 @@ const CommentAction = (props) => {
           <>
             <ArrowDropUpIcon
               onClick={() => props.handleUpvoteComment(props.comment, "upvote")}
-              className={`${style.commentAction__upvoteContainer__icon}`}
+              className={`${style.commentAction__upvoteContainer__icon} ${style.commentAction__upvoteContainer__icon_clicked}`}
             />
             {props.comment.vote}
           </>

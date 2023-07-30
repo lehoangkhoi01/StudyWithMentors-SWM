@@ -267,7 +267,7 @@ export const ERROR_MESSAGES = {
   UPDATE_COMMENT_ERROR:
     "Có lỗi xảy ra khi chỉnh sửa bình luận. Xin vui lòng thử lại sau",
   UPVOTE_ERROR:
-    "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau",
+    "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau. Nếu chưa đăng nhập, vui lòng đăng nhập vào hệ thống để thực hiện hành động này.",
   DELETE_COMMENT_ERROR:
     "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
 };
