@@ -7,7 +7,7 @@ import {
   OTHERS,
   TOPIC_STATUS_BACKEND,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { topicService } from "../../../Services/topicService";
 import {
@@ -74,7 +74,10 @@ const ConfirmTopicModal = (props) => {
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
         <div className={style.modal}>
-          <h2>{`${properties.confirm} ${CONFIRM_TOPIC_MODAL.TOPIC} ${props.title} ${OTHERS.THIS}?`}</h2>
+          <Typography marginY={3} variant="h4" color="#1a237e">
+            {`${properties.confirm} ${CONFIRM_TOPIC_MODAL.TOPIC} ${props.title} ${OTHERS.THIS}?`}
+          </Typography>
+
           <div className={style.modal__buttons}>
             <CustomizedButton
               type="submit"

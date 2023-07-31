@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Typography,
 } from "@mui/material";
 import SquareIcon from "@mui/icons-material/Square";
@@ -64,6 +65,9 @@ const EventInfoDialog = (props) => {
   return (
     <div>
       <Dialog fullWidth open={props.open} onClose={props.handleClose}>
+        <DialogTitle variant="h4" color="#1a237e">
+          Thông tin khung giờ
+        </DialogTitle>
         <DialogContent>
           <div className={`${style.eventDialog__container}`}>
             <SquareIcon

@@ -51,7 +51,7 @@ const BookingAttendanceDialog = (props) => {
       onClose={() => props.setOpenDialog(false)}
     >
       <DialogTitle>
-        <Typography variant="h5" color="#1a237e">
+        <Typography variant="h4" color="#1a237e">
           Ghi chú hệ thống
         </Typography>
       </DialogTitle>
