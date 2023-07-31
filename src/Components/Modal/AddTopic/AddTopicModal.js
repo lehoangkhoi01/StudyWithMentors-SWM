@@ -8,7 +8,7 @@ import {
   ERROR_MESSAGES,
   TITLE,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -126,7 +126,15 @@ const AddTopicModal = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{topicId ? TITLE.EDIT_TOPIC : TITLE.CREATE_TOPIC}</h1>
+              {topicId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_TOPIC}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_TOPIC}
+                </Typography>
+              )}
 
               <CustomizedTextField
                 name={ADD_TOPIC.TOPIC_NAME}

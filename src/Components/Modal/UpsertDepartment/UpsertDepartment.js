@@ -7,7 +7,7 @@ import {
   TITLE,
   UPSERT_FIELD,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -82,9 +82,15 @@ const UpsertDepartment = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>
-                {departmentId ? TITLE.EDIT_DEPARTMENT : TITLE.CREATE_DEPARTMENT}
-              </h1>
+              {departmentId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_DEPARTMENT}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_DEPARTMENT}
+                </Typography>
+              )}
 
               <CustomizedTextField
                 name={UPSERT_FIELD.NAME}

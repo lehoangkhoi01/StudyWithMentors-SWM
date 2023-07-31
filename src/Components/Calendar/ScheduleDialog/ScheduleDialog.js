@@ -151,22 +151,13 @@ const ScheduleDialog = (props) => {
     );
   }, [props.startDate]);
 
-  // React.useEffect(() => {
-  //   setStartTime(props.startDate);
-  //   setEndTime(
-  //     new Date(
-  //       new Date(props.startDate).setHours(props.startDate.getHours() + 1)
-  //     )
-  //   );
-  // }, [props.startDate]);
-
   return (
     <div>
       {startDate && (
         <Dialog fullWidth open={props.open}>
           <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle>
-              <Typography variant="h5" color="#1a237e">
+              <Typography variant="h4" color="#1a237e">
                 Lịch nhận cố vấn
               </Typography>
             </DialogTitle>

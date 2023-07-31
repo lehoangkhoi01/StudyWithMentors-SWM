@@ -440,7 +440,7 @@ const BookingInfoDialog = (props) => {
         onClose={() => props.setOpenBookingInfo(false)}
       >
         <DialogTitle>
-          <Typography variant="h5" color="#1a237e">
+          <Typography variant="h4" color="#1a237e">
             Chi tiết lịch hẹn
           </Typography>
         </DialogTitle>

@@ -500,7 +500,7 @@ export const ADD_TOPIC = {
   TOPIC_NAME: "Tên chủ đề",
   DESCRIPTION: "Mô tả",
   FIELD: "Lĩnh vực",
-  CATEGORY: "Nhóm",
+  CATEGORY: "Thể loại",
   MONEY: "Chi phí",
 };
 

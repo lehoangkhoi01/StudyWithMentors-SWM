@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import style from "./UpsertMentorModal.module.scss";
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import {
@@ -107,7 +107,9 @@ const UpsertMentorModal = (props) => {
             className={`${style.modal__form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h2>{props.CustomizedTextField}</h2>
+            <Typography marginY={3} variant="h4" color="#1a237e">
+              Thông tin diễn giả
+            </Typography>
             <CustomizedTextField
               name={"Họ và tên"}
               required={true}

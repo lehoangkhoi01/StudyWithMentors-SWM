@@ -7,7 +7,7 @@ import {
   TITLE,
   UPSERT_CATEGORY,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -82,9 +82,15 @@ const UpsertCategory = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>
-                {categoryId ? TITLE.EDIT_CATEGORY : TITLE.CREATE_CATEGORY}
-              </h1>
+              {categoryId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_CATEGORY}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_CATEGORY}
+                </Typography>
+              )}
 
               <CustomizedTextField
                 name={UPSERT_CATEGORY.NAME}
