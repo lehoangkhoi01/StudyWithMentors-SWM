@@ -76,6 +76,8 @@ const SeminarList = () => {
       departmentId: filterDepartmentId,
       status: statusFilterParam,
       ownSeminar: status === FILTER_SEMINAR.OWN_SEMINAR,
+      mentorIds:
+        status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
   };
 
@@ -182,7 +184,7 @@ const SeminarList = () => {
           {userInfo?.role === SYSTEM_ROLE.MENTOR && (
             <p
               className={
-                statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
+                statusFilter === FILTER_SEMINAR.OWN_SEMINAR
                   ? style.seminarList__status__filter__active
                   : ""
               }

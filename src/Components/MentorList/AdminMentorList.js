@@ -132,6 +132,7 @@ const AdminMentorList = () => {
         onActive={onActiveMentor}
         headerTable={headerTable}
         actionItems={actionItems}
+        defaultSort={"defaultCreatedDate"}
       />
     </div>
   );

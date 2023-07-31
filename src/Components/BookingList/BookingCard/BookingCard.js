@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, IconButton, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import style from "./BookingCard.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import { BOOKING_STATUS } from "../../../shared/constants/systemType";
-import { MoreVert } from "@mui/icons-material";
 
 const BookingCard = (props) => {
   const convertTimeToDateTime = (time, date) => {
@@ -95,9 +94,6 @@ const BookingCard = (props) => {
           {renderStatusLabel(props.bookingInfo?.status)}
         </Grid2>
       </Grid2>
-      <IconButton className={`${style.bookingCard__icon}`}>
-        <MoreVert />
-      </IconButton>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import {
   ERROR_MESSAGES,
   TITLE,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -17,10 +17,18 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const AddTopicModal = (props) => {
-  const { register, watch, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { getTopicCategories, getTopicFields } =
     useFetchTopicFieldsAndCategories();
   const { setLoading } = useCustomLoading();
@@ -47,7 +55,6 @@ const AddTopicModal = (props) => {
     if (props.existedData) {
       setValue("name", props.existedData.name);
       setValue("description", props.existedData.description);
-      setValue("monney", +props.existedData.money);
 
       setSelectedCategory({
         id: props.existedData.categoryId,
@@ -92,14 +99,12 @@ const AddTopicModal = (props) => {
       description: formValue.description,
       fieldId: selectedField.id,
       categoryId: selectedCategory.id,
-      money: formValue.money,
     };
 
     try {
       setLoading(true);
 
       await topicService.upsertTopic(topic, topicId);
-
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -121,24 +126,34 @@ const AddTopicModal = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{topicId ? TITLE.EDIT_TOPIC : TITLE.CREATE_TOPIC}</h1>
+              {topicId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_TOPIC}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_TOPIC}
+                </Typography>
+              )}
 
               <CustomizedTextField
                 name={ADD_TOPIC.TOPIC_NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <CustomizedTextField
                 name={ADD_TOPIC.DESCRIPTION}
                 required={true}
                 options={{
-                  ...register("description"),
+                  ...register("description", modalFieldValidation),
                 }}
                 multiline={true}
                 watch={watch("description")}
+                helperText={errors?.seminarName?.message}
               />
 
               <CustomizedSelect
@@ -159,15 +174,6 @@ const AddTopicModal = (props) => {
                 value={selectedField?.name ?? ""}
                 onChange={handleFieldChange}
                 renderValue={() => selectedField.name}
-              />
-
-              <CustomizedTextField
-                name={ADD_TOPIC.MONEY}
-                required={true}
-                type="number"
-                options={{
-                  ...register("money"),
-                }}
               />
 
               <div className={style.modal__buttons}>

@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import style from "./UpsertStaff.module.scss";
 import { useSelector } from "react-redux";
 import { selectDepartments } from "../../../Store/slices/departmentSlice";
@@ -137,7 +137,9 @@ const UpsertStaff = (props) => {
             className={`${style.modal__form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h2>{props.CustomizedTextField}</h2>
+            <Typography marginY={3} variant="h4" color="#1a237e">
+              Thông tin nhân viên
+            </Typography>
             <CustomizedTextField
               name={"Họ và tên"}
               required={true}

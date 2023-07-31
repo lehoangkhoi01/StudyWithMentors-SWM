@@ -7,7 +7,7 @@ import {
   TITLE,
   UPSERT_CATEGORY,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -15,10 +15,17 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const UpsertCategory = (props) => {
-  const { register, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
@@ -75,14 +82,23 @@ const UpsertCategory = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{categoryId ? TITLE.EDIT_CATEGORY : TITLE.CREATE_CATEGORY}</h1>
+              {categoryId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_CATEGORY}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_CATEGORY}
+                </Typography>
+              )}
 
               <CustomizedTextField
                 name={UPSERT_CATEGORY.NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <div className={style.modal__buttons}>
@@ -99,7 +115,9 @@ const UpsertCategory = (props) => {
                   variant="contained"
                   color="primary600"
                 >
-                  {categoryId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_CATEGORY}
+                  {categoryId
+                    ? BUTTON_LABEL.SAVE_EDIT
+                    : BUTTON_LABEL.CREATE_CATEGORY}
                 </CustomizedButton>
               </div>
             </form>

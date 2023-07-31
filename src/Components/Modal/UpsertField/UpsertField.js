@@ -7,7 +7,7 @@ import {
   TITLE,
   UPSERT_FIELD,
 } from "../../../shared/constants/common";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
   useCustomLoading,
@@ -15,10 +15,17 @@ import {
 } from "../../../Helpers/generalHelper";
 import { useEffect, useState } from "react";
 import { topicService } from "../../../Services/topicService";
+import { modalFieldValidation } from "../../../shared/constants/validationRules";
 
 const UpsertField = (props) => {
-  const { register, handleSubmit, getValues, reset, setValue } =
-    useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
@@ -75,14 +82,22 @@ const UpsertField = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={`${style.modal__form}`}
             >
-              <h1>{fieldId ? TITLE.EDIT_FIELD : TITLE.CREATE_FIELD}</h1>
-
+              {fieldId ? (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.EDIT_FIELD}
+                </Typography>
+              ) : (
+                <Typography marginY={3} variant="h4" color="#1a237e">
+                  {TITLE.CREATE_FIELD}
+                </Typography>
+              )}
               <CustomizedTextField
                 name={UPSERT_FIELD.NAME}
                 required={true}
                 options={{
-                  ...register("name"),
+                  ...register("name", modalFieldValidation),
                 }}
+                helperText={errors?.seminarName?.message}
               />
 
               <div className={style.modal__buttons}>

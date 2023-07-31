@@ -3,6 +3,7 @@ import style from "./CustomizedTextField.module.scss";
 import { OPTIONAL } from "../../constants/common";
 import { BREAK_POINT } from "../../constants/globalStyle";
 import { useMediaQuery } from "react-responsive";
+import { useRef, useState } from "react";
 
 const CustomizedTextField = (props) => {
   const isXL = useMediaQuery({
@@ -10,6 +11,18 @@ const CustomizedTextField = (props) => {
   });
   const isLG = useMediaQuery({ query: `(min-width: ${BREAK_POINT.LG}px)` });
   const isMD = useMediaQuery({ query: `(min-width: ${BREAK_POINT.MD}px)` });
+
+  const inputRef = useRef();
+
+  const [valueLength, setValueLength] = useState();
+
+  const isValueMaxLength = () => {
+    return valueLength >= props.maxLength ?? 2000;
+  };
+
+  const onChange = () => {
+    setValueLength(inputRef.current?.value?.length)
+  };
 
   return (
     <div
@@ -32,12 +45,14 @@ const CustomizedTextField = (props) => {
         required={props.required}
         {...props.options}
         disabled={props.disabled ?? false}
-        onChange={props.onChange ?? null}
+        onChange={!isValueMaxLength() ? onChange ?? null : null}
         value={props.value}
+        inputProps={{ maxLength: props.maxLength ?? 2000 }}
+        inputRef={inputRef}
       />
       {props.multiline && (
         <span className={`${style.textField__limit}`}>
-          {props.watch?.length ?? 0} / {props.maxLength ?? 2000}
+          {valueLength ?? 0} / {props.maxLength ?? 2000}
         </span>
       )}
     </div>

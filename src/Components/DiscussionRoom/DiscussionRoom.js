@@ -1,5 +1,11 @@
 import React from "react";
-import { List, Typography, OutlinedInput, IconButton } from "@mui/material";
+import {
+  List,
+  Typography,
+  OutlinedInput,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import style from "./DiscussionRoom.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
@@ -42,7 +48,6 @@ const DiscussionRoom = (props) => {
   };
 
   const handleUpvoteComment = async (comment, action) => {
-    //const documentRef = doc(db, "comments", comment.id);
     let updatedData = {};
     if (action === "upvote") {
       updatedData = {
@@ -52,6 +57,7 @@ const DiscussionRoom = (props) => {
           : [userInfo?.accountId],
       };
     } else {
+      // if (comment.vote === 0) return;
       updatedData = {
         vote: (comment.vote -= 1),
         voteList: comment.voteList.filter((c) => c !== userInfo?.accountId),
@@ -61,6 +67,7 @@ const DiscussionRoom = (props) => {
     try {
       await updateDocument("Comments", comment.id, updatedData);
     } catch (error) {
+      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
@@ -189,16 +196,31 @@ const DiscussionRoom = (props) => {
       <div className={`${style.discussion__wrapper}`}>
         <div className={`${style.discussion__heading}`}>
           <Typography mb={2} variant="h6">
-            Thảo luận ({commentList.length})
+            Hỏi và giải đáp ({commentList.length})
           </Typography>
-          <IconButton
+
+          <Tooltip
+            title={
+              sortByDate ? "Sắp xếp theo lượt thích" : "Sắp xếp theo giờ đăng"
+            }
+          >
+            <IconButton
+              onClick={() => {
+                setSortByDate((prev) => !prev);
+              }}
+              className={sortByDate ? `${style.discussion__active}` : null}
+            >
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+          {/* <IconButton
             onClick={() => {
               setSortByDate((prev) => !prev);
             }}
             className={sortByDate ? `${style.discussion__active}` : null}
           >
             <FilterListIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
 
         {userInfo && (
