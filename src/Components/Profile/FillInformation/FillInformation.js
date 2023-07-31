@@ -9,7 +9,6 @@ import {
   TITLE,
 } from "../../../shared/constants/common";
 import style from "./FillInformation.module.scss";
-import CustomPattern from "../../../shared/components/CustomPattern/CustomPattern";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +21,7 @@ import {
 import { userAccountService } from "../../../Services/userAccountService";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { registerFullNameValidation } from "../../../shared/constants/validationRules";
+import { Modal } from "@mui/material";
 
 const FillInformation = () => {
   const {
@@ -83,57 +83,58 @@ const FillInformation = () => {
 
   return (
     <div className={style.fillInformation__container}>
-      <CustomPattern height={"95%"} />
-      <form
-        className={style.fillInformation__formSection}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h1>{FILL_INFORMATION.WELCOME} </h1>
-        <p>{FILL_INFORMATION.PLEASE_FILL_INFORMATION}</p>
-        <CustomizedTextField
-          className={style.fillInformation__input}
-          inputId="email"
-          name={TITLE.EMAIL}
-          placeholder={PLACE_HOLDER.DEFAULT_EMAIL}
-          required={true}
-          type={"email"}
-          options={{ ...register("email") }}
-          disabled={true}
-        />
-        <CustomizedTextField
-          className={style.fillInformation__input}
-          inputId="fullname"
-          name={TITLE.FULL_NAME}
-          placeholder={PLACE_HOLDER.DEFAULT_NAME}
-          required={true}
-          type={"text"}
-          options={{ ...register("fullName", registerFullNameValidation) }}
-          error={errors.fullname ? true : false}
-          helperText={errors?.fullname?.message}
-        />
-        <CustomizedTextField
-          className={style.fillInformation__input}
-          inputId="phone"
-          name={TITLE.PHONE}
-          type={"text"}
-          options={{
-            ...register("phone", {
-              validate: (val) => validatePhoneNum(val),
-            }),
-          }}
-          error={errors.phone ? true : false}
-          helperText={errors?.phone?.message}
-        />
-        <div className={style.fillInformation__button}>
-          <CustomizedButton
-            type="submit"
-            variant="contained"
-            color="primary600"
-          >
-            {BUTTON_LABEL.CONFIRM}
-          </CustomizedButton>
-        </div>
-      </form>
+      <Modal open={true}>
+        <form
+          className={style.fillInformation__formSection}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <h1>{FILL_INFORMATION.WELCOME} </h1>
+          <p>{FILL_INFORMATION.PLEASE_FILL_INFORMATION}</p>
+          <CustomizedTextField
+            className={style.fillInformation__input}
+            inputId="email"
+            name={TITLE.EMAIL}
+            placeholder={PLACE_HOLDER.DEFAULT_EMAIL}
+            required={true}
+            type={"email"}
+            options={{ ...register("email") }}
+            disabled={true}
+          />
+          <CustomizedTextField
+            className={style.fillInformation__input}
+            inputId="fullname"
+            name={TITLE.FULL_NAME}
+            placeholder={PLACE_HOLDER.DEFAULT_NAME}
+            required={true}
+            type={"text"}
+            options={{ ...register("fullName", registerFullNameValidation) }}
+            error={errors.fullname ? true : false}
+            helperText={errors?.fullname?.message}
+          />
+          <CustomizedTextField
+            className={style.fillInformation__input}
+            inputId="phone"
+            name={TITLE.PHONE}
+            type={"text"}
+            options={{
+              ...register("phone", {
+                validate: (val) => validatePhoneNum(val),
+              }),
+            }}
+            error={errors.phone ? true : false}
+            helperText={errors?.phone?.message}
+          />
+          <div className={style.fillInformation__button}>
+            <CustomizedButton
+              type="submit"
+              variant="contained"
+              color="primary600"
+            >
+              {BUTTON_LABEL.CONFIRM}
+            </CustomizedButton>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };
