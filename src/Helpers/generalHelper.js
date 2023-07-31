@@ -133,8 +133,8 @@ export const useFetchTopicFieldsAndCategories = () => {
       } catch (error) {
         console.log(error);
       }
-      return topicCategories;
     }
+    return topicCategories;
   };
   return {
     getTopicFields,
