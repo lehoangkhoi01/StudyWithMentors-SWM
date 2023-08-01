@@ -20,8 +20,11 @@ const CustomizedTextField = (props) => {
     return valueLength >= props.maxLength ?? 2000;
   };
 
-  const onChange = () => {
-    setValueLength(inputRef.current?.value?.length)
+  const onChange = (e) => {
+    if (props.onChange) {
+      props.onChange(e);
+    }
+    setValueLength(inputRef.current?.value?.length);
   };
 
   return (

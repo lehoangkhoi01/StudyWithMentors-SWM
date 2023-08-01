@@ -39,6 +39,7 @@ import AdminRoutes from "./Layout/AdminRoutes";
 import MentorStudentRoutes from "./Layout/MentorStudentRoutes";
 import AdminStaffRoutes from "./Layout/AdminStaffRoutes";
 import AdminMentorRoutes from "./Layout/AdminMentorRoutes";
+import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -123,6 +124,14 @@ function App() {
 
                 <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
                 <Route path={ROUTES.MEETING} component={MeetingPage} />
+                <Route
+                  path={ROUTES.SEMINAR_CREATE}
+                  component={SeminarCreatePage}
+                />
+                <Route
+                  path={ROUTES.SEMINAR_UPDATE}
+                  component={SeminarCreatePage}
+                />
 
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />

@@ -619,7 +619,7 @@ const CV = () => {
       );
     } else {
       return (
-        <div style={{ width: "30%", marginLeft: "1rem" }}>
+        <div style={{ width: "30%", marginLeft: "auto", marginRight: "4rem" }}>
           <CustomizedButton
             variant="outlined"
             color="primary600"

@@ -11,8 +11,8 @@ export const ROUTES = {
   SERVER_ERROR: "/server-error",
   SEMINAR_LIST: "/seminars",
   SEMINAR_DETAIL: "/seminars/:id",
-  SEMINAR_CREATE: "/staff/seminar-create",
-  SEMINAR_UPDATE: "/staff/update-seminar/:id",
+  SEMINAR_CREATE: "/seminar-create",
+  SEMINAR_UPDATE: "/update-seminar/:id",
   FEEDBACK_OVERVIEW: "/management/feedback-overview/:id",
   ADMIN_MENTOR_LIST: "/management/mentors",
   MEETING: "/meeting-room/:id",
@@ -27,7 +27,7 @@ export const ROUTES = {
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
-  SEMINAR_UPDATE: "/staff/update-seminar",
+  SEMINAR_UPDATE: "/update-seminar",
   FEEDBACK_OVERVIEW: "/management/feedback-overview",
 };
 

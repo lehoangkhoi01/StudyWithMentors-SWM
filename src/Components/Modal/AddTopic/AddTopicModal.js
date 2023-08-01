@@ -153,7 +153,7 @@ const AddTopicModal = (props) => {
                 }}
                 multiline={true}
                 watch={watch("description")}
-                helperText={errors?.seminarName?.message}
+                helperText={errors?.description?.message}
               />
 
               <CustomizedSelect
