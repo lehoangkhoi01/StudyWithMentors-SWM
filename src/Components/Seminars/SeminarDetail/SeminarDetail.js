@@ -37,7 +37,11 @@ import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import moment from "moment";
 
 const SeminarDetail = () => {
-  const AUTHORIZED_ROLE_ACTION = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
+  const AUTHORIZED_ROLE_ACTION = [
+    SYSTEM_ROLE.STAFF,
+    SYSTEM_ROLE.ADMIN,
+    SYSTEM_ROLE.MENTOR,
+  ];
 
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -49,6 +53,29 @@ const SeminarDetail = () => {
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
+
+  const isAuthorizedEditSeminar = (seminarDetail) => {
+    if (!AUTHORIZED_ROLE_ACTION.includes(userInfo?.role)) {
+      return false;
+    }
+
+    if (
+      userInfo?.role === SYSTEM_ROLE.STAFF &&
+      seminarDetail?.department.id !== userInfo?.departmentId
+    ) {
+      return false;
+    }
+
+    const mentorIdList = seminarDetail?.mentors.map((mentor) => mentor.id);
+    if (
+      userInfo?.role === SYSTEM_ROLE.MENTOR &&
+      !mentorIdList.includes(userInfo?.accountId)
+    ) {
+      return false;
+    }
+
+    return true;
+  };
 
   const breadcrumbsNavigate = [
     { title: BREADCRUMBS_TITLE.SEMINAR_LIST, route: ROUTES.SEMINAR_LIST },
@@ -174,75 +201,74 @@ const SeminarDetail = () => {
                 <h1 className={style.detail__title}>{data.name}</h1>
                 {renderSeminarStatusLabel()}
 
-                {AUTHORIZED_ROLE_ACTION.includes(userInfo?.role) &&
-                  userInfo.departmentId === data.department.id && (
-                    <div className={style.detail__burger}>
-                      <Button
-                        id="basic-button"
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        onClick={handleClick}
+                {isAuthorizedEditSeminar(data) && (
+                  <div className={style.detail__burger}>
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
+                    >
+                      <img
+                        src={require("../../../assets/icons/Edit_Semniar.png")}
+                      />
+                    </Button>
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                      className={style.detail__dropdown}
+                    >
+                      <MenuItem
+                        onClick={() =>
+                          handleNavigate(
+                            ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                          )
+                        }
                       >
                         <img
-                          src={require("../../../assets/icons/Edit_Semniar.png")}
+                          src={require("../../../assets/icons/Semniar_Report.png")}
                         />
-                      </Button>
-                      <Menu
-                        id="demo-positioned-menu"
-                        aria-labelledby="demo-positioned-button"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                        className={style.detail__dropdown}
+                        <span>{SEMINAR.RERORT}</span>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() =>
+                          handleNavigate(
+                            ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                          )
+                        }
                       >
-                        <MenuItem
-                          onClick={() =>
-                            handleNavigate(
-                              ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
-                            )
-                          }
-                        >
-                          <img
-                            src={require("../../../assets/icons/Semniar_Report.png")}
-                          />
-                          <span>{SEMINAR.RERORT}</span>
-                        </MenuItem>
+                        <img
+                          src={require("../../../assets/icons/Seminar_Edit.png")}
+                        />
+                        <span>{SEMINAR.EDIT}</span>
+                      </MenuItem>
 
-                        {moment(data.startTime) > Date.now() && (
-                          //Not show edit and delete menu for past event
-                          <div>
-                            <MenuItem
-                              onClick={() =>
-                                handleNavigate(
-                                  ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
-                                )
-                              }
-                            >
-                              <img
-                                src={require("../../../assets/icons/Seminar_Edit.png")}
-                              />
-                              <span>{SEMINAR.EDIT}</span>
-                            </MenuItem>
-                            <MenuItem onClick={onOpenRemoveDialog}>
-                              <img
-                                src={require("../../../assets/icons/Seminar_Delete.png")}
-                              />
-                              <span>{SEMINAR.DELETE}</span>
-                            </MenuItem>
-                          </div>
-                        )}
-                      </Menu>
-                    </div>
-                  )}
+                      {moment(data.startTime) > Date.now() && (
+                        //Not show delete menu for past event
+                        <div>
+                          <MenuItem onClick={onOpenRemoveDialog}>
+                            <img
+                              src={require("../../../assets/icons/Seminar_Delete.png")}
+                            />
+                            <span>{SEMINAR.DELETE}</span>
+                          </MenuItem>
+                        </div>
+                      )}
+                    </Menu>
+                  </div>
+                )}
 
                 <div>
                   <strong>{SEMINAR.AUTHOR}:</strong>{" "}

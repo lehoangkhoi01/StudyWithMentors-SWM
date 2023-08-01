@@ -54,7 +54,10 @@ import {
   useFetchSpeakerList,
   useNotification,
 } from "../../../Helpers/generalHelper";
-import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import {
+  SEMINAR_DETAIL_VIEW_MODE,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import { useSelector } from "react-redux";
 import { selectMentorList } from "../../../Store/slices/mentorSlice";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
@@ -293,6 +296,12 @@ const SeminarForm = () => {
     } catch (error) {
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: "Cập nhật sự kiện thất bại",
+        });
       }
     } finally {
       setLoading(false);
@@ -328,13 +337,29 @@ const SeminarForm = () => {
   };
 
   React.useEffect(() => {
+    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+      history.push(ROUTES.NOT_FOUND);
+      return;
+    }
+
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
-        if (seminar.department?.id !== userInfo.departmentId) {
+        if (
+          userInfo.role === SYSTEM_ROLE.STAFF &&
+          seminar.department?.id !== userInfo.departmentId
+        ) {
           history.push(ROUTES.NOT_FOUND);
           return;
         }
+        if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+          const mentorIdList = seminar?.mentors.map((mentor) => mentor.id);
+          if (!mentorIdList.includes(userInfo.accountId)) {
+            history.push(ROUTES.NOT_FOUND);
+            return;
+          }
+        }
+
         setSeminarDetail(seminar);
         setSelectedSpeakers(seminar.mentors);
       } catch (error) {
@@ -374,7 +399,6 @@ const SeminarForm = () => {
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
       if (moment(seminarDetail.startTime).toDate() < new Date()) {
         setFormDisabled(true);
-        history.push(ROUTES.NOT_FOUND);
       }
     }
   }, [seminarDetail]);
@@ -535,9 +559,7 @@ const SeminarForm = () => {
             />
             <ListFileDisplay
               mode={
-                isFormDisabled
-                  ? SEMINAR_DETAIL_VIEW_MODE.VIEW
-                  : isFormUpdate
+                isFormUpdate
                   ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
                   : SEMINAR_DETAIL_VIEW_MODE.CREATE
               }
@@ -548,26 +570,24 @@ const SeminarForm = () => {
               handleRemoveOldDocuments={handleRemoveOldDocuments}
             />
 
-            {isFormDisabled ? null : (
-              <Controller
-                name="seminarDocuments"
-                control={control}
-                defaultValue={documents}
-                rules={{ validate: validateFiles }}
-                render={({ field }) => {
-                  return (
-                    <FileInputIcon
-                      onChange={(e) => {
-                        field.onChange(e);
-                        handleDocumentsChange(e);
-                      }}
-                      field={field}
-                      error={errors.seminarDocuments}
-                    />
-                  );
-                }}
-              />
-            )}
+            <Controller
+              name="seminarDocuments"
+              control={control}
+              defaultValue={documents}
+              rules={{ validate: validateFiles }}
+              render={({ field }) => {
+                return (
+                  <FileInputIcon
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleDocumentsChange(e);
+                    }}
+                    field={field}
+                    error={errors.seminarDocuments}
+                  />
+                );
+              }}
+            />
 
             <Grid2
               container
