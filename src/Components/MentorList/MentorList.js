@@ -39,7 +39,7 @@ const MentorList = () => {
   useEffect(() => {
     getMentors();
     getFields();
-    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       getFollowingMentors();
     }
   }, []);
@@ -102,7 +102,7 @@ const MentorList = () => {
   const getFollowingMentors = async () => {
     try {
       setLoading(true);
-      let result = await followMentorService.getFollowing(userInfo.accountId);
+      let result = await followMentorService.getFollowing(userInfo?.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
     } catch (error) {

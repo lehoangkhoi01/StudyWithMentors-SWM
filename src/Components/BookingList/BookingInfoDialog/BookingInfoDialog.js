@@ -117,7 +117,6 @@ const BookingInfoDialog = (props) => {
   const handleAccept = async () => {
     const data = {
       bookingIds: [props.bookingInfo?.id],
-      reason: "Approved",
       status: BOOKING_STATUS.ACCEPTED,
     };
 

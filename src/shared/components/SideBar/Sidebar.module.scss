@@ -29,7 +29,7 @@
   }
 
   &__listitem:hover {
-    background-color: $primary800;
+    background-color: $primary200;
     & a,
     div {
       color: $black000;
@@ -38,9 +38,17 @@
 
   &__active {
     background-color: $primary800;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 1rem;
+    transition: ease;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 10px;
     & a,
     div {
       color: $black000;
+      text-decoration: none;
     }
   }
 
