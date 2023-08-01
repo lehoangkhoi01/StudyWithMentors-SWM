@@ -31,13 +31,11 @@ const HEADER_TABLE = [
   },
   {
     sortable: true,
-    center: true,
     property: "field",
     name: TOPIC_TABLE.FIELD,
   },
   {
     sortable: true,
-    center: true,
     property: "category",
     name: TOPIC_TABLE.CATEGORY,
   },
@@ -65,6 +63,11 @@ const ACTION_ITEMS = [
     action: CONFIRM_ACTION,
   },
   {
+    imgSrc: require("../../assets/icons/Accept.png"),
+    label: CONFIRM_TOPIC_MODAL.SHOW,
+    action: CONFIRM_ACTION,
+  },
+  {
     imgSrc: require("../../assets/icons/Deactive.png"),
     label: CONFIRM_TOPIC_MODAL.REJECT,
     action: CONFIRM_ACTION,
@@ -83,6 +86,10 @@ const TopicList = () => {
   const [headerTable, setHeaderTable] = useState([]);
   const [actionItems, setActionItems] = useState([]);
 
+  const isStaffAdmin = () => {
+    return [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role)
+  }
+
   useEffect(() => {
     let header = HEADER_TABLE;
     let actions = ACTION_ITEMS;
@@ -92,6 +99,43 @@ const TopicList = () => {
     } else if (userInfo.role === SYSTEM_ROLE.STAFF) {
       actions.splice(0, 1);
     }
+
+    actions = actions.map(action => ({
+      ...action,
+      rule: (row) => {
+        switch (action.label) {
+          case CONFIRM_TOPIC_MODAL.ACCEPT:
+            if (isStaffAdmin() && row.translatedStatus === TOPIC_STATUS.WAITING) {
+              return true
+            }
+
+            return false;
+          case CONFIRM_TOPIC_MODAL.SHOW:
+            if (row.translatedStatus === TOPIC_STATUS.ARCHIVED) {
+              return true
+            }
+
+            return false;
+
+          case CONFIRM_TOPIC_MODAL.REJECT:
+            if (row.translatedStatus === TOPIC_STATUS.WAITING) {
+              return true
+            }
+
+            return false;
+
+          case CONFIRM_TOPIC_MODAL.ARCHIVE:
+            if (row.translatedStatus === TOPIC_STATUS.ACCEPTED) {
+              return true
+            }
+
+            return false;
+
+          default:
+            return false;
+        }
+      }
+    }))
 
     setHeaderTable(header);
     setActionItems(actions);
@@ -106,6 +150,7 @@ const TopicList = () => {
           ...topic,
           translatedStatus: TOPIC_STATUS[topic.status],
           mentorName: topic.mentor.fullName,
+          description: topic.description ?? ""
         };
       });
 

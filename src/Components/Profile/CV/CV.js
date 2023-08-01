@@ -28,8 +28,8 @@ import {
   useCustomLoading,
   useNotification,
 } from "../../../Helpers/generalHelper";
-import { useSelector } from "react-redux";
-import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserInfo, userAction } from "../../../Store/slices/userSlice";
 import ConfirmImage from "../../Modal/ImageCrop/ConfirmImage";
 import { userAccountService } from "../../../Services/userAccountService";
 import {
@@ -295,6 +295,7 @@ const CV = () => {
   const { setLoading } = useCustomLoading();
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const userInfo = useSelector(selectUserInfo);
 
@@ -555,11 +556,14 @@ const CV = () => {
   const updateAvatar = async (url) => {
     try {
       setLoading(true);
-      await userAccountService.updateUserProfile(userInfo.accountId, {
+      const updatedData = await userAccountService.updateMoreUserProfile({
         ...userInfo,
         avatarLink: url,
         avatarUrl: url,
       });
+
+      dispatch(userAction.setUserInfo(updatedData));
+      setMentorProfile(updatedData)
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -706,7 +710,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
@@ -780,8 +784,7 @@ const CV = () => {
           </div>
         </div>
       )}
-
-      <div className={style.cv__booking}>
+      {!isLoading && <div className={style.cv__booking}>
         <div className={style.cv__booking__section}>
           <h3>{CV_MENTOR.HOT_TOPIC}</h3>
 
@@ -820,7 +823,8 @@ const CV = () => {
             </CustomizedButton>
           </div>
         )}
-      </div>
+      </div>}
+
 
       <ConfirmImage
         openModal={openModal}

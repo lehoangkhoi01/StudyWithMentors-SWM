@@ -41,7 +41,7 @@ const StaffList = () => {
       name: STAFF_TABLE.PHONE,
     },
     {
-      center: true,
+      sortable: true,
       property: "departmentName",
       name: STAFF_TABLE.DEPARTMENT,
     },

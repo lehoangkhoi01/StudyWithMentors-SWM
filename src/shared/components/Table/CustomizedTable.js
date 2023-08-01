@@ -10,12 +10,12 @@ import style from "./CustomizedTable.module.scss";
 import {
   ADMIN_TABLE_HEADER,
   BUTTON_LABEL,
+  CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
   TABLE_TYPE,
-  TOPIC_STATUS,
   UPSERT_MENTOR,
   UPSERT_STAFF,
 } from "../../constants/common";
@@ -47,6 +47,9 @@ import UpsertField from "../../../Components/Modal/UpsertField/UpsertField";
 import UpsertCategory from "../../../Components/Modal/UpsertCategory/UpsertCategory";
 import UpsertDepartment from "../../../Components/Modal/UpsertDepartment/UpsertDepartment";
 import UpsertStaff from "../../../Components/Modal/UpsertStaff/UpsertStaff";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { SYSTEM_ROLE } from "../../constants/systemType";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -99,6 +102,7 @@ const CustomizedTable = (props) => {
     index: -1,
   });
   const [confirmType, setConfirmType] = useState(null);
+  const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
     getData();
@@ -510,11 +514,10 @@ const CustomizedTable = (props) => {
                       {header.link && (
                         <Link
                           to={row.link}
-                          className={`${
-                            row.translatedStatus === MENTOR_STATUS.ACTIVATED
-                              ? ""
-                              : style.list__table_disabledLink
-                          }`}
+                          className={`${row.translatedStatus === MENTOR_STATUS.ACTIVATED
+                            ? ""
+                            : style.list__table_disabledLink
+                            }`}
                         >
                           {row.linkName ?? "Hồ sơ diễn giả"}
                         </Link>
@@ -575,9 +578,10 @@ const CustomizedTable = (props) => {
 
                             case DEACTIVATE_ACTION:
                               return (
+                                userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.ACTIVATED ||
-                                (MENTOR_STATUS.WAITING && (
+                                MENTOR_STATUS.ACTIVATED &&
+                                (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -587,13 +591,14 @@ const CustomizedTable = (props) => {
                                     <img src={actionItem.imgSrc} />
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
-                                ))
+                                )
                               );
 
                             case ACTIVE_ACTION:
                               return (
+                                userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.INVALIDATE && (
+                                MENTOR_STATUS.INVALIDATE && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -608,14 +613,13 @@ const CustomizedTable = (props) => {
 
                             case CONFIRM_ACTION:
                               return (
-                                row.translatedStatus ===
-                                  TOPIC_STATUS.WAITING && (
+                                actionItem.rule(row) && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
                                       return openConfirmModalHandler(
                                         row,
-                                        actionItem.label
+                                        actionItem.label === CONFIRM_TOPIC_MODAL.SHOW ? CONFIRM_TOPIC_MODAL.ACCEPT : actionItem.label
                                       );
                                     }}
                                   >
