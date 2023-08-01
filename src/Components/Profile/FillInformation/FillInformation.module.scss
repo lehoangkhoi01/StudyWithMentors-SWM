@@ -3,12 +3,13 @@
 
 .fillInformation {
   &__container {
-    background: $primaryBackground;
     height: 100%;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: relative;
   }
 
   &__formSection {
@@ -19,12 +20,15 @@
     width: 70%;
     padding-block: 3vh;
     border-radius: 15px;
-    box-shadow: 0px 2px 5px 0px $black300;
+    outline: none;
 
     background-color: $black000;
 
-    position: relative;
-    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
 
     h1 {
       color: $primary600;

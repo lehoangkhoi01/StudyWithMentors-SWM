@@ -45,7 +45,7 @@ const SeminarList = () => {
   }, [filterInfo]);
 
   const onChangeStatusFilter = (status) => {
-    const statusFilter =
+    const statusFilterParam =
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
@@ -58,7 +58,14 @@ const SeminarList = () => {
       filterDepartmentId = userInfo.departmentId;
 
       filterRef.current.resetSelectedDepartment();
+    } else if (statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
+      // Check if last status is seminer by department or
+      filterDepartmentId = null;
     }
+
+    console.log(status)
+    console.log(statusFilter)
+    console.log("================")
 
     setStatusFilter(status);
 
@@ -67,7 +74,8 @@ const SeminarList = () => {
       startDate: filterInfo?.startDate,
       endDate: filterInfo?.endDate,
       departmentId: filterDepartmentId,
-      status: statusFilter,
+      status: statusFilterParam,
+      ownSeminar: status === FILTER_SEMINAR.OWN_SEMINAR,
       mentorIds:
         status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
@@ -94,7 +102,7 @@ const SeminarList = () => {
   };
 
   const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
-    if (departmentId) {
+    if (departmentId && statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
       setStatusFilter(FILTER_SEMINAR.ALL);
     }
 

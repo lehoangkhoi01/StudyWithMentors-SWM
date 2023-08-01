@@ -508,7 +508,14 @@ const CustomizedTable = (props) => {
                       align={header.center ? "center" : "left"}
                     >
                       {header.link && (
-                        <Link to={row.link}>
+                        <Link
+                          to={row.link}
+                          className={`${
+                            row.translatedStatus === MENTOR_STATUS.ACTIVATED
+                              ? ""
+                              : style.list__table_disabledLink
+                          }`}
+                        >
                           {row.linkName ?? "Hồ sơ diễn giả"}
                         </Link>
                       )}

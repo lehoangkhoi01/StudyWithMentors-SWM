@@ -78,6 +78,11 @@
       }
     }
 
+    &_disabledLink {
+      pointer-events: none;
+      color: $black400 !important;
+    }
+
     a {
       text-decoration: none;
       color: $primary600;

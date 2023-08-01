@@ -53,9 +53,13 @@ const DoughnutChart = (props) => {
           {OTHERS.AVERAGE}:{" "}
           {(
             props.data.value.reduce(
+              (sum, currentValue, index) => sum + currentValue * (index + 1),
+              0
+            ) /
+            props.data.value.reduce(
               (sum, currentValue) => sum + currentValue,
               0
-            ) / props.data.value.filter((value) => value !== 0).length
+            )
           ).toFixed(1)}
         </span>
       )}

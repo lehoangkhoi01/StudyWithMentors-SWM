@@ -34,6 +34,7 @@ const MentorList = () => {
   const [displayedMentors, setDisplayedMentors] = useState([]);
   const [followingMentors, setFollowingMentors] = useState([]);
   const [fields, setFields] = useState([]);
+  const [filterInfo, setFilterInfo] = useState([]);
 
   useEffect(() => {
     getMentors();
@@ -58,11 +59,15 @@ const MentorList = () => {
     }
   }, [statusFilter]);
 
-  const getMentors = async (params) => {
+  useEffect(() => {
+    getMentors();
+  }, [filterInfo]);
+
+  const getMentors = async () => {
     try {
       setLoading(true);
       const mentorsData = await accountService.getAllMoreInfoMentors(
-        params ?? []
+        filterInfo ?? []
       );
       setMentors(mentorsData.mentorCards);
     } catch (error) {
@@ -125,7 +130,7 @@ const MentorList = () => {
       let newFollowingMentors = [...prevValue];
 
       newFollowingMentors.splice(selectedMentorIndex, 1);
-      
+
       return [...newFollowingMentors];
     });
   };
@@ -161,6 +166,10 @@ const MentorList = () => {
     });
   };
 
+  const onUpdateFilter = (param) => {
+    setFilterInfo(param);
+  };
+
   return (
     <>
       <div className={`${style.mentorList__container}`}>
@@ -168,7 +177,7 @@ const MentorList = () => {
         <FilterSection
           fields={fields}
           onChangeStatusFilter={onChangeStatusFilter}
-          onSearch={getMentors}
+          onSearch={onUpdateFilter}
         />
         <div className={style.mentorList__status__filter}>
           <div className={style.mentorList__status__filter__items}>
