@@ -577,11 +577,12 @@ export const TOPIC_STATUS_BACKEND = {
 export const CONFIRM_TOPIC_MODAL = {
   REJECT_CONFIRM: "Bạn có muốn từ chối",
   ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
-  ARCHIVE_CONFIRM: "Bạn có muốn lưu trữ",
+  ARCHIVE_CONFIRM: "Bạn có muốn ẩn",
   REJECT: "Từ chối",
   ACCEPT: "Phê duyệt",
-  ARCHIVE: "Lưu trữ",
+  ARCHIVE: "Ẩn",
   TOPIC: "chủ đề",
+  SHOW: "Hiện"
 };
 
 export const TABLE_TYPE = {

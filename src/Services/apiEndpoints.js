@@ -13,6 +13,7 @@ export const UserAccountEndpoints = {
   UPDATE_PROFILE: "user-profile/mentors",
   CONFIRM_PROFILE: "user-profile/current",
   GET_USER_PROFILE: "user-profile",
+  UPDATE_DETAIL_PROFILE: "user-profile/current"
 };
 
 export const SeminarEndpoints = {
