@@ -94,8 +94,12 @@ const TopicList = () => {
   };
 
   useEffect(() => {
-    let header = HEADER_TABLE;
-    let actions = ACTION_ITEMS;
+    let header = [...HEADER_TABLE];
+    let actions = [...ACTION_ITEMS];
+
+    console.log("============")
+    console.log(userInfo?.role)
+    console.log("=============")
 
     if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
       header.splice(4, 1);
