@@ -9,7 +9,13 @@ const ActivePropertyModal = (props) => {
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
         <div className={style.modal}>
-          <Typography marginY={3} variant="h4" color="#1a237e">
+          <Typography
+            marginY={3}
+            fontWeight={700}
+            fontSize="2rem"
+            textAlign="center"
+            color="#283493"
+          >
             {`${MODAL_ACTIVE_PROPERTY.ACTIVE_CONFIRM} ${props.title} ${OTHERS.THIS}?`}
           </Typography>
           <p>{` ${MODAL_ACTIVE_PROPERTY.ACTIVE_DETAIL}`}</p>

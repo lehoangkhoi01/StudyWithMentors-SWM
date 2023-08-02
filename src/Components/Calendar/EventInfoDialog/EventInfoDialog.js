@@ -65,7 +65,12 @@ const EventInfoDialog = (props) => {
   return (
     <div>
       <Dialog fullWidth open={props.open} onClose={props.handleClose}>
-        <DialogTitle variant="h4" color="#1a237e">
+        <DialogTitle
+          fontWeight={700}
+          fontSize="2rem"
+          textAlign="center"
+          color="#283493"
+        >
           Thông tin khung giờ
         </DialogTitle>
         <DialogContent>

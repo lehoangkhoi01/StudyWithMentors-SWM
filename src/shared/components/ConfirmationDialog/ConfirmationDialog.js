@@ -35,7 +35,12 @@ const ConfirmationDialog = (props) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        <Typography variant="h4" color="#1a237e">
+        <Typography
+          fontWeight={700}
+          fontSize="2rem"
+          textAlign="center"
+          color="#283493"
+        >
           {props.title}
         </Typography>
       </DialogTitle>

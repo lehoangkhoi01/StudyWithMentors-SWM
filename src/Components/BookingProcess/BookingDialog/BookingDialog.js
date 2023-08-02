@@ -77,7 +77,12 @@ const BookingDialog = (props) => {
   return (
     <Dialog fullWidth open={props.open} maxWidth="none">
       <CustomDialogTitle onClose={() => props.handleOpenDialog(false)}>
-        <Typography variant="h4" color="#1a237e">
+        <Typography
+          fontWeight={700}
+          fontSize="2rem"
+          textAlign="center"
+          color="#283493"
+        >
           Đặt lịch cố vấn
         </Typography>
       </CustomDialogTitle>

@@ -83,11 +83,23 @@ const UpsertCategory = (props) => {
               className={`${style.modal__form}`}
             >
               {categoryId ? (
-                <Typography marginY={3} variant="h4" color="#1a237e">
+                <Typography
+                  marginY={3}
+                  fontWeight={700}
+                  fontSize="2rem"
+                  textAlign="center"
+                  color="#283493"
+                >
                   {TITLE.EDIT_CATEGORY}
                 </Typography>
               ) : (
-                <Typography marginY={3} variant="h4" color="#1a237e">
+                <Typography
+                  marginY={3}
+                  fontWeight={700}
+                  fontSize="2rem"
+                  textAlign="center"
+                  color="#283493"
+                >
                   {TITLE.CREATE_CATEGORY}
                 </Typography>
               )}
