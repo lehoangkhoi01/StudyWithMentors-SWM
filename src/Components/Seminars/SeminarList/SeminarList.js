@@ -63,10 +63,6 @@ const SeminarList = () => {
       filterDepartmentId = null;
     }
 
-    console.log(status)
-    console.log(statusFilter)
-    console.log("================")
-
     setStatusFilter(status);
 
     setFilterInfo({

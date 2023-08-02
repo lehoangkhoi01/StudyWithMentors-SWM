@@ -61,7 +61,7 @@ const CVModal = (props) => {
       watch(`${registerNamePrefix}_workingHere`) ||
       watch(`${registerNamePrefix}_attendingThis`)
     ) {
-      setValue(`${registerNamePrefix}_endDate`, "");
+      setValue(`${registerNamePrefix}_endDate`, null);
       setIsWorking(true);
     }
   }, [
@@ -189,7 +189,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                            getValues(`${registerNamePrefix}_attendingThis`)
+                          getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}
