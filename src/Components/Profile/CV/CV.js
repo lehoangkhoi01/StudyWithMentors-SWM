@@ -25,6 +25,7 @@ import {
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
 import {
+  useCustomAppbar,
   useCustomLoading,
   useNotification,
 } from "../../../Helpers/generalHelper";
@@ -52,6 +53,7 @@ import { meetingFeedbackService } from "../../../Services/meetingFeedbackService
 import RatingSection from "./RatingSection/RatingSection";
 import { seminarService } from "../../../Services/seminarService";
 import SeminarSection from "./SeminarSection/SeminarSection";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const TEXT_FIELDS = [
   {
@@ -298,6 +300,8 @@ const CV = () => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector(selectUserInfo);
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.MENTOR_PROFILE);
 
   useEffect(() => {
     if (id) {
@@ -775,7 +779,7 @@ const CV = () => {
                 <CustomTab label="Hồ sơ" value={PROFILE_SECTION.PROFILE} />
                 <CustomTab label="Đánh giá" value={PROFILE_SECTION.RATING} />
                 <CustomTab
-                  label="Sự kiện đã tham gia"
+                  label="Sự kiện tham gia"
                   value={PROFILE_SECTION.SEMINAR}
                 />
               </Tabs>
