@@ -117,7 +117,6 @@ const BookingInfoDialog = (props) => {
   const handleAccept = async () => {
     const data = {
       bookingIds: [props.bookingInfo?.id],
-      reason: "Approved",
       status: BOOKING_STATUS.ACCEPTED,
     };
 
@@ -440,7 +439,12 @@ const BookingInfoDialog = (props) => {
         onClose={() => props.setOpenBookingInfo(false)}
       >
         <DialogTitle>
-          <Typography variant="h4" color="#1a237e">
+          <Typography
+            fontWeight={700}
+            fontSize="2rem"
+            textAlign="center"
+            color="#283493"
+          >
             Chi tiết lịch hẹn
           </Typography>
         </DialogTitle>

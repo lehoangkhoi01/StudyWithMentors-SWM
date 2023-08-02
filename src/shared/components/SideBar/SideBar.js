@@ -95,8 +95,10 @@ const SideBar = (props) => {
         {SYSTEM_MANAGE_MENU.map((item, index) => (
           <ListItem
             key={`system-menu${index}`}
-            className={`${style.sidebar__listitem} ${
-              currentRouter === item.ROUTE ? style.sidebar__active : ""
+            className={`${
+              currentRouter === item.ROUTE
+                ? style.sidebar__active
+                : style.sidebar__listitem
             }`}
           >
             <Link to={item.ROUTE}>{item.TITLE}</Link>
@@ -115,8 +117,10 @@ const SideBar = (props) => {
         {ACCOUNT_MANAGE_MENU.map((item, index) => (
           <ListItem
             key={`account-manage${index}`}
-            className={`${style.sidebar__listitem} ${
-              currentRouter === item.ROUTE ? style.sidebar__active : ""
+            className={`${
+              currentRouter === item.ROUTE
+                ? style.sidebar__active
+                : style.sidebar__listitem
             }`}
           >
             <Link to={item.ROUTE}>{item.TITLE}</Link>

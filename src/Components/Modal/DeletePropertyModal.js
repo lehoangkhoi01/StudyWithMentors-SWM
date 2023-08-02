@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import style from "./DeletePropertyModal.module.scss";
 
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
@@ -6,16 +6,24 @@ import { MODAL_DELETE_PROPERTY, OTHERS } from "../../shared/constants/common";
 
 const DeletePropertyModal = (props) => {
   const { type } = props;
-  
+
   return (
     <div className={style.container}>
       <Modal open={props.openModal} onClose={props.onCloseModal}>
         <div className={style.modal}>
-          <h2>{`${
-            type === MODAL_DELETE_PROPERTY.DEACTIVATE
-              ? MODAL_DELETE_PROPERTY.DEACTIVATE
-              : MODAL_DELETE_PROPERTY.DELETE_CONFIRM
-          } ${props.title} ${OTHERS.THIS}?`}</h2>
+          <Typography
+            marginY={3}
+            fontWeight={700}
+            fontSize="2rem"
+            textAlign="center"
+            color="#283493"
+          >
+            {`${
+              type === MODAL_DELETE_PROPERTY.DEACTIVATE
+                ? MODAL_DELETE_PROPERTY.DEACTIVATE
+                : MODAL_DELETE_PROPERTY.DELETE_CONFIRM
+            } ${props.title} ${OTHERS.THIS}?`}
+          </Typography>
           <p>
             {type === MODAL_DELETE_PROPERTY.DEACTIVATE
               ? MODAL_DELETE_PROPERTY.DEACTIVATE_DETAIL

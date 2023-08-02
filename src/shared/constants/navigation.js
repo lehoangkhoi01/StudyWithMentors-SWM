@@ -41,6 +41,10 @@ export const UNAUTHORIZED_NAVBAR = [
     ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
+    TITLE: "Tìm Mentor",
+    ROUTE: ROUTES.MENTOR_LIST,
+  },
+  {
     TITLE: "Về GrowthMe",
   },
 ];

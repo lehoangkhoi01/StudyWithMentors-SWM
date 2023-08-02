@@ -85,7 +85,7 @@ const MentorCard = (props) => {
 
   return (
     <div className={style.card__container}>
-      {userInfo.role === SYSTEM_ROLE.STUDENT &&
+      {userInfo?.role === SYSTEM_ROLE.STUDENT &&
         renderFollowButton(props.data?.mentorId)}
       {/* <div className={style.card__follow}>
         <IconButton size="small" sx={{ color: "white" }}>

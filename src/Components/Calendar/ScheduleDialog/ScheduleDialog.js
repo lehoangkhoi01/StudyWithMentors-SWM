@@ -157,7 +157,12 @@ const ScheduleDialog = (props) => {
         <Dialog fullWidth open={props.open}>
           <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle>
-              <Typography variant="h4" color="#1a237e">
+              <Typography
+                fontWeight={700}
+                fontSize="2rem"
+                textAlign="center"
+                color="#283493"
+              >
                 Lịch nhận cố vấn
               </Typography>
             </DialogTitle>

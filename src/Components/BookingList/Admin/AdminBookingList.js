@@ -1,6 +1,9 @@
 import React from "react";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
-import { useNotification } from "../../../Helpers/generalHelper";
+import {
+  useCustomAppbar,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { bookingService } from "../../../Services/bookingService";
 import CustomizedTable from "../../../shared/components/Table/CustomizedTable";
 import { BOOKING_DETAIL_ACTION } from "../../../shared/constants/actionType";
@@ -12,9 +15,12 @@ import {
 } from "../../../shared/constants/common";
 import BookingInfoDialog from "../BookingInfoDialog/BookingInfoDialog";
 import BookingAttendanceDialog from "./BookingAttendanceDialog/BookingAttendanceDialog";
+import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 
 const AdminBookingList = () => {
   const { setNotification } = useNotification();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.BOOKING_LIST);
   const [openBookingInfoDialog, setOpenBookingInfoDialog] =
     React.useState(false);
 

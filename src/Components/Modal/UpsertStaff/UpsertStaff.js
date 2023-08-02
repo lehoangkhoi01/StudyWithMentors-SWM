@@ -137,7 +137,13 @@ const UpsertStaff = (props) => {
             className={`${style.modal__form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Typography marginY={3} variant="h4" color="#1a237e">
+            <Typography
+              marginY={3}
+              fontWeight={700}
+              fontSize="2rem"
+              textAlign="center"
+              color="#283493"
+            >
               Thông tin nhân viên
             </Typography>
             <CustomizedTextField

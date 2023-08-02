@@ -1,12 +1,11 @@
-import {
-  useNotification,
-} from "../../Helpers/generalHelper";
+import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
+import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 import {
   ADMIN_TABLE_HEADER,
   ERROR_MESSAGES,
@@ -17,6 +16,8 @@ import {
 
 const CategoryList = () => {
   const { setNotification } = useNotification();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.CATEGORY_LIST);
 
   const headerTable = [
     {

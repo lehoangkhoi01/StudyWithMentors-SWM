@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import style from "./CVModal.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
@@ -169,7 +169,15 @@ const CVModal = (props) => {
                 onClick={props.onCloseModal}
                 src={require("../../assets/icons/Cancel.png")}
               />
-              <h1>{props.title}</h1>
+              <Typography
+                marginY={3}
+                fontWeight={700}
+                fontSize="2rem"
+                textAlign="center"
+                color="#283493"
+              >
+                {props.title}
+              </Typography>
               {props.textFields.map((textField, index) => {
                 if (textField.type === INPUT_TYPES.DATE) {
                   return (
@@ -189,7 +197,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                          getValues(`${registerNamePrefix}_attendingThis`)
+                            getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}
