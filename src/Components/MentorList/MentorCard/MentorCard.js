@@ -102,7 +102,7 @@ const MentorCard = (props) => {
             props.data.avatarUrl !== "avatarUrl" &&
             props.data.avatarUrl !== "string"
               ? props.data.avatarUrl
-              : require("../../../assets/Mentor_img.png")
+              : require("../../../assets/sbcf-default-avatar.png")
           }
         />
       </div>
