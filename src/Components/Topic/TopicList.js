@@ -107,6 +107,14 @@ const TopicList = () => {
       ...action,
       rule: (row) => {
         switch (action.label) {
+          case TABLE_ACTION.EDIT:
+            if (
+              isStaffAdmin()
+            ) {
+              return true;
+            }
+
+            return false;
           case CONFIRM_TOPIC_MODAL.ACCEPT:
             if (
               isStaffAdmin() &&
