@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNotification } from "../../Helpers/generalHelper";
+import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
@@ -17,6 +17,7 @@ import {
 import { selectUserInfo } from "../../Store/slices/userSlice";
 import { SYSTEM_ROLE } from "../../shared/constants/systemType";
 import { useEffect, useState } from "react";
+import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 
 const HEADER_TABLE = [
   {
@@ -81,14 +82,16 @@ const ACTION_ITEMS = [
 
 const TopicList = () => {
   const { setNotification } = useNotification();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.TOPIC_LIST);
   const userInfo = useSelector(selectUserInfo);
 
   const [headerTable, setHeaderTable] = useState([]);
   const [actionItems, setActionItems] = useState([]);
 
   const isStaffAdmin = () => {
-    return [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role)
-  }
+    return [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role);
+  };
 
   useEffect(() => {
     let header = HEADER_TABLE;
@@ -100,33 +103,36 @@ const TopicList = () => {
       actions.splice(0, 1);
     }
 
-    actions = actions.map(action => ({
+    actions = actions.map((action) => ({
       ...action,
       rule: (row) => {
         switch (action.label) {
           case CONFIRM_TOPIC_MODAL.ACCEPT:
-            if (isStaffAdmin() && row.translatedStatus === TOPIC_STATUS.WAITING) {
-              return true
+            if (
+              isStaffAdmin() &&
+              row.translatedStatus === TOPIC_STATUS.WAITING
+            ) {
+              return true;
             }
 
             return false;
           case CONFIRM_TOPIC_MODAL.SHOW:
             if (row.translatedStatus === TOPIC_STATUS.ARCHIVED) {
-              return true
+              return true;
             }
 
             return false;
 
           case CONFIRM_TOPIC_MODAL.REJECT:
             if (row.translatedStatus === TOPIC_STATUS.WAITING) {
-              return true
+              return true;
             }
 
             return false;
 
           case CONFIRM_TOPIC_MODAL.ARCHIVE:
             if (row.translatedStatus === TOPIC_STATUS.ACCEPTED) {
-              return true
+              return true;
             }
 
             return false;
@@ -134,8 +140,8 @@ const TopicList = () => {
           default:
             return false;
         }
-      }
-    }))
+      },
+    }));
 
     setHeaderTable(header);
     setActionItems(actions);
@@ -150,7 +156,7 @@ const TopicList = () => {
           ...topic,
           translatedStatus: TOPIC_STATUS[topic.status],
           mentorName: topic.mentor.fullName,
-          description: topic.description ?? ""
+          description: topic.description ?? "",
         };
       });
 

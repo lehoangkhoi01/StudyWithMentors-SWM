@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  useCustomAppbar,
   useFetchDepartments,
   useNotification,
 } from "../../Helpers/generalHelper";
@@ -18,10 +19,13 @@ import {
   TRANSLATED_STAFF_STATUS,
 } from "../../shared/constants/common";
 import { accountService } from "../../Services/accountService";
+import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 
 const StaffList = () => {
   const { setNotification } = useNotification();
   const { getDepartments } = useFetchDepartments();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.STAFF_LIST);
 
   const headerTable = [
     {
@@ -82,7 +86,7 @@ const StaffList = () => {
         const { profile } = staff;
         return {
           ...profile,
-          phone: profile.phone ?? '',
+          phone: profile.phone ?? "",
           translatedStatus: TRANSLATED_STAFF_STATUS[profile.status],
         };
       });

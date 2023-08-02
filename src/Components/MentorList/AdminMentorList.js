@@ -10,6 +10,7 @@ import {
 import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
 import {
+  useCustomAppbar,
   useFetchSpeakerList,
   useNotification,
 } from "../../Helpers/generalHelper";
@@ -20,10 +21,13 @@ import {
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
+import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 
 const AdminMentorList = () => {
   const { getLatestSpeakerList } = useFetchSpeakerList();
   const { setNotification } = useNotification();
+  const { setAppbar } = useCustomAppbar();
+  setAppbar(APPBAR_TITLES.MENTOR_LIST);
 
   const headerTable = [
     {
