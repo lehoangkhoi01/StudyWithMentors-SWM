@@ -565,6 +565,7 @@ const CustomizedTable = (props) => {
                           switch (actionItem.action) {
                             case UPSERT_ACTION:
                               return (
+                                (!actionItem.rule || actionItem.rule(row)) &&
                                 <MenuItem
                                   key={`MENU_ITEM_${index}`}
                                   onClick={() => {
@@ -613,7 +614,7 @@ const CustomizedTable = (props) => {
 
                             case CONFIRM_ACTION:
                               return (
-                                actionItem.rule(row) && (
+                                (!actionItem.rule || actionItem.rule(row)) && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
