@@ -33,7 +33,7 @@ const DeletePropertyModal = (props) => {
           <div className={style.modal__buttons}>
             <CustomizedButton
               type="submit"
-              variant="text"
+              variant="outlined"
               color="primary600"
               onClick={props.onCloseModal}
             >
@@ -41,7 +41,7 @@ const DeletePropertyModal = (props) => {
             </CustomizedButton>
             <CustomizedButton
               type="submit"
-              variant="text"
+              variant="contained"
               color="primary600"
               onClick={props.onDeleteProperty}
             >

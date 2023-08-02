@@ -60,6 +60,10 @@ const SelectSlotUIStep = (props) => {
     }
   };
 
+  const onView = async (view) => {
+    await triggerRangeChangeEvent(currentDate, view);
+  };
+
   React.useEffect(() => {
     const fetchSchedule = async () => {
       await triggerRangeChangeEvent(currentDate);
@@ -78,6 +82,7 @@ const SelectSlotUIStep = (props) => {
           onSelectEvent={handleSelectEvent}
           onNavigate={handleNavigate}
           events={eventList}
+          onView={onView}
         />
       </div>
     </>
