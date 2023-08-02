@@ -97,10 +97,6 @@ const TopicList = () => {
     let header = [...HEADER_TABLE];
     let actions = [...ACTION_ITEMS];
 
-    console.log("============")
-    console.log(userInfo?.role)
-    console.log("=============")
-
     if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
       header.splice(4, 1);
     } else if (userInfo?.role === SYSTEM_ROLE.STAFF) {
