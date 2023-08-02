@@ -97,9 +97,9 @@ const TopicList = () => {
     let header = HEADER_TABLE;
     let actions = ACTION_ITEMS;
 
-    if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+    if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
       header.splice(4, 1);
-    } else if (userInfo.role === SYSTEM_ROLE.STAFF) {
+    } else if (userInfo?.role === SYSTEM_ROLE.STAFF) {
       actions.splice(0, 1);
     }
 
@@ -160,7 +160,7 @@ const TopicList = () => {
         };
       });
 
-      if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+      if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
         updatedTopicList = updatedTopicList.filter(
           (item) => item.mentor.id === userInfo.accountId
         );

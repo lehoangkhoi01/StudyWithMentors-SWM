@@ -302,7 +302,7 @@ const CV = () => {
   useEffect(() => {
     if (id) {
       setMentorId(id);
-    } else if (!id && userInfo.role === SYSTEM_ROLE.MENTOR) {
+    } else if (!id && userInfo?.role === SYSTEM_ROLE.MENTOR) {
       setMentorId(userInfo.accountId);
     } else {
       //Not allow user without mentor role to access CV page without id in the url
@@ -318,7 +318,7 @@ const CV = () => {
     getMentorProfile();
     getFeedbacks(mentorId);
     getSeminarByMentors(mentorId);
-    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       getSchedule();
       getFollowingMentors();
     }
@@ -563,7 +563,7 @@ const CV = () => {
       });
 
       dispatch(userAction.setUserInfo(updatedData));
-      setMentorProfile(updatedData)
+      setMentorProfile(updatedData);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -710,7 +710,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
@@ -754,7 +754,7 @@ const CV = () => {
                       `${position.position} ${OTHERS.AT} ${position.company}`}
                   </p>
                 </div>
-                {userInfo.role === SYSTEM_ROLE.STUDENT &&
+                {userInfo?.role === SYSTEM_ROLE.STUDENT &&
                   renderFollowButton(id)}
               </div>
             </div>
@@ -784,47 +784,48 @@ const CV = () => {
           </div>
         </div>
       )}
-      {!isLoading && <div className={style.cv__booking}>
-        <div className={style.cv__booking__section}>
-          <h3>{CV_MENTOR.HOT_TOPIC}</h3>
-
-          {hotTopics.map((topic, index) => (
-            <>
-              {index < 3 && (
-                <div
-                  key={`TOPIC_${index}`}
-                  className={style.cv__booking__topic}
-                >
-                  <h4>{topic.name}</h4>
-                  <p>
-                    {ADD_TOPIC.CATEGORY}: {topic.category}
-                  </p>
-                  <p>
-                    {ADD_TOPIC.FIELD}: {topic.field}
-                  </p>
-                </div>
-              )}
-
-              {index < 2 && <Divider />}
-            </>
-          ))}
-        </div>
-
-        {userInfo.role === SYSTEM_ROLE.STUDENT && (
+      {!isLoading && (
+        <div className={style.cv__booking}>
           <div className={style.cv__booking__section}>
-            <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
-            <TimeSlots timeSlots={availableTimeSlots} />
-            <CustomizedButton
-              variant="contained"
-              color="primary600"
-              onClick={() => setOpenBookingInfoDialog(true)}
-            >
-              {BUTTON_LABEL.BOOKING_NOW}
-            </CustomizedButton>
-          </div>
-        )}
-      </div>}
+            <h3>{CV_MENTOR.HOT_TOPIC}</h3>
 
+            {hotTopics.map((topic, index) => (
+              <>
+                {index < 3 && (
+                  <div
+                    key={`TOPIC_${index}`}
+                    className={style.cv__booking__topic}
+                  >
+                    <h4>{topic.name}</h4>
+                    <p>
+                      {ADD_TOPIC.CATEGORY}: {topic.category}
+                    </p>
+                    <p>
+                      {ADD_TOPIC.FIELD}: {topic.field}
+                    </p>
+                  </div>
+                )}
+
+                {index < 2 && <Divider />}
+              </>
+            ))}
+          </div>
+
+          {userInfo?.role === SYSTEM_ROLE.STUDENT && (
+            <div className={style.cv__booking__section}>
+              <h3>{CV_MENTOR.AVAILABLE_TIME}</h3>
+              <TimeSlots timeSlots={availableTimeSlots} />
+              <CustomizedButton
+                variant="contained"
+                color="primary600"
+                onClick={() => setOpenBookingInfoDialog(true)}
+              >
+                {BUTTON_LABEL.BOOKING_NOW}
+              </CustomizedButton>
+            </div>
+          )}
+        </div>
+      )}
 
       <ConfirmImage
         openModal={openModal}

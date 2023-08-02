@@ -133,7 +133,7 @@ const SideBar = (props) => {
         <div className={`${style.sidebar__userInfo}`}>
           <Typography variant="h6">{props.userInfo.fullName}</Typography>
           <Typography sx={{ display: "flex", justifyContent: "space-around" }}>
-            {props.userInfo.role}{" "}
+            {props.userInfo?.role}{" "}
             <ExitToAppIcon
               className={`${style.sidebar__icon}`}
               titleAccess={BUTTON_LABEL.LOGOUT}

@@ -63,7 +63,7 @@ const FeedbackOverview = () => {
         setLoading(true);
         const seminar = await seminarService.getSeminarDetail(id);
         if (
-          userInfo.role === SYSTEM_ROLE.STAFF &&
+          userInfo?.role === SYSTEM_ROLE.STAFF &&
           userInfo.departmentId !== seminar.department.id
         ) {
           history.push(ROUTES.NOT_FOUND);

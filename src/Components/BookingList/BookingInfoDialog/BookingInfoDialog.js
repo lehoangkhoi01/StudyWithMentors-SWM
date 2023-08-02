@@ -321,11 +321,11 @@ const BookingInfoDialog = (props) => {
   };
 
   const renderActionButton = (status) => {
-    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       return renderStudentActionButton(status);
     }
 
-    if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+    if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
       return renderMentorActionButton(status);
     }
   };
@@ -526,7 +526,7 @@ const BookingInfoDialog = (props) => {
               </span>
             </div>
           )}
-          {userInfo.role === SYSTEM_ROLE.STUDENT
+          {userInfo?.role === SYSTEM_ROLE.STUDENT
             ? renderStudentViewFeedback(studentFeedback)
             : renderMentorViewFeedback(feedbacks)}
         </DialogContent>

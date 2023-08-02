@@ -337,7 +337,7 @@ const SeminarForm = () => {
   };
 
   React.useEffect(() => {
-    if (userInfo.role === SYSTEM_ROLE.STUDENT) {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       history.push(ROUTES.NOT_FOUND);
       return;
     }
@@ -346,13 +346,13 @@ const SeminarForm = () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
         if (
-          userInfo.role === SYSTEM_ROLE.STAFF &&
+          userInfo?.role === SYSTEM_ROLE.STAFF &&
           seminar.department?.id !== userInfo.departmentId
         ) {
           history.push(ROUTES.NOT_FOUND);
           return;
         }
-        if (userInfo.role === SYSTEM_ROLE.MENTOR) {
+        if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
           const mentorIdList = seminar?.mentors.map((mentor) => mentor.id);
           if (!mentorIdList.includes(userInfo.accountId)) {
             history.push(ROUTES.NOT_FOUND);
