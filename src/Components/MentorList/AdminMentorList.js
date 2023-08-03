@@ -98,7 +98,7 @@ const AdminMentorList = () => {
           link: `/cv/${mentor.id}`,
           linkName: TABLE_DETAIL.CV_MENTOR,
           translatedStatus: MENTOR_STATUS[mentor.status],
-          phoneNum: mentor.phoneNum ?? "",
+          phoneNum: mentor.phoneNum ? mentor.phoneNum : "Chưa có",
         };
       });
 

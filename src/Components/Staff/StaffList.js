@@ -86,7 +86,7 @@ const StaffList = () => {
         const { profile } = staff;
         return {
           ...profile,
-          phone: profile.phone ?? "",
+          phone: profile.phone ? profile.phone : "Chưa có dữ liệu",
           translatedStatus: TRANSLATED_STAFF_STATUS[profile.status],
         };
       });
