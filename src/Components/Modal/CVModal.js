@@ -36,6 +36,7 @@ const CVModal = (props) => {
 
   useLayoutEffect(() => {
     reset();
+    setIsWorking(false);
 
     if (!props.openModal) return;
     const registerNamePrefixRaw = getRegisterNamePrefixFromTitle(props.title);
@@ -197,7 +198,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                            getValues(`${registerNamePrefix}_attendingThis`)
+                          getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}
