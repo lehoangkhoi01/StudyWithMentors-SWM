@@ -34,6 +34,7 @@ const UpsertMentorModal = (props) => {
 
   useEffect(() => {
     reset();
+    setIsExistedEmail(false);
     if (props.existedData) {
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);

@@ -50,6 +50,7 @@ const UpsertStaff = (props) => {
 
   useEffect(() => {
     reset();
+    setIsExistedEmail(false);
     if (props.existedData) {
       const departmentId = props.existedData.departmentId;
 
