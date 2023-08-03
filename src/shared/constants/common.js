@@ -130,6 +130,7 @@ export const COMMON_MESSAGE = {
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
+  UPDATE_MENTOR_SUCCESS: "Cập nhật thông tin thành công",
   REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
   REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
   ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
@@ -141,6 +142,7 @@ export const COMMON_MESSAGE = {
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
   REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
+  UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
 };
 

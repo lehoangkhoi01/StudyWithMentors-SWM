@@ -11,6 +11,12 @@ const BookingCard = (props) => {
     return new Date(date + " " + time);
   };
 
+  const getConvertDate = (date) => {
+    if (date) {
+      return format(new Date(date), DATE_FORMAT.DD_MM_YYYY);
+    } else return null;
+  };
+
   const renderStatusLabel = (status) => {
     switch (status) {
       case BOOKING_STATUS.ACCEPTED:
@@ -50,7 +56,7 @@ const BookingCard = (props) => {
       <Grid2 container spacing={4}>
         <Grid2 xs={2} className={`${style.bookingCard__datetime__container}`}>
           <Typography className={`${style.bookingCard__datetime__text}`}>
-            {props.bookingInfo?.startDate}
+            {getConvertDate(props.bookingInfo?.startDate)}
           </Typography>
           <Typography
             className={`${style.bookingCard__datetime__text} ${style.bookingCard__datetime__time}`}

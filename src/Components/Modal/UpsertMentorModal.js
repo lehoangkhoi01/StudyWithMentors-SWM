@@ -62,16 +62,22 @@ const UpsertMentorModal = (props) => {
           props.existedData.id,
           specificForm
         );
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_MENTOR_SUCCESS,
+        });
       } else if (type === MODAL_TYPE.ADD) {
         await accountService.createMentor(specificForm);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_MENTOR_SUCCESS,
+        });
       }
 
       await getLatestSpeakerList();
-      setNotification({
-        isOpen: true,
-        type: "success",
-        message: COMMON_MESSAGE.ADD_MENTOR_SUCCESS,
-      });
+
       if (props.onSuccess) {
         props.onSuccess();
       }
