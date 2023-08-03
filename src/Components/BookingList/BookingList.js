@@ -10,6 +10,7 @@ import { Box, Tabs, Typography, Tab } from "@mui/material";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
 import { COMMON_MESSAGE } from "../../shared/constants/common";
 import { styled } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 
 const CustomTab = styled(Tab)`
   color: #3948ab;
@@ -26,6 +27,7 @@ const BookingList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const history = useHistory();
 
   const processData = (data) => {
     let newData = data.map((el) => {
@@ -87,7 +89,7 @@ const BookingList = () => {
           setBookingList(newResult);
         }
       } catch (error) {
-        if (error?.status == "500") {
+        if (error?.status === 500) {
           history.push(ROUTES.SERVER_ERROR);
         }
       } finally {

@@ -37,7 +37,7 @@ const SummaryStep = (props) => {
 
       <div className={`${style.bookingSummary__detail}`}>
         <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
-        <span>{props.studentNote}</span>
+        <span>{props.studentNote ?? "(Không có)"}</span>
       </div>
       <div className={`${style.bookingSummary__detail}`}>
         <span className={`${style.bookingSummary__subTitle}`}>

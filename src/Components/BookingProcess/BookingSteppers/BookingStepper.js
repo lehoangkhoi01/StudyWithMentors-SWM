@@ -32,7 +32,7 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { useForm } from "react-hook-form";
 
-const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Ghi chú"];
+const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Xác nhận"];
 
 const CustomStepLabel = styled(StepLabel)`
   & > .Mui-active > svg,

@@ -32,7 +32,7 @@ export const BUTTON_LABEL = {
   ADD_TOPIC: "Thêm chủ đề",
   SEARCH_MENTOR: "Tìm kiếm diễn giả",
   SEARCH_TOPIC: "Tìm kiếm chủ đề",
-  BOOKING_NOW: "Đặt lịch ngay",
+  BOOKING_NOW: "Đặt lịch",
   CREATE_FIELD: "Tạo lĩnh vực",
   ADD_FIELD: "Thêm lĩnh vực",
   CREATE_CATEGORY: "Tạo thể loại",
@@ -216,7 +216,7 @@ export const LENGTH = {
   FILE_MAX_NUM: 5,
   SPEAKERS_MAX: 3,
   STUDENT_NOTE_MAX: 1000,
-  PARTICIPANTS_MAX: 3,
+  PARTICIPANTS_MAX: 4,
 };
 
 export const ERROR_MESSAGES = {
@@ -582,7 +582,7 @@ export const CONFIRM_TOPIC_MODAL = {
   ACCEPT: "Phê duyệt",
   ARCHIVE: "Ẩn",
   TOPIC: "chủ đề",
-  SHOW: "Hiện"
+  SHOW: "Hiện",
 };
 
 export const TABLE_TYPE = {
