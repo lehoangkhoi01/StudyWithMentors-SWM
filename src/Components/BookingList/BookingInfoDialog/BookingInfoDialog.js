@@ -110,7 +110,9 @@ const BookingInfoDialog = (props) => {
           )
         : null) +
       ", " +
-      props.bookingInfo?.startDate
+      (props.bookingInfo?.startDate
+        ? format(new Date(props.bookingInfo?.startDate), DATE_FORMAT.DD_MM_YYYY)
+        : null)
     );
   };
 

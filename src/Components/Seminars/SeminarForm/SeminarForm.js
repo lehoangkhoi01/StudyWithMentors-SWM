@@ -240,6 +240,11 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + result.id);
     } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: "Tạo sự kiện thất bại. Vui lòng thử lại sau.",
+      });
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }

@@ -85,15 +85,20 @@ const UpsertStaff = (props) => {
 
       if (type === MODAL_TYPE.EDIT) {
         await accountService.updateStaff(specificForm, props.existedData.id);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_STAFF_SUCCESS,
+        });
       } else if (type === MODAL_TYPE.ADD) {
         await accountService.createStaff(specificForm);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_STAFF_SUCCESS,
+        });
       }
 
-      setNotification({
-        isOpen: true,
-        type: "success",
-        message: COMMON_MESSAGE.ADD_STAFF_SUCCESS,
-      });
       if (props.onSuccess) {
         props.onSuccess();
       }

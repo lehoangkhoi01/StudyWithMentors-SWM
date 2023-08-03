@@ -213,7 +213,7 @@ const CustomCalendar = () => {
       setOpenBookingInfoDialog(false);
       history.push(ROUTES.BOOKING_LIST);
     } catch (error) {
-      if (error?.status == "500") {
+      if (error?.status === 500) {
         history.push(ROUTES.SERVER_ERROR);
       }
     } finally {
