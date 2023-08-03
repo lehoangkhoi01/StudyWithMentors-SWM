@@ -451,6 +451,7 @@ const CV = () => {
   };
 
   const processScheduleData = (data) => {
+    data = data.filter((slot) => !slot.booked);
     let newData = data.map((el) => {
       return { ...el, convertedStartDate: new Date(el.startTime) };
     });
@@ -461,11 +462,11 @@ const CV = () => {
   const getSchedule = async () => {
     try {
       setLoading(true);
-      const toDay = new Date();
-      const nextMonth = moment(toDay).add(30, "days");
+      const startDate = moment().add(2, "days").toDate();
+      const nextMonth = moment(startDate).add(30, "days");
       const data = await scheduleService.getMentorSchedule(
         mentorId,
-        format(toDay, DATE_FORMAT.BACK_END_YYYY_MM_DD),
+        format(startDate, DATE_FORMAT.BACK_END_YYYY_MM_DD),
         format(nextMonth.toDate(), DATE_FORMAT.BACK_END_YYYY_MM_DD)
       );
       const timeSlots = processScheduleData(data.timeSlots).slice(0, 4);
@@ -682,6 +683,9 @@ const CV = () => {
   };
 
   const renderRatingSection = () => {
+    if (!userInfo) {
+      return <Typography>Vui lòng đăng nhập để xem đánh giá</Typography>;
+    }
     if (feedbacks.length > 0) {
       return <RatingSection feedbacks={feedbacks} />;
     } else return <Typography>Chưa có đánh giá</Typography>;
