@@ -49,8 +49,8 @@ const SeminarList = () => {
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
-        ? "past"
-        : null;
+          ? "past"
+          : null;
 
     let filterDepartmentId = filterInfo?.departmentId;
 
@@ -98,15 +98,28 @@ const SeminarList = () => {
   };
 
   const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
+    let filterDepartmentId = filterInfo?.departmentId;
+
     if (departmentId && statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
       setStatusFilter(FILTER_SEMINAR.ALL);
+    } else if (statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
+      filterDepartmentId = userInfo.departmentId;
     }
+    const status =
+      statusFilter === FILTER_SEMINAR.IS_COMMING
+        ? "future"
+        : statusFilter === FILTER_SEMINAR.PAST
+          ? "past"
+          : null;
 
     setFilterInfo({
       searchString: seminarName,
       startDate,
       endDate,
-      departmentId,
+      departmentId: departmentId ?? filterDepartmentId,
+      status,
+      mentorIds:
+        status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
   };
 

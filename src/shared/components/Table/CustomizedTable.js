@@ -294,6 +294,7 @@ const CustomizedTable = (props) => {
     });
     setDeletedData(null);
     setConfirmType(null);
+    handleClose();
   };
 
   const onPaginate = (page, initData) => {
@@ -512,14 +513,15 @@ const CustomizedTable = (props) => {
                       align={header.center ? "center" : "left"}
                     >
                       {header.link && (
-                        <Link
+                        row.translatedStatus === MENTOR_STATUS.ACTIVATED ? <Link
                           to={row.link}
-                          className={`${row.translatedStatus === MENTOR_STATUS.ACTIVATED
-                            ? ""
-                            : style.list__table_disabledLink
-                            }`}
                         >
                           {row.linkName ?? "Hồ sơ diễn giả"}
+                        </Link> : <Link
+                          to={row.link}
+                          className={style.list__table_disabledLink}
+                        >
+                          {"Chưa có dữ liệu"}
                         </Link>
                       )}
                       {!header.link && `${row[header.property]}`}

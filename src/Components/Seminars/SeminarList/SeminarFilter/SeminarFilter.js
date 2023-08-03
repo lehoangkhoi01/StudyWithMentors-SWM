@@ -66,8 +66,6 @@ const SeminarFilter = forwardRef((props, ref) => {
     const startDate = startDateJs ? startDateJs.toDate() : "";
     const endDate = endDateJs ? endDateJs.toDate() : "";
 
-    console.log(getAll)
-
     if (getAll) {
       props.onSeminarFilter();
     } else {

@@ -93,6 +93,10 @@ const TopicList = () => {
     return [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role);
   };
 
+  const isMentor = () => {
+    return userInfo?.role === SYSTEM_ROLE.MENTOR
+  }
+
   useEffect(() => {
     let header = [...HEADER_TABLE];
     let actions = [...ACTION_ITEMS];
@@ -109,7 +113,7 @@ const TopicList = () => {
         switch (action.label) {
           case TABLE_ACTION.EDIT:
             if (
-              isStaffAdmin()
+              isMentor()
             ) {
               return true;
             }
