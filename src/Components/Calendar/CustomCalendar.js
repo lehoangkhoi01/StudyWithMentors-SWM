@@ -23,6 +23,7 @@ const CustomCalendar = () => {
   const [openBookingInfoDialog, setOpenBookingInfoDialog] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEventCalendar, setSelectedEventCalendar] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const { setLoading } = useCustomLoading();
@@ -97,6 +98,7 @@ const CustomCalendar = () => {
       setOpenEventInfoDialog(true);
     }
     setSelectedEvent(e);
+    setSelectedEventCalendar(e);
   };
 
   const handleRemoveSchedule = async (id, isSingle = false, data) => {
@@ -252,6 +254,7 @@ const CustomCalendar = () => {
             onSelectEvent={handleSelectEvent}
             onNavigate={handleNavigate}
             onView={onView}
+            selected={selectedEventCalendar}
           />
         </Grid2>
       </Grid2>
@@ -269,7 +272,10 @@ const CustomCalendar = () => {
 
       <EventInfoDialog
         open={openEventInfoDialog}
-        handleClose={() => setOpenEventInfoDialog(false)}
+        handleClose={() => {
+          setOpenEventInfoDialog(false);
+          setSelectedEventCalendar(null);
+        }}
         handleRemoveSchedule={handleRemoveSchedule}
         handleSubmitUpdateSchedule={handleSubmitUpdateSchedule}
         event={selectedEvent}
@@ -280,6 +286,7 @@ const CustomCalendar = () => {
         bookingInfo={selectedEvent?.bookingCard}
         setOpenBookingInfo={setOpenBookingInfoDialog}
         handleUpdateBookingStatus={handleUpdateBookingStatus}
+        setSelectedEventCalendar={setSelectedEventCalendar}
       />
     </div>
   );

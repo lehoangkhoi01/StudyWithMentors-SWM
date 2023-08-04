@@ -44,7 +44,11 @@ const SummaryStep = (props) => {
           Người tham gia:{" "}
         </span>
         <span>
-          {props.selectedStudents.map((student) => student.fullName).toString()}
+          {props.selectedStudents?.length > 0
+            ? props.selectedStudents
+                .map((student) => student.fullName)
+                .join(", ")
+            : "(Không có)"}
         </span>
       </div>
     </div>

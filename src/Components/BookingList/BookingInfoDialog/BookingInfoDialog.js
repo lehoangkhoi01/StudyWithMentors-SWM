@@ -438,7 +438,12 @@ const BookingInfoDialog = (props) => {
       <Dialog
         fullWidth
         open={props.open}
-        onClose={() => props.setOpenBookingInfo(false)}
+        onClose={() => {
+          props.setOpenBookingInfo(false);
+          if (props.setSelectedEventCalendar) {
+            props.setSelectedEventCalendar(null);
+          }
+        }}
       >
         <DialogTitle>
           <Typography

@@ -98,28 +98,11 @@ export const customDayPropGetter = () => {
 
 export const eventPropGetter = (event, start, end, isSelected) => ({
   ...(isSelected &&
-    event.title.includes("Nhận tư vấn") && {
-      style: {
-        backgroundColor: "#5c6ac0",
-      },
-    }),
-  ...(isSelected &&
     !event.title.includes("Nhận tư vấn") && {
       style: {
         backgroundColor: "#FFF7DF !important",
       },
     }),
-  ...(isSelected &&
-    event.bookStatus &&
-    event.bookStatus === BOOKING_STATUS.REQUESTED && {
-      className: style.requestedEvent,
-    }),
-  ...(isSelected &&
-    event.bookStatus &&
-    event.bookStatus === BOOKING_STATUS.ACCEPTED && {
-      className: style.acceptedEvent,
-    }),
-
   ...(event && {
     className: style.requestedEvent,
   }),
@@ -127,13 +110,27 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
     event.bookStatus === BOOKING_STATUS.REQUESTED && {
       className: style.requestedEvent,
     }),
+  ...(isSelected &&
+    event.bookStatus &&
+    event.bookStatus === BOOKING_STATUS.REQUESTED && {
+      className: style.selectedRequestedEvent,
+    }),
   ...(event.bookStatus &&
     event.bookStatus === BOOKING_STATUS.ACCEPTED && {
       className: style.acceptedEvent,
     }),
+  ...(isSelected &&
+    event.bookStatus &&
+    event.bookStatus === BOOKING_STATUS.ACCEPTED && {
+      className: style.selectedAcceptedEvent,
+    }),
   ...(event.title.includes("Nhận tư vấn") && {
     className: style.freeEvent,
   }),
+  ...(isSelected &&
+    event.title.includes("Nhận tư vấn") && {
+      className: style.selectedFreeEvent,
+    }),
 });
 
 export const messages = {

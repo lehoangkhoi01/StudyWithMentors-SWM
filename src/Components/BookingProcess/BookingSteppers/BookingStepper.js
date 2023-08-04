@@ -46,6 +46,8 @@ const BookingStepper = (props) => {
   const [selectedTopic, setSelectedTopic] = React.useState(null);
   const [studentNote, setStudentNote] = React.useState(null);
   const [selectSlot, setSelectSlot] = React.useState(null);
+  const [selectedEventCalendar, setSelectedEventCalendar] =
+    React.useState(null);
   const [selectedStudents, setSelectedStudents] = React.useState([]);
 
   const { setLoading } = useCustomLoading();
@@ -95,7 +97,7 @@ const BookingStepper = (props) => {
 
   const handleSelectSlot = (slot) => {
     setSelectSlot(slot);
-    handleNext();
+    setSelectedEventCalendar(slot);
   };
 
   const renderSelectTopicUI = () => {
@@ -108,7 +110,11 @@ const BookingStepper = (props) => {
         >
           Hãy chọn 1 chủ đề mà bạn mong muốn được tư vấn:
         </Typography>
-        <TopicList topics={props.topics} setSelectedTopic={setSelectedTopic} />
+        <TopicList
+          topics={props.topics}
+          setSelectedTopic={setSelectedTopic}
+          selectedTopic={selectedTopic}
+        />
       </>
     );
   };
@@ -133,6 +139,7 @@ const BookingStepper = (props) => {
     return (
       <SelectSlotUIStep
         selectedTopic={selectedTopic}
+        selectedEventCalendar={selectedEventCalendar}
         mentorId={props.mentorId}
         handleSelectSlot={handleSelectSlot}
       />
@@ -282,7 +289,10 @@ const BookingStepper = (props) => {
                         variant="contained"
                         color="primary600"
                         size="small"
-                        disabled={activeStep === 1 || props.topics.length === 0}
+                        disabled={
+                          (activeStep === 1 && !selectSlot) ||
+                          props.topics.length === 0
+                        }
                         onClick={handleNext}
                       >
                         Tiếp tục
