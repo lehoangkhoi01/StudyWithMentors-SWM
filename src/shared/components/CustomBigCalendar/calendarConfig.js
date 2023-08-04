@@ -103,13 +103,6 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
         backgroundColor: "#FFF7DF !important",
       },
     }),
-
-  ...(isSelected &&
-    event.bookStatus &&
-    event.bookStatus === BOOKING_STATUS.ACCEPTED && {
-      className: style.acceptedEvent,
-    }),
-
   ...(event && {
     className: style.requestedEvent,
   }),
@@ -125,6 +118,11 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
   ...(event.bookStatus &&
     event.bookStatus === BOOKING_STATUS.ACCEPTED && {
       className: style.acceptedEvent,
+    }),
+  ...(isSelected &&
+    event.bookStatus &&
+    event.bookStatus === BOOKING_STATUS.ACCEPTED && {
+      className: style.selectedAcceptedEvent,
     }),
   ...(event.title.includes("Nhận tư vấn") && {
     className: style.freeEvent,

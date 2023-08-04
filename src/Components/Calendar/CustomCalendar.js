@@ -286,6 +286,7 @@ const CustomCalendar = () => {
         bookingInfo={selectedEvent?.bookingCard}
         setOpenBookingInfo={setOpenBookingInfoDialog}
         handleUpdateBookingStatus={handleUpdateBookingStatus}
+        setSelectedEventCalendar={setSelectedEventCalendar}
       />
     </div>
   );
