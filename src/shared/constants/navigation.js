@@ -4,6 +4,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
+  ABOUT: "/about",
   MENTOR_LIST: "/mentors",
   CALENDAR: "/mentor/calendar",
   SEMINAR_FEEDBACK: "/seminar-feedback/:id",
@@ -46,6 +47,7 @@ export const UNAUTHORIZED_NAVBAR = [
   },
   {
     TITLE: "Về GrowthMe",
+    ROUTE: ROUTES.ABOUT,
   },
 ];
 
