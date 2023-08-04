@@ -52,6 +52,7 @@ const CVModal = (props) => {
       }
 
       setType(MODAL_TYPE.EDIT);
+      console.log()
     } else {
       setType(MODAL_TYPE.ADD);
     }
@@ -72,6 +73,10 @@ const CVModal = (props) => {
 
   const validateEndDate = (val) => {
     if (!isWorking) {
+      if (!val || val.length === 0) {
+        return ERROR_MESSAGES.REQUIRED_FIELD;
+      }
+
       const formValue = getValues();
       const startDateString = formValue[`${registerNamePrefix}_startDate`];
 
@@ -81,29 +86,53 @@ const CVModal = (props) => {
         DATE_FORMAT.MM_YYYY,
         startDateString
       );
-
       const endDateTimeNumber = endDateTime.getTime();
       const startDateTimeNumber = startDateTime.getTime();
 
-      // if (!val || val.length === 0) {
-      //   return ERROR_MESSAGES.REQUIRED_FIELD;
-      // }
-      if (endDateTimeNumber < startDateTimeNumber) {
-        return ERROR_MESSAGES.INVALID_END_DATE;
+      if
+        (endDateTimeNumber < startDateTimeNumber) {
+        return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
       }
     }
   };
 
+  const validateDueDate = (val) => {
+    if (!isWorking) {
+      if (!val || val.length === 0) {
+        return ERROR_MESSAGES.REQUIRED_FIELD;
+      }
+
+      const formValue = getValues();
+      const issuedDateString = formValue[`${registerNamePrefix}_achievingDate`];
+
+      const dueDateTime = covertToISODate(DATE_FORMAT.MM_YYYY, val);
+
+      const issuedDateTime = covertToISODate(
+        DATE_FORMAT.MM_YYYY,
+        issuedDateString
+      );
+      const dueDateTimeNumber = dueDateTime.getTime();
+      const issuedDateTimeNumber = issuedDateTime.getTime();
+
+      if
+        (dueDateTimeNumber < issuedDateTimeNumber) {
+        return ERROR_MESSAGES.EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE;
+      }
+    }
+  };
+
+
   const validateStartDate = (val) => {
+
+    if (!val || val.length === 0) {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+
     const startDateTime = covertToISODate(DATE_FORMAT.MM_YYYY, val);
 
     const currentDate = new Date().getTime();
 
     const startDateTimeNumber = startDateTime.getTime();
-
-    // if (!val || val.length === 0) {
-    //   return ERROR_MESSAGES.REQUIRED_FIELD;
-    // }
     if (startDateTimeNumber > currentDate) {
       return ERROR_MESSAGES.INVALID_END_DATE;
     }
@@ -126,7 +155,16 @@ const CVModal = (props) => {
           },
         }),
       };
-    } else {
+    } else if (registerName.includes("expiryDate")) {
+      return {
+        ...register(registerName, {
+          validate: {
+            checkEndDate: (val) => validateDueDate(val),
+          },
+        }),
+      };
+    }
+    else {
       return {
         ...register(registerName),
       };
@@ -145,6 +183,8 @@ const CVModal = (props) => {
 
     Object.keys(specificForm).map((key) => {
       if (key.toLocaleLowerCase().includes("date")) {
+        console.log(specificForm[key])
+
         specificForm[key] = convertDateFormat(
           specificForm[key],
           DATE_FORMAT.MM_YYYY,
@@ -183,6 +223,7 @@ const CVModal = (props) => {
                 if (textField.type === INPUT_TYPES.DATE) {
                   return (
                     <CustomizedDatePicker
+                      disableFuture={textField.disableFuture}
                       key={`CV_MODAL_INPUT_${index}`}
                       className={style.modal__input}
                       name={textField.name}
@@ -192,7 +233,7 @@ const CVModal = (props) => {
                       formName={textField.registerName}
                       setValue={setValue}
                       value={covertToISODate(
-                        DATE_FORMAT.YYYY_MM_DD,
+                        DATE_FORMAT.BACK_END_YYYY_MM_DD,
                         getValues(textField.registerName)
                       )}
                       disabled={

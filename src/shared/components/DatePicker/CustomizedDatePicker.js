@@ -13,6 +13,9 @@ const CustomizedDatePicker = (props) => {
     if (!isMapped && props.value !== undefined && props.value !== "") {
       setValue(props.value ?? null);
       setIsMapped(true);
+
+      const datevalue = convertISOToFormat(dateFormat, props.value);
+      props.setValue(props.formName, datevalue);
     }
   }, [props.value]);
 
@@ -23,6 +26,7 @@ const CustomizedDatePicker = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <DatePicker
+        disableFuture={props.disableFuture}
         disabled={props.disabled}
         disablePast={props.disablePast ?? false}
         minDate={props.minDate}

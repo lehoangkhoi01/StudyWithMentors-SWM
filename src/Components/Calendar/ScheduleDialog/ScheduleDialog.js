@@ -89,7 +89,7 @@ const ScheduleDialog = (props) => {
       daily: loopOption.value === loopOptions[1].value,
       weekly: loopOption.value === loopOptions[2].value,
       endDate:
-        loopOption.value !== loopOptions[0] && newEndDate
+        loopOption.value !== loopOptions[0].value && newEndDate
           ? format(newEndDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
           : null,
     };
@@ -128,13 +128,15 @@ const ScheduleDialog = (props) => {
 
   React.useEffect(() => {
     let newStartDate = props.startDate;
-
     if (
       new Date(props.startDate).setHours(0, 0, 0, 0) ===
-      new Date().setHours(0, 0, 0, 0)
+        new Date().setHours(0, 0, 0, 0) ||
+      props.startDate < new Date()
     ) {
       newStartDate = moment().add(2, "days").toDate();
       setStartDate(newStartDate);
+    } else {
+      setStartDate(props.startDate);
     }
     setValue("freeTime", format(newStartDate, DATE_FORMAT.DD_MM_YYYY));
     setValue(
@@ -149,7 +151,7 @@ const ScheduleDialog = (props) => {
     setEndTime(
       new Date(new Date(newStartDate).setHours(newStartDate.getHours() + 1))
     );
-  }, [props.startDate]);
+  }, []);
 
   return (
     <div>
