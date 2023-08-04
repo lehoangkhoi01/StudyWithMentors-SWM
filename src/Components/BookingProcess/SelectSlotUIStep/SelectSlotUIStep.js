@@ -83,6 +83,7 @@ const SelectSlotUIStep = (props) => {
           onNavigate={handleNavigate}
           events={eventList}
           onView={onView}
+          selected={props.selectedEventCalendar}
         />
       </div>
     </>

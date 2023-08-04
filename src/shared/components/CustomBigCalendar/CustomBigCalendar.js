@@ -30,6 +30,7 @@ export const CustomBigCalendar = (props) => {
       timeslots={1}
       views={views}
       selectable={true}
+      selected={props.selected}
       onSelectEvent={props.onSelectEvent}
       onNavigate={props.onNavigate}
       onView={props.onView}

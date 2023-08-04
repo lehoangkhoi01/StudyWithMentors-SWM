@@ -23,6 +23,12 @@ const TopicList = (props) => {
     setSelectedIndex(index);
   };
 
+  React.useEffect(() => {
+    if (props.topics.length > 0 && props.selectedTopic) {
+      setSelectedIndex(props.topics.indexOf(props.selectedTopic));
+    }
+  }, []);
+
   if (props.topics?.length > 0) {
     return (
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
