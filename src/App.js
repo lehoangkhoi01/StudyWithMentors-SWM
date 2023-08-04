@@ -40,6 +40,7 @@ import MentorStudentRoutes from "./Layout/MentorStudentRoutes";
 import AdminStaffRoutes from "./Layout/AdminStaffRoutes";
 import AdminMentorRoutes from "./Layout/AdminMentorRoutes";
 import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
+import AboutUsPage from "./Pages/AboutUs/AboutUsPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -102,6 +103,7 @@ function App() {
               )}
               <>
                 <Route exact path="/" component={HomePage} />
+                <Route path={ROUTES.ABOUT} component={AboutUsPage} />
                 <Route path={ROUTES.HOME} component={HomePage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route exact path={`${ROUTES.CV}`} component={CVPage} />
