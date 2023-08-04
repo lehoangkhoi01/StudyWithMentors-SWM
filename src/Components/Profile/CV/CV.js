@@ -533,6 +533,8 @@ const CV = () => {
     delete CVDataFromBE.userProfileId;
 
     convertNullToEmptyArrayProperty(CVDataFromBE);
+    const lastedPosition = findLastestWorkingExp(CVDataFromBE.workingExps);
+    setPosition(lastedPosition);
 
     setCVData(CVDataFromBE);
     setIsLoading(false);

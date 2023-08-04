@@ -24,85 +24,78 @@ export const mapCVSection = (data, indexOfProperty) => {
 
     case INDEX_OF_CV_PROPERTY.WORKING_EXP: {
       return data.map((section) => ({
-        title: `${section.position} ${OTHERS.AT} ${
-          section.company
-        } (${convertDateFormat(
-          section.startDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )} - ${
-          section.workingHere
+        title: `${section.position} ${OTHERS.AT} ${section.company
+          } (${convertDateFormat(
+            section.startDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${section.workingHere
             ? OTHERS.CURRENT
             : convertDateFormat(
-                section.endDate,
-                DATE_FORMAT.BACK_END_YYYY_MM_DD,
-                DATE_FORMAT.MM_YYYY
-              )
-        })`,
+              section.endDate,
+              DATE_FORMAT.BACK_END_YYYY_MM_DD,
+              DATE_FORMAT.MM_YYYY
+            )
+          })`,
         detail: section.description,
       }));
     }
 
     case INDEX_OF_CV_PROPERTY.LEARNING_EXPL: {
       return data.map((section) => ({
-        title: `${section.major} ${OTHERS.AT} ${
-          section.school
-        } (${convertDateFormat(
-          section.startDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )} - ${convertDateFormat(
-          section.endDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )})`,
+        title: `${section.major} ${OTHERS.AT} ${section.school
+          } (${convertDateFormat(
+            section.startDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${convertDateFormat(
+            section.endDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
         detail: section.description,
       }));
     }
 
     case INDEX_OF_CV_PROPERTY.SOCIAL_ACT: {
       return data.map((section) => ({
-        title: `${section.position} ${OTHERS.AT} ${
-          section.organization
-        } (${convertDateFormat(
-          section.startDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )} - ${
-          section.attendingThis
+        title: `${section.position} ${OTHERS.AT} ${section.organization
+          } (${convertDateFormat(
+            section.startDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )} - ${section.attendingThis
             ? OTHERS.CURRENT
             : convertDateFormat(
-                section.endDate,
-                DATE_FORMAT.BACK_END_YYYY_MM_DD,
-                DATE_FORMAT.MM_YYYY
-              )
-        })`,
+              section.endDate,
+              DATE_FORMAT.BACK_END_YYYY_MM_DD,
+              DATE_FORMAT.MM_YYYY
+            )
+          })`,
         detail: section.description,
       }));
     }
 
     case INDEX_OF_CV_PROPERTY.ACHIEVEMENT: {
       return data.map((section) => ({
-        title: `${section.name} ${OTHERS.BELONG} ${
-          section.organization
-        } (${convertDateFormat(
-          section.achievingDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )})`,
+        title: `${section.name} ${OTHERS.BELONG} ${section.organization
+          } (${convertDateFormat(
+            section.achievingDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
         detail: section.description,
       }));
     }
 
     case INDEX_OF_CV_PROPERTY.CERT: {
       return data.map((section) => ({
-        title: `${section.name} ${OTHERS.BELONG} ${
-          section.organization
-        } (${convertDateFormat(
-          section.achievingDate,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD,
-          DATE_FORMAT.MM_YYYY
-        )})`,
+        title: `${section.name} ${OTHERS.BELONG} ${section.organization
+          } (${convertDateFormat(
+            section.achievingDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})`,
         detail: section.description,
       }));
     }
@@ -155,14 +148,20 @@ export const findLastestWorkingExp = (workingExps) => {
     return null;
   }
 
+  let isWorkingHere = false;
   let latestEndDateObj = workingExps[0];
 
   for (let i = 1; i < workingExps.length; i++) {
-    if (
-      workingExps[i].endDate &&
-      workingExps[i].endDate > latestEndDateObj.endDate
-    ) {
-      latestEndDateObj = workingExps[i];
+    if (!isWorkingHere) {
+      if (workingExps[i].workingHere) {
+        latestEndDateObj = workingExps[i];
+        isWorkingHere = true
+      } else if (
+        workingExps[i].endDate &&
+        workingExps[i].endDate > latestEndDateObj.endDate
+      ) {
+        latestEndDateObj = workingExps[i];
+      }
     }
   }
 
