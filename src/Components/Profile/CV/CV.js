@@ -89,11 +89,13 @@ const TEXT_FIELDS = [
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.START_DATE,
         registerName: REGISTER_FIELD.EXPERIENCE.START_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.END_DATE,
         registerName: REGISTER_FIELD.EXPERIENCE.END_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.TEXT_AREA,
@@ -120,6 +122,7 @@ const TEXT_FIELDS = [
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.START_DATE,
         registerName: REGISTER_FIELD.STUDY_PROGRESS.START_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.DATE,
@@ -157,11 +160,13 @@ const TEXT_FIELDS = [
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.START_DATE,
         registerName: REGISTER_FIELD.ACTIVITIES.START_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.END_DATE,
         registerName: REGISTER_FIELD.ACTIVITIES.END_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.TEXT_AREA,
@@ -188,6 +193,7 @@ const TEXT_FIELDS = [
         type: INPUT_TYPES.DATE,
         name: TEXTFIELD_LABEL.RECEIVED_DATE,
         registerName: REGISTER_FIELD.ACHIEVEMENT.RECEIVED_TIME,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.TEXT_AREA,
@@ -215,6 +221,7 @@ const TEXT_FIELDS = [
         name: TEXTFIELD_LABEL.ISSUED_DATE,
         registerName: REGISTER_FIELD.CERTIFICATES.ISSUED_DATE,
         optional: true,
+        disableFuture: true,
       },
       {
         type: INPUT_TYPES.DATE,
@@ -718,7 +725,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }

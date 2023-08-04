@@ -272,6 +272,8 @@ export const ERROR_MESSAGES = {
     "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau. Nếu chưa đăng nhập, vui lòng đăng nhập vào hệ thống để thực hiện hành động này.",
   DELETE_COMMENT_ERROR:
     "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
+  END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE: "Ngày kết thúc không được sớm hơn ngày bắt đầu",
+  EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE: "Ngày hết hạn không được sớm hơn ngày nhận",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
