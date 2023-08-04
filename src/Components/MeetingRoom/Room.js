@@ -9,6 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../Store/slices/userSlice";
 import { ROUTES } from "../../shared/constants/navigation";
+import { SYSTEM_ROLE } from "../../shared/constants/systemType";
 
 const PRIMARY_COLOR = "#383c6b";
 const BACKGROUND_COLOR = "#202349";
@@ -273,7 +274,7 @@ const Room = () => {
         .map((member) => member.accountId)
         .indexOf(userInfo.accountId);
 
-      if (indexOfUser < 0) {
+      if (userInfo.role !== SYSTEM_ROLE.ADMIN && indexOfUser < 0) {
         throw "error";
       } else {
         const data = {
