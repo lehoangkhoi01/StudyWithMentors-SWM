@@ -16,6 +16,7 @@ import {
   selectDepartments,
 } from "../Store/slices/departmentSlice";
 import { departmentService } from "../Services/departmentService";
+import { sortDataByCreatedDate } from "./arrayHelper";
 
 // reason: want to specify delay time for loading for smoothier
 export const useCustomLoading = () => {
@@ -85,6 +86,9 @@ export const useFetchSpeakerList = () => {
     if (!mentorList || mentorList.length === 0) {
       try {
         mentorList = await accountService.getAllMentors();
+        if (mentorList.length > 0) {
+          mentorList = sortDataByCreatedDate(mentorList);
+        }
         dispatch(mentorAcion.setMentorList(mentorList));
       } catch (error) {
         console.log(error);
@@ -96,6 +100,9 @@ export const useFetchSpeakerList = () => {
   const getLatestSpeakerList = async () => {
     try {
       mentorList = await accountService.getAllMentors();
+      if (mentorList.length > 0) {
+        mentorList = sortDataByCreatedDate(mentorList);
+      }
       dispatch(mentorAcion.setMentorList(mentorList));
     } catch (error) {
       console.log(error);
