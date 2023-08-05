@@ -20,6 +20,7 @@ import {
 } from "../../shared/constants/common";
 import { accountService } from "../../Services/accountService";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 
 const StaffList = () => {
   const { setNotification } = useNotification();
@@ -80,8 +81,8 @@ const StaffList = () => {
 
   const getStaffs = async () => {
     try {
-      const staffs = await accountService.getAllStaffs();
-
+      let staffs = await accountService.getAllStaffs();
+      staffs = sortDataByCreatedDate(staffs);
       const updatedStaffList = staffs.map((staff) => {
         const { profile } = staff;
         return {

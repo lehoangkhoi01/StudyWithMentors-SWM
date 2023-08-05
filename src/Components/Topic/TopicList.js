@@ -18,6 +18,7 @@ import { selectUserInfo } from "../../Store/slices/userSlice";
 import { SYSTEM_ROLE } from "../../shared/constants/systemType";
 import { useEffect, useState } from "react";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 
 const HEADER_TABLE = [
   {
@@ -94,8 +95,8 @@ const TopicList = () => {
   };
 
   const isMentor = () => {
-    return userInfo?.role === SYSTEM_ROLE.MENTOR
-  }
+    return userInfo?.role === SYSTEM_ROLE.MENTOR;
+  };
 
   useEffect(() => {
     let header = [...HEADER_TABLE];
@@ -112,9 +113,7 @@ const TopicList = () => {
       rule: (row) => {
         switch (action.label) {
           case TABLE_ACTION.EDIT:
-            if (
-              isMentor() && row.translatedStatus === TOPIC_STATUS.ACCEPTED
-            ) {
+            if (isMentor() && row.translatedStatus === TOPIC_STATUS.ACCEPTED) {
               return true;
             }
 
@@ -161,7 +160,8 @@ const TopicList = () => {
 
   const getTopics = async () => {
     try {
-      const topics = await topicService.getTopics();
+      let topics = await topicService.getTopics();
+      topics = sortDataByCreatedDate(topics);
 
       let updatedTopicList = topics.map((topic) => {
         return {

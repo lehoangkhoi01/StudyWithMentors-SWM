@@ -186,6 +186,7 @@ const UpsertStaff = (props) => {
             />
             <CustomizedSelect
               fullWidth
+              name={"Phòng ban"}
               items={departments}
               inputId="departmentSelect"
               value={selectedDepartment}
