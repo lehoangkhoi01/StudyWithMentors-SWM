@@ -52,7 +52,6 @@ const CVModal = (props) => {
       }
 
       setType(MODAL_TYPE.EDIT);
-      console.log()
     } else {
       setType(MODAL_TYPE.ADD);
     }
@@ -89,8 +88,7 @@ const CVModal = (props) => {
       const endDateTimeNumber = endDateTime.getTime();
       const startDateTimeNumber = startDateTime.getTime();
 
-      if
-        (endDateTimeNumber < startDateTimeNumber) {
+      if (endDateTimeNumber < startDateTimeNumber) {
         return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
       }
     }
@@ -114,15 +112,13 @@ const CVModal = (props) => {
       const dueDateTimeNumber = dueDateTime.getTime();
       const issuedDateTimeNumber = issuedDateTime.getTime();
 
-      if
-        (dueDateTimeNumber < issuedDateTimeNumber) {
+      if (dueDateTimeNumber < issuedDateTimeNumber) {
         return ERROR_MESSAGES.EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE;
       }
     }
   };
 
   const validateStartDate = (val) => {
-
     if (!val || val.length === 0) {
       return ERROR_MESSAGES.REQUIRED_FIELD;
     }
@@ -162,8 +158,7 @@ const CVModal = (props) => {
           },
         }),
       };
-    }
-    else {
+    } else {
       return {
         ...register(registerName),
       };
@@ -182,7 +177,7 @@ const CVModal = (props) => {
 
     Object.keys(specificForm).map((key) => {
       if (key.toLocaleLowerCase().includes("date")) {
-        console.log(specificForm[key])
+        console.log(specificForm[key]);
 
         specificForm[key] = convertDateFormat(
           specificForm[key],
@@ -238,7 +233,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                          getValues(`${registerNamePrefix}_attendingThis`)
+                            getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}
