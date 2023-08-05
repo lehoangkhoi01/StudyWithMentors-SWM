@@ -22,6 +22,7 @@ import {
   findLastestWorkingExp,
   getRegisterNamePrefixFromTitle,
   mapCVSection,
+  sortWorkingExps,
 } from "../../../Helpers/SpecificComponentHelper/CVHelper";
 import { cvEndpoints } from "../../../Services/cvEndpoints";
 import {
@@ -335,6 +336,11 @@ const CV = () => {
     }
   }, [mentorId]);
 
+  useEffect(() => {
+    const lastedPosition = findLastestWorkingExp(cvData.workingExps ?? []);
+    setPosition(lastedPosition);
+  }, [cvData])
+
   const getCVData = async () => {
     try {
       setLoading(true);
@@ -345,9 +351,7 @@ const CV = () => {
       }
       delete CVDataFromBE.userProfileId;
       convertNullToEmptyArrayProperty(CVDataFromBE);
-      const lastedPosition = findLastestWorkingExp(CVDataFromBE.workingExps);
-      setPosition(lastedPosition);
-      setCVData(CVDataFromBE);
+      onSetCVData(CVDataFromBE);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -533,10 +537,8 @@ const CV = () => {
     delete CVDataFromBE.userProfileId;
 
     convertNullToEmptyArrayProperty(CVDataFromBE);
-    const lastedPosition = findLastestWorkingExp(CVDataFromBE.workingExps);
-    setPosition(lastedPosition);
 
-    setCVData(CVDataFromBE);
+    onSetCVData(CVDataFromBE);
     setIsLoading(false);
     setLoading(false);
   };
@@ -621,6 +623,15 @@ const CV = () => {
       setLoading(false);
     }
   };
+
+  const onSetCVData = (newCVData) => {
+    let updatedCVData = {
+      ...newCVData,
+      workingExps: sortWorkingExps(newCVData.workingExps)
+    }
+
+    setCVData(updatedCVData)
+  }
 
   const renderFollowButton = (mentorId) => {
     if (followingMentors.includes(mentorId)) {

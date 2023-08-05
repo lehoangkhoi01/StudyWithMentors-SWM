@@ -121,7 +121,6 @@ const CVModal = (props) => {
     }
   };
 
-
   const validateStartDate = (val) => {
 
     if (!val || val.length === 0) {
