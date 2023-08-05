@@ -18,6 +18,7 @@ import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/Co
 import { useRef } from "react";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import moment from "moment";
+import { diff } from "date-arithmetic";
 
 const loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
@@ -77,6 +78,15 @@ const ScheduleDialog = (props) => {
       setError("endDateTime", {
         type: "custom",
         message: "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+      });
+      return;
+    }
+
+    if (diff(new Date(), newFromDate, "day") < 1) {
+      setError("freeTime", {
+        type: "custom",
+        message:
+          "Thời gian bắt đầu nhận lịch phải lớn hơn hiện tại ít nhất 2 ngày.",
       });
       return;
     }
@@ -178,10 +188,13 @@ const ScheduleDialog = (props) => {
                 value={startDate}
                 setValue={setValue}
                 getValues={getValues}
-                error={errors.freeTime ? true : false}
+                error={errors.freeTime}
                 required={true}
                 disablePast={true}
                 minDate={startDate}
+                onChange={() => {
+                  clearErrors("freeTime");
+                }}
               />
               <Grid2 container spacing={2}>
                 <Grid2 xs={6}>
