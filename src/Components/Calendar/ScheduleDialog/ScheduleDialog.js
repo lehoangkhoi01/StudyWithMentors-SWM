@@ -248,7 +248,7 @@ const ScheduleDialog = (props) => {
                 required={true}
                 disabled={loopOption.value === "noloop" ? true : false}
                 disablePast={true}
-                minDate={moment(startDate).add(1, "days").toDate()}
+                minDate={moment().add(3, "days").toDate()}
               />
             </DialogContent>
 

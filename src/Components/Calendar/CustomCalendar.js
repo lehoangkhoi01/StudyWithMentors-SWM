@@ -49,11 +49,23 @@ const CustomCalendar = () => {
         message: COMMON_MESSAGE.ADD_SCHEDULE_SUCCESS,
       });
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
-      });
+      if (
+        error?.status === 400 &&
+        error?.data === "Attempt to create overlapped schedule"
+      ) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message:
+            "Không thể tạo lịch mới vì đã có lịch trùng trong khung giờ này.",
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -81,11 +93,23 @@ const CustomCalendar = () => {
         message: COMMON_MESSAGE.UPDATE_SCHEDULE_SUCCESS,
       });
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
-      });
+      if (
+        error?.status === 400 &&
+        error?.data === "Attempt to create overlapped schedule"
+      ) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message:
+            "Không thể cập nhật lịch vì đã có lịch trùng trong khung giờ này.",
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+        });
+      }
     } finally {
       setLoading(false);
     }
