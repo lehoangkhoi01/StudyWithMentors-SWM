@@ -5,6 +5,7 @@ import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   CONFIRM_ACTION,
   UPSERT_ACTION,
+  VIEW_DETAIL,
 } from "../../shared/constants/actionType";
 import {
   CONFIRM_TOPIC_MODAL,
@@ -25,11 +26,6 @@ const HEADER_TABLE = [
     sortable: true,
     property: "name",
     name: TOPIC_TABLE.NAME,
-  },
-  {
-    sortable: true,
-    property: "description",
-    name: TOPIC_TABLE.DESCRIPTION,
   },
   {
     sortable: true,
@@ -78,6 +74,11 @@ const ACTION_ITEMS = [
     imgSrc: require("../../assets/icons/Archive.png"),
     label: CONFIRM_TOPIC_MODAL.ARCHIVE,
     action: CONFIRM_ACTION,
+  },
+  {
+    imgSrc: require("../../assets/icons/Detail.png"),
+    label: CONFIRM_TOPIC_MODAL.DETAIL,
+    action: VIEW_DETAIL,
   },
 ];
 

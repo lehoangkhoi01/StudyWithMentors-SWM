@@ -16,6 +16,7 @@ import {
   MODAL_DELETE_PROPERTY,
   SORT_DIRECTION,
   TABLE_TYPE,
+  TOPIC_TABLE,
   UPSERT_MENTOR,
   UPSERT_STAFF,
 } from "../../constants/common";
@@ -40,6 +41,7 @@ import {
   CONFIRM_ACTION,
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
+  VIEW_DETAIL,
 } from "../../constants/actionType";
 import AddTopicModal from "../../../Components/Modal/AddTopic/AddTopicModal";
 import ConfirmTopicModal from "../../../Components/Modal/ConfirmTopic/ConfirmTopicModal";
@@ -50,6 +52,8 @@ import UpsertStaff from "../../../Components/Modal/UpsertStaff/UpsertStaff";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { SYSTEM_ROLE } from "../../constants/systemType";
+import CustomizedSelect from "../Select/CustomizedSelect";
+import { deepCloneArray } from "../../../Helpers/arrayHelper";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -71,6 +75,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const DEFAULT_OPEN_MODAL = {
+  upsert: false,
+  delete: false,
+  active: false,
+  confirm: false,
+  detail: false,
+}
+
 const CustomizedTable = (props) => {
   const { register, getValues, setValue } = useForm();
   const { setLoading } = useCustomLoading();
@@ -88,12 +100,7 @@ const CustomizedTable = (props) => {
     pageSize: 12,
     totalPage: 1,
   });
-  const [openModal, setOpenModal] = useState({
-    upsert: false,
-    delete: false,
-    active: false,
-    confirm: false,
-  });
+  const [openModal, setOpenModal] = useState({ DEFAULT_OPEN_MODAL });
   const [existedData, setExistedData] = useState(null);
   const [deletedData, setDeletedData] = useState(null);
   const [activeData, setActiveData] = useState(null);
@@ -102,6 +109,9 @@ const CustomizedTable = (props) => {
     index: -1,
   });
   const [confirmType, setConfirmType] = useState(null);
+  const [filterItem, setFilterItem] = useState(props.selectItems ? props.selectItems[0] : null);
+  const [detailItem, setDetailItem] = useState(null);
+
   const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
@@ -116,15 +126,20 @@ const CustomizedTable = (props) => {
     onPaginate(pagination.page);
   }, [data]);
 
+  useEffect(() => {
+    if (originData) {
+      setData([...originData]);
+      onPaginate(1, [...originData]);
+    }
+  }, [originData])
+
   const getData = async () => {
     try {
       setLoading(true);
 
       const responseData = await props.getData();
 
-      setData([...responseData]);
       setOriginData([...responseData]);
-      onPaginate(1, [...responseData]);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -196,6 +211,7 @@ const CustomizedTable = (props) => {
 
   const resetDefault = () => {
     setData([...originData]);
+    setFilterItem(props.selectItems ? props.selectItems[0] : null)
 
     if (props.defaultSort) {
       setSortData({
@@ -237,7 +253,7 @@ const CustomizedTable = (props) => {
   const onSearch = () => {
     const searchTerm = getValues("searchTerm").toLowerCase().trim();
 
-    let copyData = [...originData];
+    let copyData = deepCloneArray(originData);
 
     const filterdData = props.filterData(copyData, searchTerm);
 
@@ -250,10 +266,8 @@ const CustomizedTable = (props) => {
     }
 
     setOpenModal({
+      ...DEFAULT_OPEN_MODAL,
       upsert: true,
-      delete: false,
-      active: false,
-      confirm: false,
     });
   };
 
@@ -262,10 +276,8 @@ const CustomizedTable = (props) => {
       setDeletedData(item);
     }
     setOpenModal({
-      upsert: false,
+      ...DEFAULT_OPEN_MODAL,
       delete: true,
-      active: false,
-      confirm: false,
     });
   };
 
@@ -275,23 +287,24 @@ const CustomizedTable = (props) => {
     }
 
     setOpenModal({
-      upsert: false,
-      delete: false,
-      active: false,
+      ...DEFAULT_OPEN_MODAL,
       confirm: true,
     });
 
     setConfirmType(type);
   };
 
+  const openDetailModalHandler = (data) => {
+    setDetailItem(data);
+    setOpenModal({
+      ...DEFAULT_OPEN_MODAL,
+      detail: true,
+    })
+  }
+
   const onCloseModal = () => {
     setExistedData(null);
-    setOpenModal({
-      upsert: false,
-      delete: false,
-      active: false,
-      confirm: false,
-    });
+    setOpenModal(DEFAULT_OPEN_MODAL);
     setDeletedData(null);
     setConfirmType(null);
     handleClose();
@@ -352,6 +365,7 @@ const CustomizedTable = (props) => {
         delete: false,
         active: false,
         confirm: false,
+        detail: false,
       });
     }
   };
@@ -364,6 +378,7 @@ const CustomizedTable = (props) => {
         delete: false,
         active: true,
         confirm: false,
+        detail: false,
       });
     }
   };
@@ -397,9 +412,22 @@ const CustomizedTable = (props) => {
         delete: false,
         active: false,
         confirm: false,
+        detail: false,
       });
     }
   };
+
+  const onSelectFilter = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    let copyData = deepCloneArray(originData);
+
+    setFilterItem(value)
+    const filteredList = props.onFilterBySelect(copyData, value.name);
+    onSortTable(filteredList)
+  }
 
   const getAddButtonLabel = () => {
     switch (props.type) {
@@ -453,13 +481,22 @@ const CustomizedTable = (props) => {
               <p>{getAddButtonLabel()}</p>
             </CustomizedButton>
           )}
-
           <CustomizedTextField
             placeholder={getSearchButtonLabel()}
             className={style.list__input}
             required={true}
             options={{ ...register("searchTerm") }}
           />
+          {props.selectItems && props.onFilterBySelect && <CustomizedSelect
+            inputId="filterItem"
+            items={props.selectItems}
+            value={filterItem}
+            onChange={onSelectFilter}
+            renderValue={(selected) => selected.name}
+            placeholder={TOPIC_TABLE.STATUS}
+            name={TOPIC_TABLE.STATUS}
+          />}
+
           <CustomizedButton
             variant="contained"
             color="primary600"
@@ -643,6 +680,18 @@ const CustomizedTable = (props) => {
                                   <span>{actionItem.label}</span>
                                 </MenuItem>
                               );
+                            case VIEW_DETAIL:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    openDetailModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              );
                             default:
                               return;
                           }
@@ -727,6 +776,12 @@ const CustomizedTable = (props) => {
         onSuccess={getData}
         title={existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF}
         allStaffs={originData}
+      />
+      <UpsertStaff
+        openModal={openModal.detail}
+        onCloseModal={onCloseModal}
+        data={detailItem}
+        title={existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF}
       />
     </div>
   );

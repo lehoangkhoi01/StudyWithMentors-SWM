@@ -17,3 +17,7 @@ export const sortDataByCreatedDate = (data) => {
   newData.sort((a, b) => b.convertedCreateDate - a.convertedCreateDate);
   return newData;
 };
+
+export const deepCloneArray = (array) => {
+  return JSON.parse(JSON.stringify(array))
+}

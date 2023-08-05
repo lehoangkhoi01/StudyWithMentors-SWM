@@ -487,6 +487,7 @@ export const MENTOR_STATUS = {
   INVALIDATE: "Vô hiệu hóa",
   WAITING: "Đang chờ",
   ACTIVATED: "Hoạt động",
+  ALL: "Tất cả",
 };
 
 export const FEEDBACK_OVERVIEW = {
@@ -587,6 +588,7 @@ export const CONFIRM_TOPIC_MODAL = {
   ARCHIVE: "Ẩn",
   TOPIC: "chủ đề",
   SHOW: "Hiện",
+  DETAIL: "Chi tiết"
 };
 
 export const TABLE_TYPE = {
