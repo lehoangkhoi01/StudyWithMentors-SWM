@@ -9,3 +9,11 @@ export const convertObjectToArray = (srcObj) => {
   });
   return result;
 };
+
+export const sortDataByCreatedDate = (data) => {
+  let newData = data.map((el) => {
+    return { ...el, convertedCreateDate: new Date(el.createdDate) };
+  });
+  newData.sort((a, b) => b.convertedCreateDate - a.convertedCreateDate);
+  return newData;
+};
