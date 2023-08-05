@@ -118,13 +118,16 @@ const EventInfoDialog = (props) => {
         handleCloseEventInfoDialog={props.handleClose}
         event={props.event}
       />
-      <ScheduleDialog
-        open={openScheduleDialog}
-        handleClose={() => handleOpenScheduleDialog(false)}
-        startDate={props.event?.start ?? new Date()}
-        handleUpdateSchedule={handleUpdateSchedule}
-        isUpdate={true}
-      />
+      {openScheduleDialog && (
+        <ScheduleDialog
+          open={openScheduleDialog}
+          handleClose={() => handleOpenScheduleDialog(false)}
+          startDate={props.event?.start ?? new Date()}
+          handleUpdateSchedule={handleUpdateSchedule}
+          isUpdate={true}
+        />
+      )}
+
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Xóa lịch"
