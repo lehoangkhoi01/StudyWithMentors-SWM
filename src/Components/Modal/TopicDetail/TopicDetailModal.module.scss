@@ -1,6 +1,6 @@
 @import "../../../shared/theme";
 
-.bookingCard {
+.topicDetail {
   &__label {
     font-size: 1rem;
     color: $black000;
@@ -20,9 +20,7 @@
       background-color: $secondary800;
     }
   }
-}
 
-.bookingSummary {
   &__title {
     color: $primary800;
   }

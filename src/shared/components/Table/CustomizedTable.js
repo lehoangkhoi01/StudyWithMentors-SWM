@@ -54,6 +54,7 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { SYSTEM_ROLE } from "../../constants/systemType";
 import CustomizedSelect from "../Select/CustomizedSelect";
 import { deepCloneArray } from "../../../Helpers/arrayHelper";
+import TopicDetailModal from "../../../Components/Modal/TopicDetail/TopicDetailModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -81,7 +82,7 @@ const DEFAULT_OPEN_MODAL = {
   active: false,
   confirm: false,
   detail: false,
-}
+};
 
 const CustomizedTable = (props) => {
   const { register, getValues, setValue } = useForm();
@@ -109,7 +110,9 @@ const CustomizedTable = (props) => {
     index: -1,
   });
   const [confirmType, setConfirmType] = useState(null);
-  const [filterItem, setFilterItem] = useState(props.selectItems ? props.selectItems[0] : null);
+  const [filterItem, setFilterItem] = useState(
+    props.selectItems ? props.selectItems[0] : null
+  );
   const [detailItem, setDetailItem] = useState(null);
 
   const userInfo = useSelector(selectUserInfo);
@@ -131,7 +134,7 @@ const CustomizedTable = (props) => {
       setData([...originData]);
       onPaginate(1, [...originData]);
     }
-  }, [originData])
+  }, [originData]);
 
   const getData = async () => {
     try {
@@ -211,7 +214,7 @@ const CustomizedTable = (props) => {
 
   const resetDefault = () => {
     setData([...originData]);
-    setFilterItem(props.selectItems ? props.selectItems[0] : null)
+    setFilterItem(props.selectItems ? props.selectItems[0] : null);
 
     if (props.defaultSort) {
       setSortData({
@@ -299,8 +302,8 @@ const CustomizedTable = (props) => {
     setOpenModal({
       ...DEFAULT_OPEN_MODAL,
       detail: true,
-    })
-  }
+    });
+  };
 
   const onCloseModal = () => {
     setExistedData(null);
@@ -424,10 +427,10 @@ const CustomizedTable = (props) => {
 
     let copyData = deepCloneArray(originData);
 
-    setFilterItem(value)
+    setFilterItem(value);
     const filteredList = props.onFilterBySelect(copyData, value.name);
-    onSortTable(filteredList)
-  }
+    onSortTable(filteredList);
+  };
 
   const getAddButtonLabel = () => {
     switch (props.type) {
@@ -487,15 +490,17 @@ const CustomizedTable = (props) => {
             required={true}
             options={{ ...register("searchTerm") }}
           />
-          {props.selectItems && props.onFilterBySelect && <CustomizedSelect
-            inputId="filterItem"
-            items={props.selectItems}
-            value={filterItem}
-            onChange={onSelectFilter}
-            renderValue={(selected) => selected.name}
-            placeholder={TOPIC_TABLE.STATUS}
-            name={TOPIC_TABLE.STATUS}
-          />}
+          {props.selectItems && props.onFilterBySelect && (
+            <CustomizedSelect
+              inputId="filterItem"
+              items={props.selectItems}
+              value={filterItem}
+              onChange={onSelectFilter}
+              renderValue={(selected) => selected.name}
+              placeholder={TOPIC_TABLE.STATUS}
+              name={TOPIC_TABLE.STATUS}
+            />
+          )}
 
           <CustomizedButton
             variant="contained"
@@ -549,18 +554,19 @@ const CustomizedTable = (props) => {
                       key={`CELL_TABLE_${index}`}
                       align={header.center ? "center" : "left"}
                     >
-                      {header.link && (
-                        row.translatedStatus === MENTOR_STATUS.ACTIVATED ? <Link
-                          to={row.link}
-                        >
-                          {row.linkName ?? "Hồ sơ diễn giả"}
-                        </Link> : <Link
-                          to={row.link}
-                          className={style.list__table_disabledLink}
-                        >
-                          {"Chưa có dữ liệu"}
-                        </Link>
-                      )}
+                      {header.link &&
+                        (row.translatedStatus === MENTOR_STATUS.ACTIVATED ? (
+                          <Link to={row.link}>
+                            {row.linkName ?? "Hồ sơ diễn giả"}
+                          </Link>
+                        ) : (
+                          <Link
+                            to={row.link}
+                            className={style.list__table_disabledLink}
+                          >
+                            {"Chưa có dữ liệu"}
+                          </Link>
+                        ))}
                       {!header.link && `${row[header.property]}`}
                     </StyledTableCell>
                   ))}
@@ -604,24 +610,24 @@ const CustomizedTable = (props) => {
                           switch (actionItem.action) {
                             case UPSERT_ACTION:
                               return (
-                                (!actionItem.rule || actionItem.rule(row)) &&
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openUpsertModalHandler(null, row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
+                                (!actionItem.rule || actionItem.rule(row)) && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openUpsertModalHandler(null, row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                )
                               );
 
                             case DEACTIVATE_ACTION:
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                MENTOR_STATUS.ACTIVATED &&
-                                (
+                                  MENTOR_STATUS.ACTIVATED && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -638,7 +644,7 @@ const CustomizedTable = (props) => {
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                MENTOR_STATUS.INVALIDATE && (
+                                  MENTOR_STATUS.INVALIDATE && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -659,7 +665,10 @@ const CustomizedTable = (props) => {
                                     onClick={() => {
                                       return openConfirmModalHandler(
                                         row,
-                                        actionItem.label === CONFIRM_TOPIC_MODAL.SHOW ? CONFIRM_TOPIC_MODAL.ACCEPT : actionItem.label
+                                        actionItem.label ===
+                                          CONFIRM_TOPIC_MODAL.SHOW
+                                          ? CONFIRM_TOPIC_MODAL.ACCEPT
+                                          : actionItem.label
                                       );
                                     }}
                                   >
@@ -777,7 +786,7 @@ const CustomizedTable = (props) => {
         title={existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF}
         allStaffs={originData}
       />
-      <UpsertStaff
+      <TopicDetailModal
         openModal={openModal.detail}
         onCloseModal={onCloseModal}
         data={detailItem}

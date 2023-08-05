@@ -7,13 +7,12 @@ export const userAccountService = {
     return axiosClient.get(url);
   },
   updateUserProfile: (id, data) => {
-    console.log(data)
     const url = `${UserAccountEndpoints.UPDATE_PROFILE}/${id}`;
     return axiosClient.post(url, data);
   },
   updateMoreUserProfile: (data) => {
     const url = `${UserAccountEndpoints.UPDATE_DETAIL_PROFILE}`;
-    return axiosClient.post(url, data)
+    return axiosClient.post(url, data);
   },
   confirmUserProfile: (data) => {
     const url = UserAccountEndpoints.CONFIRM_PROFILE;
