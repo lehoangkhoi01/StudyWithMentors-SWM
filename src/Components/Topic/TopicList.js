@@ -113,7 +113,7 @@ const TopicList = () => {
         switch (action.label) {
           case TABLE_ACTION.EDIT:
             if (
-              isMentor()
+              isMentor() && row.translatedStatus === TOPIC_STATUS.ACCEPTED
             ) {
               return true;
             }
