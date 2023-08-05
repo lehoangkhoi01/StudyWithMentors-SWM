@@ -7,3 +7,5 @@ export const DEACTIVATE_ACTION = "DEACTIVE";
 export const CONFIRM_ACTION = "CONFIRM";
 
 export const BOOKING_DETAIL_ACTION = "BOOKING_DETAL";
+
+export const VIEW_DETAIL = "DETAIL"

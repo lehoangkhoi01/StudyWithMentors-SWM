@@ -81,6 +81,13 @@ const AdminMentorList = () => {
     },
   ];
 
+  const statusItems = [
+    { name: MENTOR_STATUS.ALL },
+    { name: MENTOR_STATUS.ACTIVATED },
+    { name: MENTOR_STATUS.INVALIDATE },
+    { name: MENTOR_STATUS.WAITING },
+  ]
+
   const getMentors = async () => {
     try {
       const mentors = await getLatestSpeakerList();
@@ -126,6 +133,14 @@ const AdminMentorList = () => {
     await userAccountService.updateUserProfile(mentorId, data);
   };
 
+  const onFilterMentorByStatus = (currentList , status) => {
+    if (status === MENTOR_STATUS.ALL) return currentList;
+
+    return currentList.filter((mentor) => {
+      return mentor.translatedStatus === status
+    })
+  }
+
   return (
     <div>
       <CustomizedTable
@@ -137,6 +152,8 @@ const AdminMentorList = () => {
         headerTable={headerTable}
         actionItems={actionItems}
         defaultSort={"defaultCreatedDate"}
+        onFilterBySelect={onFilterMentorByStatus}
+        selectItems={statusItems}
       />
     </div>
   );
