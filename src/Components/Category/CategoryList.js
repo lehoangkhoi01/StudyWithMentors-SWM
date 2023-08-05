@@ -1,3 +1,4 @@
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
@@ -42,8 +43,8 @@ const CategoryList = () => {
 
   const getCategories = async () => {
     try {
-      const categories = await topicService.getCategories();
-
+      let categories = await topicService.getCategories();
+      categories = sortDataByCreatedDate(categories);
       const updatedCategories = categories.map((field) => ({
         ...field,
         translatedStatus: MENTOR_STATUS.ACTIVATED,

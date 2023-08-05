@@ -191,7 +191,7 @@ const ScheduleDialog = (props) => {
                 error={errors.freeTime}
                 required={true}
                 disablePast={true}
-                minDate={startDate}
+                minDate={moment().add(2, "days").toDate()}
                 onChange={() => {
                   clearErrors("freeTime");
                 }}

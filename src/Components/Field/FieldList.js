@@ -13,6 +13,7 @@ import {
   TABLE_ACTION,
   TABLE_TYPE,
 } from "../../shared/constants/common";
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 
 const FieldList = () => {
   const { setNotification } = useNotification();
@@ -42,8 +43,8 @@ const FieldList = () => {
 
   const getFields = async () => {
     try {
-      const fields = await topicService.getFields();
-
+      let fields = await topicService.getFields();
+      fields = sortDataByCreatedDate(fields);
       const updatedFields = fields.map((field) => ({
         ...field,
         translatedStatus: MENTOR_STATUS.ACTIVATED,
