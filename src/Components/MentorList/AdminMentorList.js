@@ -1,13 +1,11 @@
 import {
   ADMIN_TABLE_HEADER,
-  DATE_FORMAT,
   ERROR_MESSAGES,
   MENTOR_STATUS,
   TABLE_ACTION,
   TABLE_DETAIL,
   TABLE_TYPE,
 } from "../../shared/constants/common";
-import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
 import {
   useCustomAppbar,
@@ -22,6 +20,7 @@ import {
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 
 const AdminMentorList = () => {
   const { getLatestSpeakerList } = useFetchSpeakerList();
@@ -50,11 +49,6 @@ const AdminMentorList = () => {
       center: true,
       name: ADMIN_TABLE_HEADER.PROFILE,
       link: true,
-    },
-    {
-      sortable: true,
-      property: "defaultCreatedDate",
-      name: ADMIN_TABLE_HEADER.CREATED_DATE,
     },
     {
       sortable: true,
@@ -95,13 +89,6 @@ const AdminMentorList = () => {
       const updatedMentorList = mentors.map((mentor) => {
         return {
           ...mentor,
-          createdDate: handleTimeToDisplay(
-            mentor.createdDate,
-            null,
-            DATE_FORMAT.DD_MM_YYYY,
-            " -"
-          ),
-          defaultCreatedDate: mentor.createdDate,
           link: `/cv/${mentor.id}`,
           linkName: TABLE_DETAIL.CV_MENTOR,
           translatedStatus: MENTOR_STATUS[mentor.status],
@@ -109,7 +96,9 @@ const AdminMentorList = () => {
         };
       });
 
-      return updatedMentorList;
+      const sortedMentorList = sortDataByCreatedDate(updatedMentorList);
+
+      return sortedMentorList;
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -133,7 +122,7 @@ const AdminMentorList = () => {
     await userAccountService.updateUserProfile(mentorId, data);
   };
 
-  const onFilterMentorByStatus = (currentList , status) => {
+  const onFilterMentorByStatus = (currentList, status) => {
     if (status === MENTOR_STATUS.ALL) return currentList;
 
     return currentList.filter((mentor) => {
@@ -151,7 +140,6 @@ const AdminMentorList = () => {
         onActive={onActiveMentor}
         headerTable={headerTable}
         actionItems={actionItems}
-        defaultSort={"defaultCreatedDate"}
         onFilterBySelect={onFilterMentorByStatus}
         selectItems={statusItems}
       />

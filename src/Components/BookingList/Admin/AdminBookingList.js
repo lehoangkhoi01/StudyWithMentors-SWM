@@ -16,6 +16,7 @@ import {
 import BookingInfoDialog from "../BookingInfoDialog/BookingInfoDialog";
 import BookingAttendanceDialog from "./BookingAttendanceDialog/BookingAttendanceDialog";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import { sortDataByCreatedDate } from "../../../Helpers/arrayHelper";
 
 const AdminBookingList = () => {
   const { setNotification } = useNotification();
@@ -63,12 +64,7 @@ const AdminBookingList = () => {
       sortable: true,
       property: "translatedStatus",
       name: ADMIN_BOOKING_TABLE.STATUS,
-    },
-    {
-      sortable: true,
-      property: "bookingTime",
-      name: ADMIN_BOOKING_TABLE.BOOKING_DATE,
-    },
+    }
   ];
 
   const actionItems = [
@@ -102,11 +98,13 @@ const AdminBookingList = () => {
         mentorName: booking.mentor.fullName,
         translatedStatus: TRANSLATED_BOOKING_STATUS[booking.status],
         time: handleTimeToDisplay(`${booking.startDate} ${booking.startTime}`),
-        bookingTime: handleTimeToDisplay(booking.createdDate),
+        defaultTime: `${booking.startDate} ${booking.startTime}`,
         ownerName: booking.owner.fullName,
       }));
 
-      return updatedBookings;
+      const sortedBookingList = sortDataByCreatedDate(updatedBookings);
+
+      return sortedBookingList;
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -131,7 +129,6 @@ const AdminBookingList = () => {
         headerTable={headerTable}
         hideAddingAction={true}
         actionItems={actionItems}
-        defaultSort={"bookingTime"}
       />
 
       {openBookingInfoDialog && (
