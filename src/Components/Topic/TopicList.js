@@ -104,10 +104,11 @@ const TopicList = () => {
     let actions = [...ACTION_ITEMS];
 
     if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
-      header.splice(4, 1);
-    } else if (userInfo?.role === SYSTEM_ROLE.STAFF) {
-      actions.splice(0, 1);
+      header.splice(3, 1);
     }
+    // else if (userInfo?.role === SYSTEM_ROLE.STAFF) {
+    //   actions.splice(0, 1);
+    // }
 
     actions = actions.map((action) => ({
       ...action,

@@ -24,6 +24,7 @@ export const ROUTES = {
   FIELD_LIST: "/admin/fields",
   ADMIN_BOOKING_LIST: "/admin/bookings",
   STAFF_LIST: "/admin/staffs",
+  STUDENT_LIST: "/admin/students"
 };
 
 export const ROUTES_STATIC = {
@@ -199,6 +200,10 @@ export const ADMIN_MANAGE_ACCOUNT_MENU = [
   {
     TITLE: "Nhân viên",
     ROUTE: ROUTES.STAFF_LIST,
+  },
+  {
+    TITLE: "Sinh viên",
+    ROUTE: ROUTES.STUDENT_LIST,
   },
 ];
 

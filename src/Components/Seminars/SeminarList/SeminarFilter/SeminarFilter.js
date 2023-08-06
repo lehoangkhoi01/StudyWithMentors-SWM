@@ -8,7 +8,6 @@ import {
   BUTTON_LABEL,
   DATE_FORMAT,
   ERROR_MESSAGES,
-  FILTER_SEMINAR,
   PLACE_HOLDER,
 } from "../../../../shared/constants/common";
 import { useForm } from "react-hook-form";
@@ -92,9 +91,7 @@ const SeminarFilter = forwardRef((props, ref) => {
     reset({
       seminarName: "",
     });
-    props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
-
-    onFilter(null, true);
+    props.setFilterInfo();
   };
 
   useImperativeHandle(ref, () => ({
