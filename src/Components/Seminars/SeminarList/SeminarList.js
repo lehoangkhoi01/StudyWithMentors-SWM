@@ -137,6 +137,7 @@ const SeminarList = () => {
         ref={filterRef}
         onSeminarFilter={onSeminarFilter}
         onChangeStatusFilter={onChangeStatusFilter}
+        setFilterInfo={setFilterInfo}
       />
       <div className={style.seminarList__status__filter}>
         <div className={style.seminarList__status__filter__items}>

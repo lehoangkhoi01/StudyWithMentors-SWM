@@ -7,6 +7,7 @@ import CategoryListPage from "../Pages/Category/CategoryListPage";
 import DepartmentListPage from "../Pages/Department/DepartmentListPage";
 import AdminBookingListPage from "../Pages/BookingList/AdminBookingListPage";
 import StaffListPage from "../Pages/Staff/StaffListPage";
+import StudentListPage from "../Pages/Student/StudentListPage";
 
 const AdminRoutes = () => {
   return (
@@ -23,6 +24,11 @@ const AdminRoutes = () => {
           path={ROUTES.STAFF_LIST}
           component={StaffListPage}
         />
+        <Route
+          path={ROUTES.STUDENT_LIST}
+          component={StudentListPage}
+        />
+        
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>

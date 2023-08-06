@@ -177,6 +177,7 @@ const MentorList = () => {
         <FilterSection
           fields={fields}
           onChangeStatusFilter={onChangeStatusFilter}
+          setFilterInfo={setFilterInfo}
           onSearch={onUpdateFilter}
         />
         <div className={style.mentorList__status__filter}>
