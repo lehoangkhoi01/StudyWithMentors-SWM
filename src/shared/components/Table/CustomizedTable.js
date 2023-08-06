@@ -197,13 +197,17 @@ const CustomizedTable = (props) => {
   const onSortTable = (newData) => {
     setData((prevValue) => {
       const sortedData = newData ?? prevValue;
+      const sortInfo = {
+        ...sortData,
+        attribute: sortData.attribute === "time" ? "defaultTime" : sortData.attribute
+      }
 
       sortedData.sort((a, b) => {
-        if (a[sortData.attribute] > b[sortData.attribute]) {
-          return sortData.direction === SORT_DIRECTION.ASC ? -1 : 1;
+        if (a[sortInfo.attribute].toLowerCase().trim() > b[sortInfo.attribute].toLowerCase().trim()) {
+          return sortInfo.direction === SORT_DIRECTION.ASC ? -1 : 1;
         }
-        if (a[sortData.attribute] < b[sortData.attribute]) {
-          return sortData.direction === SORT_DIRECTION.ASC ? 1 : -1;
+        if (a[sortInfo.attribute].toLowerCase().trim() < b[sortInfo.attribute].toLowerCase().trim()) {
+          return sortInfo.direction === SORT_DIRECTION.ASC ? 1 : -1;
         }
         return 0;
       });
@@ -627,7 +631,7 @@ const CustomizedTable = (props) => {
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.ACTIVATED && (
+                                MENTOR_STATUS.ACTIVATED && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -644,7 +648,7 @@ const CustomizedTable = (props) => {
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.INVALIDATE && (
+                                MENTOR_STATUS.INVALIDATE && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
