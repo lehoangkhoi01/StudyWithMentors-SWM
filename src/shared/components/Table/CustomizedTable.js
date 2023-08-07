@@ -40,6 +40,7 @@ import {
   BOOKING_DETAIL_ACTION,
   CONFIRM_ACTION,
   DEACTIVATE_ACTION,
+  SEND_INVITATION,
   UPSERT_ACTION,
   VIEW_DETAIL,
 } from "../../constants/actionType";
@@ -699,6 +700,18 @@ const CustomizedTable = (props) => {
                                   key={`MENU_ITEM_${index}`}
                                   onClick={() => {
                                     openDetailModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              );
+                            case SEND_INVITATION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    actionItem.functionAction(row);
                                   }}
                                 >
                                   <img src={actionItem.imgSrc} />
