@@ -43,4 +43,8 @@ export const accountService = {
     const url = `${AccountEndpoints.UPDATE_STAFF}/${id}`;
     return axiosClient.post(url, data);
   },
+  getStudents: () => {
+    const url = AccountEndpoints.ACCOUNT_STUDENT;
+    return axiosClient.get(url);
+  }
 };

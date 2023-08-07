@@ -1,13 +1,11 @@
 import {
   ADMIN_TABLE_HEADER,
-  DATE_FORMAT,
   ERROR_MESSAGES,
   MENTOR_STATUS,
   TABLE_ACTION,
   TABLE_DETAIL,
   TABLE_TYPE,
 } from "../../shared/constants/common";
-import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
 import {
   useCustomAppbar,
@@ -27,6 +25,7 @@ import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 import { useState } from "react";
 import ConfirmationDialog from "../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import { sendMailService } from "../../Services/sendMailService";
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 
 const AdminMentorList = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -59,11 +58,6 @@ const AdminMentorList = () => {
       center: true,
       name: ADMIN_TABLE_HEADER.PROFILE,
       link: true,
-    },
-    {
-      sortable: true,
-      property: "defaultCreatedDate",
-      name: ADMIN_TABLE_HEADER.CREATED_DATE,
     },
     {
       sortable: true,
@@ -113,13 +107,6 @@ const AdminMentorList = () => {
       const updatedMentorList = mentors.map((mentor) => {
         return {
           ...mentor,
-          createdDate: handleTimeToDisplay(
-            mentor.createdDate,
-            null,
-            DATE_FORMAT.DD_MM_YYYY,
-            " -"
-          ),
-          defaultCreatedDate: mentor.createdDate,
           link: `/cv/${mentor.id}`,
           linkName: TABLE_DETAIL.CV_MENTOR,
           translatedStatus: MENTOR_STATUS[mentor.status],
@@ -127,7 +114,9 @@ const AdminMentorList = () => {
         };
       });
 
-      return updatedMentorList;
+      const sortedMentorList = sortDataByCreatedDate(updatedMentorList);
+
+      return sortedMentorList;
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -190,7 +179,6 @@ const AdminMentorList = () => {
         onActive={onActiveMentor}
         headerTable={headerTable}
         actionItems={actionItems}
-        defaultSort={"defaultCreatedDate"}
         onFilterBySelect={onFilterMentorByStatus}
         selectItems={statusItems}
       />

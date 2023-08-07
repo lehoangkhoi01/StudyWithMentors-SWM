@@ -33,6 +33,7 @@ export const AccountEndpoints = {
   ACCOUNT_STATUS: "admin/accounts",
   CREATE_STAFF: "admin/staffs",
   UPDATE_STAFF: "user-profile/staffs",
+  ACCOUNT_STUDENT: "accounts/students",
 };
 
 export const StaticResourceEndpoints = {

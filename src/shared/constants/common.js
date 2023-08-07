@@ -651,7 +651,22 @@ export const STAFF_TABLE = {
   ACTION: "Tác vụ",
 };
 
+export const STUDENT_TABLE = {
+  NAME: "Tên",
+  EMAIL: "Email",
+  GENDER: "Giới tính",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
 export const TRANSLATED_STAFF_STATUS = {
+  NOT_DEFINE: "Không xác định",
+  INVALIDATE: "Vô hiệu hóa",
+  WAITING: "Đang chờ",
+  ACTIVATED: "Hoạt động",
+};
+
+export const TRANSLATED_STUDENT_STATUS = {
   NOT_DEFINE: "Không xác định",
   INVALIDATE: "Vô hiệu hóa",
   WAITING: "Đang chờ",
@@ -668,3 +683,15 @@ export const UPSERT_STAFF = {
   ADD_STAFF: "Thêm staff",
   EDIT_STAFF: "Chỉnh sửa staff",
 };
+
+export const STUDENT_STATUS = {
+  INVALIDATE: "INVALIDATE",
+  WAITING: "WAITING",
+  ACTIVATED: "ACTIVATED",
+};
+
+export const TRANSLATED_STUDENT_GENDER = {
+  OTHERS: "Khác",
+  MALE: "Nam",
+  FEMALE: "Nữ"
+}

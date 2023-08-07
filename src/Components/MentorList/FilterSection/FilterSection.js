@@ -47,6 +47,7 @@ const FilterSection = (props) => {
       searchTerm: "",
     });
     props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
+    props.setFilterInfo()
   };
 
   const onSearch = () => {
