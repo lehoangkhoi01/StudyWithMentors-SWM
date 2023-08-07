@@ -15,7 +15,6 @@ import {
   STUDENT_TABLE,
   TABLE_ACTION,
   TABLE_TYPE,
-  TRANSLATED_STUDENT_GENDER,
   TRANSLATED_STUDENT_STATUS,
 } from "../../shared/constants/common";
 import { accountService } from "../../Services/accountService";
@@ -38,11 +37,6 @@ const StudentList = () => {
       sortable: true,
       property: "email",
       name: STUDENT_TABLE.EMAIL,
-    },
-    {
-      sortable: true,
-      property: "translatedGender",
-      name: STUDENT_TABLE.GENDER,
     },
     {
       sortable: true,
@@ -78,7 +72,6 @@ const StudentList = () => {
           ...profile,
           phone: profile.phone ? profile.phone : "Chưa có dữ liệu",
           translatedStatus: TRANSLATED_STUDENT_STATUS[profile.status],
-          translatedGender: TRANSLATED_STUDENT_GENDER[profile.gender.toUpperCase()]
         };
       });
 
