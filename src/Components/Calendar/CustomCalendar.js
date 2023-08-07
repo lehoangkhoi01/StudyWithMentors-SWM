@@ -107,7 +107,7 @@ const CustomCalendar = () => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+          message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
         });
       }
     } finally {

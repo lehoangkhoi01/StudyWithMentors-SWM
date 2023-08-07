@@ -92,7 +92,10 @@ const ScheduleDialog = (props) => {
     }
 
     const newEvent = {
-      startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
+      startTime: format(
+        startTime.setSeconds(0, 0),
+        DATE_FORMAT.BACK_END_HH_mm_ss
+      ),
       startDate: newFromDate
         ? format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
         : null,
