@@ -30,7 +30,12 @@ const RemoveOptionScheduleDialog = (props) => {
 
   const onSubmitDelete = async () => {
     if (removeOption === removeOptions[1].value) {
-      await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
+      await props.handleRemoveSchedule(
+        props.event?.scheduleId,
+        false,
+        null,
+        null
+      );
     } else {
       const exceptionDate = format(
         props.event?.start,
@@ -41,7 +46,12 @@ const RemoveOptionScheduleDialog = (props) => {
         exceptionDate: exceptionDate,
         remove: true,
       };
-      await props.handleRemoveSchedule(props.event?.scheduleId, true, data);
+      await props.handleRemoveSchedule(
+        props.event?.scheduleId,
+        true,
+        null,
+        data
+      );
     }
     props.handleOpenDeleteOption(false);
     props.handleCloseEventInfoDialog();

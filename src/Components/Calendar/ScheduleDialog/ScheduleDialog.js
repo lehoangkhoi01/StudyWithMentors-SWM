@@ -235,6 +235,11 @@ const ScheduleDialog = (props) => {
                   required={true}
                   name="Lặp lại"
                   MenuProps={MenuProps}
+                  disabled={
+                    props.selectedEvent &&
+                    (props.selectedEvent?.exceptionId ||
+                      !props.selectedEvent?.belongToSeries)
+                  }
                 />
               </FormControl>
               <CustomizedDatePicker
@@ -294,7 +299,7 @@ const ScheduleDialog = (props) => {
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Cập nhật lịch"
-        content="Việc cập nhật sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
+        content="Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
         confirmLabel="Xác nhận"
         cancelLabel="Trở về"
         handleSubmit={handleUpdate}

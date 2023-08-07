@@ -26,4 +26,16 @@ export const scheduleService = {
     const url = ScheduleEndpoints.SCHEDULE + "/" + id;
     return axiosClient.post(url, data);
   },
+  updateException: (exceptionId, data) => {
+    const url = `${ScheduleEndpoints.SCHEDULE}/exception/${exceptionId}`;
+    return axiosClient.post(url, data);
+  },
+  removeException: (exceptionId, parentId) => {
+    const url = `${ScheduleEndpoints.SCHEDULE}/exception/${exceptionId}`;
+    const data = {
+      parentId: parentId,
+      remove: true,
+    };
+    return axiosClient.post(url, data);
+  },
 };

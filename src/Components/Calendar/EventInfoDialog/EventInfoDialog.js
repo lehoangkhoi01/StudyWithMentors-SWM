@@ -18,6 +18,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const EventInfoDialog = (props) => {
+  console.log(props.event);
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
   const [openScheduleDialog, setOpenScheduleDialog] = React.useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] =
@@ -44,7 +45,7 @@ const EventInfoDialog = (props) => {
   };
 
   const onRemoveSchedule = async () => {
-    if (props.event?.belongToSeries) {
+    if (props.event?.belongToSeries && !props.event?.exceptionId) {
       handleOpenDeleteOption(true);
     } else {
       setOpenConfirmationDialog(true);
@@ -52,13 +53,22 @@ const EventInfoDialog = (props) => {
   };
 
   const handleRemoveSingleSchedule = async () => {
-    await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
+    await props.handleRemoveSchedule(
+      props.event?.scheduleId,
+      false,
+      props.event?.exceptionId,
+      null
+    );
     setOpenConfirmationDialog(false);
     props.handleClose();
   };
 
   const handleUpdateSchedule = (data) => {
-    props.handleSubmitUpdateSchedule(props.event?.scheduleId, data);
+    props.handleSubmitUpdateSchedule(
+      props.event?.scheduleId,
+      props.event?.exceptionId,
+      data
+    );
     props.handleClose();
   };
 
@@ -127,6 +137,7 @@ const EventInfoDialog = (props) => {
           startDate={props.event?.start ?? new Date()}
           handleUpdateSchedule={handleUpdateSchedule}
           isUpdate={true}
+          selectedEvent={props.event}
         />
       )}
 
