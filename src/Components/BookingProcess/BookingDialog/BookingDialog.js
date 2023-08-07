@@ -15,13 +15,18 @@ import {
 } from "../../../Helpers/generalHelper";
 import { userAccountService } from "../../../Services/userAccountService";
 import { ERROR_MESSAGES } from "../../../shared/constants/common";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { bookingService } from "../../../Services/bookingService";
 
 const BookingDialog = (props) => {
   const [topicList, setTopicList] = React.useState([]);
   const [mentorInfo, setMentorInfo] = React.useState(null);
+  const [allowedBooking, setAllowedBooking] = React.useState(true);
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const userInfo = useSelector(selectUserInfo);
 
   function CustomDialogTitle(props) {
     const { children, onClose, ...other } = props;
@@ -68,10 +73,17 @@ const BookingDialog = (props) => {
         setLoading(false);
       }
     };
+    const checkAllowedBooking = async (studentId) => {
+      if (studentId) {
+        let data = await bookingService.checkBookingAllowed(studentId);
+        setAllowedBooking(data.result);
+      }
+    };
 
     if (props.mentorId) {
       fetchData(props.mentorId);
     }
+    checkAllowedBooking(userInfo.accountId);
   }, []);
 
   return (
@@ -87,12 +99,18 @@ const BookingDialog = (props) => {
         </Typography>
       </CustomDialogTitle>
       <DialogContent>
-        <BookingStepper
-          topics={topicList}
-          mentorId={props.mentorId}
-          mentorInfo={mentorInfo}
-          handleCloseDialog={() => props.handleOpenDialog(false)}
-        />
+        {allowedBooking ? (
+          <BookingStepper
+            topics={topicList}
+            mentorId={props.mentorId}
+            mentorInfo={mentorInfo}
+            handleCloseDialog={() => props.handleOpenDialog(false)}
+          />
+        ) : (
+          <Typography fontSize="1.2rem">
+            Hiện tại bạn không thể đặt lịch hẹn.
+          </Typography>
+        )}
       </DialogContent>
     </Dialog>
   );
