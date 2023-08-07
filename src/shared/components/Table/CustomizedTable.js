@@ -708,7 +708,7 @@ const CustomizedTable = (props) => {
                               );
                             case SEND_INVITATION:
                               return (
-                                <MenuItem
+                                (!actionItem.rule || actionItem.rule(row) && <MenuItem
                                   key={`MENU_ITEM_${index}`}
                                   onClick={() => {
                                     actionItem.functionAction(row);
@@ -717,7 +717,8 @@ const CustomizedTable = (props) => {
                                   <img src={actionItem.imgSrc} />
                                   <span>{actionItem.label}</span>
                                 </MenuItem>
-                              );
+                                ));
+
                             default:
                               return;
                           }

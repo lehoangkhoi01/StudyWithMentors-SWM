@@ -73,13 +73,19 @@ const AdminMentorList = () => {
       action: UPSERT_ACTION,
     },
     {
-      imgSrc: require("../../assets/icons/Accept.png"),
+      imgSrc: require("../../assets/icons/Resend.png"),
       label: "Gửi lại thư mời",
       action: SEND_INVITATION,
       functionAction: function (account) {
         setOpenDialog(true);
         setMentorAccount(account);
       },
+      rule: (row) => {
+        if (row.translatedStatus === MENTOR_STATUS.WAITING) {
+          return true;
+        } 
+        return false;
+      }
     },
     {
       imgSrc: require("../../assets/icons/Accept.png"),

@@ -474,7 +474,7 @@ export const ADMIN_TABLE_HEADER = {
 };
 
 export const TABLE_DETAIL = {
-  CV_MENTOR: "CV diễn giả",
+  CV_MENTOR: "Hồ sơ diễn giả",
 };
 
 export const SORT_DIRECTION = {
