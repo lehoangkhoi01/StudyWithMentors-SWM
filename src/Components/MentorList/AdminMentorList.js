@@ -11,6 +11,7 @@ import { handleTimeToDisplay } from "../../Helpers/dateHelper";
 import { accountService } from "../../Services/accountService";
 import {
   useCustomAppbar,
+  useCustomLoading,
   useFetchSpeakerList,
   useNotification,
 } from "../../Helpers/generalHelper";
@@ -20,13 +21,21 @@ import {
   ACTIVE_ACTION,
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
+  SEND_INVITATION,
 } from "../../shared/constants/actionType";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
+import { useState } from "react";
+import ConfirmationDialog from "../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { sendMailService } from "../../Services/sendMailService";
 
 const AdminMentorList = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [mentorAccount, setMentorAccount] = useState(null);
   const { getLatestSpeakerList } = useFetchSpeakerList();
   const { setNotification } = useNotification();
   const { setAppbar } = useCustomAppbar();
+  const { setLoading } = useCustomLoading();
+
   setAppbar(APPBAR_TITLES.MENTOR_LIST);
 
   const headerTable = [
@@ -71,6 +80,15 @@ const AdminMentorList = () => {
     },
     {
       imgSrc: require("../../assets/icons/Accept.png"),
+      label: "Gửi lại thư mời",
+      action: SEND_INVITATION,
+      functionAction: function (account) {
+        setOpenDialog(true);
+        setMentorAccount(account);
+      },
+    },
+    {
+      imgSrc: require("../../assets/icons/Accept.png"),
       label: TABLE_ACTION.ACTIVATE,
       action: ACTIVE_ACTION,
     },
@@ -86,7 +104,7 @@ const AdminMentorList = () => {
     { name: MENTOR_STATUS.ACTIVATED },
     { name: MENTOR_STATUS.INVALIDATE },
     { name: MENTOR_STATUS.WAITING },
-  ]
+  ];
 
   const getMentors = async () => {
     try {
@@ -133,13 +151,34 @@ const AdminMentorList = () => {
     await userAccountService.updateUserProfile(mentorId, data);
   };
 
-  const onFilterMentorByStatus = (currentList , status) => {
+  const onFilterMentorByStatus = (currentList, status) => {
     if (status === MENTOR_STATUS.ALL) return currentList;
 
     return currentList.filter((mentor) => {
-      return mentor.translatedStatus === status
-    })
-  }
+      return mentor.translatedStatus === status;
+    });
+  };
+
+  const handleSubmitResentInvitation = async () => {
+    try {
+      setLoading(true);
+      await sendMailService.sendMentorInvitation(mentorAccount.id);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: "Gửi thư mời thành công",
+      });
+      setOpenDialog(false);
+    } catch (error) {
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -155,6 +194,18 @@ const AdminMentorList = () => {
         onFilterBySelect={onFilterMentorByStatus}
         selectItems={statusItems}
       />
+
+      {openDialog && (
+        <ConfirmationDialog
+          open={openDialog}
+          title="Gửi thư mời"
+          confirmLabel="Xác nhận"
+          cancelLabel="Trở lại"
+          content={`Gửi thư mời tham gia vào hệ thống đến email ${mentorAccount?.email}`}
+          handleClose={() => setOpenDialog(false)}
+          handleSubmit={handleSubmitResentInvitation}
+        />
+      )}
     </div>
   );
 };

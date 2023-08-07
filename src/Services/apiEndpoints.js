@@ -13,7 +13,7 @@ export const UserAccountEndpoints = {
   UPDATE_PROFILE: "user-profile/mentors",
   CONFIRM_PROFILE: "user-profile/current",
   GET_USER_PROFILE: "user-profile",
-  UPDATE_DETAIL_PROFILE: "user-profile/current"
+  UPDATE_DETAIL_PROFILE: "user-profile/current",
 };
 
 export const SeminarEndpoints = {
@@ -21,7 +21,7 @@ export const SeminarEndpoints = {
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
   GET_SEMINAR_DETAIL: "seminars",
   SEMINAR: "seminars",
-  GET_SEMINARS_BY_MENTOR: "seminars/byMentor"
+  GET_SEMINARS_BY_MENTOR: "seminars/byMentor",
 };
 
 export const AccountEndpoints = {
@@ -32,7 +32,7 @@ export const AccountEndpoints = {
   GET_MORE_DETAIL_MENTOR: "booking/mentors",
   ACCOUNT_STATUS: "admin/accounts",
   CREATE_STAFF: "admin/staffs",
-  UPDATE_STAFF: "user-profile/staffs"
+  UPDATE_STAFF: "user-profile/staffs",
 };
 
 export const StaticResourceEndpoints = {
@@ -80,4 +80,8 @@ export const MeetingFeedbackEndpoints = {
 
 export const FollowMentorEndpoints = {
   PROFILE: "user-profile",
+};
+
+export const MailEndpoints = {
+  MAIL: "mails",
 };
