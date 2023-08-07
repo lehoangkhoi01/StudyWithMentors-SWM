@@ -31,6 +31,7 @@ import {
 } from "../../../Helpers/generalHelper";
 import { meetingFeedbackService } from "../../../Services/meetingFeedbackService";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { ROUTES } from "../../../shared/constants/navigation";
 
 const hostname = window.location.host;
 
@@ -461,7 +462,11 @@ const BookingInfoDialog = (props) => {
             <span className={`${style.bookingSummary__subTitle}`}>
               Mentor:{" "}
             </span>
-            <span>{props.bookingInfo?.mentor.fullName}</span>
+            <span>
+              <Link to={`${ROUTES.CV}/${props.bookingInfo?.mentor.accountId}`}>
+                {props.bookingInfo?.mentor.fullName}
+              </Link>{" "}
+            </span>
           </div>
 
           <div className={`${style.bookingSummary__detail}`}>

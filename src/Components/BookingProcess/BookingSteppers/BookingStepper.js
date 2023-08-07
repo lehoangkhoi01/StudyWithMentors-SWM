@@ -187,11 +187,17 @@ const BookingStepper = (props) => {
       props.handleCloseDialog();
       history.push(ROUTES.BOOKING_LIST);
     } catch (error) {
-      if (error.status === 400) {
+      if (
+        error.status === 400 &&
+        error.data?.errorMessage === "Overlapped bookings"
+      ) {
+        const studentList = error.data?.body.map((s) => s.fullName);
         setNotification({
           isOpen: true,
           type: "error",
-          message: "Bạn đã đặt lịch vào khung giờ này. Không thể tiếp tục đặt",
+          message: `Sinh viên ${studentList.join(
+            ", "
+          )} đã có lịch hẹn vào khung giờ này. Không thể tiếp tục đặt`,
         });
       } else {
         setNotification({

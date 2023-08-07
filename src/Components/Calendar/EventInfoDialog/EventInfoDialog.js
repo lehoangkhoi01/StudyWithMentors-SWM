@@ -18,6 +18,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const EventInfoDialog = (props) => {
+  console.log(props.event);
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
   const [openScheduleDialog, setOpenScheduleDialog] = React.useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] =
@@ -89,26 +90,28 @@ const EventInfoDialog = (props) => {
             </Typography>
           </div>
         </DialogContent>
-        <DialogActions
-          sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
-        >
-          <CustomizedButton
-            color="primary600"
-            variant="outlined"
-            size="small"
-            onClick={onRemoveSchedule}
+        {props.event?.start > new Date() && (
+          <DialogActions
+            sx={{ width: "60%", alignSelf: "flex-end", marginLeft: "auto" }}
           >
-            Xóa
-          </CustomizedButton>
-          <CustomizedButton
-            color="primary600"
-            variant="contained"
-            size="small"
-            onClick={() => handleOpenScheduleDialog(true)}
-          >
-            Chỉnh sửa
-          </CustomizedButton>
-        </DialogActions>
+            <CustomizedButton
+              color="primary600"
+              variant="outlined"
+              size="small"
+              onClick={onRemoveSchedule}
+            >
+              Xóa
+            </CustomizedButton>
+            <CustomizedButton
+              color="primary600"
+              variant="contained"
+              size="small"
+              onClick={() => handleOpenScheduleDialog(true)}
+            >
+              Chỉnh sửa
+            </CustomizedButton>
+          </DialogActions>
+        )}
       </Dialog>
 
       <RemoveOptionScheduleDialog
