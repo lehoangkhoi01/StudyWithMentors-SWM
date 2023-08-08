@@ -144,7 +144,7 @@ const EventInfoDialog = (props) => {
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Xóa lịch"
-        content="Bạn có chắc muốn xóa lịch này không?"
+        content="Bạn có chắc muốn xóa lịch này không? Điều này có thể ảnh hưởng đến lịch lặp của bạn (nếu có)."
         confirmLabel="Xác nhận"
         cancelLabel="Quay lại"
         handleClose={() => setOpenConfirmationDialog(false)}

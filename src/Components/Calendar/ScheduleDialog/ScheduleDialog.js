@@ -299,7 +299,7 @@ const ScheduleDialog = (props) => {
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Cập nhật lịch"
-        content="Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
+        content="Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước (nếu có)"
         confirmLabel="Xác nhận"
         cancelLabel="Trở về"
         handleSubmit={handleUpdate}
