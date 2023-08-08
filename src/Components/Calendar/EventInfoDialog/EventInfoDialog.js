@@ -45,7 +45,7 @@ const EventInfoDialog = (props) => {
   };
 
   const onRemoveSchedule = async () => {
-    if (props.event?.belongToSeries) {
+    if (props.event?.belongToSeries && !props.event?.exceptionId) {
       handleOpenDeleteOption(true);
     } else {
       setOpenConfirmationDialog(true);
@@ -53,13 +53,22 @@ const EventInfoDialog = (props) => {
   };
 
   const handleRemoveSingleSchedule = async () => {
-    await props.handleRemoveSchedule(props.event?.scheduleId, false, null);
+    await props.handleRemoveSchedule(
+      props.event?.scheduleId,
+      false,
+      props.event?.exceptionId,
+      null
+    );
     setOpenConfirmationDialog(false);
     props.handleClose();
   };
 
   const handleUpdateSchedule = (data) => {
-    props.handleSubmitUpdateSchedule(props.event?.scheduleId, data);
+    props.handleSubmitUpdateSchedule(
+      props.event?.scheduleId,
+      props.event?.exceptionId,
+      data
+    );
     props.handleClose();
   };
 
@@ -128,13 +137,14 @@ const EventInfoDialog = (props) => {
           startDate={props.event?.start ?? new Date()}
           handleUpdateSchedule={handleUpdateSchedule}
           isUpdate={true}
+          selectedEvent={props.event}
         />
       )}
 
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Xóa lịch"
-        content="Bạn có chắc muốn xóa lịch này không?"
+        content="Bạn có chắc muốn xóa lịch này không? Điều này có thể ảnh hưởng đến lịch lặp của bạn (nếu có)."
         confirmLabel="Xác nhận"
         cancelLabel="Quay lại"
         handleClose={() => setOpenConfirmationDialog(false)}

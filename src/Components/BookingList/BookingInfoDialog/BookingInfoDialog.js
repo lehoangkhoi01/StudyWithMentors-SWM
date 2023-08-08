@@ -515,9 +515,11 @@ const BookingInfoDialog = (props) => {
                 Lí do hủy:{" "}
               </span>
               <span>
-                {props.bookingInfo?.reasonToCancel +
-                  " - " +
-                  props.bookingInfo?.cancelBy?.fullName}
+                {props.bookingInfo?.cancelBy
+                  ? props.bookingInfo?.reasonToCancel +
+                    " - " +
+                    props.bookingInfo?.cancelBy?.fullName
+                  : "Tự động hủy do mentor không phản hồi."}
               </span>
             </div>
           )}

@@ -92,7 +92,10 @@ const ScheduleDialog = (props) => {
     }
 
     const newEvent = {
-      startTime: format(startTime, DATE_FORMAT.BACK_END_HH_mm_ss),
+      startTime: format(
+        startTime.setSeconds(0, 0),
+        DATE_FORMAT.BACK_END_HH_mm_ss
+      ),
       startDate: newFromDate
         ? format(newFromDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
         : null,
@@ -232,6 +235,11 @@ const ScheduleDialog = (props) => {
                   required={true}
                   name="Lặp lại"
                   MenuProps={MenuProps}
+                  disabled={
+                    props.selectedEvent &&
+                    (props.selectedEvent?.exceptionId ||
+                      !props.selectedEvent?.belongToSeries)
+                  }
                 />
               </FormControl>
               <CustomizedDatePicker
@@ -291,7 +299,7 @@ const ScheduleDialog = (props) => {
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Cập nhật lịch"
-        content="Việc cập nhật sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước"
+        content="Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước (nếu có)"
         confirmLabel="Xác nhận"
         cancelLabel="Trở về"
         handleSubmit={handleUpdate}

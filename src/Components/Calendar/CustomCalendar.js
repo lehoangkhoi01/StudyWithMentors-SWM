@@ -71,10 +71,21 @@ const CustomCalendar = () => {
     }
   };
 
-  const handleSubmitUpdateSchedule = async (scheduleId, newSchedule) => {
+  const handleSubmitUpdateSchedule = async (
+    scheduleId,
+    exceptionId,
+    newSchedule
+  ) => {
     setLoading(true);
     try {
-      if (!newSchedule.daily && !newSchedule.weekly) {
+      if (exceptionId) {
+        const data = {
+          parentId: scheduleId,
+          startTime: newSchedule.startTime,
+          remove: false,
+        };
+        await scheduleService.updateException(exceptionId, data);
+      } else if (!exceptionId && !newSchedule.daily && !newSchedule.weekly) {
         const data = {
           parentId: scheduleId,
           exceptionDate: newSchedule.startDate,
@@ -107,7 +118,7 @@ const CustomCalendar = () => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: COMMON_MESSAGE.ADD_SCHEDULE_FAIL,
+          message: COMMON_MESSAGE.UPDATE_SCHEDULE_FAIL,
         });
       }
     } finally {
@@ -125,13 +136,20 @@ const CustomCalendar = () => {
     setSelectedEventCalendar(e);
   };
 
-  const handleRemoveSchedule = async (id, isSingle = false, data) => {
+  const handleRemoveSchedule = async (
+    id,
+    isSingle = false,
+    exceptionId = null,
+    data
+  ) => {
     if (id) {
       setLoading(true);
       try {
-        if (isSingle) {
+        if (exceptionId) {
+          await scheduleService.removeException(exceptionId, id);
+        } else if (!exceptionId && isSingle) {
           await scheduleService.createException(data);
-        } else {
+        } else if (!exceptionId && !isSingle) {
           await scheduleService.deleteSchedule(id);
         }
 

@@ -136,7 +136,7 @@ export const COMMON_MESSAGE = {
   ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
   ADD_SCHEDULE_FAIL: "Thêm lịch thất bại. Xin vui lòng thử lại sau",
   UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
-  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại",
+  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại. Xin vui lòng thử lại sau",
   UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
@@ -272,8 +272,10 @@ export const ERROR_MESSAGES = {
     "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau. Nếu chưa đăng nhập, vui lòng đăng nhập vào hệ thống để thực hiện hành động này.",
   DELETE_COMMENT_ERROR:
     "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
-  END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE: "Ngày kết thúc không được sớm hơn ngày bắt đầu",
-  EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE: "Ngày hết hạn không được sớm hơn ngày nhận",
+  END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE:
+    "Ngày kết thúc không được sớm hơn ngày bắt đầu",
+  EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
+    "Ngày hết hạn không được sớm hơn ngày nhận",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -588,7 +590,7 @@ export const CONFIRM_TOPIC_MODAL = {
   ARCHIVE: "Ẩn",
   TOPIC: "chủ đề",
   SHOW: "Hiện",
-  DETAIL: "Chi tiết"
+  DETAIL: "Chi tiết",
 };
 
 export const TABLE_TYPE = {
@@ -693,5 +695,5 @@ export const STUDENT_STATUS = {
 export const TRANSLATED_STUDENT_GENDER = {
   OTHERS: "Khác",
   MALE: "Nam",
-  FEMALE: "Nữ"
-}
+  FEMALE: "Nữ",
+};
