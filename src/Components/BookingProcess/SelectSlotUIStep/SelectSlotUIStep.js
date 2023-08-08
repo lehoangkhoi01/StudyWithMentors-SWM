@@ -29,34 +29,46 @@ const SelectSlotUIStep = (props) => {
     props.handleSelectSlot(e);
   };
 
+  const filterAvailableSchedules = (schedules) => {
+    const availableDateStart = moment()
+      .add(2, "days")
+      .toDate()
+      .setHours(0, 0, 0, 0);
+    let newSchedules = [];
+    if (schedules.length > 0) {
+      newSchedules = schedules.filter((s) => s.start >= availableDateStart);
+    }
+    return newSchedules;
+  };
+
   const triggerRangeChangeEvent = async (date, view) => {
     let toDay = new Date().setHours(0, 0, 0, 0);
     let dateView = new Date(date).setHours(0, 0, 0, 0);
     let dateStart = moment().add(2, "days").toDate();
 
-    if (dateView < toDay) {
-      setEventList([]);
-    } else {
-      setLoading(true);
-      let startEnd = null;
-      startEnd = getStartEndTime(date, view);
-      if (dateView === toDay) {
-        startEnd.start = format(dateStart, DATE_FORMAT.BACK_END_YYYY_MM_DD);
-      }
+    setLoading(true);
+    let startEnd = null;
+    startEnd = getStartEndTime(date, view);
+    if (dateView === toDay) {
+      startEnd.start = format(dateStart, DATE_FORMAT.BACK_END_YYYY_MM_DD);
+    }
 
-      try {
-        const result = await scheduleService.getMentorSchedule(
-          props.mentorId,
-          startEnd.start,
-          startEnd.end
-        );
-        const schedules = processSchedules(result);
-        setEventList(schedules);
-      } catch (error) {
+    try {
+      const result = await scheduleService.getMentorSchedule(
+        props.mentorId,
+        startEnd.start,
+        startEnd.end
+      );
+      let schedules = processSchedules(result);
+      let newSchedules = filterAvailableSchedules(schedules);
+      setEventList(newSchedules);
+    } catch (error) {
+      console.log(error);
+      if (error?.status) {
         history.push(ROUTES.SERVER_ERROR);
-      } finally {
-        setLoading(false);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
