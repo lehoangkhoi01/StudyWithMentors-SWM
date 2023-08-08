@@ -40,7 +40,6 @@ const SeminarDetail = () => {
   const AUTHORIZED_ROLE_ACTION = [
     SYSTEM_ROLE.STAFF,
     SYSTEM_ROLE.ADMIN,
-    SYSTEM_ROLE.MENTOR,
   ];
 
   const [data, setData] = useState();
@@ -62,14 +61,6 @@ const SeminarDetail = () => {
     if (
       userInfo?.role === SYSTEM_ROLE.STAFF &&
       seminarDetail?.department.id !== userInfo?.departmentId
-    ) {
-      return false;
-    }
-
-    const mentorIdList = seminarDetail?.mentors.map((mentor) => mentor.id);
-    if (
-      userInfo?.role === SYSTEM_ROLE.MENTOR &&
-      !mentorIdList.includes(userInfo?.accountId)
     ) {
       return false;
     }
@@ -275,13 +266,17 @@ const SeminarDetail = () => {
                   {data.mentors.map((mentor, index) => {
                     if (mentor.status === USER_STATUS.ACTIVATED) {
                       return (
-                        <Link
-                          to={`${ROUTES.CV}/${mentor.id}`}
-                          key={`MENTOR_${index}`}
-                        >
-                          {mentor.fullName}
-                          {data.mentors.length - 1 !== index ? ", " : ""}
-                        </Link>
+                        <>
+                          <Link
+                            to={`${ROUTES.CV}/${mentor.id}`}
+                            key={`MENTOR_${index}`}
+                          >
+                            {mentor.fullName}
+                          </Link>
+                          <span>
+                            {data.mentors.length - 1 !== index ? ", " : ""}
+                          </span>
+                        </>
                       );
                     } else {
                       return (

@@ -32,17 +32,26 @@ const StyledLabelSelect = styled(InputLabel)`
 const FilterSection = (props) => {
   const { register, reset, getValues } = useForm();
 
-  const [majorName, setMajorName] = useState([]);
+  const [selectedFields, setSelectedFields] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const handleMajoreChange = (event) => {
+  const handleFieldChange = (event) => {
     const {
       target: { value },
     } = event;
-    setMajorName(typeof value === "string" ? value.split(",") : value);
+    setSelectedFields(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleCategoryChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCategories(typeof value === "string" ? value.split(",") : value);
   };
 
   const clearFilter = () => {
-    setMajorName([]);
+    setSelectedFields([]);
+    setSelectedCategories([]);
     reset({
       searchTerm: "",
     });
@@ -51,10 +60,11 @@ const FilterSection = (props) => {
   };
 
   const onSearch = () => {
-    const majorOnlyNames = majorName.map((item) => item.name);
+    const fieldNames = selectedFields.map((item) => item.name);
+    const categoryNames = selectedCategories.map((item) => item.name);
     const searchTerm = getValues("searchTerm");
 
-    const params = [searchTerm, ...majorOnlyNames];
+    const params = [searchTerm, ...fieldNames, ...categoryNames];
 
     props.onSearch(params);
   };
@@ -66,7 +76,7 @@ const FilterSection = (props) => {
         container
         columnSpacing={{ sm: 2 }}
       >
-        <Grid item xs={5.5}>
+        <Grid item xs={4}>
           <CustomizedTextField
             fullWidth
             inputId="search"
@@ -77,19 +87,41 @@ const FilterSection = (props) => {
             }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.5}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_MAJOR}
+              {PLACE_HOLDER.FIELD_SELECT}
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
               items={props.fields}
-              inputId="majorSelect"
+              inputId="fieldSelect"
               isMultipleSelect={true}
-              value={majorName}
-              onChange={handleMajoreChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
+              value={selectedFields}
+              onChange={handleFieldChange}
+              renderValue={(selected) => {
+                return selected.map(
+                  (item, index) =>
+                    `${item.name}${index < selected.length - 1 ? ", " : ""}`
+                );
+              }}
+              MenuProps={MenuProps}
+              required={true}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={2.5}>
+          <FormControl fullWidth>
+            <StyledLabelSelect className={`${style.filterSection__label}`}>
+              {PLACE_HOLDER.CATEGORY_SELECT}
+            </StyledLabelSelect>
+            <CustomizedSelect
+              fullWidth
+              items={props.categories}
+              inputId="categorySelect"
+              isMultipleSelect={true}
+              value={selectedCategories}
+              onChange={handleCategoryChange}
               renderValue={(selected) => {
                 return selected.map(
                   (item, index) =>

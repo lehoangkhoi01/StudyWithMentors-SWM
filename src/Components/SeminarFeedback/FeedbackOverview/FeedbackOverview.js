@@ -58,21 +58,27 @@ const FeedbackOverview = () => {
   const { setLoading } = useCustomLoading();
 
   useEffect(() => {
+    if (seminarDetail && feedbackData) {
+      setLoading(false);
+    }
+  }, [seminarDetail, feedbackData])
+
+  useEffect(() => {
     const getSeminarDetail = async () => {
       try {
         setLoading(true);
         const seminar = await seminarService.getSeminarDetail(id);
         if (
-          userInfo?.role === SYSTEM_ROLE.STAFF &&
-          userInfo.departmentId !== seminar.department.id
+          userInfo?.role === SYSTEM_ROLE.ADMIN ||
+          (userInfo?.role === SYSTEM_ROLE.STAFF &&
+            userInfo.departmentId !== seminar.department.id)
         ) {
           history.push(ROUTES.NOT_FOUND);
         }
+        setLoading(true);
         setSeminarDetail(seminar);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -91,10 +97,9 @@ const FeedbackOverview = () => {
 
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
+        console.log("getFeedbackReport");
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
-      } finally {
-        setLoading(false);
       }
     };
 

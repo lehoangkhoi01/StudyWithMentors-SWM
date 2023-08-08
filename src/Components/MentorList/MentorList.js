@@ -21,7 +21,7 @@ import { selectUserInfo } from "../../Store/slices/userSlice";
 const MentorList = () => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
-  const { getTopicFields } = useFetchTopicFieldsAndCategories();
+  const { getTopicFields, getTopicCategories } = useFetchTopicFieldsAndCategories();
   const userInfo = useSelector(selectUserInfo);
 
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
@@ -34,11 +34,13 @@ const MentorList = () => {
   const [displayedMentors, setDisplayedMentors] = useState([]);
   const [followingMentors, setFollowingMentors] = useState([]);
   const [fields, setFields] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [filterInfo, setFilterInfo] = useState([]);
 
   useEffect(() => {
     getMentors();
     getFields();
+    getCategories();
     if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       getFollowingMentors();
     }
@@ -87,6 +89,23 @@ const MentorList = () => {
       setLoading(true);
       const fieldsBE = await getTopicFields();
       setFields(fieldsBE);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      setLoading(true);
+      const categoriesBE = await getTopicCategories();
+      setCategories(categoriesBE);
     } catch (error) {
       console.log(error);
       setNotification({
@@ -176,6 +195,7 @@ const MentorList = () => {
         <ImageSlider />
         <FilterSection
           fields={fields}
+          categories={categories}
           onChangeStatusFilter={onChangeStatusFilter}
           setFilterInfo={setFilterInfo}
           onSearch={onUpdateFilter}
