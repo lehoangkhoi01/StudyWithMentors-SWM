@@ -186,7 +186,8 @@ export const PLACE_HOLDER = {
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",
   SEARCH_MENTOR: "Tên theo hội thảo, diễn giả",
-  DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
+  FIELD_SELECT: "Lĩnh vực",
+  CATEGORY_SELECT: "Thể loại",
   ALL_MAJOR: "Tất cả lĩnh vực",
   ALL_CATEGORY: "Tất cả phân loại",
   CHOOSE_IMAGE: "Bấm hoặc kéo file để tải poster",
@@ -476,7 +477,7 @@ export const ADMIN_TABLE_HEADER = {
 };
 
 export const TABLE_DETAIL = {
-  CV_MENTOR: "CV diễn giả",
+  CV_MENTOR: "Hồ sơ diễn giả",
 };
 
 export const SORT_DIRECTION = {

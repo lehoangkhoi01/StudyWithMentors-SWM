@@ -58,21 +58,27 @@ const FeedbackOverview = () => {
   const { setLoading } = useCustomLoading();
 
   useEffect(() => {
+    if (seminarDetail && feedbackData) {
+      setLoading(false);
+    }
+  }, [seminarDetail, feedbackData])
+
+  useEffect(() => {
     const getSeminarDetail = async () => {
       try {
         setLoading(true);
         const seminar = await seminarService.getSeminarDetail(id);
         if (
-          userInfo?.role === SYSTEM_ROLE.STAFF &&
-          userInfo.departmentId !== seminar.department.id
+          userInfo?.role === SYSTEM_ROLE.ADMIN ||
+          (userInfo?.role === SYSTEM_ROLE.STAFF &&
+            userInfo.departmentId !== seminar.department.id)
         ) {
           history.push(ROUTES.NOT_FOUND);
         }
+        setLoading(true);
         setSeminarDetail(seminar);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -91,10 +97,9 @@ const FeedbackOverview = () => {
 
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
+        console.log("getFeedbackReport");
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -219,74 +224,73 @@ const FeedbackOverview = () => {
   };
 
   return (
-    <div>
+    <>{seminarDetail && feedbackData && (
       <div className={style.overview__container}>
         <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
-        {seminarDetail && feedbackData && (
-          <div className={style.overview__information}>
-            <div className={style.overview__title}>
-              <h2>{FEEDBACK_OVERVIEW.SEMNIAR_REPORT}</h2>
-              <p>{seminarDetail.name}</p>
-            </div>
-            <div className={style.overview__charts}>
-              <Grid container spacing={2} alignItems={"stretch"}>
-                {feedbackData.map((data, index) => (
-                  <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
-                    <DoughnutChart data={data} />
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
-            <div>
-              <p className={style.overview__subHeader}>
-                {FEEDBACK_OVERVIEW.IMPROVEMENT}(
-                {feedbackText.displayedImprovements.length})
-              </p>
-              {feedbackText.displayedImprovements.map((improvement, index) => (
-                <p
-                  key={`IMPROVEMENT_${index}`}
-                  className={style.overview__feedbackItem}
-                >
-                  {improvement}
-                </p>
-              ))}
-              <Pagination
-                className={style.overview__pagination}
-                variant="outlined"
-                shape="rounded"
-                page={pagination.improvements.page}
-                onChange={(_, page) => {
-                  onPaginateImprovments(page);
-                }}
-              />
-            </div>
-            <div>
-              <p className={style.overview__subHeader}>
-                {FEEDBACK_OVERVIEW.OTHERS} (
-                {feedbackText.displayedOthers.length})
-              </p>
-              {feedbackText.displayedOthers.map((other, index) => (
-                <p
-                  key={`OTHER_${index}`}
-                  className={style.overview__feedbackItem}
-                >
-                  {other}
-                </p>
-              ))}
-              <Pagination
-                className={style.overview__pagination}
-                variant="outlined"
-                shape="rounded"
-                page={pagination.others.page}
-                onChange={(_, page) => {
-                  onPaginateOthers(page);
-                }}
-              />
-            </div>
+        <div className={style.overview__information}>
+          <div className={style.overview__title}>
+            <h2>{FEEDBACK_OVERVIEW.SEMNIAR_REPORT}</h2>
+            <p>{seminarDetail.name}</p>
           </div>
-        )}
+          <div className={style.overview__charts}>
+            <Grid container spacing={2} alignItems={"stretch"}>
+              {feedbackData.map((data, index) => (
+                <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
+                  <DoughnutChart data={data} />
+                </Grid>
+              ))}
+            </Grid>
+          </div>
+          <div>
+            <p className={style.overview__subHeader}>
+              {FEEDBACK_OVERVIEW.IMPROVEMENT}(
+              {feedbackText.displayedImprovements.length})
+            </p>
+            {feedbackText.displayedImprovements.map((improvement, index) => (
+              <p
+                key={`IMPROVEMENT_${index}`}
+                className={style.overview__feedbackItem}
+              >
+                {improvement}
+              </p>
+            ))}
+            <Pagination
+              className={style.overview__pagination}
+              variant="outlined"
+              shape="rounded"
+              page={pagination.improvements.page}
+              onChange={(_, page) => {
+                onPaginateImprovments(page);
+              }}
+            />
+          </div>
+          <div>
+            <p className={style.overview__subHeader}>
+              {FEEDBACK_OVERVIEW.OTHERS} (
+              {feedbackText.displayedOthers.length})
+            </p>
+            {feedbackText.displayedOthers.map((other, index) => (
+              <p
+                key={`OTHER_${index}`}
+                className={style.overview__feedbackItem}
+              >
+                {other}
+              </p>
+            ))}
+            <Pagination
+              className={style.overview__pagination}
+              variant="outlined"
+              shape="rounded"
+              page={pagination.others.page}
+              onChange={(_, page) => {
+                onPaginateOthers(page);
+              }}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    )}</>
+
   );
 };
 

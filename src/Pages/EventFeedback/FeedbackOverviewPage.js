@@ -2,9 +2,7 @@ import FeedbackOverview from "../../Components/SeminarFeedback/FeedbackOverview/
 
 const FeedbackOverviewPage = () => {
   return (
-    <>
-      <FeedbackOverview />
-    </>
+    <FeedbackOverview />
   );
 };
 
