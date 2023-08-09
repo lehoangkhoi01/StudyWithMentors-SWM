@@ -35,6 +35,7 @@ const SeminarList = () => {
   const userInfo = useSelector(selectUserInfo);
   const filterRef = useRef();
   const history = useHistory();
+  const AUTHORIZED_ROLE_SEMINAR = [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF];
 
   useEffect(() => {
     getSeminarList();
@@ -49,8 +50,8 @@ const SeminarList = () => {
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
-          ? "past"
-          : null;
+        ? "past"
+        : null;
 
     let filterDepartmentId = filterInfo?.departmentId;
 
@@ -109,8 +110,8 @@ const SeminarList = () => {
       statusFilter === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : statusFilter === FILTER_SEMINAR.PAST
-          ? "past"
-          : null;
+        ? "past"
+        : null;
 
     setFilterInfo({
       searchString: seminarName,
@@ -207,7 +208,7 @@ const SeminarList = () => {
           )}
         </div>
 
-        {userInfo?.role === SYSTEM_ROLE.STAFF ? (
+        {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
           <CustomizedButton
             variant="outlined"
             color="primary600"
@@ -219,7 +220,7 @@ const SeminarList = () => {
             />
             {BUTTON_LABEL.CREATE_SEMINAR}
           </CustomizedButton>
-        ) : null}
+        )}
       </div>
       <Grid
         className={style.seminarList__list}
