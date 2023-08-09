@@ -86,3 +86,7 @@ export const FollowMentorEndpoints = {
 export const MailEndpoints = {
   MAIL: "mails",
 };
+
+export const SystemConfigEndpoints = {
+  CONFIG: "admin/configs",
+};

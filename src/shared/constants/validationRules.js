@@ -63,7 +63,7 @@ export const modalFieldValidation = {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
-}
+};
 
 export const modalOptionalFieldValidation = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
@@ -71,4 +71,24 @@ export const modalOptionalFieldValidation = {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
-}
+};
+
+//---------- System Config Validation ---------------
+
+const validationNumber = (val) => {
+  const isValid = /^\d+$/.test(val); // Check if value is a positive integer
+  return isValid || "Invalid number format";
+};
+
+export const maxBookingRequestValidation = {
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  min: {
+    value: 1, // Minimum allowed value
+    message: "Invalid range of number",
+  },
+  max: {
+    value: 5,
+    message: "Invalid range of number",
+  },
+  validate: (val) => validationNumber(val),
+};

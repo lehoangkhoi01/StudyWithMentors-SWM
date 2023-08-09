@@ -1,0 +1,10 @@
+.systemConfig {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__form {
+    width: 70%;
+  }
+}
