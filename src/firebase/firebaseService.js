@@ -16,7 +16,7 @@ export const addDocument = async (collectionName, data) => {
     };
     await addDoc(collection(db, collectionName), newData);
   } catch (error) {
-    console.log(error);
+    return Promise.reject(error);
   }
 };
 

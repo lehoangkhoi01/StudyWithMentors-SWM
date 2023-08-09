@@ -11,6 +11,9 @@ export const UserAccountEndpoints = {
   GET_USER_INFO: "user-profile/current",
   USER_CV: "user-profile/current/cv",
   UPDATE_PROFILE: "user-profile/mentors",
+  CONFIRM_PROFILE: "user-profile/current",
+  GET_USER_PROFILE: "user-profile",
+  UPDATE_DETAIL_PROFILE: "user-profile/current",
 };
 
 export const SeminarEndpoints = {
@@ -18,6 +21,7 @@ export const SeminarEndpoints = {
   SEARCH_SEMINAR_BY_DEPARTMENT: "seminars/byMyDepartment",
   GET_SEMINAR_DETAIL: "seminars",
   SEMINAR: "seminars",
+  GET_SEMINARS_BY_MENTOR: "seminars/byMentor",
 };
 
 export const AccountEndpoints = {
@@ -25,6 +29,11 @@ export const AccountEndpoints = {
   ACCONT_MENTOR: "accounts/mentors",
   DELETE_MENTOR: "accounts/mentors/invalidate",
   CREATE_MENTOR: "accounts/mentors",
+  GET_MORE_DETAIL_MENTOR: "booking/mentors",
+  ACCOUNT_STATUS: "admin/accounts",
+  CREATE_STAFF: "admin/staffs",
+  UPDATE_STAFF: "user-profile/staffs",
+  ACCOUNT_STUDENT: "accounts/students",
 };
 
 export const StaticResourceEndpoints = {
@@ -39,4 +48,41 @@ export const DepartmentEndPoints = {
 export const SeminarFeedbackEndpoints = {
   SEMINAR_FEEDBACK: "feedbacks/seminar",
   SEMINAR_FEEDBACK_REPORT: "/feedbacks/seminar-feedback-report",
+};
+
+export const TopicEndpoints = {
+  GET_TOPIC_FIELDS: "admin/topic-fields",
+  GET_TOPIC_CATEGORIES: "admin/topic-categories",
+  GET_TOPICS: "admin/topics",
+  TOPICS: "topics",
+  TOPICS_MENTOR: "topics/by-mentor",
+  UPADATE_TOPIC_STATUS: "topics/update-status",
+  DELETE_TOPIC_FIELD: "admin/topic-fields",
+  UPSERT_TOPIC_FIELD: "admin/topic-fields",
+  DELETE_TOPIC_CATEGORIES: "admin/topic-categories",
+  UPSERT_TOPIC_CATEGORIES: "admin/topic-categories",
+};
+
+export const ScheduleEndpoints = {
+  SCHEDULE: "schedules",
+  SCHEDULE_MENTOR: "schedules/by-mentor",
+};
+
+export const BookingEndpoints = {
+  BOOKING: "booking",
+  ADMIN_BOOKING: "admin/bookings",
+};
+
+export const MeetingFeedbackEndpoints = {
+  MEETING_FEEDBACK: "meeting-feedback",
+  MEETING_FEEDBACK_BY_USER: "meeting-feedback/by-user",
+  MEETING_FEEDBACK_BY_BOOKING: "meeting-feedback/by-booking",
+};
+
+export const FollowMentorEndpoints = {
+  PROFILE: "user-profile",
+};
+
+export const MailEndpoints = {
+  MAIL: "mails",
 };

@@ -7,7 +7,7 @@ import CustomizedSelect from "../../../../shared/components/Select/CustomizedSel
 import {
   BUTTON_LABEL,
   DATE_FORMAT,
-  FILTER_SEMINAR,
+  ERROR_MESSAGES,
   PLACE_HOLDER,
 } from "../../../../shared/constants/common";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import CustomizedDateRangePicker from "../../../../shared/components/DateRangePi
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { departmentService } from "../../../../Services/departmentService";
 import { convertISOToFormat } from "../../../../Helpers/dateHelper";
+import { useNotification } from "../../../../Helpers/generalHelper";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,32 +40,41 @@ const SeminarFilter = forwardRef((props, ref) => {
   const [selectedDepartment, setSelectedDepartment] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
 
+  const { setNotification } = useNotification();
+
   useEffect(() => {
     const getDepartments = async () => {
       try {
         const response = await departmentService.getDepartments();
-
         setDepartments(response);
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });
       }
     };
 
     getDepartments();
   }, []);
 
-  const onFilter = () => {
+  const onFilter = (_, getAll) => {
     const seminarName = getValues("seminarName");
     const [startDateJs, endDateJs] = selectedDateRange;
     const startDate = startDateJs ? startDateJs.toDate() : "";
     const endDate = endDateJs ? endDateJs.toDate() : "";
 
-    props.onSeminarFilter(
-      seminarName,
-      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
-      convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, endDate) ?? null,
-      selectedDepartment.id
-    );
+    if (getAll) {
+      props.onSeminarFilter();
+    } else {
+      props.onSeminarFilter(
+        seminarName,
+        convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, startDate) ?? null,
+        convertISOToFormat(DATE_FORMAT.BACK_END_YYYY_MM_DD, endDate) ?? null,
+        selectedDepartment.id
+      );
+    }
   };
 
   const handleDepartmentChange = (event) => {
@@ -81,9 +91,7 @@ const SeminarFilter = forwardRef((props, ref) => {
     reset({
       seminarName: "",
     });
-    props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
-
-    onFilter();
+    props.setFilterInfo();
   };
 
   useImperativeHandle(ref, () => ({

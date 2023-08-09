@@ -1,7 +1,7 @@
 import { DatePicker } from "@mui/x-date-pickers";
 import style from "./CustomizedDatePicker.module.scss";
 import { DATE_FORMAT, OPTIONAL } from "../../constants/common";
-import { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { convertISOToFormat } from "../../../Helpers/dateHelper";
 
 const CustomizedDatePicker = (props) => {
@@ -11,9 +11,11 @@ const CustomizedDatePicker = (props) => {
 
   useLayoutEffect(() => {
     if (!isMapped && props.value !== undefined && props.value !== "") {
-      console.log("Mapped");
       setValue(props.value ?? null);
       setIsMapped(true);
+
+      const datevalue = convertISOToFormat(dateFormat, props.value);
+      props.setValue(props.formName, datevalue);
     }
   }, [props.value]);
 
@@ -24,7 +26,10 @@ const CustomizedDatePicker = (props) => {
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
       <DatePicker
+        disableFuture={props.disableFuture}
         disabled={props.disabled}
+        disablePast={props.disablePast ?? false}
+        minDate={props.minDate}
         format={dateFormat}
         views={props.views ?? ["year", "month"]}
         className={style.datePicker__input}
@@ -32,9 +37,13 @@ const CustomizedDatePicker = (props) => {
         slotProps={{
           textField: {
             helperText: props?.error?.message,
+            error: props?.error?.message,
           },
         }}
         onChange={(e) => {
+          if (props.onChange) {
+            props.onChange();
+          }
           const datevalue = convertISOToFormat(dateFormat, e);
           setValue(e);
           props.setValue(props.formName, datevalue);

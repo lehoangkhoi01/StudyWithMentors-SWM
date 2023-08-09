@@ -3,6 +3,8 @@ import userSlice from "./slices/userSlice";
 import helperSlice from "./slices/helperSlice";
 import notificationSlice from "./slices/notificationSlice";
 import mentorSlice from "./slices/mentorSlice";
+import topicSlice from "./slices/topicSlice";
+import departmentSlice from "./slices/departmentSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
     helper: helperSlice.reducer,
     notification: notificationSlice.reducer,
     mentor: mentorSlice.reducer,
+    topic: topicSlice.reducer,
+    department: departmentSlice.reducer,
   },
 });
 

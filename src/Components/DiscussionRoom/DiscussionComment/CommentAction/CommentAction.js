@@ -14,11 +14,15 @@ import style from "./CommentAction.module.scss";
 import { deleteDocument } from "../../../../firebase/firebaseService";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../../Store/slices/userSlice";
+import { useNotification } from "../../../../Helpers/generalHelper";
+import { ERROR_MESSAGES } from "../../../../shared/constants/common";
 
 const CommentAction = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const userInfo = useSelector(selectUserInfo);
+
+  const { setNotification } = useNotification();
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -33,7 +37,11 @@ const CommentAction = (props) => {
       handleClose();
       await deleteDocument("Comments", props.comment.id);
     } catch (error) {
-      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.DELETE_COMMENT_ERROR,
+      });
     }
   };
 
@@ -48,7 +56,7 @@ const CommentAction = (props) => {
           <>
             <ArrowDropUpIcon
               onClick={() => props.handleUpvoteComment(props.comment, "unvote")}
-              className={`${style.commentAction__upvoteContainer__icon} ${style.commentAction__upvoteContainer__icon_clicked}`}
+              className={`${style.commentAction__upvoteContainer__icon}`}
             />
             {props.comment.vote}
           </>
@@ -56,7 +64,7 @@ const CommentAction = (props) => {
           <>
             <ArrowDropUpIcon
               onClick={() => props.handleUpvoteComment(props.comment, "upvote")}
-              className={`${style.commentAction__upvoteContainer__icon}`}
+              className={`${style.commentAction__upvoteContainer__icon} ${style.commentAction__upvoteContainer__icon_clicked}`}
             />
             {props.comment.vote}
           </>

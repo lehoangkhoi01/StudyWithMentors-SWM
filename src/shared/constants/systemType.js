@@ -16,9 +16,22 @@ export const SYSTEM_ROLE = {
   STAFF: "STAFF",
   ADMIN: "ADMIN",
   STUDENT: "STUDENT",
+  MENTOR: "MENTOR",
 };
 
 export const SEMINAR_STATUS = {
   FUTURE: "FUTURE",
   PAST: "PAST",
+};
+
+export const BOOKING_STATUS = {
+  ACCEPTED: "ACCEPTED",
+  REQUESTED: "REQUESTED",
+  REJECTED: "REJECTED",
+};
+
+export const TOPIC_STATUS_TYPE = {
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+  WAITING: "WAITING",
 };

@@ -24,18 +24,20 @@ import { SEMINAR_DETAIL_VIEW_MODE } from "../../constants/systemType";
 import { OPTIONAL, TEXTFIELD_LABEL } from "../../constants/common";
 
 const ListFileDisplay = (props) => {
+  const handleRemoveOldFile = (index) => {
+    props.handleRemoveOldDocuments(index);
+  };
+
   const renderListForUpdate = () => (
     <div>
       <Typography className={`${style.filelist__label}`}>Tài liệu</Typography>
       <List>
-        {props.oldItems?.map((file, index) => (
+        {props.oldItems.map((file, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={file}>Attachment {index + 1}</a>
+            <a href={file.value}>{file.name}</a>
             <div className={`${style.filelist__right}`}>
               <ListItemIcon>
-                <IconButton
-                  onClick={() => props.handleRemoveOldDocuments(index)}
-                >
+                <IconButton onClick={() => handleRemoveOldFile(index)}>
                   <CloseIcon />
                 </IconButton>
               </ListItemIcon>
@@ -89,9 +91,9 @@ const ListFileDisplay = (props) => {
   const renderListForView = () => (
     <div>
       <List>
-        {props.oldItems?.map((file, index) => (
+        {Object.keys(props.oldItems).map((fileName, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={file}>Attachment {index + 1}</a>
+            <a href={props.oldItems[fileName]}>{fileName}</a>
           </ListItem>
         ))}
       </List>

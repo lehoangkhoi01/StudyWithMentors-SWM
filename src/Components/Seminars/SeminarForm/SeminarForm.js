@@ -10,7 +10,13 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import ImageUploader from "../ImageUploader/ImageUploader";
-import { Button, Checkbox, IconButton, Typography } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -54,11 +60,29 @@ import {
   useFetchSpeakerList,
   useNotification,
 } from "../../../Helpers/generalHelper";
-import { SEMINAR_DETAIL_VIEW_MODE } from "../../../shared/constants/systemType";
+import {
+  SEMINAR_DETAIL_VIEW_MODE,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
 import { useSelector } from "react-redux";
 import { selectMentorList } from "../../../Store/slices/mentorSlice";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import UpsertMentorModal from "../../Modal/UpsertMentorModal";
+import { convertObjectToArray } from "../../../Helpers/arrayHelper";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { departmentService } from "../../../Services/departmentService";
+import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -68,6 +92,7 @@ const SeminarForm = () => {
   const { getSpeakerList } = useFetchSpeakerList();
   const { id } = useParams();
   const mentors = useSelector(selectMentorList);
+  //--------------------------------------
   const isFormUpdate = id ? true : false;
   const [isFormDisabled, setFormDisabled] = React.useState(false);
   const [seminarBackground, setSeminarBackground] = React.useState(null);
@@ -80,11 +105,16 @@ const SeminarForm = () => {
   );
   const [seminarDetail, setSeminarDetail] = React.useState(null);
   const [selectedSpeakers, setSelectedSpeakers] = React.useState([]);
+
+  const [departmentList, setDepartmentList] = React.useState([]);
+  const [selectedDepartment, setSelectedDepartment] = React.useState(null);
+
   const {
     control,
     handleSubmit,
     register,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -93,6 +123,8 @@ const SeminarForm = () => {
       seminarSpeakers: [],
     },
   });
+
+  const userInfo = useSelector(selectUserInfo);
 
   const [openAddMentorModal, setOpenAddMentorModal] = React.useState(false);
 
@@ -224,6 +256,9 @@ const SeminarForm = () => {
         mentorIds: data.seminarSpeakers,
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
+      if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+        requestBody.departmentId = selectedDepartment.id;
+      }
       const result = await seminarService.create(requestBody);
       setNotification({
         isOpen: true,
@@ -232,7 +267,11 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + result.id);
     } catch (error) {
-      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: "Tạo sự kiện thất bại. Vui lòng thử lại sau.",
+      });
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
       }
@@ -279,6 +318,9 @@ const SeminarForm = () => {
         attachmentUrls: attachmentUrls,
         startTime: data.seminarTime,
       };
+      if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+        requestBody.departmentId = selectedDepartment.id;
+      }
       await seminarService.update(id, requestBody);
       setNotification({
         isOpen: true,
@@ -287,9 +329,14 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
     } catch (error) {
-      console.log(error);
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: "Cập nhật sự kiện thất bại",
+        });
       }
     } finally {
       setLoading(false);
@@ -305,9 +352,6 @@ const SeminarForm = () => {
       if (convertBytesToMB(documents[i].size) > LENGTH.FILE_MAX_SIZE) {
         return ERROR_MESSAGES.INVALID_SEMINAR_DOCUMENTS;
       }
-      // if(VALID_DOCS_FILE_TYPLE.indexOf(documents[i].type) < 0) {
-      //   return
-      // }
     }
   };
 
@@ -327,14 +371,59 @@ const SeminarForm = () => {
     setOpenAddMentorModal(false);
   };
 
+  const getDepartmentList = async () => {
+    try {
+      setLoading(true);
+      let result = await departmentService.getDepartments();
+      result = result.map((dep) => ({
+        id: dep.id,
+        name: dep.name,
+      }));
+      setDepartmentList(result);
+    } catch (error) {
+      history.push(ROUTES.SERVER_ERROR);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
+
   React.useEffect(() => {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
+      history.push(ROUTES.NOT_FOUND);
+      return;
+    }
+
     const getSeminarDetail = async () => {
       try {
         const seminar = await seminarService.getSeminarDetail(id);
+        if (
+          userInfo?.role === SYSTEM_ROLE.STAFF &&
+          seminar.department?.id !== userInfo.departmentId
+        ) {
+          history.push(ROUTES.NOT_FOUND);
+          return;
+        }
+        if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
+          const mentorIdList = seminar?.mentors.map((mentor) => mentor.id);
+          if (!mentorIdList.includes(userInfo.accountId)) {
+            history.push(ROUTES.NOT_FOUND);
+            return;
+          }
+        }
+
         setSeminarDetail(seminar);
         setSelectedSpeakers(seminar.mentors);
       } catch (error) {
-        console.log(error);
+        history.push(ROUTES.SERVER_ERROR);
       }
     };
 
@@ -343,6 +432,9 @@ const SeminarForm = () => {
       getSeminarDetail();
     } else {
       setAppbar(APPBAR_TITLES.SEMINAR_CREATE);
+    }
+    if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+      getDepartmentList();
     }
   }, []);
 
@@ -355,21 +447,30 @@ const SeminarForm = () => {
   }, [mentors]);
 
   React.useEffect(() => {
-    if (seminarDetail) {
+    if (seminarDetail && departmentList.length > 0) {
       setValue("seminarName", seminarDetail.name);
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
       setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
-      setOldDocuments(seminarDetail.attachmentLinks ?? []);
+      setOldDocuments(
+        seminarDetail.attachments
+          ? convertObjectToArray(seminarDetail.attachments)
+          : []
+      );
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
+      setSelectedDepartment(
+        departmentList.find((dep) => dep.id === seminarDetail.department.id)
+      );
+
       if (moment(seminarDetail.startTime).toDate() < new Date()) {
         setFormDisabled(true);
-        history.push(ROUTES.NOT_FOUND);
       }
+    } else if (!seminarDetail && departmentList.length > 0) {
+      setSelectedDepartment(departmentList[0]);
     }
-  }, [seminarDetail]);
+  }, [seminarDetail, departmentList]);
 
   return (
     <div className={`${style.seminarForm__container}`}>
@@ -479,6 +580,21 @@ const SeminarForm = () => {
               error={errors.seminarPlace ? true : false}
               helperText={errors?.seminarPlace?.message}
             />
+            {userInfo.role === SYSTEM_ROLE.ADMIN && (
+              <FormControl style={{ width: "100%" }}>
+                <CustomizedSelect
+                  inputId="department"
+                  isMultipleSelect={false}
+                  items={departmentList}
+                  value={selectedDepartment}
+                  required={true}
+                  name="Phòng ban"
+                  MenuProps={MenuProps}
+                  disabled={isFormDisabled}
+                  onChange={onDepartmentChange}
+                />
+              </FormControl>
+            )}
 
             <Controller
               control={control}
@@ -520,15 +636,14 @@ const SeminarForm = () => {
               disabled={isFormDisabled}
               required={false}
               optional={true}
+              watch={watch("seminarDescription")}
               options={{
                 ...register("seminarDescription"),
               }}
             />
             <ListFileDisplay
               mode={
-                isFormDisabled
-                  ? SEMINAR_DETAIL_VIEW_MODE.VIEW
-                  : isFormUpdate
+                isFormUpdate
                   ? SEMINAR_DETAIL_VIEW_MODE.UPDATE
                   : SEMINAR_DETAIL_VIEW_MODE.CREATE
               }
@@ -539,26 +654,24 @@ const SeminarForm = () => {
               handleRemoveOldDocuments={handleRemoveOldDocuments}
             />
 
-            {isFormDisabled ? null : (
-              <Controller
-                name="seminarDocuments"
-                control={control}
-                defaultValue={documents}
-                rules={{ validate: validateFiles }}
-                render={({ field }) => {
-                  return (
-                    <FileInputIcon
-                      onChange={(e) => {
-                        field.onChange(e);
-                        handleDocumentsChange(e);
-                      }}
-                      field={field}
-                      error={errors.seminarDocuments}
-                    />
-                  );
-                }}
-              />
-            )}
+            <Controller
+              name="seminarDocuments"
+              control={control}
+              defaultValue={documents}
+              rules={{ validate: validateFiles }}
+              render={({ field }) => {
+                return (
+                  <FileInputIcon
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleDocumentsChange(e);
+                    }}
+                    field={field}
+                    error={errors.seminarDocuments}
+                  />
+                );
+              }}
+            />
 
             <Grid2
               container

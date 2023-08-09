@@ -19,6 +19,7 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { useHistory } from "react-router";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
+import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
@@ -28,11 +29,13 @@ const SeminarList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setAppbar } = useCustomAppbar();
+
   setAppbar(APPBAR_TITLES.SEMINAR_LIST);
 
   const userInfo = useSelector(selectUserInfo);
   const filterRef = useRef();
   const history = useHistory();
+  const AUTHORIZED_ROLE_SEMINAR = [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF];
 
   useEffect(() => {
     getSeminarList();
@@ -43,7 +46,7 @@ const SeminarList = () => {
   }, [filterInfo]);
 
   const onChangeStatusFilter = (status) => {
-    const statusFilter =
+    const statusFilterParam =
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
@@ -56,6 +59,9 @@ const SeminarList = () => {
       filterDepartmentId = userInfo.departmentId;
 
       filterRef.current.resetSelectedDepartment();
+    } else if (statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
+      // Check if last status is seminer by department or
+      filterDepartmentId = null;
     }
 
     setStatusFilter(status);
@@ -65,7 +71,10 @@ const SeminarList = () => {
       startDate: filterInfo?.startDate,
       endDate: filterInfo?.endDate,
       departmentId: filterDepartmentId,
-      status: statusFilter,
+      status: statusFilterParam,
+      ownSeminar: status === FILTER_SEMINAR.OWN_SEMINAR,
+      mentorIds:
+        status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
   };
 
@@ -83,22 +92,35 @@ const SeminarList = () => {
       setSeminars(data);
       setNextLink(response.nextPage);
     } catch (error) {
-      console.log(error);
+      history.push(ROUTES.SERVER_ERROR);
     } finally {
       setLoading(false);
     }
   };
 
   const onSeminarFilter = (seminarName, startDate, endDate, departmentId) => {
-    if (departmentId) {
+    let filterDepartmentId = filterInfo?.departmentId;
+
+    if (departmentId && statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
       setStatusFilter(FILTER_SEMINAR.ALL);
+    } else if (statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR) {
+      filterDepartmentId = userInfo.departmentId;
     }
+    const status =
+      statusFilter === FILTER_SEMINAR.IS_COMMING
+        ? "future"
+        : statusFilter === FILTER_SEMINAR.PAST
+        ? "past"
+        : null;
 
     setFilterInfo({
       searchString: seminarName,
       startDate,
       endDate,
-      departmentId,
+      departmentId: departmentId ?? filterDepartmentId,
+      status,
+      mentorIds:
+        status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
   };
 
@@ -116,6 +138,7 @@ const SeminarList = () => {
         ref={filterRef}
         onSeminarFilter={onSeminarFilter}
         onChangeStatusFilter={onChangeStatusFilter}
+        setFilterInfo={setFilterInfo}
       />
       <div className={style.seminarList__status__filter}>
         <div className={style.seminarList__status__filter__items}>
@@ -155,7 +178,7 @@ const SeminarList = () => {
           >
             {FILTER_SEMINAR.PAST}
           </p>
-          {userInfo?.role === "STAFF" && (
+          {userInfo?.role === SYSTEM_ROLE.STAFF && (
             <p
               className={
                 statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
@@ -169,23 +192,23 @@ const SeminarList = () => {
               {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
             </p>
           )}
-          {userInfo?.role === "STUDENT" && (
+          {userInfo?.role === SYSTEM_ROLE.MENTOR && (
             <p
               className={
-                statusFilter === FILTER_SEMINAR.FOLLOWED_SEMINAR
+                statusFilter === FILTER_SEMINAR.OWN_SEMINAR
                   ? style.seminarList__status__filter__active
                   : ""
               }
               onClick={() => {
-                onChangeStatusFilter(FILTER_SEMINAR.FOLLOWED_SEMINAR);
+                onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
               }}
             >
-              {FILTER_SEMINAR.FOLLOWED_SEMINAR}
+              {FILTER_SEMINAR.OWN_SEMINAR}
             </p>
           )}
         </div>
 
-        {userInfo?.role === "STAFF" ? (
+        {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
           <CustomizedButton
             variant="outlined"
             color="primary600"
@@ -197,7 +220,7 @@ const SeminarList = () => {
             />
             {BUTTON_LABEL.CREATE_SEMINAR}
           </CustomizedButton>
-        ) : null}
+        )}
       </div>
       <Grid
         className={style.seminarList__list}

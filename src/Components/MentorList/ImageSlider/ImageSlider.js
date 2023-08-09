@@ -51,7 +51,7 @@ const ImageSlider = () => {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={`SLIDER_IMAGE_${index}`}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"

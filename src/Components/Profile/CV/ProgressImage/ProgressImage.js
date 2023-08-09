@@ -4,12 +4,13 @@ import style from "./ProgressImage.module.scss";
 
 const ProgressImage = (props) => {
   const [progressImageNumber, setProgressImageNumber] = useState(1);
+  const [numberOfEmptyCVData, setNumberOfEmptyCVData] = useState(0);
 
   useEffect(() => {
     let numberOfNullCVData = 0;
 
     Object.keys(props.cvData).forEach((key) => {
-      if (props.cvData[key] !== null) numberOfNullCVData++;
+      if (props.cvData[key].length) numberOfNullCVData++;
     });
 
     if (numberOfNullCVData < 4) {
@@ -21,6 +22,8 @@ const ProgressImage = (props) => {
     } else {
       setProgressImageNumber(4);
     }
+
+    setNumberOfEmptyCVData(numberOfNullCVData);
   }, [props.cvData]);
 
   return (
@@ -36,7 +39,7 @@ const ProgressImage = (props) => {
           <div className={style.progress__text}>
             <span>{PROGRESS_INFORMATION_TEXT.NEED_UPDATE_INFORMATION}</span>
             <span>{PROGRESS_INFORMATION_TEXT.MORE_COMPLETE}</span>
-            <span>{`${PROGRESS_INFORMATION_TEXT.PROGRESS}: ${props.stageOfProgress}/7`}</span>
+            <span>{`${PROGRESS_INFORMATION_TEXT.PROGRESS}: ${numberOfEmptyCVData}/7`}</span>
           </div>
         </div>
       )}

@@ -7,11 +7,17 @@
     border-radius: 1rem;
 
     background-color: $black000;
+
+    height: 32rem;
+    overflow: hidden;
   }
 
   &__header {
     position: relative;
     text-align: center;
+  }
+  &__header:hover {
+    cursor: pointer;
   }
 
   &__image {
@@ -41,12 +47,12 @@
   }
 
   &__information {
-    padding-inline: 1rem;
+    padding-inline: 0.8rem;
   }
 
   &__title {
     font-size: 1.5rem;
-    height: 3.4rem;
+    height: 3.6rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -69,6 +75,12 @@
     gap: 0.5rem;
     font-size: 1rem;
     font-weight: 500;
+
+    height: 3.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     img {
       transform: scale(0.7);

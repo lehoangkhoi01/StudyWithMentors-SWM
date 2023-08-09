@@ -16,4 +16,35 @@ export const accountService = {
     const url = AccountEndpoints.CREATE_MENTOR;
     return axiosClient.post(url, data);
   },
+  getAllMoreInfoMentors: (params) => {
+    const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
+    return axiosClient.get(url, {
+      params: {
+        searchString: ["", ...params],
+      },
+    });
+  },
+  getAllStaffs: () => {
+    const url = AccountEndpoints.ACCOUNT_STAFF;
+    return axiosClient.get(url);
+  },
+  createStaff: (data) => {
+    const url = AccountEndpoints.CREATE_STAFF;
+    return axiosClient.post(url, data);
+  },
+  updateAccountStatus: (id, status) => {
+    const url = `${AccountEndpoints.ACCOUNT_STATUS}/${id}`;
+
+    return axiosClient.post(url, {
+      status,
+    });
+  },
+  updateStaff: (data, id) => {
+    const url = `${AccountEndpoints.UPDATE_STAFF}/${id}`;
+    return axiosClient.post(url, data);
+  },
+  getStudents: () => {
+    const url = AccountEndpoints.ACCOUNT_STUDENT;
+    return axiosClient.get(url);
+  }
 };

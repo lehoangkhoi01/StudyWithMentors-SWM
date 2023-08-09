@@ -29,7 +29,7 @@ const CVSection = (props) => {
     <>
       <div className={style.section__title}>
         <h3>{props.title}</h3>
-        {props.title !== PROFILE_TITLES.INTRODUCION && (
+        {props.editable && props.title !== PROFILE_TITLES.INTRODUCION && (
           <>
             <img
               onClick={onEditData}
@@ -41,7 +41,7 @@ const CVSection = (props) => {
             />
           </>
         )}
-        {props.title === PROFILE_TITLES.INTRODUCION && (
+        {props.editable && props.title === PROFILE_TITLES.INTRODUCION && (
           <>
             {props.viewData.length > 0 && (
               <img

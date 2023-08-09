@@ -15,32 +15,37 @@ import { useCustomLoading } from "../../../Helpers/generalHelper";
 import { Typography } from "@mui/material";
 import CustomTopTitle from "../../../shared/components/CustomTopTitle/CustomTopTitle";
 import { TITLE } from "../../../shared/constants/common";
+import { userAccountService } from "../../../Services/userAccountService";
 
 const SignInForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { setLoading } = useCustomLoading();
   const [loginError, setLoginError] = React.useState("");
+  const [disabled, setDisabled] = React.useState(false);
 
   const handleSignInWithGoogle = async () => {
     setLoading(true);
+    setDisabled(true);
     try {
       const googleSignInResult = await SignInWithGoogle();
       const response = await authenticationService.signInGoogle(
         googleSignInResult
       );
       localStorage.setItem("TOKEN", response.accessToken);
-      dispatch(userAction.loginSuccess(response));
+
+      const userInfo = await userAccountService.getUserInfo();
+      dispatch(userAction.loginSuccess(userInfo));
       history.push(ROUTES.HOME);
     } catch (error) {
-      if (error.status == "403") {
+      if (error.status === 400 || error.status === 403) {
         setLoginError(ERROR_MESSAGES.UNAUTHORIZED_SIGNIN);
       } else {
         history.push(ROUTES.SERVER_ERROR);
       }
-      console.log(error);
     } finally {
       setLoading(false);
+      setDisabled(false);
     }
   };
 
@@ -50,7 +55,10 @@ const SignInForm = () => {
         <CustomPattern width={"50%"} height={"95%"} />
         <div className={`${style.signIn__formSection}`}>
           <CustomTopTitle title={TITLE.SIGN_IN} />
-          <GoogleSignInButton onClick={handleSignInWithGoogle} />
+          <GoogleSignInButton
+            onClick={handleSignInWithGoogle}
+            isDisabled={disabled}
+          />
           <Typography
             variant="subtitle1"
             className={`${style.signIn__errorText}`}

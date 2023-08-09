@@ -20,6 +20,7 @@ import {
   DialogContentText,
   DialogTitle,
   DialogActions,
+  Typography,
 } from "@mui/material";
 import { BUTTON_LABEL } from "../../constants/common";
 import CustomizedButton from "../Button/CustomizedButton";
@@ -27,12 +28,22 @@ import CustomizedButton from "../Button/CustomizedButton";
 const ConfirmationDialog = (props) => {
   return (
     <Dialog
+      fullWidth
       open={props.open ?? false}
       onClose={props.handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        <Typography
+          fontWeight={700}
+          fontSize="2rem"
+          textAlign="center"
+          color="#283493"
+        >
+          {props.title}
+        </Typography>
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {props.content}

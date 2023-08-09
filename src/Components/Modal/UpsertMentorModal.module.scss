@@ -23,7 +23,7 @@
   padding: 0rem 2.5rem 1rem;
 
   &__buttons {
-    justify-content: flex-start;
+    justify-content: flex-end;
     display: flex;
     width: 100%;
     gap: 5%;
@@ -46,6 +46,11 @@
     &:active {
       transform: scale(1.05);
     }
+  }
+
+  &__error {
+    color: $systemRed;
+    margin-top: -1rem;
   }
 
   h2 {

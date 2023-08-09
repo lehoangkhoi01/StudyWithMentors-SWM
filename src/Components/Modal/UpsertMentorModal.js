@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 import style from "./UpsertMentorModal.module.scss";
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import {
@@ -18,22 +18,31 @@ import {
   useNotification,
 } from "../../Helpers/generalHelper";
 import { userAccountService } from "../../Services/userAccountService";
+import {
+  emailValidationRules,
+  registerFullNameValidation,
+} from "../../shared/constants/validationRules";
 
 const UpsertMentorModal = (props) => {
-  const { handleSubmit, register, setValue, getValues } = useForm();
+  const { handleSubmit, register, setValue, getValues, reset } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const { getLatestSpeakerList } = useFetchSpeakerList();
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
+  const [isExistedEmail, setIsExistedEmail] = useState(false);
 
   useEffect(() => {
+    reset();
+    setIsExistedEmail(false);
     if (props.existedData) {
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
       setValue("phoneNum", props.existedData.phoneNum);
 
       setType(MODAL_TYPE.EDIT);
+    } else {
+      setType(MODAL_TYPE.ADD);
     }
   }, [props.openModal]);
 
@@ -47,35 +56,53 @@ const UpsertMentorModal = (props) => {
 
     try {
       setLoading(true);
+      setIsExistedEmail(false);
+
       if (type === MODAL_TYPE.EDIT) {
         await userAccountService.updateUserProfile(
           props.existedData.id,
           specificForm
         );
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_MENTOR_SUCCESS,
+        });
       } else if (type === MODAL_TYPE.ADD) {
         await accountService.createMentor(specificForm);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_MENTOR_SUCCESS,
+        });
       }
 
       await getLatestSpeakerList();
-      setNotification({
-        isOpen: true,
-        type: "success",
-        message: COMMON_MESSAGE.ADD_MENTOR_SUCCESS,
-      });
+
       if (props.onSuccess) {
         props.onSuccess();
       }
       props.onCloseModal();
     } catch (error) {
-      console.log(error);
-
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: ERROR_MESSAGES.COMMON_ERROR,
-      });
+      if (error.data.includes("already exists")) {
+        setIsExistedEmail(true);
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const validatePhoneNum = (phoneNum) => {
+    if (phoneNum && (phoneNum.length < 10 || phoneNum.length > 11)) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    } else if (phoneNum && /^\d+$/.test(phoneNum) === false) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
     }
   };
 
@@ -87,28 +114,45 @@ const UpsertMentorModal = (props) => {
             className={`${style.modal__form}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h2>Thêm diễn giả</h2>
+            <Typography
+              marginY={3}
+              fontWeight={700}
+              fontSize="2rem"
+              textAlign="center"
+              color="#283493"
+            >
+              Thông tin diễn giả
+            </Typography>
             <CustomizedTextField
               name={"Họ và tên"}
               required={true}
               placeholder={PLACE_HOLDER.DEFAULT_NAME}
               options={{
-                ...register("fullName"),
+                ...register("fullName", registerFullNameValidation),
               }}
             />
             <CustomizedTextField
               name={"Email"}
               required={true}
               placeholder={PLACE_HOLDER.DEFAULT_EMAIL}
+              disabled={type === MODAL_TYPE.EDIT}
               options={{
-                ...register("email"),
+                ...register("email", emailValidationRules),
               }}
             />
+            {isExistedEmail && (
+              <p className={`${style.modal__error}`}>
+                {ERROR_MESSAGES.EXISTED_EMAIL}
+              </p>
+            )}
+
             <CustomizedTextField
               name={"Số điện thoại"}
               placeholder={PLACE_HOLDER.DEFAULT_PHONE}
               options={{
-                ...register("phoneNum"),
+                ...register("phoneNum", {
+                  validate: (val) => validatePhoneNum(val),
+                }),
               }}
             />
             <div className={style.modal__buttons}>

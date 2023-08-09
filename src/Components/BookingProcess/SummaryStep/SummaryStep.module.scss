@@ -1,0 +1,15 @@
+@import "../../../shared/theme";
+
+.bookingSummary {
+  &__title {
+    color: $primary800;
+  }
+  &__subTitle {
+    font-weight: 600;
+  }
+  &__detail {
+    color: $black800;
+    margin: 0.5rem 1rem;
+    font-size: $NORMAL_FONT_SIZE;
+  }
+}

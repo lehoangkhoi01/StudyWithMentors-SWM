@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
   ERROR_MESSAGES,
   SEMINAR,
   TITLE,
+  USER_STATUS,
 } from "../../../shared/constants/common";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
@@ -36,6 +37,11 @@ import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import moment from "moment";
 
 const SeminarDetail = () => {
+  const AUTHORIZED_ROLE_ACTION = [
+    SYSTEM_ROLE.STAFF,
+    SYSTEM_ROLE.ADMIN,
+  ];
+
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -46,6 +52,21 @@ const SeminarDetail = () => {
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
+
+  const isAuthorizedEditSeminar = (seminarDetail) => {
+    if (!AUTHORIZED_ROLE_ACTION.includes(userInfo?.role)) {
+      return false;
+    }
+
+    if (
+      userInfo?.role === SYSTEM_ROLE.STAFF &&
+      seminarDetail?.department.id !== userInfo?.departmentId
+    ) {
+      return false;
+    }
+
+    return true;
+  };
 
   const breadcrumbsNavigate = [
     { title: BREADCRUMBS_TITLE.SEMINAR_LIST, route: ROUTES.SEMINAR_LIST },
@@ -88,7 +109,6 @@ const SeminarDetail = () => {
       });
       history.push(ROUTES.SEMINAR_LIST);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
@@ -141,7 +161,9 @@ const SeminarDetail = () => {
         if (error?.status == "404") {
           history.push(ROUTES.NOT_FOUND);
         }
-        console.log(error);
+        if (error.status == "500") {
+          history.push(ROUTES.SERVER_ERROR);
+        }
       } finally {
         setLoading(false);
       }
@@ -170,7 +192,7 @@ const SeminarDetail = () => {
                 <h1 className={style.detail__title}>{data.name}</h1>
                 {renderSeminarStatusLabel()}
 
-                {userInfo?.role === "STAFF" && (
+                {isAuthorizedEditSeminar(data) && (
                   <div className={style.detail__burger}>
                     <Button
                       id="basic-button"
@@ -211,22 +233,22 @@ const SeminarDetail = () => {
                         />
                         <span>{SEMINAR.RERORT}</span>
                       </MenuItem>
+                      <MenuItem
+                        onClick={() =>
+                          handleNavigate(
+                            ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
+                          )
+                        }
+                      >
+                        <img
+                          src={require("../../../assets/icons/Seminar_Edit.png")}
+                        />
+                        <span>{SEMINAR.EDIT}</span>
+                      </MenuItem>
 
                       {moment(data.startTime) > Date.now() && (
-                        //Not show edit and delete menu for past event
+                        //Not show delete menu for past event
                         <div>
-                          <MenuItem
-                            onClick={() =>
-                              handleNavigate(
-                                ROUTES_STATIC.SEMINAR_UPDATE + "/" + id
-                              )
-                            }
-                          >
-                            <img
-                              src={require("../../../assets/icons/Seminar_Edit.png")}
-                            />
-                            <span>{SEMINAR.EDIT}</span>
-                          </MenuItem>
                           <MenuItem onClick={onOpenRemoveDialog}>
                             <img
                               src={require("../../../assets/icons/Seminar_Delete.png")}
@@ -238,15 +260,34 @@ const SeminarDetail = () => {
                     </Menu>
                   </div>
                 )}
-                <p>
+
+                <div>
                   <strong>{SEMINAR.AUTHOR}:</strong>{" "}
-                  {data.mentors.map(
-                    (mentor, index) =>
-                      `${mentor.fullName}${
-                        data.mentors.length - 1 !== index ? ", " : ""
-                      }`
-                  )}
-                </p>
+                  {data.mentors.map((mentor, index) => {
+                    if (mentor.status === USER_STATUS.ACTIVATED) {
+                      return (
+                        <>
+                          <Link
+                            to={`${ROUTES.CV}/${mentor.id}`}
+                            key={`MENTOR_${index}`}
+                          >
+                            {mentor.fullName}
+                          </Link>
+                          <span>
+                            {data.mentors.length - 1 !== index ? ", " : ""}
+                          </span>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <span key={`MENTOR_${index}`}>
+                          {mentor.fullName}
+                          {data.mentors.length - 1 !== index ? ", " : ""}
+                        </span>
+                      );
+                    }
+                  })}
+                </div>
                 <p>
                   <strong>{SEMINAR.TIME}: </strong>
                   {handleTimeToDisplay(data.startTime)}
@@ -263,29 +304,39 @@ const SeminarDetail = () => {
                   </p>
                   {data.description ? (
                     <>
-                      <Typography
-                        className={
-                          expandDetail
-                            ? null
-                            : `${style.detail__seminarDescription}`
-                        }
-                      >
-                        {data.description}
-                      </Typography>
-                      <div className={`${style.detail__expandButton}`}>
-                        <Button
-                          onClick={() => {
-                            setExpandDetail((prev) => !prev);
-                          }}
-                        >
-                          {expandDetail
-                            ? BUTTON_LABEL.VIEW_LESS
-                            : BUTTON_LABEL.VIEW_MORE}
-                        </Button>
-                      </div>
+                      {data.description.length > 300 ? (
+                        <>
+                          <Typography
+                            className={
+                              expandDetail
+                                ? null
+                                : `${style.detail__seminarDescription}`
+                            }
+                          >
+                            {data.description}
+                          </Typography>
+                          <div className={`${style.detail__expandButton}`}>
+                            <Button
+                              onClick={() => {
+                                setExpandDetail((prev) => !prev);
+                              }}
+                            >
+                              {expandDetail
+                                ? BUTTON_LABEL.VIEW_LESS
+                                : BUTTON_LABEL.VIEW_MORE}
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography>{data.description}</Typography>
+                        </>
+                      )}
                     </>
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_DESCRIPTION}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_DESCRIPTION}
+                    </Typography>
                   )}
                 </div>
 
@@ -294,28 +345,26 @@ const SeminarDetail = () => {
                   {data.attachmentLinks?.length > 0 ? (
                     <ListFileDisplay
                       mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
-                      oldItems={data.attachmentLinks}
+                      oldItems={data.attachments}
                     />
                   ) : (
-                    <Typography>{SEMINAR.EMPTY_ATTACHMENTS}</Typography>
+                    <Typography color="GrayText" fontStyle="italic">
+                      {SEMINAR.EMPTY_ATTACHMENTS}
+                    </Typography>
                   )}
                 </p>
 
                 <div className={style.detail__buttons}>
-                  {userInfo?.role === SYSTEM_ROLE.STUDENT && (
-                    <CustomizedButton variant="outlined" color="primary600">
-                      {BUTTON_LABEL.SUBCRIBE_SEMNIAR}
-                    </CustomizedButton>
-                  )}
-                  {userInfo?.role !== SYSTEM_ROLE.STAFF && (
-                    <CustomizedButton
-                      onClick={onOpenModal}
-                      variant="outlined"
-                      color="primary600"
-                    >
-                      {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                    </CustomizedButton>
-                  )}
+                  {userInfo?.role !== SYSTEM_ROLE.STAFF &&
+                    new Date() > new Date(data.startTime) && (
+                      <CustomizedButton
+                        onClick={onOpenModal}
+                        variant="outlined"
+                        color="primary600"
+                      >
+                        {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                      </CustomizedButton>
+                    )}
                 </div>
               </div>
             </div>

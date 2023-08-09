@@ -12,23 +12,6 @@ import {
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const MAJOR_NAMES = [
-  { name: "IT - Phần mêm", value: "IT - Phần mêm" },
-  { name: "IT - Phần cứng", value: "IT - Phần cứng" },
-  { name: "Bất động sản", value: "Bất động sản" },
-  { name: "Thiết kế/Kiến trúc", value: "Thiết kế/Kiến trúc" },
-  { name: "Nhà hàng/Khách sạn", value: "Nhà hàng/Khách sạn" },
-  { name: "Marketing", value: "Marketing" },
-];
-
-const CATEGORY_NAMES = [
-  { name: "Kỹ năng mềm", value: "Kỹ năng mềm" },
-  { name: "Kiến thức chuyên môn", value: "Kiến thức chuyên môn" },
-  { name: "Nghề nghiệp", value: "Nghề nghiệp" },
-  { name: "Feedback và Lời khuyên", value: "eedback và Lời khuyên" },
-  { name: "Học bổng", value: "Học bổng" },
-  { name: "Các cuộc thi", value: "Các cuộc thi" },
-];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -47,33 +30,43 @@ const StyledLabelSelect = styled(InputLabel)`
 `;
 
 const FilterSection = (props) => {
-  const { register, reset } = useForm();
+  const { register, reset, getValues } = useForm();
 
-  const [majorName, setMajorName] = useState([]);
-  const [categoryName, setCategoryName] = useState([]);
+  const [selectedFields, setSelectedFields] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const handleMajoreChange = (event) => {
+  const handleFieldChange = (event) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
-    setMajorName(typeof value === "string" ? value.split(",") : value);
+    setSelectedFields(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleCategoryChange = (event) => {
     const {
       target: { value },
     } = event;
-    setCategoryName(typeof value === "string" ? value.split(",") : value);
+    setSelectedCategories(typeof value === "string" ? value.split(",") : value);
   };
 
   const clearFilter = () => {
-    setMajorName([]);
-    setCategoryName([]);
+    setSelectedFields([]);
+    setSelectedCategories([]);
     reset({
       searchTerm: "",
     });
     props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
+    props.setFilterInfo()
+  };
+
+  const onSearch = () => {
+    const fieldNames = selectedFields.map((item) => item.name);
+    const categoryNames = selectedCategories.map((item) => item.name);
+    const searchTerm = getValues("searchTerm");
+
+    const params = [searchTerm, ...fieldNames, ...categoryNames];
+
+    props.onSearch(params);
   };
 
   return (
@@ -83,7 +76,7 @@ const FilterSection = (props) => {
         container
         columnSpacing={{ sm: 2 }}
       >
-        <Grid item xs={3.5}>
+        <Grid item xs={4}>
           <CustomizedTextField
             fullWidth
             inputId="search"
@@ -94,19 +87,18 @@ const FilterSection = (props) => {
             }}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.5}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_MAJOR}
+              {PLACE_HOLDER.FIELD_SELECT}
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
-              items={MAJOR_NAMES}
-              inputId="majorSelect"
+              items={props.fields}
+              inputId="fieldSelect"
               isMultipleSelect={true}
-              value={majorName}
-              onChange={handleMajoreChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
+              value={selectedFields}
+              onChange={handleFieldChange}
               renderValue={(selected) => {
                 return selected.map(
                   (item, index) =>
@@ -118,19 +110,18 @@ const FilterSection = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.5}>
           <FormControl fullWidth>
             <StyledLabelSelect className={`${style.filterSection__label}`}>
-              {PLACE_HOLDER.ALL_CATEGORY}
+              {PLACE_HOLDER.CATEGORY_SELECT}
             </StyledLabelSelect>
             <CustomizedSelect
               fullWidth
-              items={CATEGORY_NAMES}
-              inputId="majorSelect"
+              items={props.categories}
+              inputId="categorySelect"
               isMultipleSelect={true}
-              value={categoryName}
+              value={selectedCategories}
               onChange={handleCategoryChange}
-              placeholder={PLACE_HOLDER.DEFAULT_FILTER_MENTOR_SELECT}
               renderValue={(selected) => {
                 return selected.map(
                   (item, index) =>
@@ -148,6 +139,7 @@ const FilterSection = (props) => {
               className={`${style.filterSection__button}`}
               variant="contained"
               startIcon={<SearchIcon />}
+              onClick={onSearch}
             >
               {BUTTON_LABEL.SEARCH}
             </Button>

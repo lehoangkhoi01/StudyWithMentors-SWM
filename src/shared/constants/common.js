@@ -28,6 +28,22 @@ export const BUTTON_LABEL = {
   DEACTIVATE_MENTOR: "Vô hiệu hóa",
   VIEW_MORE: "Xem thêm",
   VIEW_LESS: "Thu gọn",
+  CREATE_TOPIC: "Tạo chủ đề",
+  ADD_TOPIC: "Thêm chủ đề",
+  SEARCH_MENTOR: "Tìm kiếm diễn giả",
+  SEARCH_TOPIC: "Tìm kiếm chủ đề",
+  BOOKING_NOW: "Đặt lịch",
+  CREATE_FIELD: "Tạo lĩnh vực",
+  ADD_FIELD: "Thêm lĩnh vực",
+  CREATE_CATEGORY: "Tạo thể loại",
+  ADD_CATEGORY: "Thêm thể loại",
+  SEARCH_FIELD: "Tìm kiếm lĩnh vực",
+  SEARCH_CATEGORY: "Tìm kiếm thể loại",
+  CREATE_DEPARTMENT: "Tạo phòng ban",
+  ADD_DEPARTMENT: "Thêm phòng ban",
+  ADD_STAFF: "Thêm nhân viên",
+  SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
+  SEARCH_STAFF: "Tim kiếm nhân viên",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -79,11 +95,20 @@ export const TITLE = {
   SEMINAR_INFO: "Thông tin sự kiện",
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
+  CREATE_TOPIC: "Tạo chủ đề",
+  EDIT_TOPIC: "Chỉnh sửa chủ đề",
+  CREATE_FIELD: "Tạo lĩnh vực",
+  EDIT_FIELD: "Chỉnh sửa lĩnh vực",
+  CREATE_CATEGORY: "Tạo thể loại",
+  EDIT_CATEGORY: "Chỉnh sửa thể loại",
+  CREATE_DEPARTMENT: "Tạo phòng ban",
+  EDIT_DEPARTMENT: "Chỉnh sửa phòng ban",
 };
 
 export const OTHER_TEXT = {
   FREE_SCHEDULE: "Lịch chưa được đặt",
-  BOOKED_SCHEDULE: "Lịch đã được đặt",
+  BOOKED_SCHEDULE: "Lịch đang chờ xác nhận",
+  ACCEPTED_SCHEDULE: "Lịch đã xác nhận",
 };
 
 export const COMMON_MESSAGE = {
@@ -105,6 +130,20 @@ export const COMMON_MESSAGE = {
   CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
+  UPDATE_MENTOR_SUCCESS: "Cập nhật thông tin thành công",
+  REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
+  REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
+  ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
+  ADD_SCHEDULE_FAIL: "Thêm lịch thất bại. Xin vui lòng thử lại sau",
+  UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
+  UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại. Xin vui lòng thử lại sau",
+  UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
+  UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
+  ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
+  REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
+  ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
+  UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
+  EXISTED_EMAIL: "Email đã tồn tại",
 };
 
 export const SIGN_UP_STAGE = {
@@ -147,7 +186,8 @@ export const PLACE_HOLDER = {
   ENTER_EMAIL: "Hãy nhập email của bạn",
   DEFAULT_DATE: "09/2020",
   SEARCH_MENTOR: "Tên theo hội thảo, diễn giả",
-  DEFAULT_FILTER_MENTOR_SELECT: "Tất cả lĩnh vực",
+  FIELD_SELECT: "Lĩnh vực",
+  CATEGORY_SELECT: "Thể loại",
   ALL_MAJOR: "Tất cả lĩnh vực",
   ALL_CATEGORY: "Tất cả phân loại",
   CHOOSE_IMAGE: "Bấm hoặc kéo file để tải poster",
@@ -169,6 +209,7 @@ export const GENDER = {
 };
 
 export const LENGTH = {
+  FULLNAME_MAX: 200,
   PASSWORD_MAX: 100,
   PASSWORD_MIN: 8,
   EMAIL_MAX: 254,
@@ -177,6 +218,8 @@ export const LENGTH = {
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 5,
   SPEAKERS_MAX: 3,
+  STUDENT_NOTE_MAX: 1000,
+  PARTICIPANTS_MAX: 4,
 };
 
 export const ERROR_MESSAGES = {
@@ -188,12 +231,18 @@ export const ERROR_MESSAGES = {
   EMPTY_EMAIL_FIELD: "Email không được để trống.",
   EMPTY_PASSWORD_FIELD: "Password không được để trống.",
   MAX_LENGTH_EMAIL: "Độ dài tối đa cho email là " + LENGTH.EMAIL_MAX + " kí tự",
+  MAX_LENGTH_FULLNAME:
+    "Độ dài tối đa cho tên là " + LENGTH.FULLNAME_MAX + " kí tự",
+  MAX_PARTICIPANTS: "Chọn tối đa " + LENGTH.PARTICIPANTS_MAX + " bạn tham gia",
+  MAX_LENGTH_STUDENT_NOTE:
+    "Độ dài tối đa cho ghi chú là " + LENGTH.STUDENT_NOTE_MAX + " kí tự",
   INVALID_PASSWORD_LENGTH:
     "Chọn mật khẩu có độ dài từ " +
     LENGTH.PASSWORD_MIN +
     " đến " +
     LENGTH.PASSWORD_MAX +
     " kí tự.",
+  INVALID_PHONE_NUM: "Số điện thoại từ 10 đến 11 số.",
   WRONG_EMAIL_OR_PASSWORD: "Email hoặc mật khẩu không chính xác.",
   CONFIRM_PASSWORD_NOT_MATCH: "Mật khẩu không trùng khớp.",
   WRONG_PASSWORD_FORMAT:
@@ -216,6 +265,18 @@ export const ERROR_MESSAGES = {
     "Vui lòng chọn tối đa " + LENGTH.SPEAKERS_MAX + " diễn giả.",
   COMMON_ERROR:
     "Đã có lỗi xảy ra. Máy chủ hiện không ổn định. Xin vui lòng thử lại sau",
+  EXISTED_EMAIL: "Email đã tồn tại",
+  COMMENT_ERROR: "Có lỗi xảy ra khi bình luận. Xin vui lòng thử lại sau",
+  UPDATE_COMMENT_ERROR:
+    "Có lỗi xảy ra khi chỉnh sửa bình luận. Xin vui lòng thử lại sau",
+  UPVOTE_ERROR:
+    "Có lỗi xảy ra khi đánh giá bình luận. Xin vui lòng thử lại sau. Nếu chưa đăng nhập, vui lòng đăng nhập vào hệ thống để thực hiện hành động này.",
+  DELETE_COMMENT_ERROR:
+    "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
+  END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE:
+    "Ngày kết thúc không được sớm hơn ngày bắt đầu",
+  EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
+    "Ngày hết hạn không được sớm hơn ngày nhận",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -321,6 +382,8 @@ export const DATE_FORMAT = {
   BACK_END_YYYY_MM_DD: "yyyy-MM-dd",
   BACK_END_DD_MM_YYYY__HH_mm_ss: "dd-MM-yyyy HH:mm:ss",
   BACK_END_YYYY_MM_DD__HH_mm_ss: "yyyy-MM-dd HH:mm:ss",
+  BACK_END_HH_mm_ss: "HH:mm:ss",
+  HH_mm: "HH:mm",
 };
 
 export const CV_REGISTER_NAME_PREFIX = {
@@ -342,6 +405,14 @@ export const MODAL_DELETE_PROPERTY = {
   BACK: "Quay lại",
   DELETE: "Xóa",
   DEACTIVATE: "Vô hiệu hóa",
+};
+
+export const MODAL_ACTIVE_PROPERTY = {
+  ACTIVE_CONFIRM: "Bạn có muốn kích hoạt lại tài khoản",
+  ACTIVE_DETAIL:
+    "Tài khoản sau khi kích hoạt sẽ được phép sử dụng các tài nguyên website của Growth Me.",
+  BACK: "Quay lại",
+  ACTIVE: "Kích hoạt",
 };
 
 export const FOLLOW = {
@@ -373,6 +444,7 @@ export const FILTER_SEMINAR = {
   FOLLOWED_SEMINAR: "Quan tâm",
   POPULAR: "Nổi bật",
   FOLLOWING: "Đang theo dõi",
+  OWN_SEMINAR: "Sự kiện của tôi",
 };
 
 export const QR_TEXT = {
@@ -400,6 +472,12 @@ export const ADMIN_TABLE_HEADER = {
   CREATED_DATE: "Ngày tạo",
   STATUS: "Trạng thái",
   ACTION: "Tác vụ",
+  FIELD_NAME: "Lĩnh vực",
+  CATEGORY_NAME: "Thể loại",
+};
+
+export const TABLE_DETAIL = {
+  CV_MENTOR: "Hồ sơ diễn giả",
 };
 
 export const SORT_DIRECTION = {
@@ -412,6 +490,7 @@ export const MENTOR_STATUS = {
   INVALIDATE: "Vô hiệu hóa",
   WAITING: "Đang chờ",
   ACTIVATED: "Hoạt động",
+  ALL: "Tất cả",
 };
 
 export const FEEDBACK_OVERVIEW = {
@@ -423,4 +502,199 @@ export const FEEDBACK_OVERVIEW = {
 export const CROP_IMAGE = {
   ADJUST_AVATAR: "Điều chỉnh ảnh đại diện",
   AVATAR_AFTER_ADJUST: "Ảnh đại diện sau khi điều chỉnh",
+};
+
+export const ADD_TOPIC = {
+  TOPIC_NAME: "Tên chủ đề",
+  DESCRIPTION: "Mô tả",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
+  MONEY: "Chi phí",
+};
+
+export const CLASS_NAME = {
+  SPAN_CAPTION_IS_YOU: "OSeYVFzQ3ebXxqDY9XKn",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_1: "i8ct3MPKG0I8SA9qfu6m",
+  DIV_CAPTION_IS_YOU_ROOM_MEMBERS_2: "Dp9dbt0Fgqf3teHekKjV",
+  DIV_ROOM_MENBERS: "n6GuqIk3cK3cSgL5gW1Z",
+  P_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  DIV_IGNORE_SHARING_WARNING: "MMnj7hRGhI3yZw8790HU",
+  P_YOU_ARE_PRESENTING: "imtOkrRZytf3edIVDdeD",
+  DIV_STOP_PRESENTING: "t7UX3TRe4IbZBz9_mSrz",
+  BACKGROUND: "sCsSbKP9yxvw4LQAeaTz",
+  VIDEO_BACKGROUND: "GBqD5akUB0siCNWbAPQr",
+  VIDEO_1: "z1WvYJgksHY23EwdFNB5",
+  VIDEO_2: "pVo6XoSfywa4eLk9ef2S",
+  OUTSIDE_VIDEO_1: "lRNsiz_pTf7YmA5QMh4z",
+  OUTSIDE_VIDEO_2: "Xfk1RtGH65gHx0iQ5uPA",
+  RIGHT_SIDE_BOX: "M4HRY2n7rpNAd1UjDNZe",
+  MEETING_FOOTER: "ji5jASszKFf2CGCmbxEh",
+  MIRCO_ICON: "QYvze2FiFrLlotTk5Iz7",
+  CAMERA_ICON: "Wlqv8YhEAE9OzBkKuKjg",
+  SHARING_ICON: "UbpDhvufmId2nxL2l5gC",
+  ROOM_DETAIL_ICON: "QbarJSxzhe6iPp6VdlAs",
+  MEMBER_ICON: "qJdF_iTl1gv6JkFZmE2R",
+  CHAT_ICON: "aUBcrib1jsrHTK9vhlVZ",
+  LEAVE_TITLE: "YVsLErvDz5lZnY9Ce4UB",
+  LEAVE_CONFIRM: "_gK_8I1XIktCDlYp08Lg",
+  CANCEL_LEAVE: "nRumfFQWv_1Hnf9jP5qZ",
+  SUBMIT_LEAVE: "TTgLs8cpg66Z6CXgHGVA",
+  NOT_FOUND_MEDIA: "U3bw7pl2JEPgyTwLzxFa",
+  PLACE_HOLDER: "xM8CBkrn0wtFOdOP84Bb",
+  IS_LEFT: "lflaXazrPGAK9SbOcNoC",
+};
+
+export const TABLE_ACTION = {
+  EDIT: "Chỉnh sửa",
+  DEACTIVATE: "Vô hiệu hóa",
+  ACTIVATE: "Kích hoạt",
+};
+
+export const UPSERT_MENTOR = {
+  ADD_MENTOR: "Thêm diễn giả",
+  EDIT_MENTOR: "Chỉnh sửa diễn giả",
+};
+
+export const TOPIC_TABLE = {
+  NUMBER: "STT",
+  NAME: "Chủ đề",
+  DESCRIPTION: "Mô tả",
+  FIELD: "Lĩnh vực",
+  CATEGORY: "Thể loại",
+  MENTOR: "Diễn giả",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const TOPIC_STATUS = {
+  WAITING: "Đang chờ",
+  DELETED: "Đã xóa",
+  ACCEPTED: "Đã duyệt",
+  REJECTED: "Từ chối",
+  ARCHIVED: "Lưu trữ",
+};
+
+export const TOPIC_STATUS_BACKEND = {
+  WAITING: "WAITING",
+  DELETED: "DELETED",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+  ARCHIVED: "ARCHIVED",
+};
+
+export const CONFIRM_TOPIC_MODAL = {
+  REJECT_CONFIRM: "Bạn có muốn từ chối",
+  ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
+  ARCHIVE_CONFIRM: "Bạn có muốn ẩn",
+  REJECT: "Từ chối",
+  ACCEPT: "Phê duyệt",
+  ARCHIVE: "Ẩn",
+  TOPIC: "chủ đề",
+  SHOW: "Hiện",
+  DETAIL: "Chi tiết",
+};
+
+export const TABLE_TYPE = {
+  MENTOR: "MENTOR",
+  TOPIC: "TOPIC",
+  FIELD: "FIELD",
+  CATEGORY: "CATEGORY",
+  BOOKING: "BOOKING",
+  DEPARTMENT: "DEPARTMENT",
+  STAFF: "STAFF",
+};
+
+export const USER_STATUS = {
+  ACTIVATED: "ACTIVATED",
+  WATTING: "WAITING",
+};
+
+export const CV_MENTOR = {
+  HOT_TOPIC: "Chủ đề nổi bật",
+  AVAILABLE_TIME: "Thời gian khả dụng gần nhất trong 30 ngày tiếp theo",
+};
+
+export const MENTOR_CARD = {
+  RATING: "sao",
+  FOLLOWERS: "người theo dõi",
+  DONT_HAVE_TOPIC: "Chưa có chủ đề",
+};
+
+export const MIN_DURATION_ACTION_BOOKING = 2;
+
+export const UPSERT_FIELD = {
+  NAME: "Tên lĩnh vực",
+};
+
+export const UPSERT_CATEGORY = {
+  NAME: "Tên thể loại",
+};
+
+export const ADMIN_BOOKING_TABLE = {
+  TOPIC_NAME: "Chủ đề",
+  MENTOR_NAME: "Diễn giả",
+  PARTICIPANTS: "Người tham gia",
+  TIME: "Thời gian",
+  STATUS: "Trạng thái",
+  BOOKING_DATE: "Ngày đặt",
+};
+
+export const TRANSLATED_BOOKING_STATUS = {
+  ACCEPTED: "Đã duyệt",
+  REQUESTED: "Đang yêu cầu",
+  REJECTED: "Đã hủy",
+};
+
+export const STAFF_TABLE = {
+  NAME: "Tên",
+  EMAIL: "Email",
+  PHONE: "Số điện thoại",
+  DEPARTMENT: "Phòng ban",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const STUDENT_TABLE = {
+  NAME: "Tên",
+  EMAIL: "Email",
+  GENDER: "Giới tính",
+  STATUS: "Trạng thái",
+  ACTION: "Tác vụ",
+};
+
+export const TRANSLATED_STAFF_STATUS = {
+  NOT_DEFINE: "Không xác định",
+  INVALIDATE: "Vô hiệu hóa",
+  WAITING: "Đang chờ",
+  ACTIVATED: "Hoạt động",
+};
+
+export const TRANSLATED_STUDENT_STATUS = {
+  NOT_DEFINE: "Không xác định",
+  INVALIDATE: "Vô hiệu hóa",
+  WAITING: "Đang chờ",
+  ACTIVATED: "Hoạt động",
+};
+
+export const STAFF_STATUS = {
+  INVALIDATE: "INVALIDATE",
+  WAITING: "WAITING",
+  ACTIVATED: "ACTIVATED",
+};
+
+export const UPSERT_STAFF = {
+  ADD_STAFF: "Thêm staff",
+  EDIT_STAFF: "Chỉnh sửa staff",
+};
+
+export const STUDENT_STATUS = {
+  INVALIDATE: "INVALIDATE",
+  WAITING: "WAITING",
+  ACTIVATED: "ACTIVATED",
+};
+
+export const TRANSLATED_STUDENT_GENDER = {
+  OTHERS: "Khác",
+  MALE: "Nam",
+  FEMALE: "Nữ",
 };

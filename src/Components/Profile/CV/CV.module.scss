@@ -3,13 +3,13 @@
 .cv {
   &__container {
     display: flex;
-    flex-direction: row;
-    gap: 3vw;
+    flex-direction: row !important;
+    gap: 1rem;
     justify-content: center;
-    align-items: center;
-
-    width: 85%;
+    width: 95%;
+    margin-inline: auto;
     padding-top: 4vh;
+    margin-bottom: 1rem;
   }
 
   &__detail {
@@ -18,9 +18,10 @@
     box-shadow: 0px 4px 4px rgba($black900, 0.25),
       0px 1px 2px rgba($black900, 0.3), 0px 1px 3px 1px rgba($black900, 0.15);
     background-color: $black000;
+    overflow: hidden;
 
     &__information {
-      background: url("../../../assets/default-cover.jpg") no-repeat;
+      background: url("../../../assets/CV_Background.png") no-repeat;
       background-size: cover;
       height: 11vw;
       position: relative;
@@ -30,10 +31,10 @@
       &_brief {
         position: absolute;
         display: flex;
-        gap: 4.5%;
-
-        top: 4.5vw;
+        width: 100%;
+        top: 5.5vw;
         left: 2.5vw;
+        gap: 1vw;
       }
 
       &_edit {
@@ -112,7 +113,7 @@
 
     &__profile {
       margin-inline: 4vw;
-      margin-top: 11%;
+      margin-top: 13%;
       padding-bottom: 2.3rem;
 
       &_title {
@@ -145,5 +146,36 @@
   }
 
   &__booking {
+    width: 35%;
+
+    &__section {
+      border-radius: 20px;
+      box-shadow: 0px 4px 4px rgba($black900, 0.25),
+        0px 1px 2px rgba($black900, 0.3), 0px 1px 3px 1px rgba($black900, 0.15);
+      background-color: $black000;
+
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+
+      h3 {
+        color: $black800;
+        text-align: center;
+
+        margin-top: 0;
+      }
+    }
+
+    &__topic {
+      h4 {
+        color: $primary600;
+        margin-bottom: 0;
+      }
+
+      p {
+        color: $black600;
+
+        margin-block: 1rem;
+      }
+    }
   }
 }

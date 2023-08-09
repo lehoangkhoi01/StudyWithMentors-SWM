@@ -1,0 +1,125 @@
+@import "../../theme";
+
+.list {
+  &__container {
+    background-color: $black000;
+    width: 90%;
+    min-height: 80vh;
+    padding: 2rem;
+    margin: 1rem auto;
+
+    border-radius: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+
+    align-items: center;
+    height: max-content;
+
+    margin-bottom: 1rem;
+
+    button {
+      width: fit-content;
+      border-radius: 8px;
+      height: 2.8rem;
+
+      font-size: 1rem;
+    }
+
+    div {
+      margin-bottom: 0;
+
+      label {
+        display: none;
+      }
+    }
+
+    img {
+      transform: scale(0.5);
+    }
+  }
+
+  &__input {
+    margin-left: auto;
+
+    width: 30%;
+  }
+
+  &__table {
+    margin-bottom: 1rem;
+    border-radius: 10px;
+
+    box-shadow: 2px 4px 8px rgba(4, 30, 160, 0.1);
+
+    &_dropdown {
+      li {
+        display: flex;
+        gap: 0.8rem;
+        font-weight: 600;
+
+        margin-inline: 0.3rem;
+        padding-inline: 0.5rem;
+
+        &:hover {
+          background-color: $primary50;
+        }
+      }
+
+      img {
+        width: 22px;
+      }
+
+      &_icon {
+        img {
+          height: 40px;
+        }
+      }
+    }
+
+    &_disabledLink {
+      pointer-events: none;
+      color: $black400 !important;
+    }
+
+    a {
+      text-decoration: none;
+      color: $primary600;
+    }
+  }
+
+  &__pagination {
+    ul {
+      justify-content: center;
+    }
+  }
+
+  &__header {
+    th {
+      position: relative;
+    }
+
+    &_sortable {
+      cursor: pointer;
+
+      transition: all 0.2 ease-out;
+
+      &:hover {
+        filter: brightness(0.8);
+      }
+    }
+  }
+
+  &__sortIcon {
+    display: inline-block;
+    position: absolute;
+
+    top: 55%;
+    transform: translateY(-50%);
+
+    svg {
+      height: 15px;
+    }
+  }
+}

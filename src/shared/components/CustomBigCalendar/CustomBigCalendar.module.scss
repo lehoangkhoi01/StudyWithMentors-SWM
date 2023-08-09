@@ -1,0 +1,62 @@
+@import "../../theme";
+
+.cell {
+  background-color: $primary50;
+}
+
+.week {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.timeSlot {
+  background-color: $primary600;
+}
+
+.freeEvent {
+  background-color: $primary400 !important;
+  color: $black000;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $primary900 !important;
+}
+
+.selectedFreeEvent {
+  background-color: $primary200 !important;
+  color: $black000;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $primary600 !important;
+}
+
+.requestedEvent {
+  background-color: $secondary100 !important;
+  color: $black900 !important;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $secondary500 !important;
+}
+
+.selectedRequestedEvent {
+  background-color: $secondary50 !important;
+  color: $black900;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $secondary400 !important;
+}
+
+.acceptedEvent {
+  background-color: $lightGreen200 !important;
+  color: $black900 !important;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $systemGreen !important;
+}
+
+.selectedAcceptedEvent {
+  background-color: $lightGreen !important;
+  color: $black900 !important;
+  border-radius: 5px;
+  border: none !important;
+  border-left: 5px solid $systemGreen !important;
+}

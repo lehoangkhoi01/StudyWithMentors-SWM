@@ -10,4 +10,20 @@ export const userAccountService = {
     const url = `${UserAccountEndpoints.UPDATE_PROFILE}/${id}`;
     return axiosClient.post(url, data);
   },
+  updateMoreUserProfile: (data) => {
+    const url = `${UserAccountEndpoints.UPDATE_DETAIL_PROFILE}`;
+    return axiosClient.post(url, data);
+  },
+  confirmUserProfile: (data) => {
+    const url = UserAccountEndpoints.CONFIRM_PROFILE;
+    return axiosClient.post(url, data);
+  },
+  getUserProfileById: (id) => {
+    const url = `${UserAccountEndpoints.GET_USER_PROFILE}/${id}`;
+    return axiosClient.get(url);
+  },
+  getAllStudents: () => {
+    const url = `${UserAccountEndpoints.GET_USER_PROFILE}/mentees`;
+    return axiosClient.get(url);
+  },
 };

@@ -27,6 +27,7 @@ const RatingInput = (props) => {
       )}
       <div className={`${style.ratingInput__wrapper}`}>
         <Rating
+          size="medium"
           name={props.name}
           precision={1}
           getLabelText={getLabelText}
@@ -34,6 +35,7 @@ const RatingInput = (props) => {
           onChangeActive={(event, newHover) => {
             setHover(newHover);
           }}
+          icon={<StarIcon fontSize="medium" />}
           emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="medium" />}
         />
         {props.field.value !== null && (

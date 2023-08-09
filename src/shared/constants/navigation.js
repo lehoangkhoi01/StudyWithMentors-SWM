@@ -1,30 +1,36 @@
 export const ROUTES = {
   SIGN_IN: "/sign-in",
-  SIGN_UP: "/sign-up",
-  SIGN_UP_CONFIRMATION: "/confirmation",
   FILL_INFORMATION: "/fill-information",
   FORGOT_PASSWORD: "/forgot-password",
   CV: "/cv",
   HOME: "/home",
-  CALENDAR: "/calendar",
-  ACCOUNT: "/account",
+  ABOUT: "/about",
+  MENTOR_LIST: "/mentors",
+  CALENDAR: "/mentor/calendar",
   SEMINAR_FEEDBACK: "/seminar-feedback/:id",
   NOT_FOUND: "/not-found",
   SERVER_ERROR: "/server-error",
   SEMINAR_LIST: "/seminars",
   SEMINAR_DETAIL: "/seminars/:id",
-  SEMINAR_CREATE: "/create-seminar",
+  SEMINAR_CREATE: "/seminar-create",
   SEMINAR_UPDATE: "/update-seminar/:id",
-  FEEDBACK_OVERVIEW: "/feedback-overview/:id",
-  MENTOR_LIST: "/mentors",
-  ADMIN_MENTOR_LIST: "/admin/mentors",
-  DISCUSSION: "/discussion/:id",
+  FEEDBACK_OVERVIEW: "/management/feedback-overview/:id",
+  ADMIN_MENTOR_LIST: "/management/mentors",
+  MEETING: "/meeting-room/:id",
+  TOPIC_LIST: "/topic/list",
+  BOOKING_LIST: "/booking/list",
+  CATEGORY_LIST: "/admin/categories",
+  DEPARTMENT_LIST: "/admin/departments",
+  FIELD_LIST: "/admin/fields",
+  ADMIN_BOOKING_LIST: "/admin/bookings",
+  STAFF_LIST: "/admin/staffs",
+  STUDENT_LIST: "/admin/students"
 };
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
   SEMINAR_UPDATE: "/update-seminar",
-  FEEDBACK_OVERVIEW: "/feedback-overview",
+  FEEDBACK_OVERVIEW: "/management/feedback-overview",
 };
 
 export const UNAUTHORIZED_NAVBAR = [
@@ -38,6 +44,11 @@ export const UNAUTHORIZED_NAVBAR = [
   },
   {
     TITLE: "Tìm Mentor",
+    ROUTE: ROUTES.MENTOR_LIST,
+  },
+  {
+    TITLE: "Về GrowthMe",
+    ROUTE: ROUTES.ABOUT,
   },
 ];
 
@@ -51,10 +62,12 @@ export const COMMON_NAVBAR = [
     ROUTE: ROUTES.SEMINAR_LIST,
   },
   {
-    TITLE: "Về Growth Me",
+    TITLE: "Tìm Mentor",
+    ROUTE: ROUTES.MENTOR_LIST,
   },
   {
-    TITLE: "Tìm Mentor",
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
   },
 ];
 
@@ -64,12 +77,52 @@ export const MENTOR_NAVBAR = [
     ROUTE: ROUTES.HOME,
   },
   {
-    TITLE: "Tìm mentor",
-    ROUTE: ROUTES.MENTOR_LIST,
+    TITLE: "Hội thảo",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Chủ đề",
+    ROUTE: ROUTES.TOPIC_LIST,
+  },
+  {
+    TITLE: "Lịch rảnh",
+    ROUTE: ROUTES.CALENDAR,
+  },
+  {
+    TITLE: "Hồ sơ của tôi",
+    ROUTE: ROUTES.CV,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
+  },
+];
+
+export const MENTOR_NAVBAR_LARGE_SCREEN = [
+  {
+    TITLE: "Trang chủ",
+    ROUTE: ROUTES.HOME,
   },
   {
     TITLE: "Hội thảo",
     ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.BOOKING_LIST,
+  },
+  {
+    TITLE: "Cố vấn",
+    MENU: [
+      {
+        TITLE: "Chủ đề",
+        ROUTE: ROUTES.TOPIC_LIST,
+      },
+      {
+        TITLE: "Lịch rảnh",
+        ROUTE: ROUTES.CALENDAR,
+      },
+    ],
   },
   {
     TITLE: "Hồ sơ của tôi",
@@ -108,5 +161,55 @@ export const AUTHENTICATION_MENU = [
   {
     TITLE: "Đăng nhập",
     ROUTE: ROUTES.SIGN_IN,
+  },
+];
+
+export const ADMIN_MANAGE_SYSTEM_MENU = [
+  {
+    TITLE: "Lịch hẹn",
+    ROUTE: ROUTES.ADMIN_BOOKING_LIST,
+  },
+  {
+    TITLE: "Sự kiện",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+  {
+    TITLE: "Chủ đề",
+    ROUTE: ROUTES.TOPIC_LIST,
+  },
+  {
+    TITLE: "Lĩnh vực",
+    ROUTE: ROUTES.FIELD_LIST,
+  },
+  { TITLE: "Thể loại", ROUTE: ROUTES.CATEGORY_LIST },
+  { TITLE: "Phòng ban", ROUTE: ROUTES.DEPARTMENT_LIST },
+];
+
+export const STAFF_MANAGE_SYSTEM_MENU = [
+  {
+    TITLE: "Sự kiện",
+    ROUTE: ROUTES.SEMINAR_LIST,
+  },
+];
+
+export const ADMIN_MANAGE_ACCOUNT_MENU = [
+  {
+    TITLE: "Diễn giả",
+    ROUTE: ROUTES.ADMIN_MENTOR_LIST,
+  },
+  {
+    TITLE: "Nhân viên",
+    ROUTE: ROUTES.STAFF_LIST,
+  },
+  {
+    TITLE: "Sinh viên",
+    ROUTE: ROUTES.STUDENT_LIST,
+  },
+];
+
+export const STAFF_MANAGE_ACCOUNT_MENU = [
+  {
+    TITLE: "Diễn giả",
+    ROUTE: ROUTES.ADMIN_MENTOR_LIST,
   },
 ];

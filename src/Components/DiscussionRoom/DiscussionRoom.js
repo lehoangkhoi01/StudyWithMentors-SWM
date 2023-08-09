@@ -1,5 +1,11 @@
 import React from "react";
-import { List, Typography, OutlinedInput, IconButton } from "@mui/material";
+import {
+  List,
+  Typography,
+  OutlinedInput,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import style from "./DiscussionRoom.module.scss";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
@@ -15,10 +21,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { format } from "date-fns";
-import { DATE_FORMAT } from "../../shared/constants/common";
+import { DATE_FORMAT, ERROR_MESSAGES } from "../../shared/constants/common";
 import DiscussionComment from "./DiscussionComment/DiscussionComment";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../Store/slices/userSlice";
+import { useNotification } from "../../Helpers/generalHelper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES } from "../../shared/constants/navigation";
 
 const DiscussionRoom = (props) => {
   const [sortByDate, setSortByDate] = React.useState(true);
@@ -30,13 +39,15 @@ const DiscussionRoom = (props) => {
   const [shoudlRerender, setShouldRerender] = React.useState(true);
   const userInfo = useSelector(selectUserInfo);
 
+  const { setNotification } = useNotification();
+  const history = useHistory();
+
   const updateLocalStorage = (value) => {
     localStorage.setItem("SHOULD_RERENDER_COMMENT", value);
     setShouldRerender(false);
   };
 
   const handleUpvoteComment = async (comment, action) => {
-    //const documentRef = doc(db, "comments", comment.id);
     let updatedData = {};
     if (action === "upvote") {
       updatedData = {
@@ -46,6 +57,7 @@ const DiscussionRoom = (props) => {
           : [userInfo?.accountId],
       };
     } else {
+      // if (comment.vote === 0) return;
       updatedData = {
         vote: (comment.vote -= 1),
         voteList: comment.voteList.filter((c) => c !== userInfo?.accountId),
@@ -56,6 +68,11 @@ const DiscussionRoom = (props) => {
       await updateDocument("Comments", comment.id, updatedData);
     } catch (error) {
       console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.UPVOTE_ERROR,
+      });
     }
   };
 
@@ -77,7 +94,11 @@ const DiscussionRoom = (props) => {
         addDocument("Comments", requestBody);
         setCurrentComment("");
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMENT_ERROR,
+        });
       }
     }
   };
@@ -142,8 +163,8 @@ const DiscussionRoom = (props) => {
               );
             }
           })
-          .catch((error) => {
-            console.error("Error fetching user data:", error);
+          .catch(() => {
+            history.push(ROUTES.SERVER_ERROR);
           });
       });
     }
@@ -175,16 +196,31 @@ const DiscussionRoom = (props) => {
       <div className={`${style.discussion__wrapper}`}>
         <div className={`${style.discussion__heading}`}>
           <Typography mb={2} variant="h6">
-            Thảo luận ({commentList.length})
+            Hỏi và giải đáp ({commentList.length})
           </Typography>
-          <IconButton
+
+          <Tooltip
+            title={
+              sortByDate ? "Sắp xếp theo lượt thích" : "Sắp xếp theo giờ đăng"
+            }
+          >
+            <IconButton
+              onClick={() => {
+                setSortByDate((prev) => !prev);
+              }}
+              className={sortByDate ? `${style.discussion__active}` : null}
+            >
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+          {/* <IconButton
             onClick={() => {
               setSortByDate((prev) => !prev);
             }}
             className={sortByDate ? `${style.discussion__active}` : null}
           >
             <FilterListIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
 
         {userInfo && (

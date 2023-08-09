@@ -13,9 +13,14 @@ import style from "./Comment.module.scss";
 import { Timestamp } from "firebase/firestore";
 import { updateDocument } from "../../../../firebase/firebaseService";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useNotification } from "../../../../Helpers/generalHelper";
+import { ERROR_MESSAGES } from "../../../../shared/constants/common";
 
 const Comment = (props) => {
   const [updatedComment, setUpdatedComment] = React.useState(undefined);
+
+  const { setNotification } = useNotification();
+
 
   const onUpdateComment = (comment) => {
     setUpdatedComment(comment);
@@ -46,7 +51,11 @@ const Comment = (props) => {
         );
         setUpdatedComment(null);
       } catch (error) {
-        console.log(error);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.UPDATE_COMMENT_ERROR,
+        });
       }
     }
   };
