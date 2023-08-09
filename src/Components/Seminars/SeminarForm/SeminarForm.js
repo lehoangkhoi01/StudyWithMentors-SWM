@@ -10,7 +10,13 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import CustomizedDateTimePicker from "../../../shared/components/DatetimePicker/CustomizedDateTimePicker";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import ImageUploader from "../ImageUploader/ImageUploader";
-import { Button, Checkbox, IconButton, Typography } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -64,6 +70,19 @@ import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import UpsertMentorModal from "../../Modal/UpsertMentorModal";
 import { convertObjectToArray } from "../../../Helpers/arrayHelper";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
+import { departmentService } from "../../../Services/departmentService";
+import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const SeminarForm = () => {
   const history = useHistory();
@@ -73,6 +92,7 @@ const SeminarForm = () => {
   const { getSpeakerList } = useFetchSpeakerList();
   const { id } = useParams();
   const mentors = useSelector(selectMentorList);
+  //--------------------------------------
   const isFormUpdate = id ? true : false;
   const [isFormDisabled, setFormDisabled] = React.useState(false);
   const [seminarBackground, setSeminarBackground] = React.useState(null);
@@ -85,6 +105,10 @@ const SeminarForm = () => {
   );
   const [seminarDetail, setSeminarDetail] = React.useState(null);
   const [selectedSpeakers, setSelectedSpeakers] = React.useState([]);
+
+  const [departmentList, setDepartmentList] = React.useState([]);
+  const [selectedDepartment, setSelectedDepartment] = React.useState(null);
+
   const {
     control,
     handleSubmit,
@@ -232,6 +256,9 @@ const SeminarForm = () => {
         mentorIds: data.seminarSpeakers,
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
+      if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+        requestBody.departmentId = selectedDepartment.id;
+      }
       const result = await seminarService.create(requestBody);
       setNotification({
         isOpen: true,
@@ -291,6 +318,9 @@ const SeminarForm = () => {
         attachmentUrls: attachmentUrls,
         startTime: data.seminarTime,
       };
+      if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+        requestBody.departmentId = selectedDepartment.id;
+      }
       await seminarService.update(id, requestBody);
       setNotification({
         isOpen: true,
@@ -341,6 +371,31 @@ const SeminarForm = () => {
     setOpenAddMentorModal(false);
   };
 
+  const getDepartmentList = async () => {
+    try {
+      setLoading(true);
+      let result = await departmentService.getDepartments();
+      result = result.map((dep) => ({
+        id: dep.id,
+        name: dep.name,
+      }));
+      setDepartmentList(result);
+    } catch (error) {
+      history.push(ROUTES.SERVER_ERROR);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
+
   React.useEffect(() => {
     if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       history.push(ROUTES.NOT_FOUND);
@@ -378,6 +433,9 @@ const SeminarForm = () => {
     } else {
       setAppbar(APPBAR_TITLES.SEMINAR_CREATE);
     }
+    if (userInfo.role === SYSTEM_ROLE.ADMIN) {
+      getDepartmentList();
+    }
   }, []);
 
   React.useEffect(() => {
@@ -389,7 +447,7 @@ const SeminarForm = () => {
   }, [mentors]);
 
   React.useEffect(() => {
-    if (seminarDetail) {
+    if (seminarDetail && departmentList.length > 0) {
       setValue("seminarName", seminarDetail.name);
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
@@ -402,11 +460,17 @@ const SeminarForm = () => {
           : []
       );
       setOldDocumentUrls(seminarDetail.attachmentUrls ?? []);
+      setSelectedDepartment(
+        departmentList.find((dep) => dep.id === seminarDetail.department.id)
+      );
+
       if (moment(seminarDetail.startTime).toDate() < new Date()) {
         setFormDisabled(true);
       }
+    } else if (!seminarDetail && departmentList.length > 0) {
+      setSelectedDepartment(departmentList[0]);
     }
-  }, [seminarDetail]);
+  }, [seminarDetail, departmentList]);
 
   return (
     <div className={`${style.seminarForm__container}`}>
@@ -516,6 +580,21 @@ const SeminarForm = () => {
               error={errors.seminarPlace ? true : false}
               helperText={errors?.seminarPlace?.message}
             />
+            {userInfo.role === SYSTEM_ROLE.ADMIN && (
+              <FormControl style={{ width: "100%" }}>
+                <CustomizedSelect
+                  inputId="department"
+                  isMultipleSelect={false}
+                  items={departmentList}
+                  value={selectedDepartment}
+                  required={true}
+                  name="Phòng ban"
+                  MenuProps={MenuProps}
+                  disabled={isFormDisabled}
+                  onChange={onDepartmentChange}
+                />
+              </FormControl>
+            )}
 
             <Controller
               control={control}

@@ -158,7 +158,9 @@ const SeminarFeedbackForm = () => {
           className={`${style.eventFeedback__form}`}
         >
           <CustomTopTitle title={TITLE.EVENT_FEEDBACK} />
-          <Typography variant="h6">{seminarDetail?.name}</Typography>
+          <Typography textAlign="center" variant="h6">
+            {seminarDetail?.name}
+          </Typography>
           {questionList.map((item, index) => renderInput(item, index))}
           <CustomizedButton
             type="submit"
