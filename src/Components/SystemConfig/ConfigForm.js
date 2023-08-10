@@ -120,9 +120,15 @@ const ConfigForm = () => {
           error={errors.autoRejectBookingDelay ? true : false}
           helperText={errors?.autoRejectBookingDelay?.message}
         />
-        <CustomizedButton type="submit" variant="contained" color="primary600">
-          Cập nhật
-        </CustomizedButton>
+        <div className={`${style.systemConfig__button}`}>
+          <CustomizedButton
+            type="submit"
+            variant="contained"
+            color="primary600"
+          >
+            Cập nhật
+          </CustomizedButton>
+        </div>
       </form>
     </div>
   );
