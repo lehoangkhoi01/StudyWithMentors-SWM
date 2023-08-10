@@ -77,18 +77,22 @@ export const modalOptionalFieldValidation = {
 
 const validationNumber = (val) => {
   const isValid = /^\d+$/.test(val); // Check if value is a positive integer
-  return isValid || "Invalid number format";
+  return isValid || ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR;
 };
 
-export const maxBookingRequestValidation = {
+export const commonSystemConfigValidation = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
   min: {
-    value: 1, // Minimum allowed value
-    message: "Invalid range of number",
+    value: LENGTH.SYSTEM_CONFIG_NUM_MIN,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
   },
   max: {
-    value: 5,
-    message: "Invalid range of number",
+    value: LENGTH.SYSTEM_CONFIG_NUM_MAX,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
+  },
+  maxLength: {
+    value: LENGTH.SYSTEM_CONFIG_NUM_LENGTH,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
   },
   validate: (val) => validationNumber(val),
 };

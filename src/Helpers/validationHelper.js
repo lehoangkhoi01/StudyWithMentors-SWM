@@ -1,8 +1,5 @@
-import { maxBookingRequestValidation } from "../shared/constants/validationRules";
+import { commonSystemConfigValidation } from "../shared/constants/validationRules";
 
-export const getSystemConfigFieldValidation = (name) => {
-  switch (name) {
-    case "maxRequestedBooking":
-      return maxBookingRequestValidation;
-  }
+export const getSystemConfigFieldValidation = () => {
+  return commonSystemConfigValidation;
 };

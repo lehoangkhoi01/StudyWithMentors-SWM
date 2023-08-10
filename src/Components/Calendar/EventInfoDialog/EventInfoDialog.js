@@ -18,7 +18,6 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 const EventInfoDialog = (props) => {
-  console.log(props.event);
   const [openDeleteOption, setOpenDeleteOption] = React.useState(false);
   const [openScheduleDialog, setOpenScheduleDialog] = React.useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] =
