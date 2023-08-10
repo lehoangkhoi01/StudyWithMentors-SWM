@@ -134,7 +134,7 @@ const CVModal = (props) => {
   };
 
   const renderFormOptionForDate = (registerName) => {
-    if (registerName.includes("endDate")) {
+    if (registerName.includes("endDate") && !registerName.includes("learningExps_endDate")) {
       return {
         ...register(registerName, {
           validate: {
