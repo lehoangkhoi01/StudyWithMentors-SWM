@@ -8,6 +8,7 @@ import DepartmentListPage from "../Pages/Department/DepartmentListPage";
 import AdminBookingListPage from "../Pages/BookingList/AdminBookingListPage";
 import StaffListPage from "../Pages/Staff/StaffListPage";
 import StudentListPage from "../Pages/Student/StudentListPage";
+import ConfigPage from "../Pages/Config/ConfigPage";
 
 const AdminRoutes = () => {
   return (
@@ -20,15 +21,10 @@ const AdminRoutes = () => {
           path={ROUTES.ADMIN_BOOKING_LIST}
           component={AdminBookingListPage}
         />
-        <Route
-          path={ROUTES.STAFF_LIST}
-          component={StaffListPage}
-        />
-        <Route
-          path={ROUTES.STUDENT_LIST}
-          component={StudentListPage}
-        />
-        
+        <Route path={ROUTES.STAFF_LIST} component={StaffListPage} />
+        <Route path={ROUTES.STUDENT_LIST} component={StudentListPage} />
+        <Route path={ROUTES.ADMIN_CONFIG} component={ConfigPage} />
+
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>

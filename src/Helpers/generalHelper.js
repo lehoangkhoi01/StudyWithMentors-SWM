@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { helperAction } from "../Store/slices/helperSlice";
+import { helperAction, selectSystemConfig } from "../Store/slices/helperSlice";
 import { notificationAction } from "../Store/slices/notificationSlice";
 import { selectUserInfo, userAction } from "../Store/slices/userSlice";
 import { userAccountService } from "../Services/userAccountService";
@@ -16,6 +16,7 @@ import {
   selectDepartments,
 } from "../Store/slices/departmentSlice";
 import { departmentService } from "../Services/departmentService";
+import { systemConfigService } from "../Services/systemConfigService";
 import { sortDataByCreatedDate } from "./arrayHelper";
 
 // reason: want to specify delay time for loading for smoothier
@@ -53,6 +54,38 @@ export const useNotification = () => {
   return {
     setNotification,
     setNotiOpen,
+  };
+};
+
+export const useSystemConfig = () => {
+  const dispatch = useDispatch();
+  let systemConfig = useSelector(selectSystemConfig);
+
+  const getSystemConfig = async () => {
+    try {
+      if (!systemConfig) {
+        systemConfig = await systemConfigService.getConfigs();
+      }
+      dispatch(helperAction.setSystemConfig(systemConfig));
+    } catch (error) {
+      console.log(error);
+    }
+    return systemConfig;
+  };
+
+  const getLatestSystemConfig = async () => {
+    try {
+      systemConfig = await systemConfigService.getConfigs();
+      dispatch(helperAction.setSystemConfig(systemConfig));
+    } catch (error) {
+      console.log(error);
+    }
+    return systemConfig;
+  };
+
+  return {
+    getSystemConfig,
+    getLatestSystemConfig,
   };
 };
 

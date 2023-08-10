@@ -63,7 +63,7 @@ export const modalFieldValidation = {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
-}
+};
 
 export const modalOptionalFieldValidation = {
   required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
@@ -71,4 +71,28 @@ export const modalOptionalFieldValidation = {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
-}
+};
+
+//---------- System Config Validation ---------------
+
+const validationNumber = (val) => {
+  const isValid = /^\d+$/.test(val); // Check if value is a positive integer
+  return isValid || ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR;
+};
+
+export const commonSystemConfigValidation = {
+  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  min: {
+    value: LENGTH.SYSTEM_CONFIG_NUM_MIN,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
+  },
+  max: {
+    value: LENGTH.SYSTEM_CONFIG_NUM_MAX,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
+  },
+  maxLength: {
+    value: LENGTH.SYSTEM_CONFIG_NUM_LENGTH,
+    message: ERROR_MESSAGES.COMMON_SYSTEM_CONFIG_ERROR,
+  },
+  validate: (val) => validationNumber(val),
+};

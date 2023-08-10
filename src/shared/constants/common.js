@@ -71,6 +71,10 @@ export const TEXTFIELD_LABEL = {
   TIME: "Thời gian",
   SPEAKER: "Diễn giả",
   DOCUMENT: "Tài liệu",
+  MAX_PARTICIPANT: "Số lượng sinh viên tối đa trong nhóm",
+  MAX_REQUEST_BOOKING: "Số lượng lịch hẹn tối đa trong trạng thái đang chờ",
+  INVITATION_EMAIL_DELAY: "Thời gian chờ gửi email báo cáo hội thảo (phút)",
+  AUTO_REJECT_BOOKING_DELAY: "Thời gian tự động huỷ lịch hẹn (phút)",
 };
 
 export const TITLE = {
@@ -220,6 +224,9 @@ export const LENGTH = {
   SPEAKERS_MAX: 3,
   STUDENT_NOTE_MAX: 1000,
   PARTICIPANTS_MAX: 4,
+  SYSTEM_CONFIG_NUM_LENGTH: 5,
+  SYSTEM_CONFIG_NUM_MAX: 99999,
+  SYSTEM_CONFIG_NUM_MIN: 1,
 };
 
 export const ERROR_MESSAGES = {
@@ -277,6 +284,9 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
+    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];

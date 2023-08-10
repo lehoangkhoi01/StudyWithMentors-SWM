@@ -1,0 +1,17 @@
+.systemConfig {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__form {
+    width: 75%;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  &__button {
+    width: 60%;
+    margin: 0 auto;
+  }
+}

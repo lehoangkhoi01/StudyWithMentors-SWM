@@ -24,7 +24,8 @@ export const ROUTES = {
   FIELD_LIST: "/admin/fields",
   ADMIN_BOOKING_LIST: "/admin/bookings",
   STAFF_LIST: "/admin/staffs",
-  STUDENT_LIST: "/admin/students"
+  STUDENT_LIST: "/admin/students",
+  ADMIN_CONFIG: "/admin/config",
 };
 
 export const ROUTES_STATIC = {
@@ -183,6 +184,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
   },
   { TITLE: "Thể loại", ROUTE: ROUTES.CATEGORY_LIST },
   { TITLE: "Phòng ban", ROUTE: ROUTES.DEPARTMENT_LIST },
+  { TITLE: "Cài đặt", ROUTE: ROUTES.ADMIN_CONFIG },
 ];
 
 export const STAFF_MANAGE_SYSTEM_MENU = [

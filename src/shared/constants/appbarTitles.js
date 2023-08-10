@@ -12,5 +12,6 @@ export const APPBAR_TITLES = {
   MENTOR_LIST: "Quản lí tài khoản mentor",
   STAFF_LIST: "Quản lí tài khoản nhân viên",
   MENTOR_PROFILE: "Hồ sơ diễn giả",
-  STUDENT_LIST: "Quản lí tài khoản nhân sinh viên",
+  STUDENT_LIST: "Quản lí tài khoản sinh viên",
+  SYSTEM_CONFIG: "Cài đặt hệ thống",
 };

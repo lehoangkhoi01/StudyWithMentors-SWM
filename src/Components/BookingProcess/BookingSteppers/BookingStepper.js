@@ -31,6 +31,7 @@ import { useHistory } from "react-router-dom";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { useForm } from "react-hook-form";
+import { selectSystemConfig } from "../../../Store/slices/helperSlice";
 
 const steps = ["Chọn chủ đề", "Chọn lịch cố vấn", "Mô tả", "Xác nhận"];
 
@@ -53,6 +54,7 @@ const BookingStepper = (props) => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
+  const systemConfig = useSelector(selectSystemConfig);
   const history = useHistory();
 
   const {
@@ -68,13 +70,17 @@ const BookingStepper = (props) => {
     if (activeStep === 2) {
       //Validation for student note and participants
       let isValid = true;
-      if (selectedStudents.length > LENGTH.PARTICIPANTS_MAX) {
+      if (
+        systemConfig.maxParticipant &&
+        selectedStudents.length > systemConfig.maxParticipant
+      ) {
         isValid = false;
         setError("participants", {
           type: "custom",
-          message: ERROR_MESSAGES.MAX_PARTICIPANTS,
+          message: `Chọn tối đa ${systemConfig.maxParticipant} bạn tham gia`,
         });
       }
+
       if (studentNote?.length > LENGTH.STUDENT_NOTE_MAX) {
         isValid = false;
         setError("studentNote", {

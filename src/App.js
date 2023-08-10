@@ -18,7 +18,11 @@ import SeminarFeedbackPage from "./Pages/EventFeedback/EventFeedbackPage";
 import NotiSnackbar from "./shared/components/Snackbar/NotiSnackbar";
 import { Toolbar } from "@mui/material";
 import MentorListPage from "./Pages/Mentor/MentorListPage";
-import { useCustomLoading, useFetchUserInfo } from "./Helpers/generalHelper";
+import {
+  useCustomLoading,
+  useFetchUserInfo,
+  useSystemConfig,
+} from "./Helpers/generalHelper";
 import {
   selectFirstFetch,
   selectUser,
@@ -49,11 +53,13 @@ function App() {
   const isFirstFetch = useSelector(selectFirstFetch);
   const dispatch = useDispatch();
   const { getUserInfo } = useFetchUserInfo();
+  const { getSystemConfig } = useSystemConfig();
 
   React.useEffect(() => {
-    async function fetchUserData() {
+    async function fetchInitialData() {
       setLoading(true);
       const userInfoResponse = await getUserInfo();
+      await getSystemConfig();
 
       if (
         (userInfoResponse && userInfoResponse.status === 403) ||
@@ -66,7 +72,7 @@ function App() {
       }
       setLoading(false);
     }
-    fetchUserData();
+    fetchInitialData();
   }, []);
 
   if (isFirstFetch) {
