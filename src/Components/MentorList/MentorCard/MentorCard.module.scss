@@ -76,17 +76,14 @@
     color: $primary900;
     font-weight: 600;
     font-size: 1.2rem;
-    p {
-      margin-block: 0.4rem;
-    }
 
-    p:nth-of-type(1) {
-      color: $primary900;
-      font-weight: 600;
-    }
-
-    p:nth-of-type(2) {
+    &_position {
       font-size: 1.2rem;
+      color: $black900;
+      font-weight: 500 !important;
+      margin-top: -1rem;
+
+      height: 1rem;
     }
   }
 
