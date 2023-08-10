@@ -48,11 +48,15 @@ export const mapCVSection = (data, indexOfProperty) => {
             section.startDate,
             DATE_FORMAT.BACK_END_YYYY_MM_DD,
             DATE_FORMAT.MM_YYYY
-          )} - ${convertDateFormat(
-            section.endDate,
-            DATE_FORMAT.BACK_END_YYYY_MM_DD,
-            DATE_FORMAT.MM_YYYY
-          )})`,
+          )}  ${section.endDate ? `- ${section.workingHere
+            ? OTHERS.CURRENT
+            : convertDateFormat(
+              section.endDate,
+              DATE_FORMAT.BACK_END_YYYY_MM_DD,
+              DATE_FORMAT.MM_YYYY
+            )
+            }` : ''}
+          )`,
         detail: section.description,
       }));
     }

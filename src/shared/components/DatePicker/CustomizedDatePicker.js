@@ -33,7 +33,7 @@ const CustomizedDatePicker = (props) => {
         format={dateFormat}
         views={props.views ?? ["year", "month"]}
         className={style.datePicker__input}
-        onError={props.error}
+        // onError={props.error}
         slotProps={{
           textField: {
             helperText: props?.error?.message,
@@ -41,6 +41,8 @@ const CustomizedDatePicker = (props) => {
           },
         }}
         onChange={(e) => {
+          
+
           if (props.onChange) {
             props.onChange();
           }
