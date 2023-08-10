@@ -99,8 +99,8 @@ const MentorCard = (props) => {
         <img
           src={
             props.data.avatarUrl &&
-            props.data.avatarUrl !== "avatarUrl" &&
-            props.data.avatarUrl !== "string"
+              props.data.avatarUrl !== "avatarUrl" &&
+              props.data.avatarUrl !== "string"
               ? props.data.avatarUrl
               : require("../../../assets/sbcf-default-avatar.png")
           }
@@ -117,7 +117,7 @@ const MentorCard = (props) => {
               {props.data.fullName}
             </Button>
           </p>
-          <p>{props.data.occupation}</p>
+          <p className={style.card__name_position}>{props.data.occupation}</p>
         </div>
         <div className={style.card__rating}>
           <div>

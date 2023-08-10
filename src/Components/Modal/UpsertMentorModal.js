@@ -38,7 +38,7 @@ const UpsertMentorModal = (props) => {
     if (props.existedData) {
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
-      setValue("phoneNum", props.existedData.phoneNum);
+      setValue("phoneNum", props.existedData.phoneNum === "Chưa có" ? null : props.existedData.phoneNum);
 
       setType(MODAL_TYPE.EDIT);
     } else {
