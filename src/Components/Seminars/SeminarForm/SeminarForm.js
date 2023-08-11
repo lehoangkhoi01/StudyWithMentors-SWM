@@ -103,6 +103,9 @@ const SeminarForm = () => {
   const [seminarDate, setSeminarDate] = React.useState(
     new Date().setDate(new Date().getDate() + 1) // set tomorrow as default date
   );
+  const [seminarEndDate, setSeminarEndDate] = React.useState(
+    moment(seminarDate).add(2, "hours").toDate()
+  );
   const [seminarDetail, setSeminarDetail] = React.useState(null);
   const [selectedSpeakers, setSelectedSpeakers] = React.useState([]);
 
@@ -148,6 +151,15 @@ const SeminarForm = () => {
     : CREATE_SEMINAR_BREADCRUMBS;
 
   //----------------------------------------------------
+
+  const validateSeminarEndDate = (value) => {
+    if (!value || value.length === 0) {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+    if (value <= watch("seminarTime")) {
+      return ERROR_MESSAGES.INVALID_SEMINAR_END_DATE;
+    }
+  };
 
   const onFileChange = (newValue) => {
     if (newValue && VALID_IMAGE_FILE_TYPE.indexOf(newValue.type) >= 0) {
@@ -244,6 +256,10 @@ const SeminarForm = () => {
         data.seminarTime,
         DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
       );
+      data.seminarEndTime = format(
+        data.seminarEndTime,
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      );
       const imageUrl = await handleUploadImage(data.seminarBackground);
       const attachmentList = await handleUploadAttachments(documents);
       //----------------------------------------
@@ -253,6 +269,7 @@ const SeminarForm = () => {
         location: data.seminarPlace,
         imageUrl: imageUrl,
         startTime: data.seminarTime,
+        endTime: data.seminarEndTime,
         mentorIds: data.seminarSpeakers,
         attachmentUrls: attachmentList.length > 0 ? attachmentList : null,
       };
@@ -288,6 +305,10 @@ const SeminarForm = () => {
         data.seminarTime,
         DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
       );
+      data.seminarEndTime = format(
+        data.seminarEndTime,
+        DATE_FORMAT.BACK_END_YYYY_MM_DD__HH_mm_ss
+      );
       data.seminarSpeakers = data.seminarSpeakers.map((speaker) => speaker.id);
 
       let imageUrl = null;
@@ -317,6 +338,7 @@ const SeminarForm = () => {
         imageUrl: imageUrl,
         attachmentUrls: attachmentUrls,
         startTime: data.seminarTime,
+        endTime: data.seminarEndTime,
       };
       if (userInfo.role === SYSTEM_ROLE.ADMIN) {
         requestBody.departmentId = selectedDepartment.id;
@@ -554,7 +576,7 @@ const SeminarForm = () => {
               defaultValue={seminarDate}
               render={({ field: { onChange, ...restField }, fieldState }) => (
                 <CustomizedDateTimePicker
-                  label={TEXTFIELD_LABEL.TIME}
+                  label={TEXTFIELD_LABEL.START_TIME}
                   ampm={false}
                   formName="seminarTime"
                   required={true}
@@ -562,6 +584,30 @@ const SeminarForm = () => {
                   onChange={(event) => {
                     onChange(event);
                     setSeminarDate(event);
+                  }}
+                  disablePast={true}
+                  fieldState={fieldState}
+                  {...restField}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="seminarEndTime"
+              rules={{
+                validate: isFormUpdate ? null : validateSeminarEndDate,
+              }}
+              defaultValue={seminarEndDate}
+              render={({ field: { onChange, ...restField }, fieldState }) => (
+                <CustomizedDateTimePicker
+                  label={TEXTFIELD_LABEL.END_TIME}
+                  ampm={false}
+                  formName="seminarEndTime"
+                  required={true}
+                  disabled={isFormDisabled}
+                  onChange={(event) => {
+                    onChange(event);
+                    setSeminarEndDate(event);
                   }}
                   disablePast={true}
                   fieldState={fieldState}

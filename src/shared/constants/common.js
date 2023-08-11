@@ -69,6 +69,8 @@ export const TEXTFIELD_LABEL = {
   SEMINAR_PLACE: "Địa điểm",
   SEMINAR_DESCRIPTION: "Mô tả",
   TIME: "Thời gian",
+  START_TIME: "Thời gian bắt đầu",
+  END_TIME: "Thời gian kết thúc",
   SPEAKER: "Diễn giả",
   DOCUMENT: "Tài liệu",
   MAX_PARTICIPANT: "Số lượng sinh viên tối đa trong nhóm",
@@ -257,6 +259,7 @@ export const ERROR_MESSAGES = {
   WRONG_EMAIL_FORMAT: "Vui lòng nhập địa chỉ email đúng định dạng.",
   EMAIL_NOT_FOUND: "Email của bạn chưa được đăng ký trong hệ thống.",
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
+  INVALID_SEMINAR_END_DATE: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
   SEMINAR_NAME_LENGTH: "Độ dài tối đa là " + LENGTH.SEMINAR_NAME + " ký tự.",
   INVALID_DATE_TIME_FUTURE: "Vui lòng chọn ngày giờ trong tương lai",
   INVALID_IMAGE_FILE:
