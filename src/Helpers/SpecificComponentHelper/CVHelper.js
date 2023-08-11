@@ -174,10 +174,10 @@ export const findLastestWorkingExp = (workingExps) => {
 
 export const sortWorkingExps = (workingExps) => {
   const sortedList = workingExps.map((el) => {
-    return { ...el, convertedEndDate: new Date(el.endDate ?? new Date()) };
+    return { ...el };
   });
 
-  sortedList.sort((a, b) => b.convertedEndDate - a.convertedEndDate)
+  sortedList.sort((a, b) =>  (new Date(b.endDate ?? new Date())) - (new Date(a.endDate ?? new Date())))
 
   return sortedList;
 }
