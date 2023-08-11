@@ -204,10 +204,10 @@ const CustomizedTable = (props) => {
       }
 
       sortedData.sort((a, b) => {
-        if (a[sortInfo.attribute].toLowerCase().trim() > b[sortInfo.attribute].toLowerCase().trim()) {
+        if (a[sortInfo.attribute]?.toLowerCase().trim() > b[sortInfo.attribute]?.toLowerCase().trim()) {
           return sortInfo.direction === SORT_DIRECTION.ASC ? -1 : 1;
         }
-        if (a[sortInfo.attribute].toLowerCase().trim() < b[sortInfo.attribute].toLowerCase().trim()) {
+        if (a[sortInfo.attribute]?.toLowerCase().trim() < b[sortInfo.attribute]?.toLowerCase().trim()) {
           return sortInfo.direction === SORT_DIRECTION.ASC ? 1 : -1;
         }
         return 0;
