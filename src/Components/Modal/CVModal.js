@@ -177,8 +177,6 @@ const CVModal = (props) => {
 
     Object.keys(specificForm).map((key) => {
       if (key.toLocaleLowerCase().includes("date")) {
-        console.log(specificForm[key]);
-
         specificForm[key] = convertDateFormat(
           specificForm[key],
           DATE_FORMAT.MM_YYYY,
@@ -233,7 +231,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                            getValues(`${registerNamePrefix}_attendingThis`)
+                          getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}

@@ -32,6 +32,8 @@
 
   &__body {
     margin-inline: auto;
+    word-wrap: break-word;
+    width: 51vw;
 
     &_header {
       display: flex;
@@ -57,7 +59,7 @@
   }
 
   &__img {
-    width: 20px;
+    width: 16px;
     cursor: pointer;
     transition: transform 0.15s ease-out;
     &:active {
