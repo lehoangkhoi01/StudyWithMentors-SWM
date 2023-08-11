@@ -284,9 +284,8 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
-    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -612,6 +611,7 @@ export const TABLE_TYPE = {
   BOOKING: "BOOKING",
   DEPARTMENT: "DEPARTMENT",
   STAFF: "STAFF",
+  SEMINAR: "SEMINAR",
 };
 
 export const USER_STATUS = {
@@ -708,3 +708,15 @@ export const TRANSLATED_STUDENT_GENDER = {
   MALE: "Nam",
   FEMALE: "Nữ",
 };
+
+export const SEMINAR_TABLE = {
+  NAME: "Tên sự kiện",
+  MENTOR_NAME: "Diễn giả",
+  DEPARTMENT: "Phòng ban",
+  STATUS: "Trạng thái"
+}
+
+export const TRANSLATED_SEMINAR_STATUS = {
+  IS_COMMING: "Chưa diễn ra",
+  PAST: "Đã diễn ra",
+}

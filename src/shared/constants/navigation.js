@@ -26,6 +26,7 @@ export const ROUTES = {
   STAFF_LIST: "/admin/staffs",
   STUDENT_LIST: "/admin/students",
   ADMIN_CONFIG: "/admin/config",
+  ADMIN_SEMINAR_LIST: "/admin/seminars"
 };
 
 export const ROUTES_STATIC = {
@@ -172,7 +173,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
   },
   {
     TITLE: "Sự kiện",
-    ROUTE: ROUTES.SEMINAR_LIST,
+    ROUTE: ROUTES.ADMIN_SEMINAR_LIST,
   },
   {
     TITLE: "Chủ đề",
@@ -190,7 +191,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
 export const STAFF_MANAGE_SYSTEM_MENU = [
   {
     TITLE: "Sự kiện",
-    ROUTE: ROUTES.SEMINAR_LIST,
+    ROUTE: ROUTES.ADMIN_SEMINAR_LIST,
   },
 ];
 
