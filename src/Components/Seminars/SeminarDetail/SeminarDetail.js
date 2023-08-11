@@ -37,10 +37,7 @@ import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import moment from "moment";
 
 const SeminarDetail = () => {
-  const AUTHORIZED_ROLE_ACTION = [
-    SYSTEM_ROLE.STAFF,
-    SYSTEM_ROLE.ADMIN,
-  ];
+  const AUTHORIZED_ROLE_ACTION = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
 
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -289,8 +286,12 @@ const SeminarDetail = () => {
                   })}
                 </div>
                 <p>
-                  <strong>{SEMINAR.TIME}: </strong>
+                  <strong>{SEMINAR.START_TIME}: </strong>
                   {handleTimeToDisplay(data.startTime)}
+                </p>
+                <p>
+                  <strong>{SEMINAR.END_TIME}: </strong>
+                  {handleTimeToDisplay(data.endTime)}
                 </p>
                 <p>
                   <strong>{SEMINAR.LOCATION}: </strong> {data.location}

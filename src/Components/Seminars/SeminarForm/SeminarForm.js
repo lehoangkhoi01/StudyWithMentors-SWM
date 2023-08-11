@@ -474,6 +474,7 @@ const SeminarForm = () => {
       setValue("seminarPlace", seminarDetail.location);
       setValue("seminarDescription", seminarDetail.description);
       setValue("seminarTime", moment(seminarDetail.startTime).toDate());
+      setValue("seminarEndTime", moment(seminarDetail.endTime).toDate());
       setValue("seminarSpeakers", seminarDetail.mentors);
       setSeminarBackground(seminarDetail.imageLink);
       setOldDocuments(

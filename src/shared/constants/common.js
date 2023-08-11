@@ -436,6 +436,8 @@ export const SEMINAR = {
   IS_COMMING_STATUS: "Sắp diễn ra",
   AUTHOR: "Diễn giả",
   TIME: "Thời gian",
+  START_TIME: "Thời gian bắt đầu",
+  END_TIME: "Thời gian kết thúc",
   LOCATION: "Địa điểm",
   ORGANIZER: "Tổ chức",
   CONTENT: "Mô tả",
