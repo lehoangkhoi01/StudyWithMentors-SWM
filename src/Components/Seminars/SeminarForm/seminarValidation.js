@@ -1,9 +1,19 @@
+import { getPlainTextFromHtmlString } from "../../../Helpers/generalHelper";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import {
   ERROR_MESSAGES,
   LENGTH,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
+
+export const validateSeminarDescription = (val) => {
+  const plainTextValue = getPlainTextFromHtmlString(val);
+  if (plainTextValue || plainTextValue.length > 0) {
+    if (plainTextValue.length > LENGTH.SEMINAR_DESCRIPTION) {
+      return ERROR_MESSAGES.SEMINAR_DESCRIPTION_LENGTH;
+    }
+  }
+};
 
 export const validationSeminarDate = (value) => {
   if (!value || value.length === 0) {

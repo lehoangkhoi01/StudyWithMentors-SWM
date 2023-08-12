@@ -1,9 +1,12 @@
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import style from "./CustomizedTextField.module.scss";
 import { OPTIONAL } from "../../constants/common";
 import { BREAK_POINT } from "../../constants/globalStyle";
 import { useMediaQuery } from "react-responsive";
 import { useRef, useState } from "react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import "./ckEditor.css";
 
 const CustomizedTextField = (props) => {
   const isXL = useMediaQuery({
@@ -37,26 +40,44 @@ const CustomizedTextField = (props) => {
         {props.name}
         {!props.required ? <span>({OPTIONAL})</span> : ""}
       </label>
-      <TextField
-        multiline={props.multiline}
-        rows={isXL ? 8 : isLG ? 6 : isMD ? 4 : 2}
-        error={props.error}
-        helperText={props.helperText}
-        id={props.inputId}
-        placeholder={props.placeholder}
-        type={props.type ?? "text"}
-        required={props.required}
-        {...props.options}
-        disabled={props.disabled ?? false}
-        onChange={!isValueMaxLength() ? onChange ?? null : null}
-        value={props.value}
-        inputProps={{ maxLength: props.maxLength ?? 2000 }}
-        inputRef={inputRef}
-      />
-      {props.multiline && (
-        <span className={`${style.textField__limit}`}>
-          {valueLength ?? 0} / {props.maxLength ?? 2000}
-        </span>
+      {props.isRichText ? (
+        <div style={{ height: "25vh" }}>
+          <CKEditor
+            editor={ClassicEditor}
+            disabled={props.disabled}
+            onChange={props.onChange}
+            {...props.options}
+          />
+          {props.fieldState?.error?.message && (
+            <Typography variant="caption" color="#ff5252">
+              {props.fieldState?.error?.message}
+            </Typography>
+          )}
+        </div>
+      ) : (
+        <>
+          <TextField
+            multiline={props.multiline}
+            rows={isXL ? 8 : isLG ? 6 : isMD ? 4 : 2}
+            error={props.error}
+            helperText={props.helperText}
+            id={props.inputId}
+            placeholder={props.placeholder}
+            type={props.type ?? "text"}
+            required={props.required}
+            {...props.options}
+            disabled={props.disabled ?? false}
+            onChange={!isValueMaxLength() ? onChange ?? null : null}
+            value={props.value}
+            inputProps={{ maxLength: props.maxLength ?? 2000 }}
+            inputRef={inputRef}
+          />
+          {props.multiline && (
+            <span className={`${style.textField__limit}`}>
+              {valueLength ?? 0} / {props.maxLength ?? 2000}
+            </span>
+          )}
+        </>
       )}
     </div>
   );

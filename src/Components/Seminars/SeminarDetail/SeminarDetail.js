@@ -314,7 +314,12 @@ const SeminarDetail = () => {
                                 : `${style.detail__seminarDescription}`
                             }
                           >
-                            {data.description}
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: data.description,
+                              }}
+                            ></div>
+                            {/* {data.description} */}
                           </Typography>
                           <div className={`${style.detail__expandButton}`}>
                             <Button

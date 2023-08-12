@@ -221,6 +221,7 @@ export const LENGTH = {
   EMAIL_MAX: 254,
   SEMINAR_NAME: 200,
   SEMINAR_PLACE: 200,
+  SEMINAR_DESCRIPTION: 2000,
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 5,
   SPEAKERS_MAX: 3,
@@ -261,6 +262,8 @@ export const ERROR_MESSAGES = {
   INVALID_END_DATE: "Ngày kết thúc không hợp lệ",
   INVALID_SEMINAR_END_DATE: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
   SEMINAR_NAME_LENGTH: "Độ dài tối đa là " + LENGTH.SEMINAR_NAME + " ký tự.",
+  SEMINAR_DESCRIPTION_LENGTH:
+    "Độ dài tối đa là " + LENGTH.SEMINAR_DESCRIPTION + " ký tự.",
   INVALID_DATE_TIME_FUTURE: "Vui lòng chọn ngày giờ trong tương lai",
   INVALID_IMAGE_FILE:
     "Vui lòng chọn ảnh PNG, JPG hoặc JPEG với kích thước không quá 10MB.",
@@ -287,8 +290,9 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
+    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -718,10 +722,10 @@ export const SEMINAR_TABLE = {
   NAME: "Tên sự kiện",
   MENTOR_NAME: "Diễn giả",
   DEPARTMENT: "Phòng ban",
-  STATUS: "Trạng thái"
-}
+  STATUS: "Trạng thái",
+};
 
 export const TRANSLATED_SEMINAR_STATUS = {
   IS_COMMING: "Chưa diễn ra",
   PAST: "Đã diễn ra",
-}
+};
