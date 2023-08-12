@@ -259,49 +259,65 @@ const SeminarDetail = () => {
                 )}
 
                 <div>
-                  <strong>{SEMINAR.AUTHOR}:</strong>{" "}
-                  {data.mentors.map((mentor, index) => {
-                    if (mentor.status === USER_STATUS.ACTIVATED) {
-                      return (
-                        <>
-                          <Link
-                            to={`${ROUTES.CV}/${mentor.id}`}
-                            key={`MENTOR_${index}`}
-                          >
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.AUTHOR}:
+                  </Typography>
+                  <Typography>
+                    {data.mentors.map((mentor, index) => {
+                      if (mentor.status === USER_STATUS.ACTIVATED) {
+                        return (
+                          <>
+                            <Link
+                              to={`${ROUTES.CV}/${mentor.id}`}
+                              key={`MENTOR_${index}`}
+                            >
+                              {mentor.fullName}
+                            </Link>
+                            <span>
+                              {data.mentors.length - 1 !== index ? ", " : ""}
+                            </span>
+                          </>
+                        );
+                      } else {
+                        return (
+                          <span key={`MENTOR_${index}`}>
                             {mentor.fullName}
-                          </Link>
-                          <span>
                             {data.mentors.length - 1 !== index ? ", " : ""}
                           </span>
-                        </>
-                      );
-                    } else {
-                      return (
-                        <span key={`MENTOR_${index}`}>
-                          {mentor.fullName}
-                          {data.mentors.length - 1 !== index ? ", " : ""}
-                        </span>
-                      );
-                    }
-                  })}
+                        );
+                      }
+                    })}
+                  </Typography>
                 </div>
                 <p>
-                  <strong>{SEMINAR.START_TIME}: </strong>
-                  {handleTimeToDisplay(data.startTime)}
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.START_TIME}:
+                  </Typography>
+                  <Typography>{handleTimeToDisplay(data.startTime)}</Typography>
                 </p>
                 <p>
-                  <strong>{SEMINAR.END_TIME}: </strong>
-                  {handleTimeToDisplay(data.endTime)}
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.END_TIME}:
+                  </Typography>
+                  <Typography>{handleTimeToDisplay(data.endTime)}</Typography>
                 </p>
                 <p>
-                  <strong>{SEMINAR.LOCATION}: </strong> {data.location}
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.LOCATION}:
+                  </Typography>
+                  <Typography>{data.location}</Typography>
                 </p>
                 <p>
-                  <strong>{SEMINAR.ORGANIZER}: </strong> {data.department?.name}
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.ORGANIZER}:
+                  </Typography>
+                  <Typography>{data.department?.name}</Typography>
                 </p>
                 <div>
                   <p>
-                    <strong>{SEMINAR.CONTENT}: </strong>
+                    <Typography className={`${style.detail__subTitle}`}>
+                      {SEMINAR.CONTENT}:{" "}
+                    </Typography>
                   </p>
                   {data.description ? (
                     <>
@@ -340,21 +356,23 @@ const SeminarDetail = () => {
                       )}
                     </>
                   ) : (
-                    <Typography color="GrayText" fontStyle="italic">
+                    <Typography fontStyle="italic">
                       {SEMINAR.EMPTY_DESCRIPTION}
                     </Typography>
                   )}
                 </div>
 
                 <p>
-                  <strong>{SEMINAR.ATTACHED_FILE}: </strong>
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.ATTACHED_FILE}:{" "}
+                  </Typography>
                   {data.attachmentLinks?.length > 0 ? (
                     <ListFileDisplay
                       mode={SEMINAR_DETAIL_VIEW_MODE.VIEW}
                       oldItems={data.attachments}
                     />
                   ) : (
-                    <Typography color="GrayText" fontStyle="italic">
+                    <Typography fontStyle="italic">
                       {SEMINAR.EMPTY_ATTACHMENTS}
                     </Typography>
                   )}

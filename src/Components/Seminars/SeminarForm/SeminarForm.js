@@ -285,7 +285,6 @@ const SeminarForm = () => {
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + result.id);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",

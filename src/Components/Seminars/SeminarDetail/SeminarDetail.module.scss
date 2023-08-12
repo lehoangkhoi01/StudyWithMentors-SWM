@@ -47,6 +47,12 @@
     flex: unset;
   }
 
+  &__subTitle {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: $primary900;
+  }
+
   &__image {
     width: 30%;
     height: fit-content;
