@@ -34,7 +34,7 @@ const ListFileDisplay = (props) => {
       <List>
         {props.oldItems.map((file, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={file.value}>{file.name}</a>
+            <a href={file.value}>{file.name?.replace("*", "")}</a>
             <div className={`${style.filelist__right}`}>
               <ListItemIcon>
                 <IconButton onClick={() => handleRemoveOldFile(index)}>
@@ -48,7 +48,7 @@ const ListFileDisplay = (props) => {
       <List>
         {Array.from(props.items)?.map((file, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <Typography>{file.name}</Typography>
+            <Typography>{file.name?.replace("*", "")}</Typography>
             <div className={`${style.filelist__right}`}>
               <Typography>{convertBytesToMB(file.size)}MB</Typography>
               <ListItemIcon>
@@ -72,7 +72,7 @@ const ListFileDisplay = (props) => {
         <List>
           {Array.from(props.items).map((file, index) => (
             <ListItem key={index} className={`${style.filelist__row}`}>
-              <Typography>{file.name}</Typography>
+              <Typography>{file.name?.replace("*", "")}</Typography>
               <div className={`${style.filelist__right}`}>
                 <Typography>{convertBytesToMB(file.size)}MB</Typography>
                 <ListItemIcon>
@@ -93,7 +93,7 @@ const ListFileDisplay = (props) => {
       <List>
         {Object.keys(props.oldItems).map((fileName, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={props.oldItems[fileName]}>{fileName}</a>
+            <a href={props.oldItems[fileName]}>{fileName?.replace("*", "")}</a>
           </ListItem>
         ))}
       </List>
