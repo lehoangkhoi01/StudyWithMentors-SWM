@@ -29,6 +29,7 @@ import {
   seminarPlaceValidation,
 } from "../../../shared/constants/validationRules";
 import {
+  validateSeminarDescription,
   validationSeminarDate,
   validationSeminarImage,
   validationSeminarSpeakers,
@@ -675,19 +676,30 @@ const SeminarForm = () => {
               Thêm diễn giả mới
             </Button>
 
-            <CustomizedTextField
-              multiline
-              maxRows={3}
-              inputId="seminarDescription"
-              name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
-              disabled={isFormDisabled}
-              required={false}
-              optional={true}
-              watch={watch("seminarDescription")}
-              options={{
-                ...register("seminarDescription"),
+            <Controller
+              control={control}
+              name="seminarDescription"
+              rules={{
+                validate: isFormUpdate ? null : validateSeminarDescription,
               }}
+              render={({ fieldState }) => (
+                <CustomizedTextField
+                  inputId="seminarDescription"
+                  name={TEXTFIELD_LABEL.SEMINAR_DESCRIPTION}
+                  disabled={isFormDisabled}
+                  required={false}
+                  optional={true}
+                  isRichText={true}
+                  fieldState={fieldState}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setValue("seminarDescription", data);
+                    console.log({ event, editor, data });
+                  }}
+                />
+              )}
             />
+
             <ListFileDisplay
               mode={
                 isFormUpdate
