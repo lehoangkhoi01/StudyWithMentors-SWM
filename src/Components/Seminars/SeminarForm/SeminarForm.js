@@ -118,6 +118,7 @@ const SeminarForm = () => {
     handleSubmit,
     register,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm({
@@ -691,6 +692,7 @@ const SeminarForm = () => {
                   optional={true}
                   isRichText={true}
                   fieldState={fieldState}
+                  initData={getValues("seminarDescription")}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setValue("seminarDescription", data);
