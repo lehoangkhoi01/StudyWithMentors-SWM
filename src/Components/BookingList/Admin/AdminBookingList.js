@@ -6,7 +6,7 @@ import {
 } from "../../../Helpers/generalHelper";
 import { bookingService } from "../../../Services/bookingService";
 import CustomizedTable from "../../../shared/components/Table/CustomizedTable";
-import { BOOKING_DETAIL_ACTION } from "../../../shared/constants/actionType";
+import { BOOKING_DETAIL_ACTION, EXTERNAL_ACTION } from "../../../shared/constants/actionType";
 import {
   ADMIN_BOOKING_TABLE,
   ERROR_MESSAGES,
@@ -71,7 +71,7 @@ const AdminBookingList = () => {
     {
       imgSrc: require("../../../assets/icons/Edit.png"),
       label: "Xem chi tiết",
-      action: BOOKING_DETAIL_ACTION,
+      action: EXTERNAL_ACTION,
       functionAction: function (selectedBooking) {
         handleViewDetail(selectedBooking);
       },

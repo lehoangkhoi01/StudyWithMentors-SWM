@@ -191,7 +191,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
 export const STAFF_MANAGE_SYSTEM_MENU = [
   {
     TITLE: "Sự kiện",
-    ROUTE: ROUTES.ADMIN_SEMINAR_LIST,
+    ROUTE: ROUTES.SEMINAR_LIST,
   },
 ];
 
