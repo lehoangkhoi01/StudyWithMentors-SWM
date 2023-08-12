@@ -40,6 +40,7 @@ import {
   BOOKING_DETAIL_ACTION,
   CONFIRM_ACTION,
   DEACTIVATE_ACTION,
+  EXTERNAL_ACTION,
   SEND_INVITATION,
   UPSERT_ACTION,
   VIEW_DETAIL,
@@ -269,6 +270,12 @@ const CustomizedTable = (props) => {
   };
 
   const openUpsertModalHandler = (_, data) => {
+    if (props.overdrivedAddingAcion) {
+      props.overdrivedAddingAcion();
+
+      return;
+    }
+
     if (data) {
       setExistedData(data);
     }
@@ -451,6 +458,8 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.ADD_DEPARTMENT;
       case TABLE_TYPE.STAFF:
         return BUTTON_LABEL.ADD_STAFF;
+      case TABLE_TYPE.SEMINAR:
+        return BUTTON_LABEL.ADD_SEMINAR;
       default:
         return "";
     }
@@ -719,6 +728,19 @@ const CustomizedTable = (props) => {
                                 </MenuItem>
                                 ));
 
+                            case EXTERNAL_ACTION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    actionItem.functionAction(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+                              );
+                              
                             default:
                               return;
                           }

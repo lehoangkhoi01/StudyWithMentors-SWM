@@ -3,16 +3,20 @@ import { selectUserInfo } from "../../../Store/slices/userSlice";
 import { useCustomAppbar, useNotification } from "../../../Helpers/generalHelper";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import { CONFIRM_TOPIC_MODAL, ERROR_MESSAGES, SEMINAR_TABLE, TABLE_ACTION, TABLE_TYPE, TRANSLATED_SEMINAR_STATUS } from "../../../shared/constants/common";
-import { UPSERT_ACTION } from "../../../shared/constants/actionType";
+import { EXTERNAL_ACTION } from "../../../shared/constants/actionType";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import { seminarService } from "../../../Services/seminarService";
 import CustomizedTable from "../../../shared/components/Table/CustomizedTable";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 
 const AdminSeminarList = () => {
   const userInfo = useSelector(selectUserInfo);
   const { setNotification } = useNotification();
   const { setAppbar } = useCustomAppbar();
   setAppbar(APPBAR_TITLES.SEMINAR_LIST);
+
+  const history = useHistory();
 
   const headerTable = [
     {
@@ -36,12 +40,18 @@ const AdminSeminarList = () => {
     {
       imgSrc: require("../../../assets/icons/Detail.png"),
       label: CONFIRM_TOPIC_MODAL.DETAIL,
-      action: UPSERT_ACTION,
+      action: EXTERNAL_ACTION,
+      functionAction: (row) => {
+        history.push(`${ROUTES_STATIC.SEMINAR_DETAIL}/${row.id}`);
+      },
     },
     {
       imgSrc: require("../../../assets/icons/Edit.png"),
       label: TABLE_ACTION.EDIT,
-      action: UPSERT_ACTION,
+      action: EXTERNAL_ACTION,
+      functionAction: (row) => {
+        history.push(`${ROUTES_STATIC.SEMINAR_UPDATE}/${row.id}`);
+      },
     },
   ];
 
@@ -60,8 +70,6 @@ const AdminSeminarList = () => {
         departmentName: seminar.department.name,
         translatedStatus: TRANSLATED_SEMINAR_STATUS[seminar.status],
       }));
-
-      console.log(updatedSeminars)
 
       return updatedSeminars;
     } catch (error) {
@@ -82,6 +90,10 @@ const AdminSeminarList = () => {
     );
   };
 
+  const overdrivedAddingAcion = () => {
+    history.push(ROUTES.SEMINAR_CREATE)
+  }
+
   return (
     <div>
       <CustomizedTable
@@ -90,6 +102,7 @@ const AdminSeminarList = () => {
         filterData={onSearchSeminar}
         headerTable={headerTable}
         actionItems={actionItems}
+        overdrivedAddingAcion={overdrivedAddingAcion}
       />
     </div>
   );

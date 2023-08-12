@@ -44,6 +44,7 @@ export const BUTTON_LABEL = {
   ADD_STAFF: "Thêm nhân viên",
   SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
   SEARCH_STAFF: "Tim kiếm nhân viên",
+  ADD_SEMINAR: "Thêm sự kiện"
 };
 
 export const TEXTFIELD_LABEL = {
@@ -290,9 +291,8 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
-    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
