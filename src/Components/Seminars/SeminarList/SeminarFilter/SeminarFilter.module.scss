@@ -1,8 +1,9 @@
 @import "../../../../shared/theme";
+@import "../../../../shared/break-point";
 
 .filterSection {
   &__container {
-    width: 95%;
+    width: 80%;
     margin: 2rem auto;
   }
 
@@ -20,7 +21,6 @@
 
     &:hover {
       background-color: $primary900;
-
     }
   }
 
@@ -41,6 +41,18 @@
 
     &:focus {
       color: $primary600;
+    }
+  }
+}
+
+@media (max-width: $bp-xl) {
+  .filterSection {
+    &__container {
+      width: 85%;
+    }
+    &__button,
+    &__linkButton {
+      font-size: $SMALL_BUTTON_TEXT_SIZE;
     }
   }
 }

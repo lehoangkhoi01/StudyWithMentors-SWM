@@ -274,8 +274,9 @@ const PROFILE_SECTION = {
 };
 
 const CustomTab = styled(Tab)`
-  color: #3948ab;
-  font-size: 1.3rem;
+  color: #283493;
+  font-size: 1.2vw;
+  font-weight: 600;
   &.Mui-selected {
     color: #283493;
   }
@@ -339,7 +340,7 @@ const CV = () => {
   useEffect(() => {
     const lastedPosition = findLastestWorkingExp(cvData.workingExps ?? []);
     setPosition(lastedPosition);
-  }, [cvData])
+  }, [cvData]);
 
   const getCVData = async () => {
     try {
@@ -627,11 +628,11 @@ const CV = () => {
   const onSetCVData = (newCVData) => {
     let updatedCVData = {
       ...newCVData,
-      workingExps: sortWorkingExps(newCVData.workingExps)
-    }
+      workingExps: sortWorkingExps(newCVData.workingExps),
+    };
 
-    setCVData(updatedCVData)
-  }
+    setCVData(updatedCVData);
+  };
 
   const renderFollowButton = (mentorId) => {
     if (followingMentors.includes(mentorId)) {
@@ -738,7 +739,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
