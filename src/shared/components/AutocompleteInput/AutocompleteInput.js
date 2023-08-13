@@ -12,7 +12,7 @@ const AutocompleteInput = (props) => {
       </label>
       <Autocomplete
         {...props.field}
-        disablePortal
+        // disablePortal
         disabled={props.disabled ?? false}
         id={props.id}
         multiple={props.multiple ?? false}
