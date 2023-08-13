@@ -11,6 +11,7 @@ import { BOOKING_STATUS } from "../../shared/constants/systemType";
 import { COMMON_MESSAGE } from "../../shared/constants/common";
 import { styled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 const CustomTab = styled(Tab)`
   color: #3948ab;
@@ -27,6 +28,7 @@ const BookingList = () => {
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
+  const { id } = useParams();
   const history = useHistory();
 
   const processData = (data) => {
@@ -72,8 +74,32 @@ const BookingList = () => {
     setFilterValue(newValue);
   };
 
+  const fetchBooking = async () => {
+    setLoading(true);
+    try {
+      let result = await bookingService.getBooking();
+      if (result.bookingCards && result.bookingCards.length > 0) {
+        let filteredList = [];
+        if (filterValue !== "ALL") {
+          filteredList = result.bookingCards.filter(
+            (x) => x.status === filterValue
+          );
+        } else filteredList = result.bookingCards;
+
+        const newResult = processData(filteredList);
+        setBookingList(newResult);
+      }
+    } catch (error) {
+      if (error?.status === 500) {
+        history.push(ROUTES.SERVER_ERROR);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   React.useEffect(() => {
-    const fetchBooking = async () => {
+    const fetchInitBooking = async () => {
       setLoading(true);
       try {
         let result = await bookingService.getBooking();
@@ -87,6 +113,15 @@ const BookingList = () => {
 
           const newResult = processData(filteredList);
           setBookingList(newResult);
+          if (id) {
+            const selected = newResult.find(
+              (booking) => Number.parseInt(booking.id) === Number.parseInt(id)
+            );
+            if (selected) {
+              setSelectedBooking(selected);
+              setOpenBookingInfo(true);
+            }
+          }
         }
       } catch (error) {
         if (error?.status === 500) {
@@ -96,6 +131,10 @@ const BookingList = () => {
         setLoading(false);
       }
     };
+    fetchInitBooking();
+  }, []);
+
+  React.useEffect(() => {
     fetchBooking();
   }, [filterValue]);
 

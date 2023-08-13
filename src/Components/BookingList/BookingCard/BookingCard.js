@@ -4,9 +4,16 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import style from "./BookingCard.module.scss";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
-import { BOOKING_STATUS } from "../../../shared/constants/systemType";
+import {
+  BOOKING_STATUS,
+  SYSTEM_ROLE,
+} from "../../../shared/constants/systemType";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const BookingCard = (props) => {
+  const userInfo = useSelector(selectUserInfo);
+
   const convertTimeToDateTime = (time, date) => {
     return new Date(date + " " + time);
   };
@@ -51,6 +58,38 @@ const BookingCard = (props) => {
     props.setSelectedBooking(props.bookingInfo);
   };
 
+  const renderBookingCardDetail = () => {
+    if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
+      return (
+        <div className={`${style.bookingCard__detail}`}>
+          <span>Chủ đề: {props.bookingInfo?.topicDetailResponse?.name}</span> |{" "}
+          <span>
+            Phân loại: {props.bookingInfo?.topicDetailResponse?.field}
+          </span>{" "}
+          |{" "}
+          <span>
+            Lĩnh vực: {props.bookingInfo?.topicDetailResponse?.category}
+          </span>{" "}
+          | <span>Sinh viên: {props.bookingInfo?.menteeNames?.join(", ")}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className={`${style.bookingCard__detail}`}>
+          <span>Mentor: {props.bookingInfo?.mentor?.fullName}</span> |{" "}
+          <span>Chủ đề: {props.bookingInfo?.topicDetailResponse?.name}</span> |{" "}
+          <span>
+            Phân loại chủ đề: {props.bookingInfo?.topicDetailResponse?.field}
+          </span>{" "}
+          |{" "}
+          <span>
+            Lĩnh vực: {props.bookingInfo?.topicDetailResponse?.category}
+          </span>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={`${style.bookingCard__container}`}>
       <Grid2 container spacing={4}>
@@ -90,13 +129,7 @@ const BookingCard = (props) => {
           >
             {props.bookingInfo?.topicDetailResponse?.name}
           </Button>
-          <div className={`${style.bookingCard__detail}`}>
-            <span>Mentor: {props.bookingInfo?.mentor?.fullName}</span> |{" "}
-            <span>Nhóm: {props.bookingInfo?.topicDetailResponse?.field}</span> |{" "}
-            <span>
-              Lĩnh vực: {props.bookingInfo?.topicDetailResponse?.category}
-            </span>
-          </div>
+          {renderBookingCardDetail()}
           {renderStatusLabel(props.bookingInfo?.status)}
         </Grid2>
       </Grid2>

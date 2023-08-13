@@ -8,7 +8,12 @@ const MentorStudentRoutes = () => {
   return (
     <React.Fragment>
       <Switch>
-        <Route path={ROUTES.BOOKING_LIST} component={BookingListPage} />
+        <Route exact path={ROUTES.BOOKING_LIST} component={BookingListPage} />
+        <Route
+          exact
+          path={`${ROUTES.BOOKING_LIST}/:id`}
+          component={BookingListPage}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>
