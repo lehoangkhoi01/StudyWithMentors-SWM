@@ -457,9 +457,7 @@ const SeminarForm = () => {
     } else {
       setAppbar(APPBAR_TITLES.SEMINAR_CREATE);
     }
-    if (userInfo.role === SYSTEM_ROLE.ADMIN) {
-      getDepartmentList();
-    }
+    getDepartmentList();
   }, []);
 
   React.useEffect(() => {
