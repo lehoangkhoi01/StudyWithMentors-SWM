@@ -95,11 +95,17 @@ export const mapCVSection = (data, indexOfProperty) => {
     case INDEX_OF_CV_PROPERTY.CERT: {
       return data.map((section) => ({
         title: `${section.name} ${OTHERS.BELONG} ${section.organization
-          } (${convertDateFormat(
+          } 
+          ${section.achievingDate && section.expiryDate ? `(${convertDateFormat(
             section.achievingDate,
             DATE_FORMAT.BACK_END_YYYY_MM_DD,
             DATE_FORMAT.MM_YYYY
-          )})`,
+          )} - ${convertDateFormat(
+            section.expiryDate,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD,
+            DATE_FORMAT.MM_YYYY
+          )})` : ""} 
+          `,
         detail: section.description,
       }));
     }
@@ -177,7 +183,7 @@ export const sortWorkingExps = (workingExps) => {
     return { ...el };
   });
 
-  sortedList.sort((a, b) =>  (new Date(b.endDate ?? new Date())) - (new Date(a.endDate ?? new Date())))
+  sortedList.sort((a, b) => (new Date(b.endDate ?? new Date())) - (new Date(a.endDate ?? new Date())))
 
   return sortedList;
 }

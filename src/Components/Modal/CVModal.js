@@ -20,6 +20,12 @@ import {
 } from "../../Helpers/SpecificComponentHelper/CVHelper";
 import { convertDateFormat, covertToISODate } from "../../Helpers/dateHelper";
 
+const LIST_OPTIONAL_DATE = [
+  "learningExps_endDate",
+  "certificates_achievingDate",
+  "certificates_expiryDate"
+]
+
 const CVModal = (props) => {
   const [registerNamePrefix, setRegisterNamePrefix] = useState();
   const {
@@ -96,14 +102,15 @@ const CVModal = (props) => {
 
   const validateDueDate = (val) => {
     if (!isWorking) {
-      if (!val || val.length === 0) {
-        return ERROR_MESSAGES.REQUIRED_FIELD;
-      }
 
       const formValue = getValues();
       const issuedDateString = formValue[`${registerNamePrefix}_achievingDate`];
 
       const dueDateTime = covertToISODate(DATE_FORMAT.MM_YYYY, val);
+
+      if (!dueDateTime) {
+        return;
+      }
 
       const issuedDateTime = covertToISODate(
         DATE_FORMAT.MM_YYYY,
@@ -134,7 +141,7 @@ const CVModal = (props) => {
   };
 
   const renderFormOptionForDate = (registerName) => {
-    if (registerName.includes("endDate") && !registerName.includes("learningExps_endDate")) {
+    if (registerName.includes("endDate") && !isOptionalDate(registerName)) {
       return {
         ...register(registerName, {
           validate: {
@@ -187,6 +194,18 @@ const CVModal = (props) => {
 
     props.handleSubmit(specificForm, registerNamePrefix);
   };
+
+  const isOptionalDate = (registerName) => {
+    let result = false;
+
+    LIST_OPTIONAL_DATE.forEach(optionalDate => {
+      if (registerName.includes(optionalDate)) {
+        result = true;
+      }
+    })
+
+    return result;
+  }
 
   return (
     <div className={style.container}>
