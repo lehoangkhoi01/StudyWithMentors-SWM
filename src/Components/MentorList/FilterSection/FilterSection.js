@@ -66,6 +66,10 @@ const FilterSection = (props) => {
 
     const params = [searchTerm, ...fieldNames, ...categoryNames];
 
+    if (!searchTerm) {
+      params.splice(0, 1)
+    }
+
     props.onSearch(params);
   };
 
