@@ -8,7 +8,6 @@ import NavigationBar from "./shared/components/NavigationBar/NavigationBar";
 import style from "./App.module.scss";
 import LoadingProvider from "./shared/components/Loading/LoadingProvider";
 import CVPage from "./Pages/CV/CVPage";
-import HomePage from "./Pages/HomePage";
 import NotFound from "./Pages/NotFound";
 import ServerError from "./Pages/ServerError";
 import Footer from "./shared/components/Footer/Footer";
@@ -45,6 +44,7 @@ import AdminStaffRoutes from "./Layout/AdminStaffRoutes";
 import AdminMentorRoutes from "./Layout/AdminMentorRoutes";
 import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import AboutUsPage from "./Pages/AboutUs/AboutUsPage";
+import HomePage from "./Pages/Home/HomePage";
 
 function App() {
   const user = useSelector(selectUser);
