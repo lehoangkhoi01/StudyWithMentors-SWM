@@ -2,12 +2,14 @@
 
 .card {
   &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
     border-radius: 1.5rem;
     overflow: hidden;
     height: 100%;
     background-color: $black000;
-
     padding-bottom: 0.3rem;
   }
 
@@ -40,32 +42,25 @@
     }
   }
 
-  &__cover {
-    margin-bottom: 3.5rem;
-    img {
-      width: 100%;
-    }
-  }
+  // &__avatar {
+  //   position: absolute;
+  //   top: 13%;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  //   text-align: center;
+  //   width: 8rem;
+  //   height: 8rem;
 
-  &__avatar {
-    position: absolute;
-    top: 13%;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    width: 8rem;
-    height: 8rem;
+  //   border-radius: 2rem;
+  //   border: 1px solid $black000;
+  //   overflow: hidden;
 
-    border-radius: 2rem;
-    border: 1px solid $black000;
-    overflow: hidden;
-
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-  }
+  //   img {
+  //     height: 100%;
+  //     width: 100%;
+  //     object-fit: cover;
+  //   }
+  // }
 
   &__information {
     padding-inline: 1rem;

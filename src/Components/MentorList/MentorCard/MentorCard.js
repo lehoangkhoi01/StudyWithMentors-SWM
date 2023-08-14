@@ -1,6 +1,6 @@
 import style from "./MentorCard.module.scss";
 import { ERROR_MESSAGES, MENTOR_CARD } from "../../../shared/constants/common";
-import { Button, IconButton } from "@mui/material";
+import { Avatar, Button, IconButton } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../../shared/constants/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -92,18 +92,24 @@ const MentorCard = (props) => {
           <AddIcon fontSize="small" /> <span>{FOLLOW.FOLLOW}</span>
         </IconButton>
       </div> */}
-      <div className={style.card__cover}>
-        <img src={require("../../../assets/Mentor-cover.png")} />
-      </div>
       <div className={style.card__avatar}>
-        <img
+        {/* <img
           src={
             props.data.avatarUrl &&
-              props.data.avatarUrl !== "avatarUrl" &&
-              props.data.avatarUrl !== "string"
+            props.data.avatarUrl !== "avatarUrl" &&
+            props.data.avatarUrl !== "string"
               ? props.data.avatarUrl
               : require("../../../assets/sbcf-default-avatar.png")
           }
+        /> */}
+        <Avatar
+          alt={props.data?.name}
+          src={
+            props.data?.avatarUrl
+              ? props.data?.avatarUrl
+              : require("../../../assets/sbcf-default-avatar.png")
+          }
+          sx={{ width: 120, height: 120 }}
         />
       </div>
       <div className={style.card__information}>
