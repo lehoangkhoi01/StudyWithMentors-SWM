@@ -1,9 +1,10 @@
 import style from "./MentorCard.module.scss";
 import { ERROR_MESSAGES, MENTOR_CARD } from "../../../shared/constants/common";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../../shared/constants/navigation";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
 import {
   useCustomLoading,
   useNotification,
@@ -65,7 +66,7 @@ const MentorCard = (props) => {
             sx={{ color: "#ff6700" }}
             onClick={() => handleUnfollow(mentorId)}
           >
-            <AddIcon fontSize="small" /> <span>Đã theo dõi</span>
+            <CheckIcon fontSize="small" /> <span> Đã theo dõi</span>
           </IconButton>
         </div>
       );
@@ -78,7 +79,7 @@ const MentorCard = (props) => {
             sx={{ color: "#ff6700" }}
             onClick={() => handleFollow(mentorId)}
           >
-            <AddIcon fontSize="small" /> <span>Theo dõi</span>
+            <AddIcon fontSize="small" /> <span> Theo dõi</span>
           </IconButton>
         </div>
       );
@@ -101,7 +102,9 @@ const MentorCard = (props) => {
                 alt="icon"
                 src={require("../../../assets/icons/sparkles.png")}
               />
-              <span>{topic.name}</span>
+              <Tooltip title={topic.name}>
+                <span>{topic.name}</span>
+              </Tooltip>
             </div>
           )}
         </div>
@@ -119,15 +122,6 @@ const MentorCard = (props) => {
         </IconButton>
       </div> */}
       <div className={style.card__avatar}>
-        {/* <img
-          src={
-            props.data.avatarUrl &&
-            props.data.avatarUrl !== "avatarUrl" &&
-            props.data.avatarUrl !== "string"
-              ? props.data.avatarUrl
-              : require("../../../assets/sbcf-default-avatar.png")
-          }
-        /> */}
         <Avatar
           alt={props.data?.name}
           src={
@@ -135,7 +129,7 @@ const MentorCard = (props) => {
               ? props.data?.avatarUrl
               : require("../../../assets/sbcf-default-avatar.png")
           }
-          sx={{ width: 120, height: 120 }}
+          sx={{ width: 150, height: 150 }}
         />
       </div>
       <div className={style.card__information}>
