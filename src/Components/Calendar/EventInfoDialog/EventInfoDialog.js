@@ -66,10 +66,13 @@ const EventInfoDialog = (props) => {
     props.handleSubmitUpdateSchedule(
       props.event?.scheduleId,
       props.event?.exceptionId,
+      props.event?.belongToSeries,
       data
     );
     props.handleClose();
   };
+
+  console.log(props.event);
 
   return (
     <div>
