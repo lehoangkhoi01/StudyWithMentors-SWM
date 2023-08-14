@@ -78,7 +78,6 @@ const CustomCalendar = () => {
     newSchedule
   ) => {
     setLoading(true);
-    console.log(exceptionId);
     try {
       if (exceptionId) {
         // Update exception is used for update an exception slot (have exception id)

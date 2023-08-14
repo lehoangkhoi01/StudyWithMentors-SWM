@@ -153,7 +153,6 @@ const SeminarDetail = () => {
       try {
         setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
-        console.log(seminarDetail);
         setData(seminarDetail);
       } catch (error) {
         if (error?.status == "404") {
