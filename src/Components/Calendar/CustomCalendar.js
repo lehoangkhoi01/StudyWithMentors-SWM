@@ -74,18 +74,27 @@ const CustomCalendar = () => {
   const handleSubmitUpdateSchedule = async (
     scheduleId,
     exceptionId,
+    isBelongToSeries = false,
     newSchedule
   ) => {
     setLoading(true);
+    console.log(exceptionId);
     try {
       if (exceptionId) {
+        // Update exception is used for update an exception slot (have exception id)
         const data = {
           parentId: scheduleId,
           startTime: newSchedule.startTime,
           remove: false,
         };
         await scheduleService.updateException(exceptionId, data);
-      } else if (!exceptionId && !newSchedule.daily && !newSchedule.weekly) {
+      } else if (
+        !exceptionId &&
+        !newSchedule.daily &&
+        !newSchedule.weekly &&
+        isBelongToSeries
+      ) {
+        // Create exception use for update a single slot from series to other a single slot
         const data = {
           parentId: scheduleId,
           exceptionDate: newSchedule.startDate,
@@ -94,6 +103,7 @@ const CustomCalendar = () => {
         };
         await scheduleService.createException(data);
       } else {
+        // Update schedule is use for update a single slot or update all the series
         await scheduleService.updateSchedule(scheduleId, newSchedule);
       }
 
