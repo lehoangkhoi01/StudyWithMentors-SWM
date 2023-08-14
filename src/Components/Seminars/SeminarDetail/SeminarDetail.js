@@ -281,7 +281,7 @@ const SeminarDetail = () => {
                             </Typography>
                           </Link>
                         ) : (
-                          <Typography fontSize="1.4rem">
+                          <Typography fontSize="1.2rem">
                             {mentor.fullName}
                           </Typography>
                         )}

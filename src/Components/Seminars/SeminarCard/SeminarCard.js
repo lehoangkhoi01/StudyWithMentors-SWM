@@ -3,6 +3,7 @@ import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarCard.module.scss";
 import { ROUTES_STATIC } from "../../../shared/constants/navigation";
+import { Tooltip } from "@mui/material";
 
 const SeminarCard = ({ data }) => {
   const history = useHistory();
@@ -30,9 +31,11 @@ const SeminarCard = ({ data }) => {
       </div>
 
       <div className={style.card__information}>
-        <h1 className={style.card__title}>
-          <Link to={`/seminars/${data.id}`}>{data.name}</Link>
-        </h1>
+        <Tooltip title={data.name}>
+          <h1 className={style.card__title}>
+            <Link to={`/seminars/${data.id}`}>{data.name}</Link>
+          </h1>
+        </Tooltip>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Author_Seminar.png")} />
           <p>
@@ -44,6 +47,17 @@ const SeminarCard = ({ data }) => {
             )}
           </p>
         </div>
+
+        {/* <div>
+          {data.mentors.map((mentor) => {
+            return (
+              <div key={mentor.id}>
+                <Avatar alt={mentor.fullName} src={mentor.avatarUrl} />
+                <Typography>{mentor.fullName}</Typography>
+              </div>
+            );
+          })}
+        </div> */}
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Time_Seminar.png")} />
           <p>{handleTimeToDisplay(data.startTime)}</p>
