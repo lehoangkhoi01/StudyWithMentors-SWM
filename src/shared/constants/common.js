@@ -566,6 +566,7 @@ export const TABLE_ACTION = {
   EDIT: "Chỉnh sửa",
   DEACTIVATE: "Vô hiệu hóa",
   ACTIVATE: "Kích hoạt",
+  DELETE: "Xóa",
 };
 
 export const UPSERT_MENTOR = {
