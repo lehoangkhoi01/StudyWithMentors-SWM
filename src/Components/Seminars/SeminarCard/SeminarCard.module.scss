@@ -1,14 +1,13 @@
 @import "../../../shared/theme";
+@import "../../../shared/break-point";
 
 .card {
   &__container {
+    display: flex;
     padding: 0.6rem;
-
     border-radius: 1rem;
-
     background-color: $black000;
-
-    height: 32rem;
+    height: 20rem;
     overflow: hidden;
   }
 
@@ -21,21 +20,19 @@
   }
 
   &__image {
-    width: auto;
-    height: 12rem;
+    width: 14rem;
+    height: 20rem;
     border-radius: 1rem;
   }
 
   &__status {
     position: absolute;
-    bottom: 0;
     left: 0;
+    bottom: 0;
     width: 100%;
-
     text-align: center;
     color: $black000;
     font-size: 1.1rem;
-
     padding-block: 0.8rem;
 
     background: linear-gradient(
