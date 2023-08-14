@@ -740,7 +740,7 @@ const CustomizedTable = (props) => {
                                   <span>{actionItem.label}</span>
                                 </MenuItem>
                               );
-                              
+
                             default:
                               return;
                           }
@@ -769,7 +769,9 @@ const CustomizedTable = (props) => {
         onCloseModal={onCloseModal}
         title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
-        type={MODAL_DELETE_PROPERTY.DEACTIVATE}
+        type={
+          (props.type === TABLE_TYPE.CATEGORY || props.type === TABLE_TYPE.FIELD) ? MODAL_DELETE_PROPERTY.DELETE :
+            MODAL_DELETE_PROPERTY.DEACTIVATE}
       />
       <ActivePropertyModal
         openModal={openModal.active}

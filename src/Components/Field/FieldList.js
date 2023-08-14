@@ -36,7 +36,7 @@ const FieldList = () => {
     },
     {
       imgSrc: require("../../assets/icons/Deactive.png"),
-      label: TABLE_ACTION.DEACTIVATE,
+      label: TABLE_ACTION.DELETE,
       action: DEACTIVATE_ACTION,
     },
   ];
