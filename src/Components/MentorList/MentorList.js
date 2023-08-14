@@ -21,7 +21,8 @@ import { selectUserInfo } from "../../Store/slices/userSlice";
 const MentorList = () => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
-  const { getTopicFields, getTopicCategories } = useFetchTopicFieldsAndCategories();
+  const { getTopicFields, getTopicCategories } =
+    useFetchTopicFieldsAndCategories();
   const userInfo = useSelector(selectUserInfo);
 
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
@@ -186,7 +187,7 @@ const MentorList = () => {
   };
 
   const onUpdateFilter = (param) => {
-    console.log(param)
+    console.log(param);
     setFilterInfo(param);
   };
 
@@ -230,14 +231,7 @@ const MentorList = () => {
       </div>
       <Grid className={`${style.mentorList__cards}`} container spacing={3}>
         {displayedMentors.map((mentor, index) => (
-          <Grid
-            key={`MENTOR_CARD_${index}`}
-            item
-            xs={12}
-            md={6}
-            lg={4}
-            xl={3}
-          >
+          <Grid key={`MENTOR_CARD_${index}`} item xs={12} md={6} lg={4} xl={3}>
             <MentorCard
               key={`MENTOR_CARD_${index}`}
               data={mentor}

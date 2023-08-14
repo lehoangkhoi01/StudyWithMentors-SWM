@@ -1,6 +1,6 @@
 import style from "./MentorCard.module.scss";
 import { ERROR_MESSAGES, MENTOR_CARD } from "../../../shared/constants/common";
-import { Avatar, Button, IconButton } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../../shared/constants/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -60,11 +60,12 @@ const MentorCard = (props) => {
       return (
         <div className={style.card__follow}>
           <IconButton
+            disableRipple
             size="small"
-            sx={{ color: "white" }}
+            sx={{ color: "#ff6700" }}
             onClick={() => handleUnfollow(mentorId)}
           >
-            <AddIcon fontSize="small" /> <span>Hủy theo dõi</span>
+            <AddIcon fontSize="small" /> <span>Đã theo dõi</span>
           </IconButton>
         </div>
       );
@@ -72,14 +73,39 @@ const MentorCard = (props) => {
       return (
         <div className={style.card__follow}>
           <IconButton
+            disableRipple
             size="small"
-            sx={{ color: "white" }}
+            sx={{ color: "#ff6700" }}
             onClick={() => handleFollow(mentorId)}
           >
             <AddIcon fontSize="small" /> <span>Theo dõi</span>
           </IconButton>
         </div>
       );
+    }
+  };
+
+  const renderTopicSection = () => {
+    if (!props.data?.topics?.length) {
+      return (
+        <div className={style.card__topic_item}>
+          <span>{MENTOR_CARD.DONT_HAVE_TOPIC}</span>
+        </div>
+      );
+    } else {
+      return props.data.topics.map((topic, index) => (
+        <div key={`MENTOR_ITEM_${index}`}>
+          {index < 2 && (
+            <div className={style.card__topic_item}>
+              <img
+                alt="icon"
+                src={require("../../../assets/icons/sparkles.png")}
+              />
+              <span>{topic.name}</span>
+            </div>
+          )}
+        </div>
+      ));
     }
   };
 
@@ -114,16 +140,16 @@ const MentorCard = (props) => {
       </div>
       <div className={style.card__information}>
         <div className={style.card__name}>
-          <p>
-            <Button
-              variant="text"
-              className={style.card__name}
-              onClick={() => handleNavigateProfile(props.data.mentorId)}
-            >
-              {props.data.fullName}
-            </Button>
-          </p>
-          <p className={style.card__name_position}>{props.data.occupation}</p>
+          <div
+            // variant="text"
+            className={style.card__name__button}
+            onClick={() => handleNavigateProfile(props.data.mentorId)}
+          >
+            {props.data.fullName}
+          </div>
+          <div className={style.card__name_position}>
+            {props.data.occupation}
+          </div>
         </div>
         <div className={style.card__rating}>
           <div>
@@ -141,23 +167,7 @@ const MentorCard = (props) => {
             {props.data.followers} {MENTOR_CARD.FOLLOWERS}
           </span>
         </div>
-        <div className={style.card__topic}>
-          {!props.data.topics.length && (
-            <div className={style.card__topic_item}>
-              <span>{MENTOR_CARD.DONT_HAVE_TOPIC}</span>
-            </div>
-          )}
-          {props.data.topics.map((topic, index) => (
-            <div key={`MENTOR_ITEM_${index}`}>
-              {index < 3 && (
-                <div className={style.card__topic_item}>
-                  <img src={require("../../../assets/icons/mentor-pen.png")} />
-                  <span>{topic.name}</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <div className={style.card__topic}>{renderTopicSection()}</div>
       </div>
     </div>
   );
