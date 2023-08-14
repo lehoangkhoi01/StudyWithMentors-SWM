@@ -473,7 +473,7 @@ const BookingInfoDialog = (props) => {
             <span className={`${style.bookingSummary__subTitle}`}>
               Người tham gia:{" "}
             </span>
-            <span>{props.bookingInfo?.menteeNames?.toString()}</span>
+            <span>{props.bookingInfo?.menteeNames?.join(", ")}</span>
           </div>
 
           <div className={`${style.bookingSummary__detail}`}>
