@@ -11,7 +11,7 @@ import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
 import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
-import { Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Avatar, Button, Menu, MenuItem, Typography } from "@mui/material";
 import {
   useCustomAppbar,
   useCustomLoading,
@@ -153,6 +153,7 @@ const SeminarDetail = () => {
       try {
         setLoading(true);
         const seminarDetail = await seminarService.getSeminarDetail(id);
+        console.log(seminarDetail);
         setData(seminarDetail);
       } catch (error) {
         if (error?.status == "404") {
@@ -258,76 +259,78 @@ const SeminarDetail = () => {
                   </div>
                 )}
 
-                <div>
-                  <Typography className={`${style.detail__subTitle}`}>
-                    {SEMINAR.AUTHOR}:
-                  </Typography>
-                  <Typography>
-                    {data.mentors.map((mentor, index) => {
-                      if (mentor.status === USER_STATUS.ACTIVATED) {
-                        return (
-                          <>
-                            <Link
-                              to={`${ROUTES.CV}/${mentor.id}`}
-                              key={`MENTOR_${index}`}
+                <div className={style.detail__mentorContainer}>
+                  {data?.mentors?.map((mentor, index) => {
+                    return (
+                      <div key={mentor.id}>
+                        <Avatar
+                          sx={{ width: 60, height: 60 }}
+                          alt={mentor.fullName}
+                          src={mentor.avatarUrl}
+                        />
+                        {mentor.status === USER_STATUS.ACTIVATED ? (
+                          <Link
+                            to={`${ROUTES.CV}/${mentor.id}`}
+                            key={`MENTOR_${index}`}
+                            className={`${style.detail__activeMentor}`}
+                          >
+                            <Typography
+                              className={`${style.detail__activeMentor}`}
                             >
                               {mentor.fullName}
-                            </Link>
-                            <span>
-                              {data.mentors.length - 1 !== index ? ", " : ""}
-                            </span>
-                          </>
-                        );
-                      } else {
-                        return (
-                          <span key={`MENTOR_${index}`}>
+                            </Typography>
+                          </Link>
+                        ) : (
+                          <Typography fontSize="1.4rem">
                             {mentor.fullName}
-                            {data.mentors.length - 1 !== index ? ", " : ""}
-                          </span>
-                        );
-                      }
-                    })}
-                  </Typography>
+                          </Typography>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-                <p>
+
+                <div className={style.detail__section}>
                   <Typography className={`${style.detail__subTitle}`}>
                     {SEMINAR.START_TIME}:
                   </Typography>
-                  <Typography>{handleTimeToDisplay(data.startTime)}</Typography>
-                </p>
-                <p>
+                  <div>{handleTimeToDisplay(data.startTime)}</div>
+                </div>
+
+                <div className={style.detail__section}>
                   <Typography className={`${style.detail__subTitle}`}>
                     {SEMINAR.END_TIME}:
                   </Typography>
-                  <Typography>{handleTimeToDisplay(data.endTime)}</Typography>
-                </p>
-                <p>
+                  <div>{handleTimeToDisplay(data.endTime)}</div>
+                </div>
+
+                <div className={style.detail__section}>
                   <Typography className={`${style.detail__subTitle}`}>
                     {SEMINAR.LOCATION}:
                   </Typography>
-                  <Typography>{data.location}</Typography>
-                </p>
-                <p>
+                  <div>{data.location}</div>
+                </div>
+
+                <div className={style.detail__section}>
                   <Typography className={`${style.detail__subTitle}`}>
                     {SEMINAR.ORGANIZER}:
                   </Typography>
-                  <Typography>{data.department?.name}</Typography>
-                </p>
+                  <div>{data.department?.name}</div>
+                </div>
+
                 <div>
-                  <p>
-                    <Typography className={`${style.detail__subTitle}`}>
-                      {SEMINAR.CONTENT}:{" "}
-                    </Typography>
-                  </p>
+                  <Typography className={`${style.detail__subTitle}`}>
+                    {SEMINAR.CONTENT}:
+                  </Typography>
                   {data.description ? (
                     <>
                       {data.description.length > 300 ? (
                         <>
-                          <Typography
+                          <div
                             className={
                               expandDetail
-                                ? null
-                                : `${style.detail__seminarDescription}`
+                                ? `${style.detail__seminarDescription}`
+                                : `${style.detail__seminarDescriptionExpand}`
                             }
                           >
                             <div
@@ -335,8 +338,8 @@ const SeminarDetail = () => {
                                 __html: data.description,
                               }}
                             ></div>
-                            {/* {data.description} */}
-                          </Typography>
+                          </div>
+
                           <div className={`${style.detail__expandButton}`}>
                             <Button
                               onClick={() => {
