@@ -1,37 +1,48 @@
 @import "../../../shared/theme";
+@import "../../../shared/break-point";
 
 .filterSection {
-    &__container {
-        width: 100%;
-    }
-    &__gridContainer {
-        margin: 0;
-    }
-    &__button {
-        background-color: $primary600;
-        padding: 9px 16px;
-        border-radius: 10px;
-        height: 45px;
-        margin-top: .7vh;
-    }
-    &__button:hover {
-        background-color: $primary900;
-    }
-    &__linkButton {
-        height: 45px;
-        padding: 9px 0;
-        color: $primary600;
-        margin-top: .7vh;
-    }
-    &__linkButton:hover {
-        background-color: transparent;
-        text-decoration: underline;
-    }
+  &__container {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  &__gridContainer {
+    margin: 0;
+  }
+  &__button {
+    background-color: $primary600;
+    padding: 9px 16px;
+    border-radius: 10px;
+    height: 45px;
+    margin-top: 0.7vh;
+  }
+  &__button:hover {
+    background-color: $primary900;
+  }
+  &__linkButton {
+    height: 45px;
+    padding: 9px 0;
+    color: $primary600;
+    margin-top: 0.7vh;
+  }
+  &__linkButton:hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
 
-    &__label {
-        color: $black400;
+  &__label {
+    color: $black400;
+  }
+  &__label:focus {
+    color: $primary600;
+  }
+}
+
+@media (max-width: $bp-xl) {
+  .filterSection {
+    &__button,
+    &__linkButton {
+      font-size: $SMALL_BUTTON_TEXT_SIZE;
     }
-    &__label:focus {
-        color: $primary600;
-    }
+  }
 }
