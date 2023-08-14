@@ -1,8 +1,18 @@
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../../Store/slices/userSlice";
-import { useCustomAppbar, useNotification } from "../../../Helpers/generalHelper";
+import {
+  useCustomAppbar,
+  useNotification,
+} from "../../../Helpers/generalHelper";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
-import { CONFIRM_TOPIC_MODAL, ERROR_MESSAGES, SEMINAR_TABLE, TABLE_ACTION, TABLE_TYPE, TRANSLATED_SEMINAR_STATUS } from "../../../shared/constants/common";
+import {
+  CONFIRM_TOPIC_MODAL,
+  ERROR_MESSAGES,
+  SEMINAR_TABLE,
+  TABLE_ACTION,
+  TABLE_TYPE,
+  TRANSLATED_SEMINAR_STATUS,
+} from "../../../shared/constants/common";
 import { EXTERNAL_ACTION } from "../../../shared/constants/actionType";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import { seminarService } from "../../../Services/seminarService";
@@ -58,10 +68,11 @@ const AdminSeminarList = () => {
   const getSeminars = async () => {
     try {
       const filter = {
-        mentorIds: userInfo?.role === SYSTEM_ROLE.MENTOR ? [userInfo.accountId] : [],
+        mentorIds:
+          userInfo?.role === SYSTEM_ROLE.MENTOR ? [userInfo.accountId] : [],
         pageIndex: 0,
         pageSize: 100,
-      }
+      };
 
       const seminars = await seminarService.getSemniars(filter);
 
@@ -82,17 +93,14 @@ const AdminSeminarList = () => {
   };
 
   const onSearchSeminar = (currentList, searchTerm) => {
-    console.log(currentList);
     return currentList.filter((seminar) => {
-      console.log(seminar.name)
-      return seminar.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-    }
-    );
+      return seminar.name?.toLowerCase().includes(searchTerm?.toLowerCase());
+    });
   };
 
   const overdrivedAddingAcion = () => {
-    history.push(ROUTES.SEMINAR_CREATE)
-  }
+    history.push(ROUTES.SEMINAR_CREATE);
+  };
 
   return (
     <div>

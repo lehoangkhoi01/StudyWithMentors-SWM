@@ -187,7 +187,6 @@ const MentorList = () => {
   };
 
   const onUpdateFilter = (param) => {
-    console.log(param);
     setFilterInfo(param);
   };
 

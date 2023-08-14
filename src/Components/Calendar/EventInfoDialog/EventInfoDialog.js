@@ -72,8 +72,6 @@ const EventInfoDialog = (props) => {
     props.handleClose();
   };
 
-  console.log(props.event);
-
   return (
     <div>
       <Dialog fullWidth open={props.open} onClose={props.handleClose}>

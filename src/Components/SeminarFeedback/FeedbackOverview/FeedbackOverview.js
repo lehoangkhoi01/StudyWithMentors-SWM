@@ -97,7 +97,6 @@ const FeedbackOverview = () => {
 
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
-        console.log("getFeedbackReport");
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
       }
