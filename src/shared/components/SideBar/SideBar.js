@@ -33,7 +33,7 @@ import { SYSTEM_ROLE } from "../../constants/systemType";
 
 const SideBar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [currentRouter, setCurrentRoute] = React.useState("/");
+  const [currentRouter, setCurrentRoute] = React.useState(ROUTES.HOME);
 
   const appbarTitle = useSelector(selectAppbarTitle);
   const userInfo = useSelector(selectUserInfo);

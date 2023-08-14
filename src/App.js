@@ -108,9 +108,9 @@ function App() {
                 </>
               )}
               <>
-                <Route exact path="/" component={HomePage} />
+
+                <Route exact path={ROUTES.HOME} component={HomePage} />
                 <Route path={ROUTES.ABOUT} component={AboutUsPage} />
-                <Route path={ROUTES.HOME} component={HomePage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route exact path={`${ROUTES.CV}`} component={CVPage} />
                 <Route exact path={`${ROUTES.CV}/:id`} component={CVPage} />
@@ -174,6 +174,9 @@ function App() {
                   roles={[SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.MENTOR]}
                   component={AdminMentorRoutes}
                 />
+                <Route exact path="/">
+                  <Redirect to={ROUTES.HOME} />
+                </Route>
               </>
             </Switch>
           </div>

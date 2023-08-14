@@ -9,7 +9,7 @@
     margin-bottom: 4rem;
 
     img {
-        width: 100%;
+      width: 100%;
     }
   }
 
@@ -18,6 +18,7 @@
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
+    margin-bottom: 1rem;
 
     img {
       height: 2.5rem;
@@ -26,6 +27,104 @@
   }
 
   &__target {
+    margin-bottom: 4rem;
+
+    &_itemList {
+      display: flex;
+      gap: 5rem;
+      justify-content: center;
+      align-items: center;
+      box-sizing: content-box;
+    }
+
+    &_item {
+      width: 16%;
+      background-color: $black000;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      padding-right: 2.5rem;
+      box-shadow: 0px 6px 12px 0px #1a237e14;
+
+      img {
+        width: 40px;
+      }
+
+      p {
+        color: $black700;
+        font-weight: 600;
+        margin-block: 0.7rem;
+      }
+
+      span {
+        color: $black400;
+        font-size: 0.9rem;
+
+        width: 90%;
+      }
+    }
+  }
+
+  &__imageSection {
+    img {
+      width: 100%;
+    }
+  }
+
+  &__booking {
+    background-image: url("../../assets/home-img/Booking_Background.png");
+    background-size: cover;
+    height: 30vh;
+    gap: 10rem;
+    margin-bottom: 4rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background: transparent;
+      color: $black000;
+      outline: none;
+
+      border-radius: 70px;
+      border: 2px solid $black000;
+      
+      padding: 1rem 2rem;
+
+      font-size: 1.4rem;
+      font-weight: 500;
+
+      cursor: pointer;
+
+      transition: all 0.15s ease-in-out;
+
+      &:hover {
+        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+          0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12);
+
+        transform: translateY(1px);
+      }
+
+      &:active {
+        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+          0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12);
+
+        transform: translateY(-1px);
+      }
+    }
+
+    h4 {
+      margin: 0;
+      
+      transform: scale(1.2);
+    }
+  }
+
+  &__seminar {
+    margin-bottom: 6rem;
     
+    img {
+      width: 100%;
+    }
   }
 }
