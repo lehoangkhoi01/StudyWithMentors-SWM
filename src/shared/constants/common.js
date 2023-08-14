@@ -456,7 +456,7 @@ export const SEMINAR = {
 
 export const FILTER_SEMINAR = {
   ALL: "Tất cả",
-  IS_COMMING: "Chưa diễn ra",
+  IS_COMMING: "Sắp diễn ra",
   PAST: "Đã diễn ra",
   DEPARTMENT_SEMINAR: "Sự kiện của phòng ban",
   FOLLOWED_SEMINAR: "Quan tâm",
@@ -589,7 +589,7 @@ export const TOPIC_STATUS = {
   DELETED: "Đã xóa",
   ACCEPTED: "Đã duyệt",
   REJECTED: "Từ chối",
-  ARCHIVED: "Lưu trữ",
+  ARCHIVED: "Ẩn",
 };
 
 export const TOPIC_STATUS_BACKEND = {
@@ -604,12 +604,14 @@ export const CONFIRM_TOPIC_MODAL = {
   REJECT_CONFIRM: "Bạn có muốn từ chối",
   ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
   ARCHIVE_CONFIRM: "Bạn có muốn ẩn",
+  DELETE_CONFIRM: "Bạn có muốn xóa",
   REJECT: "Từ chối",
   ACCEPT: "Phê duyệt",
   ARCHIVE: "Ẩn",
   TOPIC: "chủ đề",
   SHOW: "Hiện",
   DETAIL: "Chi tiết",
+  DELETE: "Xóa",
 };
 
 export const TABLE_TYPE = {
@@ -726,6 +728,6 @@ export const SEMINAR_TABLE = {
 };
 
 export const TRANSLATED_SEMINAR_STATUS = {
-  IS_COMMING: "Chưa diễn ra",
+  IS_COMMING: "Sắp diễn ra",
   PAST: "Đã diễn ra",
 };

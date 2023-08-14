@@ -13,6 +13,7 @@ import {
   TABLE_ACTION,
   TABLE_TYPE,
   TOPIC_STATUS,
+  TOPIC_STATUS_BACKEND,
   TOPIC_TABLE,
 } from "../../shared/constants/common";
 import { selectUserInfo } from "../../Store/slices/userSlice";
@@ -80,6 +81,11 @@ const ACTION_ITEMS = [
     label: CONFIRM_TOPIC_MODAL.DETAIL,
     action: VIEW_DETAIL,
   },
+  {
+    imgSrc: require("../../assets/icons/Table_Remove.png"),
+    label: CONFIRM_TOPIC_MODAL.DELETE,
+    action: CONFIRM_ACTION,
+  },
 ];
 
 const TopicList = () => {
@@ -91,8 +97,8 @@ const TopicList = () => {
   const [headerTable, setHeaderTable] = useState([]);
   const [actionItems, setActionItems] = useState([]);
 
-  const isStaffAdmin = () => {
-    return [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role);
+  const isAdmin = () => {
+    return [SYSTEM_ROLE.ADMIN].includes(userInfo?.role);
   };
 
   const isMentor = () => {
@@ -122,7 +128,7 @@ const TopicList = () => {
             return false;
           case CONFIRM_TOPIC_MODAL.ACCEPT:
             if (
-              isStaffAdmin() &&
+              isAdmin() &&
               row.translatedStatus === TOPIC_STATUS.WAITING
             ) {
               return true;
@@ -145,6 +151,13 @@ const TopicList = () => {
 
           case CONFIRM_TOPIC_MODAL.ARCHIVE:
             if (row.translatedStatus === TOPIC_STATUS.ACCEPTED) {
+              return true;
+            }
+
+            return false;
+
+          case CONFIRM_TOPIC_MODAL.DELETE:
+            if (row.translatedStatus === TOPIC_STATUS.WAITING) {
               return true;
             }
 
@@ -197,7 +210,7 @@ const TopicList = () => {
   };
 
   const onDeleteTopic = async (topicId) => {
-    await topicService.updateStatus(topicId, TOPIC_STATUS.DELETED);
+    await topicService.updateStatus(topicId, TOPIC_STATUS_BACKEND.DELETED);
   };
 
   const onUpdateTopicStatus = async (topicId, status) => {

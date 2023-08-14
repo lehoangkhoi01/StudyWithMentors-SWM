@@ -12,3 +12,4 @@ export const solution = {
   Mentors_2: `Nền tảng tạo điều kiện kết nối và gặp gỡ giữa mentor và sinh viên FPT, tập trung vào việc chia sẻ kiến thức và kinh nghiệm thực tiễn. Trong không gian này, bạn sẽ được chia sẻ, bày tỏ ý kiến, thảo luận, và nhận được sự hỗ trợ cá nhân từ mentor.`,
   Mentors_3: `Buổi gặp mặt này giúp tạo mentor hiểu bạn hơn, là môi trường thân thiện và đáng tin cậy để bạn có thể học hỏi và phát triển bằng cách đưa ra những góp ý và lời khuyên theo những vấn đề của bạn.`
 };
+

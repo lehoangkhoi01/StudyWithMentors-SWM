@@ -44,7 +44,7 @@ function NavigationBar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMentorMenu = Boolean(anchorEl);
 
-  const [currentRouter, setCurrentRoute] = useState("/");
+  const [currentRouter, setCurrentRoute] = useState(ROUTES.HOME);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -83,7 +83,7 @@ function NavigationBar() {
     localStorage.removeItem("TOKEN");
     dispatch(userAction.logout());
     setAuthenticated(false);
-    history.push("/");
+    history.push(ROUTES.HOME);
   };
 
   const handleCloseUserMenu = () => {
@@ -123,9 +123,8 @@ function NavigationBar() {
             aria-haspopup="true"
             aria-expanded={openMentorMenu ? "true" : undefined}
             onClick={(e) => setAnchorEl(e.currentTarget)}
-            className={`${style.navigation__title} ${
-              currentRouter === item.ROUTE ? style.navigation__title_active : ""
-            }`}
+            className={`${style.navigation__title} ${currentRouter === item.ROUTE ? style.navigation__title_active : ""
+              }`}
             sx={{ color: "white" }}
           >
             {item.TITLE}
@@ -162,9 +161,8 @@ function NavigationBar() {
           to={item.ROUTE}
         >
           <Button
-            className={`${style.navigation__title} ${
-              currentRouter === item.ROUTE ? style.navigation__title_active : ""
-            }`}
+            className={`${style.navigation__title} ${currentRouter === item.ROUTE ? style.navigation__title_active : ""
+              }`}
             onClick={handleCloseNavMenu}
             sx={{ mx: 2, color: "white", display: "block" }}
           >
@@ -235,11 +233,10 @@ function NavigationBar() {
                 >
                   {navigationItems.map((item) => (
                     <MenuItem
-                      className={`${style.navigation__menuItem} ${
-                        currentRouter === item.ROUTE
-                          ? style.navigation__menuItem_active
-                          : ""
-                      }`}
+                      className={`${style.navigation__menuItem} ${currentRouter === item.ROUTE
+                        ? style.navigation__menuItem_active
+                        : ""
+                        }`}
                       key={item.TITLE}
                       onClick={handleCloseNavMenu}
                     >
@@ -360,11 +357,10 @@ function NavigationBar() {
                       to={item.ROUTE}
                     >
                       <Button
-                        className={`${style.navigation__title} ${
-                          currentRouter === item.ROUTE
+                        className={`${style.navigation__title} ${currentRouter === item.ROUTE
                             ? style.navigation__title_active
                             : ""
-                        }`}
+                          }`}
                         sx={{ mx: 2, color: "white", display: "block" }}
                       >
                         {item.TITLE}
@@ -443,11 +439,10 @@ function NavigationBar() {
                   >
                     {navigationItems.map((item) => (
                       <MenuItem
-                        className={`${style.navigation__menuItem} ${
-                          currentRouter === item.ROUTE
-                            ? style.navigation__menuItem_active
-                            : ""
-                        }`}
+                        className={`${style.navigation__menuItem} ${currentRouter === item.ROUTE
+                          ? style.navigation__menuItem_active
+                          : ""
+                          }`}
                         key={item.TITLE}
                         onClick={handleCloseNavMenu}
                       >
@@ -513,11 +508,10 @@ function NavigationBar() {
                       to={item.ROUTE}
                     >
                       <Button
-                        className={`${style.navigation__title} ${
-                          currentRouter === item.ROUTE
-                            ? style.navigation__title_active
-                            : ""
-                        }`}
+                        className={`${style.navigation__title} ${currentRouter === item.ROUTE
+                          ? style.navigation__title_active
+                          : ""
+                          }`}
                         onClick={handleCloseNavMenu}
                         sx={{ mx: 2, color: "white", display: "block" }}
                       >
@@ -578,22 +572,24 @@ function NavigationBar() {
                     className={`${style.navigation__titleContainer}`}
                   >
                     {AUTHENTICATION_MENU.map((item) => (
-                      <Link
-                        className={`${style.navigation__link}`}
-                        key={item.TITLE}
-                        to={item.ROUTE}
-                      >
-                        <Button
-                          className={`${style.navigation__title} ${
-                            currentRouter === item.ROUTE
-                              ? style.navigation__title_active
-                              : ""
-                          }`}
-                          sx={{ mx: 2, color: "white", display: "block" }}
-                        >
-                          {item.TITLE}
-                        </Button>
-                      </Link>
+                      // <Link
+                      //   className={`${style.navigation__link}`}
+                      //   key={item.TITLE}
+                      //   to={item.ROUTE}
+                      // >
+                      //   <Button
+                      //     className={`${style.navigation__title} ${currentRouter === item.ROUTE
+                      //       ? style.navigation__title_active
+                      //       : ""
+                      //       }`}
+                      //     sx={{ mx: 2, color: "white", display: "block" }}
+                      //   >
+                      //     {item.TITLE}
+                      //   </Button>
+                      // </Link>
+                      <button key={item.TITLE} className={style.navigation__button} onClick={() => {
+                        history.push(item.ROUTE)
+                      }}>{item.TITLE}</button>
                     ))}
                   </Box>
                 )}
