@@ -1,9 +1,10 @@
 import style from "./MentorCard.module.scss";
 import { ERROR_MESSAGES, MENTOR_CARD } from "../../../shared/constants/common";
-import { Button, IconButton } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ROUTES } from "../../../shared/constants/navigation";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
 import {
   useCustomLoading,
   useNotification,
@@ -60,11 +61,12 @@ const MentorCard = (props) => {
       return (
         <div className={style.card__follow}>
           <IconButton
+            disableRipple
             size="small"
-            sx={{ color: "white" }}
+            sx={{ color: "#ff6700" }}
             onClick={() => handleUnfollow(mentorId)}
           >
-            <AddIcon fontSize="small" /> <span>Hủy theo dõi</span>
+            <CheckIcon fontSize="small" /> <span> Đã theo dõi</span>
           </IconButton>
         </div>
       );
@@ -72,14 +74,41 @@ const MentorCard = (props) => {
       return (
         <div className={style.card__follow}>
           <IconButton
+            disableRipple
             size="small"
-            sx={{ color: "white" }}
+            sx={{ color: "#ff6700" }}
             onClick={() => handleFollow(mentorId)}
           >
-            <AddIcon fontSize="small" /> <span>Theo dõi</span>
+            <AddIcon fontSize="small" /> <span> Theo dõi</span>
           </IconButton>
         </div>
       );
+    }
+  };
+
+  const renderTopicSection = () => {
+    if (!props.data?.topics?.length) {
+      return (
+        <div className={style.card__topic_item}>
+          <span>{MENTOR_CARD.DONT_HAVE_TOPIC}</span>
+        </div>
+      );
+    } else {
+      return props.data.topics.map((topic, index) => (
+        <div key={`MENTOR_ITEM_${index}`}>
+          {index < 2 && (
+            <div className={style.card__topic_item}>
+              <img
+                alt="icon"
+                src={require("../../../assets/icons/sparkles.png")}
+              />
+              <Tooltip title={topic.name}>
+                <span>{topic.name}</span>
+              </Tooltip>
+            </div>
+          )}
+        </div>
+      ));
     }
   };
 
@@ -92,32 +121,29 @@ const MentorCard = (props) => {
           <AddIcon fontSize="small" /> <span>{FOLLOW.FOLLOW}</span>
         </IconButton>
       </div> */}
-      <div className={style.card__cover}>
-        <img src={require("../../../assets/Mentor-cover.png")} />
-      </div>
       <div className={style.card__avatar}>
-        <img
+        <Avatar
+          alt={props.data?.name}
           src={
-            props.data.avatarUrl &&
-              props.data.avatarUrl !== "avatarUrl" &&
-              props.data.avatarUrl !== "string"
-              ? props.data.avatarUrl
+            props.data?.avatarUrl
+              ? props.data?.avatarUrl
               : require("../../../assets/sbcf-default-avatar.png")
           }
+          sx={{ width: 150, height: 150 }}
         />
       </div>
       <div className={style.card__information}>
         <div className={style.card__name}>
-          <p>
-            <Button
-              variant="text"
-              className={style.card__name}
-              onClick={() => handleNavigateProfile(props.data.mentorId)}
-            >
-              {props.data.fullName}
-            </Button>
-          </p>
-          <p className={style.card__name_position}>{props.data.occupation}</p>
+          <div
+            // variant="text"
+            className={style.card__name__button}
+            onClick={() => handleNavigateProfile(props.data.mentorId)}
+          >
+            {props.data.fullName}
+          </div>
+          <div className={style.card__name_position}>
+            {props.data.occupation}
+          </div>
         </div>
         <div className={style.card__rating}>
           <div>
@@ -135,23 +161,7 @@ const MentorCard = (props) => {
             {props.data.followers} {MENTOR_CARD.FOLLOWERS}
           </span>
         </div>
-        <div className={style.card__topic}>
-          {!props.data.topics.length && (
-            <div className={style.card__topic_item}>
-              <span>{MENTOR_CARD.DONT_HAVE_TOPIC}</span>
-            </div>
-          )}
-          {props.data.topics.map((topic, index) => (
-            <div key={`MENTOR_ITEM_${index}`}>
-              {index < 3 && (
-                <div className={style.card__topic_item}>
-                  <img src={require("../../../assets/icons/mentor-pen.png")} />
-                  <span>{topic.name}</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <div className={style.card__topic}>{renderTopicSection()}</div>
       </div>
     </div>
   );
