@@ -178,4 +178,16 @@
       }
     }
   }
+
+  &__followButton {
+    color: $secondary900;
+    background-color: $secondary50;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid $secondary200;
+    font-size: $NORMAL_FONT_SIZE;
+  }
+  &__followButton:hover {
+    background-color: $secondary200;
+  }
 }
