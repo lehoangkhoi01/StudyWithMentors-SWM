@@ -28,17 +28,17 @@ const Home = () => {
                 <div className={`${style.home__target_item}`}>
                     <img src={require("../../assets/home-img/target_icon_1.png")} />
                     <p>Cùng phát triển</p>
-                    <span>Nullam senectus porttitor in eget. Eget rutrum leo interdum.</span>
+                    <span>Cam kết tận tâm hướng đến sự thành công chung, luôn khuyến khích sự hỗ trợ và hợp tác để đạt được mục tiêu bền vững.</span>
                 </div>
                 <div className={`${style.home__target_item}`}>
-                    <img src={require("../../assets/home-img/target_icon_1.png")} />
+                    <img src={require("../../assets/home-img/target_icon_2.png")} />
                     <p>Hỗ trợ nhanh nhất</p>
-                    <span>Nullam senectus porttitor in eget. Eget rutrum leo interdum.</span>
+                    <span>Đảm bảo giải đáp mọi thắc mắc của sinh viên trong thời gian ngắn nhất, giúp họ tiếp tục hành trình học tập một cách hiệu quả.</span>
                 </div>
                 <div className={`${style.home__target_item}`}>
                     <img src={require("../../assets/home-img/target_icon_3.png")} />
                     <p>Tối ưu nhất</p>
-                    <span>Nullam senectus porttitor in eget. Eget rutrum leo interdum.</span>
+                    <span>Kết hợp sự hiện đại trong phương pháp dạy học và tạo điều kiện tốt nhất cho sự phát triển toàn diện của sinh viên.</span>
                 </div>
             </div>
         </div>
