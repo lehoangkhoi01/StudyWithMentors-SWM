@@ -45,6 +45,7 @@ import AdminMentorRoutes from "./Layout/AdminMentorRoutes";
 import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import AboutUsPage from "./Pages/AboutUs/AboutUsPage";
 import HomePage from "./Pages/Home/HomePage";
+import ProfilePage from "./Pages/Profile/ProfilePage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -140,7 +141,10 @@ function App() {
                   path={ROUTES.SEMINAR_UPDATE}
                   component={SeminarCreatePage}
                 />
-
+                <Route
+                  path={ROUTES.PROFILE}
+                  component={ProfilePage}
+                />
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
 

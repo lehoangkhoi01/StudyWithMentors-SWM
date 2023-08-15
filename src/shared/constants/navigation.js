@@ -26,7 +26,8 @@ export const ROUTES = {
   STAFF_LIST: "/admin/staffs",
   STUDENT_LIST: "/admin/students",
   ADMIN_CONFIG: "/admin/config",
-  ADMIN_SEMINAR_LIST: "/admin/seminars"
+  ADMIN_SEMINAR_LIST: "/admin/seminars",
+  PROFILE: "/profile"
 };
 
 export const ROUTES_STATIC = {
@@ -152,6 +153,7 @@ export const STAFF_NAVBAR = [
 export const ACCOUNT_MENU = [
   {
     TITLE: "Tài khoản",
+    ACTION: "UPDATE_PROFILE"
   },
   {
     TITLE: "Đăng xuất",

@@ -76,6 +76,9 @@ function NavigationBar() {
     if (action && action === "LOG_OUT") {
       handleLogout();
     }
+    if (action && action === "UPDATE_PROFILE") {
+      history.push(ROUTES.PROFILE);
+    }
     setAnchorElUser(null);
   };
 
@@ -358,8 +361,8 @@ function NavigationBar() {
                     >
                       <Button
                         className={`${style.navigation__title} ${currentRouter === item.ROUTE
-                            ? style.navigation__title_active
-                            : ""
+                          ? style.navigation__title_active
+                          : ""
                           }`}
                         sx={{ mx: 2, color: "white", display: "block" }}
                       >

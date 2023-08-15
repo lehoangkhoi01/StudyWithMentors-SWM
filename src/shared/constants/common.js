@@ -151,6 +151,7 @@ export const COMMON_MESSAGE = {
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
+  UPDATE_SUCCESS: "Cập nhật thông tin thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -205,6 +206,12 @@ export const FILL_INFORMATION = {
   WELCOME: "Chào mừng bạn đến với Growth Me",
   PLEASE_FILL_INFORMATION:
     "Vui lòng cập nhật thông tin cá nhân để có thể đặt lịch với mentor",
+};
+
+export const PROFILE = {
+  UPDATE_PROFILE: "Cập nhật thông tin tài khoản",
+  PLEASE_FILL_INFORMATION:
+    "Cập nhật thông tin cá nhân",
 };
 
 export const OPTIONAL = "không bắt buộc";
