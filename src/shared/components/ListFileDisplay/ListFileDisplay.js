@@ -22,6 +22,7 @@ import style from "./ListFileDisplay.module.scss";
 import { convertBytesToMB } from "../../../Helpers/mathHelper";
 import { SEMINAR_DETAIL_VIEW_MODE } from "../../constants/systemType";
 import { OPTIONAL, TEXTFIELD_LABEL } from "../../constants/common";
+import LinkIcon from "@mui/icons-material/Link";
 
 const ListFileDisplay = (props) => {
   const handleRemoveOldFile = (index) => {
@@ -93,7 +94,10 @@ const ListFileDisplay = (props) => {
       <List>
         {Object.keys(props.oldItems).map((fileName, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={props.oldItems[fileName]}>{fileName?.replace("*", "")}</a>
+            <a href={props.oldItems[fileName]}>
+              <LinkIcon />
+              {fileName?.replace("*", "")}
+            </a>
           </ListItem>
         ))}
       </List>

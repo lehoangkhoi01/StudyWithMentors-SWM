@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -458,15 +459,28 @@ const BookingInfoDialog = (props) => {
         </DialogTitle>
         <DialogContent>
           <div>{renderStatusLabel(props.bookingInfo?.status)}</div>
-          <div className={`${style.bookingSummary__detail}`}>
+          <div
+            className={`${style.bookingSummary__detail} ${style.bookingSummary__mentorContainer}`}
+          >
             <span className={`${style.bookingSummary__subTitle}`}>
               Mentor:{" "}
             </span>
-            <span>
-              <Link to={`${ROUTES.CV}/${props.bookingInfo?.mentor.accountId}`}>
+            <Link
+              to={
+                userInfo.role === SYSTEM_ROLE.MENTOR
+                  ? `${ROUTES.CV}`
+                  : `${ROUTES.CV}/${props.bookingInfo?.mentor.accountId}`
+              }
+              className={`${style.bookingSummary__link}`}
+            >
+              <span className={`${style.bookingSummary__mentor}`}>
+                <Avatar
+                  alt={props.bookingInfo?.mentor.fullName}
+                  src={props.bookingInfo?.mentor.avatarUrl}
+                />
                 {props.bookingInfo?.mentor.fullName}
-              </Link>{" "}
-            </span>
+              </span>
+            </Link>{" "}
           </div>
 
           <div className={`${style.bookingSummary__detail}`}>

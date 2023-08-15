@@ -13,6 +13,14 @@
   &__row {
     font-size: $LABEL_SIZE;
     justify-content: space-between;
+    & a {
+      color: $primary900;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
   &__right {
     display: flex;

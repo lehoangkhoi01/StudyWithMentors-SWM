@@ -34,4 +34,23 @@
     margin: 1rem 0;
     overflow: hidden;
   }
+  &__mentorContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  &__mentor {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $primary800;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  &__link {
+    text-decoration: none;
+  }
+  &__link:hover {
+    text-decoration: underline;
+  }
 }
