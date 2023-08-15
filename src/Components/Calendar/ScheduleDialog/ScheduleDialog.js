@@ -20,7 +20,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import moment from "moment";
 import { diff } from "date-arithmetic";
 
-const loopOptions = [
+let loopOptions = [
   { name: "Không lặp lại", value: "noloop" },
   { name: "Hằng ngày", value: "daily" },
   { name: "Hằng tuần", value: "weekly" },
@@ -44,6 +44,11 @@ const ScheduleDialog = (props) => {
     clearErrors,
     formState: { errors },
   } = useForm();
+  if (props.isUpdate) {
+    loopOptions[0].name = "Chỉ lịch này";
+  } else {
+    loopOptions[0].name = "Không lặp lại";
+  }
 
   const formRef = useRef();
   const [startDate, setStartDate] = React.useState(null);
@@ -311,7 +316,11 @@ const ScheduleDialog = (props) => {
       <ConfirmationDialog
         open={openConfirmationDialog}
         title="Cập nhật lịch"
-        content="Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước (nếu có)"
+        content={
+          loopOption.value !== loopOptions[0].value
+            ? "Việc cập nhật có thể sẽ ảnh hưởng đến toàn bộ lịch lặp của bạn đã tạo từ trước (nếu có)"
+            : "Việc cập nhật sẽ chỉ ảnh hưởng đến lịch này."
+        }
         confirmLabel="Xác nhận"
         cancelLabel="Trở về"
         handleSubmit={handleUpdate}
