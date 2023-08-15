@@ -66,7 +66,7 @@ export const modalFieldValidation = {
 };
 
 export const modalOptionalFieldValidation = {
-  required: { value: true, message: ERROR_MESSAGES.REQUIRED_FIELD },
+  required: { value: false, message: ERROR_MESSAGES.REQUIRED_FIELD },
   maxLength: {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,

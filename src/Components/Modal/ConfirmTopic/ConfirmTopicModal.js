@@ -65,6 +65,13 @@ const ConfirmTopicModal = (props) => {
         });
         setEnglishType(TOPIC_STATUS_BACKEND.ARCHIVED);
         break;
+      case CONFIRM_TOPIC_MODAL.DELETE:
+        setProperties({
+          confirmButton: CONFIRM_TOPIC_MODAL.DELETE,
+          confirm: CONFIRM_TOPIC_MODAL.DELETE_CONFIRM,
+        });
+        setEnglishType(TOPIC_STATUS_BACKEND.DELETED);
+        break;
       default:
         break;
     }
