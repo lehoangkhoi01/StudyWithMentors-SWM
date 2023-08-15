@@ -41,16 +41,13 @@ const CustomizedDatePicker = (props) => {
           },
         }}
         onChange={(e) => {
-
-
-          if (props.onChange) {
-            props.onChange();
-          }
           const datevalue = convertISOToFormat(dateFormat, e);
           setValue(e);
           props.setValue(props.formName, datevalue);
-
           if (!isMapped) setIsMapped(true);
+          if (props.onChange) {
+            props.onChange();
+          }
         }}
         value={value}
       ></DatePicker>

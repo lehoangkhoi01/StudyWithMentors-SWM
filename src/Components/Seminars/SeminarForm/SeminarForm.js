@@ -694,7 +694,6 @@ const SeminarForm = () => {
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setValue("seminarDescription", data);
-                    console.log({ event, editor, data });
                   }}
                 />
               )}
