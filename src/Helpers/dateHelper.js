@@ -60,8 +60,8 @@ export const handleTimeToDisplay = (
   );
 
   return `${timeObject.hour}:${timeObject.minute}${
-    seperator ?? ","
-  } ${formatedDate}`;
+    seperator ?? "-"
+  }${formatedDate}`;
 };
 
 export {

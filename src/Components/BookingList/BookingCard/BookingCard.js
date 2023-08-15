@@ -70,7 +70,9 @@ const BookingCard = (props) => {
           <span>
             Lĩnh vực: {props.bookingInfo?.topicDetailResponse?.category}
           </span>{" "}
-          | <span>Sinh viên: {props.bookingInfo?.menteeNames?.join(", ")}</span>
+          <div style={{ margin: "5px 0" }}>
+            Sinh viên: {props.bookingInfo?.menteeNames?.join(", ")}
+          </div>
         </div>
       );
     } else {

@@ -291,16 +291,12 @@ const SeminarDetail = () => {
 
                 <div className={style.detail__section}>
                   <Typography className={`${style.detail__subTitle}`}>
-                    {SEMINAR.START_TIME}:
+                    {SEMINAR.TIME}:
                   </Typography>
-                  <div>{handleTimeToDisplay(data.startTime)}</div>
-                </div>
-
-                <div className={style.detail__section}>
-                  <Typography className={`${style.detail__subTitle}`}>
-                    {SEMINAR.END_TIME}:
-                  </Typography>
-                  <div>{handleTimeToDisplay(data.endTime)}</div>
+                  <div>
+                    {handleTimeToDisplay(data.startTime)} đến{" "}
+                    {handleTimeToDisplay(data.endTime)}
+                  </div>
                 </div>
 
                 <div className={style.detail__section}>
