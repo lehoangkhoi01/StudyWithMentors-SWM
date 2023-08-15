@@ -116,6 +116,11 @@ const CVModal = (props) => {
         DATE_FORMAT.MM_YYYY,
         issuedDateString
       );
+
+      if (!issuedDateTime) {
+        return;
+      }
+
       const dueDateTimeNumber = dueDateTime.getTime();
       const issuedDateTimeNumber = issuedDateTime.getTime();
 
@@ -184,11 +189,15 @@ const CVModal = (props) => {
 
     Object.keys(specificForm).map((key) => {
       if (key.toLocaleLowerCase().includes("date")) {
-        specificForm[key] = convertDateFormat(
-          specificForm[key],
-          DATE_FORMAT.MM_YYYY,
-          DATE_FORMAT.BACK_END_YYYY_MM_DD
-        );
+        if (specificForm[key]) {
+          specificForm[key] = convertDateFormat(
+            specificForm[key],
+            DATE_FORMAT.MM_YYYY,
+            DATE_FORMAT.BACK_END_YYYY_MM_DD
+          );
+        } else {
+          specificForm[key] = null;
+        }
       }
     });
 

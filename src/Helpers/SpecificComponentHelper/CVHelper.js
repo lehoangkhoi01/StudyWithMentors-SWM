@@ -55,8 +55,7 @@ export const mapCVSection = (data, indexOfProperty) => {
               DATE_FORMAT.BACK_END_YYYY_MM_DD,
               DATE_FORMAT.MM_YYYY
             )
-            }` : ''}
-          )`,
+            }` : ''})`,
         detail: section.description,
       }));
     }
@@ -96,15 +95,15 @@ export const mapCVSection = (data, indexOfProperty) => {
       return data.map((section) => ({
         title: `${section.name} ${OTHERS.BELONG} ${section.organization
           } 
-          ${section.achievingDate && section.expiryDate ? `(${convertDateFormat(
+          ${`(${section.achievingDate ? `${convertDateFormat(
             section.achievingDate,
             DATE_FORMAT.BACK_END_YYYY_MM_DD,
             DATE_FORMAT.MM_YYYY
-          )} - ${convertDateFormat(
+          )}` : ""} ${section.expiryDate ? `- ${convertDateFormat(
             section.expiryDate,
             DATE_FORMAT.BACK_END_YYYY_MM_DD,
             DATE_FORMAT.MM_YYYY
-          )})` : ""} 
+          )}` : ""})`} 
           `,
         detail: section.description,
       }));

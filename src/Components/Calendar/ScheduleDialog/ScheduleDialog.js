@@ -55,6 +55,8 @@ const ScheduleDialog = (props) => {
   const [openConfirmationDialog, setOpenConfirmationDialog] =
     React.useState(false);
 
+  const datePickerRef = useRef();
+
   const convertToDateTime = (date) => {
     if (date) {
       const dateExtracted = date.split("/");
@@ -120,6 +122,7 @@ const ScheduleDialog = (props) => {
     if (e.target.value.value === loopOptions[0].value) {
       setStartDate(props.startDate);
       setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+      datePickerRef.current.customSetValue(startDate);
     }
     clearErrors("endDateTime");
   };
@@ -186,6 +189,7 @@ const ScheduleDialog = (props) => {
             </DialogTitle>
             <DialogContent>
               <CustomizedDatePicker
+                ref={datePickerRef}
                 name="Thời gian"
                 placeholder="Thời gian"
                 formName="freeTime"
