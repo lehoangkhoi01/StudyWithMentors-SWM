@@ -7,20 +7,6 @@ import { styled } from "@mui/material/styles";
 import style from "./ImageSlider.module.scss";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-const images = [
-  {
-    imgPath:
-      "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-  {
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-  {
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
-  },
-];
 
 export const StyledStepper = styled(MobileStepper)`
   position: absolute;
@@ -37,6 +23,21 @@ export const StyledStepper = styled(MobileStepper)`
 `;
 
 const ImageSlider = () => {
+  const images = [
+    {
+      imgPath:
+        "../../../assets/Mentor_Slider_1.jpg",
+    },
+    {
+      imgPath:
+        "../../../assets/Mentor_Slider_2.jpg",
+    },
+    {
+      imgPath:
+        "../../../assets/Mentor_Slider_3.jpg",
+    },
+  ];
+
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
   const handleStepChange = (step) => {
@@ -61,7 +62,7 @@ const ImageSlider = () => {
                   overflow: "hidden",
                   width: "100%",
                 }}
-                src={require("../../../assets/imageSlider.png")}
+                src={require(`../../../assets/Mentor_Slider_${index + 1}.jpg`)}
                 alt={step.label}
               />
             ) : null}

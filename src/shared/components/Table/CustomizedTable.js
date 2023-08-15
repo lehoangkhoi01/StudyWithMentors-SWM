@@ -10,6 +10,7 @@ import style from "./CustomizedTable.module.scss";
 import {
   ADMIN_TABLE_HEADER,
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   MENTOR_STATUS,
@@ -145,15 +146,15 @@ const CustomizedTable = (props) => {
       const responseData = await props.getData();
 
       setOriginData([...responseData]);
+
+      onCloseModal();
+      setLoading(false);
     } catch (error) {
       setNotification({
         isOpen: true,
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
-    } finally {
-      onCloseModal();
-      setLoading(false);
     }
   };
 
@@ -361,7 +362,7 @@ const CustomizedTable = (props) => {
       }
 
       setTimeout(async () => {
-        getData();
+        handleSuccess();
         setActiveData(null);
 
         setLoading(false);
@@ -408,7 +409,7 @@ const CustomizedTable = (props) => {
       }
 
       setTimeout(async () => {
-        getData();
+        handleSuccess();
         setActiveData(null);
 
         setLoading(false);
@@ -483,6 +484,15 @@ const CustomizedTable = (props) => {
         return "";
     }
   };
+
+  const handleSuccess = async () => {
+    await getData();
+    setNotification({
+      isOpen: true,
+      type: "success",
+      message: COMMON_MESSAGE.UPDATE_SUCCESS 
+    });
+  }
 
   return (
     <div>
@@ -783,7 +793,7 @@ const CustomizedTable = (props) => {
         openModal={openModal.upsert && props.type === TABLE_TYPE.MENTOR}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
         title={
           existedData ? UPSERT_MENTOR.EDIT_MENTOR : UPSERT_MENTOR.ADD_MENTOR
         }
@@ -792,25 +802,25 @@ const CustomizedTable = (props) => {
         openModal={openModal.upsert && props.type === TABLE_TYPE.TOPIC}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
       />
       <UpsertField
         openModal={openModal.upsert && props.type === TABLE_TYPE.FIELD}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
       />
       <UpsertCategory
         openModal={openModal.upsert && props.type === TABLE_TYPE.CATEGORY}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
       />
       <UpsertDepartment
         openModal={openModal.upsert && props.type === TABLE_TYPE.DEPARTMENT}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
       />
       <ConfirmTopicModal
         type={confirmType}
@@ -818,13 +828,13 @@ const CustomizedTable = (props) => {
         openModal={openModal.confirm}
         existedData={existedData}
         onCloseModal={onCloseModal}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
       />
       <UpsertStaff
         openModal={openModal.upsert && props.type === TABLE_TYPE.STAFF}
         onCloseModal={onCloseModal}
         existedData={existedData}
-        onSuccess={getData}
+        onSuccess={handleSuccess}
         title={existedData ? UPSERT_STAFF.EDIT_STAFF : UPSERT_STAFF.ADD_STAFF}
         allStaffs={originData}
       />
