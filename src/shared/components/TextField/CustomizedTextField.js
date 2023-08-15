@@ -65,7 +65,7 @@ const CustomizedTextField = (props) => {
             id={props.inputId}
             placeholder={props.placeholder}
             type={props.type ?? "text"}
-            required={props.required}
+            // required={props.required}
             {...props.options}
             disabled={props.disabled ?? false}
             onChange={!isValueMaxLength() ? onChange ?? null : null}

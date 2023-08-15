@@ -20,11 +20,17 @@ import {
 import { userAccountService } from "../../Services/userAccountService";
 import {
   emailValidationRules,
-  registerFullNameValidation,
+  modalFieldValidation,
 } from "../../shared/constants/validationRules";
 
 const UpsertMentorModal = (props) => {
-  const { handleSubmit, register, setValue, getValues, reset } = useForm();
+  const { 
+    handleSubmit, 
+    register, 
+    setValue, 
+    getValues, 
+    reset,
+    formState: { errors }, } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const { getLatestSpeakerList } = useFetchSpeakerList();
@@ -128,8 +134,10 @@ const UpsertMentorModal = (props) => {
               required={true}
               placeholder={PLACE_HOLDER.DEFAULT_NAME}
               options={{
-                ...register("fullName", registerFullNameValidation),
+                ...register("fullName", modalFieldValidation),
               }}
+              error={errors.fullName ? true : false}
+              helperText={errors?.fullName?.message}
             />
             <CustomizedTextField
               name={"Email"}
@@ -139,6 +147,8 @@ const UpsertMentorModal = (props) => {
               options={{
                 ...register("email", emailValidationRules),
               }}
+              error={errors.email ? true : false}
+              helperText={errors?.email?.message}
             />
             {isExistedEmail && (
               <p className={`${style.modal__error}`}>
@@ -154,6 +164,8 @@ const UpsertMentorModal = (props) => {
                   validate: (val) => validatePhoneNum(val),
                 }),
               }}
+              error={errors.phoneNum ? true : false}
+              helperText={errors?.phoneNum?.message}
             />
             <div className={style.modal__buttons}>
               <CustomizedButton

@@ -25,7 +25,13 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import { accountService } from "../../../Services/accountService";
 
 const UpsertStaff = (props) => {
-  const { handleSubmit, register, setValue, getValues, reset } = useForm();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    reset,
+    formState: { errors } } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const departments = useSelector(selectDepartments);
@@ -159,6 +165,8 @@ const UpsertStaff = (props) => {
               options={{
                 ...register("fullName", registerFullNameValidation),
               }}
+              error={errors.fullName ? true : false}
+              helperText={errors?.fullName?.message}
             />
             <CustomizedTextField
               name={"Email"}
@@ -168,6 +176,8 @@ const UpsertStaff = (props) => {
               options={{
                 ...register("email", emailValidationRules),
               }}
+              error={errors.email ? true : false}
+              helperText={errors?.email?.message}
             />
             {isExistedEmail && (
               <p className={`${style.modal__error}`}>
@@ -183,6 +193,8 @@ const UpsertStaff = (props) => {
                   validate: (val) => validatePhoneNum(val),
                 }),
               }}
+              error={errors.phoneNum ? true : false}
+              helperText={errors?.phoneNum?.message}
             />
             <CustomizedSelect
               fullWidth
