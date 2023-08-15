@@ -106,7 +106,6 @@ const ScheduleDialog = (props) => {
           ? format(newEndDate, DATE_FORMAT.BACK_END_YYYY_MM_DD)
           : null,
     };
-
     if (props.isUpdate) {
       props.handleUpdateSchedule(newEvent);
     } else {
@@ -118,6 +117,10 @@ const ScheduleDialog = (props) => {
 
   const onLoopOptionChange = (e) => {
     setLoopOption(e.target.value);
+    if (e.target.value.value === loopOptions[0].value) {
+      setStartDate(props.startDate);
+      setValue("freeTime", format(props.startDate, DATE_FORMAT.DD_MM_YYYY));
+    }
     clearErrors("endDateTime");
   };
 
@@ -194,6 +197,11 @@ const ScheduleDialog = (props) => {
                 error={errors.freeTime}
                 required={true}
                 disablePast={true}
+                disabled={
+                  props.selectedEvent &&
+                  props.selectedEvent?.belongToSeries &&
+                  loopOption.value === loopOptions[0].value
+                }
                 minDate={moment().add(2, "days").toDate()}
                 onChange={() => {
                   clearErrors("freeTime");
