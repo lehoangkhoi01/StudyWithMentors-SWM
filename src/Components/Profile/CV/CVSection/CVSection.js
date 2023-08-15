@@ -3,6 +3,7 @@ import style from "./CVSection.module.scss";
 import CVModal from "../../../Modal/CVModal";
 import { PROFILE_TITLES } from "../../../../shared/constants/common";
 import { Grid } from "@mui/material";
+import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 
 const CVSection = (props) => {
   const [openModal, setOpenModal] = useState(false);
@@ -62,9 +63,22 @@ const CVSection = (props) => {
         {props.title !== PROFILE_TITLES.SKILLS &&
           props.viewData.map((data, index) => {
             return (
-              <div key={`CV_DETAIL_${index}`}>
-                {data.title && <h4>{data.title}</h4>}
-                <p>{data.detail}</p>
+              <div
+                key={`CV_DETAIL_${index}`}
+                className={`${style.section__detailWrapper}`}
+              >
+                {data.title && (
+                  <h4>
+                    <SubdirectoryArrowRightIcon />
+                    {data.title}
+                  </h4>
+                )}
+                <div style={{ display: "flex", alignItems: "baseline" }}>
+                  <SubdirectoryArrowRightIcon sx={{ visibility: "hidden" }} />{" "}
+                  <div className={`${style.section__detailWrapper_data}`}>
+                    {data.detail}
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -74,9 +88,21 @@ const CVSection = (props) => {
             {props.viewData.map((data, index) => {
               return (
                 <Grid key={`CV_DETAIL_${index}`} item xs={6}>
-                  <div>
-                    {data.title && <h4>{data.title}</h4>}
-                    <p>{data.detail}</p>
+                  <div className={`${style.section__detailWrapper}`}>
+                    {data.title && (
+                      <h4>
+                        <SubdirectoryArrowRightIcon />
+                        {data.title}
+                      </h4>
+                    )}
+                    <div style={{ display: "flex", alignItems: "baseline" }}>
+                      <SubdirectoryArrowRightIcon
+                        sx={{ visibility: "hidden" }}
+                      />{" "}
+                      <div className={`${style.section__detailWrapper_data}`}>
+                        {data.detail}
+                      </div>
+                    </div>
                   </div>
                 </Grid>
               );

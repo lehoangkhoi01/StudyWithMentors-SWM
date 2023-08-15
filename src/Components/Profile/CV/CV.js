@@ -43,7 +43,7 @@ import CustomizedButton from "../../../shared/components/Button/CustomizedButton
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 import BookingDialog from "../../BookingProcess/BookingDialog/BookingDialog";
 import { topicService } from "../../../Services/topicService";
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, Divider, Tab, Tabs, Typography } from "@mui/material";
 import moment from "moment";
 import { scheduleService } from "../../../Services/sheduleService";
 import { format } from "date-fns";
@@ -637,26 +637,26 @@ const CV = () => {
   const renderFollowButton = (mentorId) => {
     if (followingMentors.includes(mentorId)) {
       return (
-        <div style={{ width: "30%", marginLeft: "auto", marginRight: "4rem" }}>
-          <CustomizedButton
+        <div style={{ width: "30%", marginLeft: "auto" }}>
+          <Button
             variant="contained"
-            color="primary600"
+            className={`${style.cv__followButton}`}
             onClick={() => handleUnfollow(mentorId)}
           >
-            Hủy theo dõi
-          </CustomizedButton>
+            Đã theo dõi
+          </Button>
         </div>
       );
     } else {
       return (
-        <div style={{ width: "30%", marginLeft: "auto", marginRight: "4rem" }}>
-          <CustomizedButton
-            variant="outlined"
-            color="primary600"
+        <div style={{ width: "30%", marginLeft: "auto" }}>
+          <Button
+            variant="contained"
+            className={`${style.cv__followButton}`}
             onClick={() => handleFollow(mentorId)}
           >
             Theo dõi
-          </CustomizedButton>
+          </Button>
         </div>
       );
     }
