@@ -520,7 +520,11 @@ const BookingInfoDialog = (props) => {
 
           <div className={`${style.bookingSummary__detail}`}>
             <span className={`${style.bookingSummary__subTitle}`}>Mô tả: </span>
-            <span>{props.bookingInfo?.description}</span>
+            <span>
+              {props.bookingInfo?.description?.length > 0
+                ? props.bookingInfo?.description
+                : "(Không có)"}
+            </span>
           </div>
 
           {props.bookingInfo?.reasonToCancel && (
