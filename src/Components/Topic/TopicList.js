@@ -168,7 +168,14 @@ const TopicList = () => {
 
   const getTopics = async () => {
     try {
-      let topics = await topicService.getTopics();
+      let topics = [];
+
+      if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
+        topics = await topicService.getTopicsByOwnMentor();
+      } else if ([SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role)) {
+        topics = await topicService.getTopics();
+      }
+
       topics = sortDataByCreatedDate(topics);
 
       let updatedTopicList = topics.map((topic) => {
@@ -179,12 +186,6 @@ const TopicList = () => {
           description: topic.description ?? "",
         };
       });
-
-      if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
-        updatedTopicList = updatedTopicList.filter(
-          (item) => item.mentor.id === userInfo.accountId
-        );
-      }
 
       return updatedTopicList;
     } catch (error) {

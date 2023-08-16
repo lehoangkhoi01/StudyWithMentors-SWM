@@ -3,7 +3,7 @@ import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
-  DEACTIVATE_ACTION,
+  DELETE_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
@@ -37,7 +37,7 @@ const CategoryList = () => {
     {
       imgSrc: require("../../assets/icons/Deactive.png"),
       label: TABLE_ACTION.DELETE,
-      action: DEACTIVATE_ACTION,
+      action: DELETE_ACTION,
     },
   ];
 

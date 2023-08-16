@@ -60,6 +60,8 @@ const UpsertMentorModal = (props) => {
       Object.entries(fullForm).filter(([_, v]) => v != null)
     );
 
+    specificForm = specificForm.map(item => item?.trim())
+
     try {
       setLoading(true);
       setIsExistedEmail(false);
