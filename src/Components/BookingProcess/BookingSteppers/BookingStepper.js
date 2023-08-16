@@ -81,7 +81,7 @@ const BookingStepper = (props) => {
         });
       }
 
-      if (studentNote?.length > LENGTH.STUDENT_NOTE_MAX) {
+      if (studentNote?.trim().length > LENGTH.STUDENT_NOTE_MAX) {
         isValid = false;
         setError("studentNote", {
           type: "custom",
@@ -181,7 +181,7 @@ const BookingStepper = (props) => {
         startDate: format(selectSlot.start, DATE_FORMAT.BACK_END_YYYY_MM_DD),
         scheduleId: selectSlot.scheduleId,
         topicId: selectedTopic.id,
-        description: studentNote,
+        description: studentNote.trim(),
         participants: participants,
       };
       await bookingService.createBooking(data);
