@@ -349,7 +349,11 @@ const SeminarDetail = () => {
                         </>
                       ) : (
                         <>
-                          <Typography>{data.description}</Typography>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: data.description,
+                            }}
+                          ></div>
                         </>
                       )}
                     </>
