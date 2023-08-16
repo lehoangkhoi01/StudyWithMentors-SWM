@@ -86,6 +86,8 @@ const UpsertStaff = (props) => {
 
     specificForm = { ...specificForm, departmentId: selectedDepartment.id };
 
+    specificForm = specificForm.map(item => item?.trim())
+
     try {
       setLoading(true);
       setIsExistedEmail(false);

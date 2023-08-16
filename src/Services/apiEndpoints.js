@@ -56,6 +56,7 @@ export const TopicEndpoints = {
   GET_TOPICS: "admin/topics",
   TOPICS: "topics",
   TOPICS_MENTOR: "topics/by-mentor",
+  TOPICS_OWN_MENTOR: "topics/by-mentor/own",
   UPADATE_TOPIC_STATUS: "topics/update-status",
   DELETE_TOPIC_FIELD: "admin/topic-fields",
   UPSERT_TOPIC_FIELD: "admin/topic-fields",

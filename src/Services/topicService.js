@@ -18,6 +18,10 @@ export const topicService = {
     const url = TopicEndpoints.TOPICS_MENTOR + "/" + id;
     return axiosClient.get(url);
   },
+  getTopicsByOwnMentor: () => {
+    const url = TopicEndpoints.TOPICS_OWN_MENTOR;
+    return axiosClient.get(url);
+  },
   upsertTopic: (data, id) => {
     const url = TopicEndpoints.TOPICS + (id ? `/${id}` : "");
     return axiosClient.post(url, data);

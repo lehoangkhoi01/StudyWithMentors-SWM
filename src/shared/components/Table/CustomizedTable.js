@@ -806,7 +806,7 @@ const CustomizedTable = (props) => {
         title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
         type={
-          (props.type === TABLE_TYPE.CATEGORY || props.type === TABLE_TYPE.FIELD) ? MODAL_DELETE_PROPERTY.DELETE :
+          (props.type === TABLE_TYPE.CATEGORY || props.type === TABLE_TYPE.FIELD || props.type === TABLE_TYPE.DEPARTMENT) ? MODAL_DELETE_PROPERTY.DELETE :
             MODAL_DELETE_PROPERTY.DEACTIVATE}
       />
       <ActivePropertyModal

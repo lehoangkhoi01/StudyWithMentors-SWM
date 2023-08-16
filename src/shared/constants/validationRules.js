@@ -63,6 +63,11 @@ export const modalFieldValidation = {
     value: LENGTH.SEMINAR_PLACE,
     message: ERROR_MESSAGES.SEMINAR_NAME_LENGTH,
   },
+  validate: (val) => {
+    if (val && !val.trim()) {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+  },
 };
 
 export const modalOptionalFieldValidation = {

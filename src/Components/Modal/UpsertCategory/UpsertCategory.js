@@ -30,9 +30,11 @@ const UpsertCategory = (props) => {
   const { setNotification } = useNotification();
 
   const [categoryId, setCategoryId] = useState();
+  const [isExisted, setIsExisted] = useState(false);
 
   useEffect(() => {
     clearData();
+    setIsExisted(false);
 
     if (props.existedData) {
       setValue("name", props.existedData.name);
@@ -50,26 +52,31 @@ const UpsertCategory = (props) => {
     const formValue = getValues();
 
     let category = {
-      name: formValue.name,
+      name: formValue.name.trim(),
     };
 
     try {
       setLoading(true);
+      setIsExisted(false);
 
       if (categoryId) {
         await topicService.updateCategory(category, categoryId);
       } else {
         await topicService.createCategory(category);
       }
+      props.onSuccess();
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: ERROR_MESSAGES.COMMON_ERROR,
-      });
+      if (error.data.includes("Duplicate")) {
+        setIsExisted(true);
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMON_ERROR,
+        });
+      }
     } finally {
       setLoading(false);
-      props.onSuccess();
     }
   };
 
@@ -110,9 +117,14 @@ const UpsertCategory = (props) => {
                 options={{
                   ...register("name", modalFieldValidation),
                 }}
-                helperText={errors?.seminarName?.message}
+                error={errors.name ? true : false}
+                helperText={errors?.name?.message}
               />
-
+              {isExisted && (
+                <p className={`${style.modal__error}`}>
+                  {ERROR_MESSAGES.EXISTED_FIELD}
+                </p>
+              )}
               <div className={style.modal__buttons}>
                 <CustomizedButton
                   type="submit"
