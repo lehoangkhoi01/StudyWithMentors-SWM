@@ -298,9 +298,9 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
-    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  CAN_NOT_DELETE: "Không thể xóa",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
@@ -500,6 +500,7 @@ export const ADMIN_TABLE_HEADER = {
   ACTION: "Tác vụ",
   FIELD_NAME: "Lĩnh vực",
   CATEGORY_NAME: "Thể loại",
+  DEPARTMENT_NAME: "Phòng ban"
 };
 
 export const TABLE_DETAIL = {
@@ -634,6 +635,17 @@ export const TABLE_TYPE = {
   SEMINAR: "SEMINAR",
 };
 
+export const TRANSLATED_TABLE_TYPE = {
+  MENTOR: "Diễn giả",
+  TOPIC: "Chủ đề",
+  FIELD: "Linhx vực",
+  CATEGORY: "Thể loại",
+  BOOKING: "Lịch hẹn",
+  DEPARTMENT: "Phòng ban",
+  STAFF: "Nhân viên",
+  SEMINAR: "Sự kiện",
+};
+
 export const USER_STATUS = {
   ACTIVATED: "ACTIVATED",
   WATTING: "WAITING",
@@ -654,6 +666,10 @@ export const MIN_DURATION_ACTION_BOOKING = 2;
 
 export const UPSERT_FIELD = {
   NAME: "Tên lĩnh vực",
+};
+
+export const UPSERT_DEPARTMENT = {
+  NAME: "Tên phòng ban",
 };
 
 export const UPSERT_CATEGORY = {

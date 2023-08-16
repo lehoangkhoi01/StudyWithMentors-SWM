@@ -4,6 +4,7 @@ import { topicService } from "../../Services/topicService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   CONFIRM_ACTION,
+  DELETE_ACTION,
   UPSERT_ACTION,
   VIEW_DETAIL,
 } from "../../shared/constants/actionType";
@@ -84,7 +85,7 @@ const ACTION_ITEMS = [
   {
     imgSrc: require("../../assets/icons/Table_Remove.png"),
     label: CONFIRM_TOPIC_MODAL.DELETE,
-    action: CONFIRM_ACTION,
+    action: DELETE_ACTION,
   },
 ];
 
@@ -155,14 +156,6 @@ const TopicList = () => {
             }
 
             return false;
-
-          case CONFIRM_TOPIC_MODAL.DELETE:
-            if (row.translatedStatus === TOPIC_STATUS.WAITING) {
-              return true;
-            }
-
-            return false;
-
           default:
             return false;
         }

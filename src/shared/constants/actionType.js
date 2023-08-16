@@ -13,3 +13,5 @@ export const VIEW_DETAIL = "DETAIL";
 export const SEND_INVITATION = "SEND_INVITATION";
 
 export const EXTERNAL_ACTION = "EXTERNAL_ACTION";
+
+export const DELETE_ACTION = "DELETE";

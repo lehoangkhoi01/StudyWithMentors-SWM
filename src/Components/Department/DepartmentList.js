@@ -2,7 +2,7 @@ import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { departmentService } from "../../Services/departmentService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
-  DEACTIVATE_ACTION,
+  DELETE_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
@@ -23,7 +23,7 @@ const DepartmentList = () => {
     {
       sortable: true,
       property: "name",
-      name: ADMIN_TABLE_HEADER.FIELD_NAME,
+      name: ADMIN_TABLE_HEADER.DEPARTMENT_NAME,
     },
   ];
 
@@ -35,8 +35,8 @@ const DepartmentList = () => {
     },
     {
       imgSrc: require("../../assets/icons/Deactive.png"),
-      label: TABLE_ACTION.DEACTIVATE,
-      action: DEACTIVATE_ACTION,
+      label: TABLE_ACTION.DELETE,
+      action: DELETE_ACTION,
     },
   ];
 
