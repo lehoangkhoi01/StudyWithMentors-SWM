@@ -202,5 +202,7 @@ export const useFetchDepartments = () => {
 };
 
 export const getPlainTextFromHtmlString = (text) => {
-  return text.replace(/<[^>]+>/g, "");
+  if (text) {
+    return text.replace(/<[^>]+>/g, "");
+  }
 };

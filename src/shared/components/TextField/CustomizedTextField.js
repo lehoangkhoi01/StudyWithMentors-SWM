@@ -45,7 +45,7 @@ const CustomizedTextField = (props) => {
           <CKEditor
             editor={ClassicEditor}
             disabled={props.disabled}
-            data={props.initData}
+            data={props.initData ?? ""}
             onChange={props.onChange}
             {...props.options}
           />
