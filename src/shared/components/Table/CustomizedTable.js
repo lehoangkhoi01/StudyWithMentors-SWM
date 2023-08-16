@@ -15,9 +15,11 @@ import {
   ERROR_MESSAGES,
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
+  OTHERS,
   SORT_DIRECTION,
   TABLE_TYPE,
   TOPIC_TABLE,
+  TRANSLATED_TABLE_TYPE,
   UPSERT_MENTOR,
   UPSERT_STAFF,
 } from "../../constants/common";
@@ -41,6 +43,7 @@ import {
   BOOKING_DETAIL_ACTION,
   CONFIRM_ACTION,
   DEACTIVATE_ACTION,
+  DELETE_ACTION,
   EXTERNAL_ACTION,
   SEND_INVITATION,
   UPSERT_ACTION,
@@ -368,12 +371,21 @@ const CustomizedTable = (props) => {
         setLoading(false);
       }, 500);
     } catch (error) {
-      setNotification({
-        isOpen: true,
-        type: "error",
-        message: ERROR_MESSAGES.COMMON_ERROR,
-      });
-
+      console.log("ERRROR")
+      if (props.type) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message:
+            `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]} ${OTHERS.THIS}.`,
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: ERROR_MESSAGES.COMMENT_ERROR,
+        });
+      }
       setLoading(false);
     } finally {
       setOpenModal({
@@ -490,7 +502,7 @@ const CustomizedTable = (props) => {
     setNotification({
       isOpen: true,
       type: "success",
-      message: COMMON_MESSAGE.UPDATE_SUCCESS 
+      message: COMMON_MESSAGE.UPDATE_SUCCESS
     });
   }
 
@@ -662,6 +674,20 @@ const CustomizedTable = (props) => {
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
                                 )
+                              );
+
+                            case DELETE_ACTION:
+                              return (
+                                <MenuItem
+                                  key={`MENU_ITEM_${index}`}
+                                  onClick={() => {
+                                    return openDeleteModalHandler(row);
+                                  }}
+                                >
+                                  <img src={actionItem.imgSrc} />
+                                  <span>{actionItem.label}</span>
+                                </MenuItem>
+
                               );
 
                             case ACTIVE_ACTION:

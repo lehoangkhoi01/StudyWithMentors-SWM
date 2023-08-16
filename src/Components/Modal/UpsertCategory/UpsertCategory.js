@@ -120,7 +120,9 @@ const UpsertCategory = (props) => {
                   color="primary600"
                   onClick={props.onCloseModal}
                 >
-                  {BUTTON_LABEL.CANCEL_CREATE}
+                  {categoryId
+                    ? BUTTON_LABEL.CANCEL_EDIT
+                    : BUTTON_LABEL.CANCEL_CREATE}
                 </CustomizedButton>
                 <CustomizedButton
                   type="submit"

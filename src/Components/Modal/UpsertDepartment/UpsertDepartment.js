@@ -5,7 +5,7 @@ import {
   BUTTON_LABEL,
   ERROR_MESSAGES,
   TITLE,
-  UPSERT_FIELD,
+  UPSERT_DEPARTMENT,
 } from "../../../shared/constants/common";
 import { Modal, Typography } from "@mui/material";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
@@ -105,7 +105,7 @@ const UpsertDepartment = (props) => {
               )}
 
               <CustomizedTextField
-                name={UPSERT_FIELD.NAME}
+                name={UPSERT_DEPARTMENT.NAME}
                 required={true}
                 options={{
                   ...register("name", modalFieldValidation),
@@ -120,7 +120,9 @@ const UpsertDepartment = (props) => {
                   color="primary600"
                   onClick={props.onCloseModal}
                 >
-                  {BUTTON_LABEL.CANCEL_CREATE}
+                  {departmentId
+                    ? BUTTON_LABEL.CANCEL_EDIT
+                    : BUTTON_LABEL.CANCEL_CREATE}
                 </CustomizedButton>
                 <CustomizedButton
                   type="submit"
