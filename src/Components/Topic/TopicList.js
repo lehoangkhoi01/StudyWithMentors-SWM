@@ -182,10 +182,12 @@ const TopicList = () => {
         return {
           ...topic,
           translatedStatus: TOPIC_STATUS[topic.status],
-          mentorName: topic.mentor.fullName,
+          mentorName: userInfo?.role === SYSTEM_ROLE.MENTOR ? "" : topic.mentor.fullName,
           description: topic.description ?? "",
         };
       });
+
+      console.log(updatedTopicList)
 
       return updatedTopicList;
     } catch (error) {

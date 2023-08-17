@@ -145,13 +145,12 @@ const CustomizedTable = (props) => {
   const getData = async () => {
     try {
       setLoading(true);
-
       const responseData = await props.getData();
 
       setOriginData([...responseData]);
 
-      onCloseModal();
       setLoading(false);
+      onCloseModal();
     } catch (error) {
       setNotification({
         isOpen: true,
