@@ -29,8 +29,6 @@ import {
 } from "../../../shared/constants/systemType";
 import { useHistory } from "react-router";
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
-import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
-import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import DiscussionRoom from "../../DiscussionRoom/DiscussionRoom";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
@@ -64,11 +62,6 @@ const SeminarDetail = () => {
 
     return true;
   };
-
-  const breadcrumbsNavigate = [
-    { title: BREADCRUMBS_TITLE.SEMINAR_LIST, route: ROUTES.SEMINAR_LIST },
-    { title: data?.name, route: null },
-  ];
 
   const { id } = useParams();
 
@@ -174,7 +167,6 @@ const SeminarDetail = () => {
       {data && (
         <>
           <div>
-            <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
             <div className={style.detail__content}>
               <img
                 className={style.detail__image}
