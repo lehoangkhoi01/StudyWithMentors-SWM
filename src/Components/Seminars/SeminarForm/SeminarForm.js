@@ -22,7 +22,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AutocompleteInput from "../../../shared/components/AutocompleteInput/AutocompleteInput";
-import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 //-------------------
 import {
   seminarNameValidation,
@@ -44,10 +43,7 @@ import {
   TEXTFIELD_LABEL,
   VALID_IMAGE_FILE_TYPE,
 } from "../../../shared/constants/common";
-import {
-  BREADCRUMBS_TITLE,
-  CREATE_SEMINAR_BREADCRUMBS,
-} from "../../../shared/constants/breadcrumbs";
+
 //------------------
 import { ROUTES, ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { seminarService } from "../../../Services/seminarService";
@@ -132,25 +128,6 @@ const SeminarForm = () => {
   const userInfo = useSelector(selectUserInfo);
 
   const [openAddMentorModal, setOpenAddMentorModal] = React.useState(false);
-
-  const UPDATE_SEMINAR_BREADCRUMBS = [
-    {
-      title: BREADCRUMBS_TITLE.SEMINAR_LIST,
-      route: ROUTES.SEMINAR_LIST,
-    },
-    {
-      title: seminarDetail?.name,
-      route: ROUTES_STATIC.SEMINAR_DETAIL + "/" + id,
-    },
-    {
-      title: BREADCRUMBS_TITLE.UPDATE_SEMINAR,
-      route: null,
-    },
-  ];
-
-  const breadcrumbsNavigate = isFormUpdate
-    ? UPDATE_SEMINAR_BREADCRUMBS
-    : CREATE_SEMINAR_BREADCRUMBS;
 
   //----------------------------------------------------
 
@@ -497,7 +474,6 @@ const SeminarForm = () => {
 
   return (
     <div className={`${style.seminarForm__container}`}>
-      <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
       <Grid2
         spacing={2}
         container

@@ -59,6 +59,8 @@ const MentorList = () => {
         followingMentors.includes(mentor.mentorId)
       );
       setMentors(newMentorList);
+    } else if (statusFilter === FILTER_SEMINAR.RECOMMEND) {
+      getReommendMentors();
     }
   }, [statusFilter]);
 
@@ -70,6 +72,25 @@ const MentorList = () => {
     try {
       setLoading(true);
       const mentorsData = await accountService.getAllMoreInfoMentors(
+        filterInfo ?? []
+      );
+      setMentors(mentorsData.mentorCards);
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message: ERROR_MESSAGES.COMMON_ERROR,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getReommendMentors = async () => {
+    try {
+      setLoading(true);
+      const mentorsData = await accountService.getRecommendMentors(
         filterInfo ?? []
       );
       setMentors(mentorsData.mentorCards);
@@ -214,18 +235,34 @@ const MentorList = () => {
           >
             {FILTER_SEMINAR.ALL}
           </p>
-          <p
-            className={
-              statusFilter === FILTER_SEMINAR.FOLLOWING
-                ? style.mentorList__status__filter__active
-                : ""
-            }
-            onClick={() => {
-              onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
-            }}
-          >
-            {FILTER_SEMINAR.FOLLOWING}
-          </p>
+          {userInfo?.role === SYSTEM_ROLE.STUDENT && (
+            <>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.FOLLOWING
+                    ? style.mentorList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
+                }}
+              >
+                {FILTER_SEMINAR.FOLLOWING}
+              </p>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.RECOMMEND
+                    ? style.mentorList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.RECOMMEND);
+                }}
+              >
+                {FILTER_SEMINAR.RECOMMEND}
+              </p>
+            </>
+          )}
         </div>
       </div>
       <Grid className={`${style.mentorList__cards}`} container spacing={3}>

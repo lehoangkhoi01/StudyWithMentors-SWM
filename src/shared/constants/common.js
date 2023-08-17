@@ -210,8 +210,7 @@ export const FILL_INFORMATION = {
 
 export const PROFILE = {
   UPDATE_PROFILE: "Cập nhật thông tin tài khoản",
-  PLEASE_FILL_INFORMATION:
-    "Cập nhật thông tin cá nhân",
+  PLEASE_FILL_INFORMATION: "Cập nhật thông tin cá nhân",
 };
 
 export const OPTIONAL = "không bắt buộc";
@@ -298,8 +297,9 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
+    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   CATEGORY_FIELD: "Thể loại này đã tồn tại",
@@ -474,6 +474,7 @@ export const FILTER_SEMINAR = {
   POPULAR: "Nổi bật",
   FOLLOWING: "Đang theo dõi",
   OWN_SEMINAR: "Sự kiện của tôi",
+  RECOMMEND: "Gợi ý",
 };
 
 export const QR_TEXT = {
@@ -503,7 +504,7 @@ export const ADMIN_TABLE_HEADER = {
   ACTION: "Tác vụ",
   FIELD_NAME: "Lĩnh vực",
   CATEGORY_NAME: "Thể loại",
-  DEPARTMENT_NAME: "Phòng ban"
+  DEPARTMENT_NAME: "Phòng ban",
 };
 
 export const TABLE_DETAIL = {
