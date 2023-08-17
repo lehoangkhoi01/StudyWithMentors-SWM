@@ -2,7 +2,7 @@ import { Modal, Typography } from "@mui/material";
 import style from "./DeletePropertyModal.module.scss";
 
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
-import { MODAL_DELETE_PROPERTY, OTHERS } from "../../shared/constants/common";
+import { MODAL_DELETE_PROPERTY } from "../../shared/constants/common";
 
 const DeletePropertyModal = (props) => {
   const { type } = props;
@@ -22,7 +22,7 @@ const DeletePropertyModal = (props) => {
               type === MODAL_DELETE_PROPERTY.DEACTIVATE
                 ? MODAL_DELETE_PROPERTY.DEACTIVATE
                 : MODAL_DELETE_PROPERTY.DELETE_CONFIRM
-            } ${props.title} ${OTHERS.THIS}?`}
+            } ${props.title}?`}
           </Typography>
           <p>
             {type === MODAL_DELETE_PROPERTY.DEACTIVATE

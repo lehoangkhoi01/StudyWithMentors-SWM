@@ -642,7 +642,7 @@ export const TABLE_TYPE = {
 export const TRANSLATED_TABLE_TYPE = {
   MENTOR: "Diễn giả",
   TOPIC: "Chủ đề",
-  FIELD: "Linhx vực",
+  FIELD: "Lĩnh vực",
   CATEGORY: "Thể loại",
   BOOKING: "Lịch hẹn",
   DEPARTMENT: "Phòng ban",
