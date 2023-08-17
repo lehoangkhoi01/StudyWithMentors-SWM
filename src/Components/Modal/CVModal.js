@@ -13,12 +13,13 @@ import {
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import CustomizedDatePicker from "../../shared/components/DatePicker/CustomizedDatePicker";
 import CustomizedCheckBox from "../../shared/components/CheckBox/CustomizedCheckBox";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import {
   getRegisterNamePrefixFromTitle,
   removeRegisterNamePrefix,
 } from "../../Helpers/SpecificComponentHelper/CVHelper";
 import { convertDateFormat, covertToISODate } from "../../Helpers/dateHelper";
+import { registerFullNameValidation } from "../../shared/constants/validationRules";
 
 const LIST_OPTIONAL_DATE = [
   "learningExps_endDate",
@@ -38,11 +39,9 @@ const CVModal = (props) => {
     formState: { errors },
   } = useForm();
   const [type, setType] = useState(MODAL_TYPE.ADD);
-  const [isWorking, setIsWorking] = useState(false);
 
   useLayoutEffect(() => {
     reset();
-    setIsWorking(false);
 
     if (!props.openModal) return;
     const registerNamePrefixRaw = getRegisterNamePrefixFromTitle(props.title);
@@ -63,22 +62,11 @@ const CVModal = (props) => {
     }
   }, [props.openModal]);
 
-  useEffect(() => {
-    if (
-      watch(`${registerNamePrefix}_workingHere`) ||
-      watch(`${registerNamePrefix}_attendingThis`)
-    ) {
-      setValue(`${registerNamePrefix}_endDate`, null);
-      setIsWorking(true);
-    }
-  }, [
-    watch(`${registerNamePrefix}_workingHere`),
-    watch(`${registerNamePrefix}_attendingThis`),
-  ]);
-
-  const validateEndDate = (val) => {
-    if (!isWorking) {
-      if (!val || val.length === 0) {
+  const validateEndDate = (val, isOptionalEmptyDate) => {
+    let isSkipValidate = getValues(`${registerNamePrefix}_workingHere`) ||
+      getValues(`${registerNamePrefix}_attendingThis`);
+    if (!isSkipValidate && !isOptionalEmptyDate) {
+      if (val === null || !val || val.length === 0) {
         return ERROR_MESSAGES.REQUIRED_FIELD;
       }
 
@@ -97,11 +85,14 @@ const CVModal = (props) => {
       if (endDateTimeNumber < startDateTimeNumber) {
         return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
       }
+
     }
   };
 
   const validateDueDate = (val) => {
-    if (!isWorking) {
+    let isSkipValidate = getValues(`${registerNamePrefix}_workingHere`) ||
+      getValues(`${registerNamePrefix}_attendingThis`);
+    if (!isSkipValidate) {
 
       const formValue = getValues();
       const issuedDateString = formValue[`${registerNamePrefix}_achievingDate`];
@@ -131,6 +122,7 @@ const CVModal = (props) => {
   };
 
   const validateStartDate = (val) => {
+    console.log("Validate")
     if (!val || val.length === 0) {
       return ERROR_MESSAGES.REQUIRED_FIELD;
     }
@@ -145,12 +137,24 @@ const CVModal = (props) => {
     }
   };
 
+  const isOptionalEmptyDate = (registerName, value) => {
+    let result = false;
+
+    LIST_OPTIONAL_DATE.forEach(optionalDate => {
+      if (registerName.includes(optionalDate) && (!value || value?.length === 0)) {
+        result = true;
+      }
+    })
+
+    return result;
+  }
+
   const renderFormOptionForDate = (registerName) => {
-    if (registerName.includes("endDate") && !isOptionalDate(registerName)) {
+    if (registerName.includes("endDate")) {
       return {
         ...register(registerName, {
           validate: {
-            checkEndDate: (val) => validateEndDate(val),
+            checkEndDate: (val) => validateEndDate(val, isOptionalEmptyDate(registerName, val)),
           },
         }),
       };
@@ -203,18 +207,6 @@ const CVModal = (props) => {
 
     props.handleSubmit(specificForm, registerNamePrefix);
   };
-
-  const isOptionalDate = (registerName) => {
-    let result = false;
-
-    LIST_OPTIONAL_DATE.forEach(optionalDate => {
-      if (registerName.includes(optionalDate)) {
-        result = true;
-      }
-    })
-
-    return result;
-  }
 
   return (
     <div className={style.container}>
@@ -287,7 +279,10 @@ const CVModal = (props) => {
                       required={!textField.optional}
                       multiline={textField.type === INPUT_TYPES.TEXT_AREA}
                       options={{
-                        ...register(textField.registerName),
+                        ...register(
+                          textField.registerName,
+                          textField.optional ? "" : registerFullNameValidation
+                        ),
                       }}
                       error={errors[textField.registerName] ? true : false}
                       helperText={errors[textField.registerName]?.message}

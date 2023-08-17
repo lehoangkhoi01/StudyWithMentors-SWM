@@ -45,6 +45,9 @@ export const BUTTON_LABEL = {
   SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
   SEARCH_STAFF: "Tim kiếm nhân viên",
   ADD_SEMINAR: "Thêm sự kiện",
+  SEARCH_SEMINAR: "Tim kiếm sự kiện",
+  SEARCH_BOOKING: "Tim kiếm lịch hẹn",
+  SEARCH_STUDENT: "Tim kiếm sinh viên",
 };
 
 export const TEXTFIELD_LABEL = {
@@ -152,6 +155,7 @@ export const COMMON_MESSAGE = {
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
   UPDATE_SUCCESS: "Cập nhật thông tin thành công",
+  CREATE_SUCCESS: "Khởi tạo thành công",
 };
 
 export const SIGN_UP_STAGE = {
@@ -297,9 +301,8 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
-    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   CATEGORY_FIELD: "Thể loại này đã tồn tại",
@@ -637,6 +640,7 @@ export const TABLE_TYPE = {
   DEPARTMENT: "DEPARTMENT",
   STAFF: "STAFF",
   SEMINAR: "SEMINAR",
+  STUDENT: "STUDENT",
 };
 
 export const TRANSLATED_TABLE_TYPE = {
