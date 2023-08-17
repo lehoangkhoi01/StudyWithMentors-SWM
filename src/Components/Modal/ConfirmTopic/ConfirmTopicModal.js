@@ -4,7 +4,6 @@ import {
   CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   MODAL_ACTIVE_PROPERTY,
-  OTHERS,
   TOPIC_STATUS_BACKEND,
 } from "../../../shared/constants/common";
 import { Modal, Typography } from "@mui/material";
@@ -88,7 +87,7 @@ const ConfirmTopicModal = (props) => {
             textAlign="center"
             color="#283493"
           >
-            {`${properties.confirm} ${CONFIRM_TOPIC_MODAL.TOPIC} ${props.title} ${OTHERS.THIS}?`}
+            {`${properties.confirm} ${CONFIRM_TOPIC_MODAL.TOPIC} ${props.title}?`}
           </Typography>
 
           <div className={style.modal__buttons}>

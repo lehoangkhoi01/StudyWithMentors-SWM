@@ -2,7 +2,7 @@ import { Modal, Typography } from "@mui/material";
 import style from "./ActivePropertyModal.module.scss";
 
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
-import { MODAL_ACTIVE_PROPERTY, OTHERS } from "../../shared/constants/common";
+import { MODAL_ACTIVE_PROPERTY } from "../../shared/constants/common";
 
 const ActivePropertyModal = (props) => {
   return (
@@ -16,7 +16,7 @@ const ActivePropertyModal = (props) => {
             textAlign="center"
             color="#283493"
           >
-            {`${MODAL_ACTIVE_PROPERTY.ACTIVE_CONFIRM} ${props.title} ${OTHERS.THIS}?`}
+            {`${MODAL_ACTIVE_PROPERTY.ACTIVE_CONFIRM} ${props.title}?`}
           </Typography>
           <p>{` ${MODAL_ACTIVE_PROPERTY.ACTIVE_DETAIL}`}</p>
           <div className={style.modal__buttons}>
