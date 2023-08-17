@@ -97,8 +97,8 @@ const AddTopicModal = (props) => {
     let topic = {
       name: formValue.name.trim(),
       description: formValue.description.trim(),
-      fieldId: selectedField.id.trim(),
-      categoryId: selectedCategory.id.trim(),
+      fieldId: selectedField.id,
+      categoryId: selectedCategory.id,
     };
 
     try {

@@ -60,7 +60,9 @@ const UpsertMentorModal = (props) => {
       Object.entries(fullForm).filter(([_, v]) => v != null)
     );
 
-    specificForm = specificForm.map(item => item?.trim())
+    for (const [key, value] of Object.entries(specificForm)) {
+      specificForm[key] = value.toString().trim();
+    }
 
     try {
       setLoading(true);

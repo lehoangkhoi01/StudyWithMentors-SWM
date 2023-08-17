@@ -86,7 +86,9 @@ const UpsertStaff = (props) => {
 
     specificForm = { ...specificForm, departmentId: selectedDepartment.id };
 
-    specificForm = specificForm.map(item => item?.trim())
+    for (const [key, value] of Object.entries(specificForm)) {
+      specificForm[key] = value.toString().trim();
+    }
 
     try {
       setLoading(true);
