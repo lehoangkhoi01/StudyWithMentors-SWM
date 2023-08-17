@@ -1,5 +1,5 @@
 import axiosClient from "./Axios/axiosClient";
-import { AccountEndpoints } from "./apiEndpoints";
+import { AccountEndpoints, BookingEndpoints } from "./apiEndpoints";
 
 export const accountService = {
   getAllMentors: () => {
@@ -18,6 +18,14 @@ export const accountService = {
   },
   getAllMoreInfoMentors: (params) => {
     const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
+    return axiosClient.get(url, {
+      params: {
+        searchString: ["", ...params],
+      },
+    });
+  },
+  getRecommendMentors: (params) => {
+    const url = BookingEndpoints.BOOKING + "/mentors-recommend";
     return axiosClient.get(url, {
       params: {
         searchString: ["", ...params],
@@ -46,5 +54,5 @@ export const accountService = {
   getStudents: () => {
     const url = AccountEndpoints.ACCOUNT_STUDENT;
     return axiosClient.get(url);
-  }
+  },
 };
