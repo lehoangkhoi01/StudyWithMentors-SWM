@@ -181,7 +181,7 @@ const BookingStepper = (props) => {
         startDate: format(selectSlot.start, DATE_FORMAT.BACK_END_YYYY_MM_DD),
         scheduleId: selectSlot.scheduleId,
         topicId: selectedTopic.id,
-        description: studentNote.trim(),
+        description: studentNote?.trim(),
         participants: participants,
       };
       await bookingService.createBooking(data);
