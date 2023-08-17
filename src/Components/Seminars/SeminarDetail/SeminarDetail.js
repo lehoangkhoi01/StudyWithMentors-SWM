@@ -7,6 +7,8 @@ import {
   TITLE,
   USER_STATUS,
 } from "../../../shared/constants/common";
+import { BREADCRUMBS_TITLE } from "../../../shared/constants/breadcrumbs";
+import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBreadcrumbs";
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
@@ -47,6 +49,11 @@ const SeminarDetail = () => {
   const { setNotification } = useNotification();
   const userInfo = useSelector(selectUserInfo);
   const history = useHistory();
+
+  const breadcrumbsNavigate = [
+    { title: BREADCRUMBS_TITLE.SEMINAR_LIST, route: ROUTES.SEMINAR_LIST },
+    { title: data?.name, route: null },
+  ];
 
   const isAuthorizedEditSeminar = (seminarDetail) => {
     if (!AUTHORIZED_ROLE_ACTION.includes(userInfo?.role)) {
@@ -167,6 +174,7 @@ const SeminarDetail = () => {
       {data && (
         <>
           <div>
+            <GlobalBreadcrumbs navigate={breadcrumbsNavigate} />
             <div className={style.detail__content}>
               <img
                 className={style.detail__image}
