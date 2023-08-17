@@ -38,26 +38,19 @@ const SeminarCard = ({ data }) => {
         </Tooltip>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Author_Seminar.png")} />
-          <p>
-            {data.mentors.map(
-              (mentor, index) =>
-                `${mentor.fullName}${
-                  data.mentors.length - 1 !== index ? ", " : ""
-                }`
-            )}
-          </p>
+          <Tooltip
+            title={data.mentors.map((mentor) => mentor.fullName).join(", ")}
+          >
+            <p>
+              {data.mentors.map(
+                (mentor, index) =>
+                  `${mentor.fullName}${
+                    data.mentors.length - 1 !== index ? ", " : ""
+                  }`
+              )}
+            </p>
+          </Tooltip>
         </div>
-
-        {/* <div>
-          {data.mentors.map((mentor) => {
-            return (
-              <div key={mentor.id}>
-                <Avatar alt={mentor.fullName} src={mentor.avatarUrl} />
-                <Typography>{mentor.fullName}</Typography>
-              </div>
-            );
-          })}
-        </div> */}
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Time_Seminar.png")} />
           <p>{handleTimeToDisplay(data.startTime)}</p>
@@ -68,7 +61,9 @@ const SeminarCard = ({ data }) => {
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Organizer_Seminar.png")} />
-          <p>{data.department?.name}</p>
+          <Tooltip title={data.department?.name}>
+            <p>{data.department?.name}</p>
+          </Tooltip>
         </div>
       </div>
     </div>
