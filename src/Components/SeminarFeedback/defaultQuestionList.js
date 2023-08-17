@@ -7,7 +7,7 @@ export const feedbackQuestionList = [
   },
   {
     id: 2,
-    question: "Sự kiện có đáp ứng được mong đợi của bạn không?",
+    question: "Hội thảo có đáp ứng được mong đợi của bạn không?",
     type: "YES/NO",
     result: "YESS",
   },
@@ -18,12 +18,12 @@ export const feedbackQuestionList = [
   },
   {
     id: 4,
-    question: "Bạn đánh giá thế nào về mặt tổ chức và hậu cần của sự kiện",
+    question: "Bạn đánh giá thế nào về mặt tổ chức và hậu cần của hội thảo",
     type: "RATING",
   },
   {
     id: 5,
-    question: "Có điều gì trong sự kiện cần phải cải thiện không?",
+    question: "Có điều gì trong hội thảo cần phải cải thiện không?",
     type: "TEXT",
     result: "454534665dfsgdfgf",
   },

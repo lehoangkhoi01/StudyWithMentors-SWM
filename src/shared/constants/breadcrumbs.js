@@ -5,10 +5,10 @@
 import { ROUTES } from "./navigation";
 
 export const BREADCRUMBS_TITLE = {
-  SEMINAR_LIST: "Danh sách sự kiện",
-  CREATE_SEMINAR: "Tạo sự kiện mới",
-  UPDATE_SEMINAR: "Chỉnh sửa sự kiện",
-  FEEDBACK_OVERVIEW: "Báo cáo sự kiện",
+  SEMINAR_LIST: "Danh sách hội thảo",
+  CREATE_SEMINAR: "Tạo hội thảo mới",
+  UPDATE_SEMINAR: "Chỉnh sửa hội thảo",
+  FEEDBACK_OVERVIEW: "Báo cáo hội thảo",
   MENTOR_LIST: "Danh sách mentor",
 };
 

@@ -174,7 +174,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
     ROUTE: ROUTES.ADMIN_BOOKING_LIST,
   },
   {
-    TITLE: "Sự kiện",
+    TITLE: "Hội thảo",
     ROUTE: ROUTES.ADMIN_SEMINAR_LIST,
   },
   {
@@ -192,7 +192,7 @@ export const ADMIN_MANAGE_SYSTEM_MENU = [
 
 export const STAFF_MANAGE_SYSTEM_MENU = [
   {
-    TITLE: "Sự kiện",
+    TITLE: "Hội thảo",
     ROUTE: ROUTES.SEMINAR_LIST,
   },
 ];

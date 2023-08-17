@@ -18,11 +18,11 @@ export const BUTTON_LABEL = {
   DEFAULT: "Mặc định",
   TODAY: "Hôm nay",
   CREATE_SCHEDULE: "Tạo lịch",
-  CREATE_SEMINAR: "Tạo sự kiện mới",
-  UPDATE_SEMINAR: "Cập nhật sự kiện",
+  CREATE_SEMINAR: "Tạo hội thảo mới",
+  UPDATE_SEMINAR: "Cập nhật hội thảo",
   ADD_DOCUMENT: "Tải thêm tài liệu",
   SUBCRIBE_SEMNIAR: "Quan tâm",
-  FEEDBACK_SEMINAR: "Đánh giá sự kiện",
+  FEEDBACK_SEMINAR: "Đánh giá hội thảo",
   CONFIRM: "Xác nhận",
   ADD_MENTOR: "Thêm diễn giả",
   DEACTIVATE_MENTOR: "Vô hiệu hóa",
@@ -44,8 +44,8 @@ export const BUTTON_LABEL = {
   ADD_STAFF: "Thêm nhân viên",
   SEARCH_DEPARTMENT: "Tìm kiếm phòng ban",
   SEARCH_STAFF: "Tim kiếm nhân viên",
-  ADD_SEMINAR: "Thêm sự kiện",
-  SEARCH_SEMINAR: "Tim kiếm sự kiện",
+  ADD_SEMINAR: "Thêm hội thảo",
+  SEARCH_SEMINAR: "Tim kiếm hội thảo",
   SEARCH_BOOKING: "Tim kiếm lịch hẹn",
   SEARCH_STUDENT: "Tim kiếm sinh viên",
 };
@@ -69,7 +69,7 @@ export const TEXTFIELD_LABEL = {
   ISSUED_DATE: "Ngày cấp",
   DUE_DATE: "Thời hạn đến",
   SKILL: "Kỹ năng",
-  SEMINAR_NAME: "Tên sự kiện",
+  SEMINAR_NAME: "Tên hội thảo",
   SEMINAR_PLACE: "Địa điểm",
   SEMINAR_DESCRIPTION: "Mô tả",
   TIME: "Thời gian",
@@ -87,7 +87,7 @@ export const TITLE = {
   SIGN_IN: "Đăng nhập",
   SIGN_UP: "Đăng ký",
   SIGN_UP_CONFIRMATION: "Xác nhận tài khoản",
-  EVENT_FEEDBACK: "Khảo sát sự kiện",
+  EVENT_FEEDBACK: "Khảo sát hội thảo",
   FORGOT_PASSWORD: "Quên mật khẩu?",
   OR: "Hoặc",
   PASSWORD: "Mật khẩu",
@@ -102,7 +102,7 @@ export const TITLE = {
   LOGIN_TROUBLE: "Gặp rắc rối trong việc đăng nhập?",
   FOOTER: "© 2023 Growth Me",
   LABEL: "Nhãn",
-  SEMINAR_INFO: "Thông tin sự kiện",
+  SEMINAR_INFO: "Thông tin hội thảo",
   SEMINAR_FUTURE: "Sắp diễn ra",
   SEMINAR_PAST: "Đã diễn ra",
   CREATE_TOPIC: "Tạo chủ đề",
@@ -137,8 +137,8 @@ export const COMMON_MESSAGE = {
   APPLY_RESET_PASSWORD_SUCCESS:
     "Đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục cùng Growth Me.",
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
-  CREATE_SEMINAR_SUCCESS: "Tạo sự kiện thành công",
-  REMOVE_SEMINAR_SUCCESS: "Xóa sự kiện thành công",
+  CREATE_SEMINAR_SUCCESS: "Tạo hội thảo thành công",
+  REMOVE_SEMINAR_SUCCESS: "Xóa hội thảo thành công",
   ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
   UPDATE_MENTOR_SUCCESS: "Cập nhật thông tin thành công",
   REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
@@ -460,7 +460,7 @@ export const SEMINAR = {
   ORGANIZER: "Tổ chức",
   CONTENT: "Mô tả",
   ATTACHED_FILE: "Tài liệu đính kèm",
-  SEMINAR_LIST: "Danh sách sự kiện",
+  SEMINAR_LIST: "Danh sách hội thảo",
   RERORT: "Xem báo cáo",
   EDIT: "Chỉnh sửa",
   DELETE: "Xóa",
@@ -472,16 +472,16 @@ export const FILTER_SEMINAR = {
   ALL: "Tất cả",
   IS_COMMING: "Sắp diễn ra",
   PAST: "Đã diễn ra",
-  DEPARTMENT_SEMINAR: "Sự kiện của phòng ban",
+  DEPARTMENT_SEMINAR: "Hội thảo của phòng ban",
   FOLLOWED_SEMINAR: "Quan tâm",
   POPULAR: "Nổi bật",
   FOLLOWING: "Đang theo dõi",
-  OWN_SEMINAR: "Sự kiện của tôi",
+  OWN_SEMINAR: "Hội thảo của tôi",
   RECOMMEND: "Gợi ý",
 };
 
 export const QR_TEXT = {
-  FEEDBACK_SEMINAR: "Đánh giá sự kiện",
+  FEEDBACK_SEMINAR: "Đánh giá hội thảo",
   OR_THIS_LINK: "hoặc vào đường link",
 };
 
@@ -528,7 +528,7 @@ export const MENTOR_STATUS = {
 };
 
 export const FEEDBACK_OVERVIEW = {
-  SEMNIAR_REPORT: "Báo cáo sự kiện",
+  SEMNIAR_REPORT: "Báo cáo hội thảo",
   IMPROVEMENT: "Cần cải thiện",
   OTHERS: "Ý kiến khác",
 };
@@ -651,7 +651,7 @@ export const TRANSLATED_TABLE_TYPE = {
   BOOKING: "Lịch hẹn",
   DEPARTMENT: "Phòng ban",
   STAFF: "Nhân viên",
-  SEMINAR: "Sự kiện",
+  SEMINAR: "Hội thảo",
 };
 
 export const USER_STATUS = {
@@ -754,7 +754,7 @@ export const TRANSLATED_STUDENT_GENDER = {
 };
 
 export const SEMINAR_TABLE = {
-  NAME: "Tên sự kiện",
+  NAME: "Tên hội thảo",
   MENTOR_NAME: "Diễn giả",
   DEPARTMENT: "Phòng ban",
   STATUS: "Trạng thái",
