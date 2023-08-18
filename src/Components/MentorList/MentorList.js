@@ -31,6 +31,7 @@ const MentorList = () => {
     pageSize: 12,
     totalPage: 1,
   });
+  const [allMentors, setAllMentors] = useState([]);
   const [mentors, setMentors] = useState([]);
   const [displayedMentors, setDisplayedMentors] = useState([]);
   const [followingMentors, setFollowingMentors] = useState([]);
@@ -55,7 +56,7 @@ const MentorList = () => {
     if (statusFilter === FILTER_SEMINAR.ALL) {
       getMentors();
     } else if (statusFilter === FILTER_SEMINAR.FOLLOWING) {
-      const newMentorList = mentors.filter((mentor) =>
+      const newMentorList = allMentors.filter((mentor) =>
         followingMentors.includes(mentor.mentorId)
       );
       setMentors(newMentorList);
@@ -74,9 +75,9 @@ const MentorList = () => {
       const mentorsData = await accountService.getAllMoreInfoMentors(
         filterInfo ?? []
       );
+      setAllMentors(mentorsData.mentorCards);
       setMentors(mentorsData.mentorCards);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
