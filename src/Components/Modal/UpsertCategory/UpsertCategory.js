@@ -3,6 +3,7 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import style from "./UpsertCategory.module.scss";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   ERROR_MESSAGES,
   TITLE,
   UPSERT_CATEGORY,
@@ -61,8 +62,18 @@ const UpsertCategory = (props) => {
 
       if (categoryId) {
         await topicService.updateCategory(category, categoryId);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_SUCCESS,
+        });
       } else {
         await topicService.createCategory(category);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_CATEGORY_SUCCESS,
+        });
       }
       props.onSuccess();
     } catch (error) {

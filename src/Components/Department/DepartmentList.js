@@ -1,3 +1,4 @@
+import { sortDataByCreatedDate } from "../../Helpers/arrayHelper";
 import { useCustomAppbar, useNotification } from "../../Helpers/generalHelper";
 import { departmentService } from "../../Services/departmentService";
 import CustomizedTable from "../../shared/components/Table/CustomizedTable";
@@ -42,8 +43,8 @@ const DepartmentList = () => {
 
   const getDepartments = async () => {
     try {
-      const departments = await departmentService.getDepartments();
-
+      let departments = await departmentService.getDepartments();
+      departments = sortDataByCreatedDate(departments);
       const updatedDepartments = departments.map((department) => ({
         ...department,
         translatedStatus: MENTOR_STATUS.ACTIVATED,

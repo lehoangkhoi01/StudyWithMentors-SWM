@@ -155,6 +155,10 @@ export const COMMON_MESSAGE = {
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
   UPDATE_SUCCESS: "Cập nhật thông tin thành công",
+  ADD_FIELD_SUCCESS: "Thêm lĩnh vực thành công",
+  ADD_CATEGORY_SUCCESS: "Thêm thể loại thành công",
+  ADD_DEPARTMENT_SUCCESS: "Thêm phòng ban thành công",
+  ADD_TOPIC_SUCCESS: "Thêm chủ đề thành công",
   CREATE_SUCCESS: "Khởi tạo thành công",
 };
 
@@ -301,8 +305,9 @@ export const ERROR_MESSAGES = {
     "Ngày kết thúc không được sớm hơn ngày bắt đầu",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
+    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   CATEGORY_FIELD: "Thể loại này đã tồn tại",

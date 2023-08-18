@@ -67,7 +67,7 @@ const CategoryList = () => {
   };
 
   const onDeleteCategory = async (categoryId) => {
-    await topicService.deleteField(categoryId[0]);
+    await topicService.deleteCategory(categoryId[0]);
   };
 
   return (

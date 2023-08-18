@@ -5,6 +5,7 @@ import style from "./AddTopicModal.module.scss";
 import {
   ADD_TOPIC,
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   ERROR_MESSAGES,
   TITLE,
 } from "../../../shared/constants/common";
@@ -103,8 +104,12 @@ const AddTopicModal = (props) => {
 
     try {
       setLoading(true);
-
       await topicService.upsertTopic(topic, topicId);
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.ADD_TOPIC_SUCCESS,
+      });
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -113,7 +118,7 @@ const AddTopicModal = (props) => {
       });
     } finally {
       setLoading(false);
-      props.onSuccess();
+      await props.onSuccess();
     }
   };
 
@@ -154,7 +159,8 @@ const AddTopicModal = (props) => {
                 options={{
                   ...register("name", modalFieldValidation),
                 }}
-                helperText={errors?.seminarName?.message}
+                error={errors?.name?.message}
+                helperText={errors?.name?.message}
               />
 
               <CustomizedTextField
@@ -165,6 +171,7 @@ const AddTopicModal = (props) => {
                 }}
                 multiline={true}
                 watch={watch("description")}
+                error={errors?.description?.message}
                 helperText={errors?.description?.message}
               />
 
