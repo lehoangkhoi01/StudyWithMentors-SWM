@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
 import style from "./SummaryStep.module.scss";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const SummaryStep = (props) => {
+  const userInfo = useSelector(selectUserInfo);
+  const [participantsList, setParticipantsList] = useState([]);
+
   const renderStartEndTime = () => {
     return (
       format(props.selectedSlot?.start, DATE_FORMAT.HH_mm) +
@@ -14,6 +19,14 @@ const SummaryStep = (props) => {
       format(props.selectedSlot?.start, DATE_FORMAT.DD_MM_YYYY)
     );
   };
+
+  React.useEffect(() => {
+    let newList = [userInfo];
+    if (props.selectedStudents) {
+      newList = newList.concat(props.selectedStudents);
+    }
+    setParticipantsList(newList);
+  }, []);
 
   return (
     <div>
@@ -48,10 +61,8 @@ const SummaryStep = (props) => {
           Người tham gia:{" "}
         </span>
         <span>
-          {props.selectedStudents?.length > 0
-            ? props.selectedStudents
-                .map((student) => student.fullName)
-                .join(", ")
+          {participantsList.length > 0
+            ? participantsList.map((student) => student.fullName).join(", ")
             : "(Không có)"}
         </span>
       </div>

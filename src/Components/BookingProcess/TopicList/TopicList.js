@@ -32,7 +32,11 @@ const TopicList = (props) => {
   if (props.topics?.length > 0) {
     return (
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-        <List component="nav" aria-label="secondary mailbox folder">
+        <List
+          sx={{ height: "40vh", overflowY: "scroll" }}
+          component="nav"
+          aria-label="secondary mailbox folder"
+        >
           {props.topics?.map((topic, index) => (
             <ListItem
               key={topic.id}
