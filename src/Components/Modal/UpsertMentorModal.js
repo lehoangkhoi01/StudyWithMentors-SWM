@@ -24,27 +24,32 @@ import {
 } from "../../shared/constants/validationRules";
 
 const UpsertMentorModal = (props) => {
-  const { 
-    handleSubmit, 
-    register, 
-    setValue, 
-    getValues, 
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    setError,
     reset,
-    formState: { errors }, } = useForm();
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const { getLatestSpeakerList } = useFetchSpeakerList();
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
-  const [isExistedEmail, setIsExistedEmail] = useState(false);
 
   useEffect(() => {
     reset();
-    setIsExistedEmail(false);
     if (props.existedData) {
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
-      setValue("phoneNum", props.existedData.phoneNum === "Chưa có" ? null : props.existedData.phoneNum);
+      setValue(
+        "phoneNum",
+        props.existedData.phoneNum === "Chưa có"
+          ? null
+          : props.existedData.phoneNum
+      );
 
       setType(MODAL_TYPE.EDIT);
     } else {
@@ -66,7 +71,6 @@ const UpsertMentorModal = (props) => {
 
     try {
       setLoading(true);
-      setIsExistedEmail(false);
 
       if (type === MODAL_TYPE.EDIT) {
         await userAccountService.updateUserProfile(
@@ -88,14 +92,16 @@ const UpsertMentorModal = (props) => {
       }
 
       await getLatestSpeakerList();
-
       if (props.onSuccess) {
         props.onSuccess();
       }
       props.onCloseModal();
     } catch (error) {
       if (error.data.includes("already exists")) {
-        setIsExistedEmail(true);
+        setError("email", {
+          type: "custom",
+          message: ERROR_MESSAGES.EXISTED_EMAIL,
+        });
       } else {
         setNotification({
           isOpen: true,
@@ -154,11 +160,6 @@ const UpsertMentorModal = (props) => {
               error={errors.email ? true : false}
               helperText={errors?.email?.message}
             />
-            {isExistedEmail && (
-              <p className={`${style.modal__error}`}>
-                {ERROR_MESSAGES.EXISTED_EMAIL}
-              </p>
-            )}
 
             <CustomizedTextField
               name={"Số điện thoại"}
