@@ -1,11 +1,17 @@
 import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import React from "react";
 import style from "./TopicDetailModal.module.scss";
-import { TOPIC_STATUS_TYPE } from "../../../shared/constants/systemType";
+import {
+  SYSTEM_ROLE,
+  TOPIC_STATUS_TYPE,
+} from "../../../shared/constants/systemType";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "../../../shared/constants/common";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../../../Store/slices/userSlice";
 
 const TopicDetailModal = (props) => {
+  const userInfo = useSelector(selectUserInfo);
   const renderStatusLabel = (status) => {
     switch (status) {
       case TOPIC_STATUS_TYPE.ACCEPTED:
@@ -52,10 +58,14 @@ const TopicDetailModal = (props) => {
         </DialogTitle>
         <DialogContent>
           <div>{renderStatusLabel(props.data?.status)}</div>
-          <div className={`${style.topicDetail__detail}`}>
-            <span className={`${style.topicDetail__subTitle}`}>Diễn giả: </span>
-            <span>{props.data?.mentor?.fullName}</span>
-          </div>
+          {userInfo?.role !== SYSTEM_ROLE.MENTOR && (
+            <div className={`${style.topicDetail__detail}`}>
+              <span className={`${style.topicDetail__subTitle}`}>
+                Diễn giả:{" "}
+              </span>
+              <span>{props.data?.mentor?.fullName}</span>
+            </div>
+          )}
           <div className={`${style.topicDetail__detail}`}>
             <span className={`${style.topicDetail__subTitle}`}>
               Tên chủ đề:{" "}
