@@ -409,6 +409,8 @@ const CV = () => {
       setLoading(true);
       let result = await followMentorService.getFollowing(userInfo.accountId);
       result = result.map((mentor) => mentor.accountId);
+
+      console.log(result)
       setFollowingMentors(result);
     } catch (error) {
       setNotification({
@@ -597,7 +599,7 @@ const CV = () => {
     try {
       setLoading(true);
       await followMentorService.follow(mentorId);
-      await getFollowingMentors();
+      setFollowingMentors((prevValue) => [...prevValue, mentorId])
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -613,7 +615,15 @@ const CV = () => {
     try {
       setLoading(true);
       await followMentorService.unfollow(mentorId);
-      await getFollowingMentors();
+      setFollowingMentors((prevValue) => {
+        let newFollowingList = [...prevValue];
+
+        const deletedIndex = newFollowingList.findIndex((id) => id === mentorId);
+
+        newFollowingList.splice(deletedIndex, 1);
+
+        return newFollowingList;
+      })
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -739,7 +749,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
