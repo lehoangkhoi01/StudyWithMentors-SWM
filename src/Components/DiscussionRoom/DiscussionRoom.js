@@ -171,7 +171,9 @@ const DiscussionRoom = (props) => {
 
     return () => {
       if (!shoudlRerender) {
-        detach();
+        if (typeof detach === "function") {
+          detach();
+        }
       }
     };
   }, [shoudlRerender]);
