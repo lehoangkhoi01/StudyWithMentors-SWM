@@ -30,14 +30,15 @@ const UpsertStaff = (props) => {
     register,
     setValue,
     getValues,
+    setError,
     reset,
-    formState: { errors } } = useForm();
+    formState: { errors },
+  } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
   const departments = useSelector(selectDepartments);
 
   const [type, setType] = useState(MODAL_TYPE.ADD);
-  const [isExistedEmail, setIsExistedEmail] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(departments[0]);
 
   useEffect(() => {
@@ -56,7 +57,6 @@ const UpsertStaff = (props) => {
 
   useEffect(() => {
     reset();
-    setIsExistedEmail(false);
     if (props.existedData) {
       const departmentId = props.existedData.departmentId;
 
@@ -92,8 +92,6 @@ const UpsertStaff = (props) => {
 
     try {
       setLoading(true);
-      setIsExistedEmail(false);
-
       if (type === MODAL_TYPE.EDIT) {
         await accountService.updateStaff(specificForm, props.existedData.id);
         setNotification({
@@ -116,7 +114,10 @@ const UpsertStaff = (props) => {
       props.onCloseModal();
     } catch (error) {
       if (error.data.includes("already exists")) {
-        setIsExistedEmail(true);
+        setError("email", {
+          type: "custom",
+          message: ERROR_MESSAGES.EXISTED_EMAIL,
+        });
       } else {
         setNotification({
           isOpen: true,
@@ -183,11 +184,6 @@ const UpsertStaff = (props) => {
               error={errors.email ? true : false}
               helperText={errors?.email?.message}
             />
-            {isExistedEmail && (
-              <p className={`${style.modal__error}`}>
-                {ERROR_MESSAGES.EXISTED_EMAIL}
-              </p>
-            )}
 
             <CustomizedTextField
               name={"Số điện thoại"}
