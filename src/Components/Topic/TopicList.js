@@ -206,7 +206,7 @@ const TopicList = () => {
   };
 
   const onDeleteTopic = async (topicId) => {
-    await topicService.updateStatus(topicId, TOPIC_STATUS_BACKEND.DELETED);
+    await topicService.updateStatus(...topicId, TOPIC_STATUS_BACKEND.DELETED);
   };
 
   const onUpdateTopicStatus = async (topicId, status) => {
