@@ -502,6 +502,12 @@ const CustomizedTable = (props) => {
         return BUTTON_LABEL.SEARCH_DEPARTMENT;
       case TABLE_TYPE.STAFF:
         return BUTTON_LABEL.SEARCH_STAFF;
+      case TABLE_TYPE.SEMINAR:
+        return BUTTON_LABEL.SEARCH_SEMINAR;
+      case TABLE_TYPE.BOOKING:
+        return BUTTON_LABEL.SEARCH_BOOKING;
+      case TABLE_TYPE.STUDENT:
+        return BUTTON_LABEL.SEARCH_STUDENT;
       default:
         return "";
     }
@@ -813,6 +819,7 @@ const CustomizedTable = (props) => {
         title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
         type={
+          props.type === TABLE_TYPE.TOPIC ||
           props.type === TABLE_TYPE.CATEGORY ||
           props.type === TABLE_TYPE.FIELD ||
           props.type === TABLE_TYPE.DEPARTMENT

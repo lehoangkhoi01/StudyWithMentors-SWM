@@ -287,7 +287,7 @@ const SeminarForm = () => {
       setNotification({
         isOpen: true,
         type: "error",
-        message: "Tạo sự kiện thất bại. Vui lòng thử lại sau.",
+        message: "Tạo hội thảo thất bại. Vui lòng thử lại sau.",
       });
       if (error.status == "500") {
         history.push(ROUTES.SERVER_ERROR);
@@ -347,7 +347,7 @@ const SeminarForm = () => {
       setNotification({
         isOpen: true,
         type: "success",
-        message: "Cập nhật sự kiện thành công",
+        message: "Cập nhật hội thảo thành công",
       });
       history.push(ROUTES_STATIC.SEMINAR_DETAIL + "/" + id);
     } catch (error) {
@@ -357,7 +357,7 @@ const SeminarForm = () => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: "Cập nhật sự kiện thất bại",
+          message: "Cập nhật hội thảo thất bại",
         });
       }
     } finally {
