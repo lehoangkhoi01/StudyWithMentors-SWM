@@ -50,8 +50,8 @@ const SeminarList = () => {
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
-        ? "past"
-        : null;
+          ? "past"
+          : null;
 
     let filterDepartmentId = filterInfo?.departmentId;
 
@@ -110,8 +110,9 @@ const SeminarList = () => {
       statusFilter === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : statusFilter === FILTER_SEMINAR.PAST
-        ? "past"
-        : null;
+          ? "past"
+          : statusFilter === FILTER_SEMINAR.OWN_SEMINAR
+            ? FILTER_SEMINAR.OWN_SEMINAR : null;
 
     setFilterInfo({
       searchString: seminarName,
@@ -119,6 +120,7 @@ const SeminarList = () => {
       endDate,
       departmentId: departmentId ?? filterDepartmentId,
       status,
+      ownSeminar: status === FILTER_SEMINAR.OWN_SEMINAR,
       mentorIds:
         status === FILTER_SEMINAR.OWN_SEMINAR ? [userInfo.accountId] : [],
     });
