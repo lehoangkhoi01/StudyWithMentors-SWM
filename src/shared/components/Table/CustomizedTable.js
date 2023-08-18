@@ -10,7 +10,6 @@ import style from "./CustomizedTable.module.scss";
 import {
   ADMIN_TABLE_HEADER,
   BUTTON_LABEL,
-  COMMON_MESSAGE,
   CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   MENTOR_STATUS,
@@ -146,10 +145,7 @@ const CustomizedTable = (props) => {
     try {
       setLoading(true);
       const responseData = await props.getData();
-
       setOriginData([...responseData]);
-
-      setLoading(false);
       onCloseModal();
     } catch (error) {
       setNotification({
@@ -157,6 +153,8 @@ const CustomizedTable = (props) => {
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -204,14 +202,21 @@ const CustomizedTable = (props) => {
       const sortedData = newData ?? prevValue;
       const sortInfo = {
         ...sortData,
-        attribute: sortData.attribute === "time" ? "defaultTime" : sortData.attribute
-      }
+        attribute:
+          sortData.attribute === "time" ? "defaultTime" : sortData.attribute,
+      };
 
       sortedData.sort((a, b) => {
-        if (a[sortInfo.attribute]?.toLowerCase().trim() > b[sortInfo.attribute]?.toLowerCase().trim()) {
+        if (
+          a[sortInfo.attribute]?.toLowerCase().trim() >
+          b[sortInfo.attribute]?.toLowerCase().trim()
+        ) {
           return sortInfo.direction === SORT_DIRECTION.ASC ? -1 : 1;
         }
-        if (a[sortInfo.attribute]?.toLowerCase().trim() < b[sortInfo.attribute]?.toLowerCase().trim()) {
+        if (
+          a[sortInfo.attribute]?.toLowerCase().trim() <
+          b[sortInfo.attribute]?.toLowerCase().trim()
+        ) {
           return sortInfo.direction === SORT_DIRECTION.ASC ? 1 : -1;
         }
         return 0;
@@ -364,25 +369,31 @@ const CustomizedTable = (props) => {
       }
 
       setTimeout(async () => {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: `Xóa ${TRANSLATED_TABLE_TYPE[props.type]} thành công.`,
+        });
         handleSuccess();
         setActiveData(null);
 
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.log("ERRROR")
+      console.log("ERRROR");
       if (props.type) {
         setNotification({
           isOpen: true,
           type: "error",
-          message:
-            `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]} ${OTHERS.THIS}.`,
+          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${
+            TRANSLATED_TABLE_TYPE[props.type]
+          } ${OTHERS.THIS}.`,
         });
       } else {
         setNotification({
           isOpen: true,
           type: "error",
-          message: ERROR_MESSAGES.COMMENT_ERROR,
+          message: ERROR_MESSAGES.COMMON_ERROR,
         });
       }
       setLoading(false);
@@ -498,12 +509,7 @@ const CustomizedTable = (props) => {
 
   const handleSuccess = async () => {
     await getData();
-    setNotification({
-      isOpen: true,
-      type: "success",
-      message: COMMON_MESSAGE.UPDATE_SUCCESS
-    });
-  }
+  };
 
   return (
     <div>
@@ -662,7 +668,7 @@ const CustomizedTable = (props) => {
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                MENTOR_STATUS.ACTIVATED && (
+                                  MENTOR_STATUS.ACTIVATED && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -686,14 +692,13 @@ const CustomizedTable = (props) => {
                                   <img src={actionItem.imgSrc} />
                                   <span>{actionItem.label}</span>
                                 </MenuItem>
-
                               );
 
                             case ACTIVE_ACTION:
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                MENTOR_STATUS.INVALIDATE && (
+                                  MENTOR_STATUS.INVALIDATE && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -752,16 +757,19 @@ const CustomizedTable = (props) => {
                               );
                             case SEND_INVITATION:
                               return (
-                                (!actionItem.rule || actionItem.rule(row) && <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    actionItem.functionAction(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
-                                ));
+                                !actionItem.rule ||
+                                (actionItem.rule(row) && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      actionItem.functionAction(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+                                ))
+                              );
 
                             case EXTERNAL_ACTION:
                               return (
@@ -805,8 +813,12 @@ const CustomizedTable = (props) => {
         title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
         type={
-          (props.type === TABLE_TYPE.CATEGORY || props.type === TABLE_TYPE.FIELD || props.type === TABLE_TYPE.DEPARTMENT) ? MODAL_DELETE_PROPERTY.DELETE :
-            MODAL_DELETE_PROPERTY.DEACTIVATE}
+          props.type === TABLE_TYPE.CATEGORY ||
+          props.type === TABLE_TYPE.FIELD ||
+          props.type === TABLE_TYPE.DEPARTMENT
+            ? MODAL_DELETE_PROPERTY.DELETE
+            : MODAL_DELETE_PROPERTY.DEACTIVATE
+        }
       />
       <ActivePropertyModal
         openModal={openModal.active}

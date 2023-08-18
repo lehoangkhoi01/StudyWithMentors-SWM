@@ -3,6 +3,7 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import style from "./UpsertField.module.scss";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   ERROR_MESSAGES,
   TITLE,
   UPSERT_FIELD,
@@ -61,8 +62,18 @@ const UpsertField = (props) => {
 
       if (fieldId) {
         await topicService.updateField(field, fieldId);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_SUCCESS,
+        });
       } else {
         await topicService.createField(field);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_FIELD_SUCCESS,
+        });
       }
 
       props.onSuccess();

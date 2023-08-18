@@ -109,7 +109,7 @@ const UpsertStaff = (props) => {
       }
 
       if (props.onSuccess) {
-        props.onSuccess();
+        await props.onSuccess();
       }
       props.onCloseModal();
     } catch (error) {

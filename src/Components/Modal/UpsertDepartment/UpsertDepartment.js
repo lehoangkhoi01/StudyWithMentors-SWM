@@ -3,6 +3,7 @@ import CustomizedTextField from "../../../shared/components/TextField/Customized
 import style from "./UpsertDepartment.module.scss";
 import {
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   ERROR_MESSAGES,
   TITLE,
   UPSERT_DEPARTMENT,
@@ -61,10 +62,20 @@ const UpsertDepartment = (props) => {
 
       if (departmentId) {
         await departmentService.updateDepartment(department, departmentId);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_SUCCESS,
+        });
       } else {
         await departmentService.createDepartment(department);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_DEPARTMENT_SUCCESS,
+        });
       }
-      props.onSuccess();
+      await props.onSuccess();
     } catch (error) {
       if (error.data.includes("Duplicate")) {
         setIsExisted(true);

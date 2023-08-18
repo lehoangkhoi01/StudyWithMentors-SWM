@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./ConfirmTopicModal.module.scss";
 import {
+  COMMON_MESSAGE,
   CONFIRM_TOPIC_MODAL,
   ERROR_MESSAGES,
   MODAL_ACTIVE_PROPERTY,
@@ -28,7 +29,11 @@ const ConfirmTopicModal = (props) => {
     try {
       setLoading(true);
       await topicService.updateStatus(props.existedData.id, englishType);
-
+      setNotification({
+        isOpen: true,
+        type: "success",
+        message: COMMON_MESSAGE.UPDATE_SUCCESS,
+      });
       props.onSuccess();
 
       setLoading(false);

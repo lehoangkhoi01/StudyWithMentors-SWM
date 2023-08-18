@@ -152,6 +152,10 @@ export const COMMON_MESSAGE = {
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
   UPDATE_SUCCESS: "Cập nhật thông tin thành công",
+  ADD_FIELD_SUCCESS: "Thêm lĩnh vực thành công",
+  ADD_CATEGORY_SUCCESS: "Thêm thể loại thành công",
+  ADD_DEPARTMENT_SUCCESS: "Thêm phòng ban thành công",
+  ADD_TOPIC_SUCCESS: "Thêm chủ đề thành công",
 };
 
 export const SIGN_UP_STAGE = {
