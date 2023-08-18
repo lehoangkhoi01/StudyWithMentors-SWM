@@ -35,14 +35,14 @@ const ConfirmTopicModal = (props) => {
         message: COMMON_MESSAGE.UPDATE_SUCCESS,
       });
       props.onSuccess();
-
-      setLoading(false);
     } catch (error) {
       setNotification({
         isOpen: true,
         type: "error",
         message: ERROR_MESSAGES.COMMON_ERROR,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
