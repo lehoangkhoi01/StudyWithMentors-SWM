@@ -136,6 +136,6 @@ export const eventPropGetter = (event, start, end, isSelected) => ({
 export const messages = {
   date: "Ngày",
   time: "Giờ",
-  event: "Sự kiện",
+  event: "Hội thảo",
   noEventsInRange: "Không có dữ liệu",
 };

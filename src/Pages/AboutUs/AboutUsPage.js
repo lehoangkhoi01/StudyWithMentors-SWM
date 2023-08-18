@@ -57,7 +57,7 @@ const AboutUsPage = () => {
           fontWeight={500}
           className={`${style.about__confirm_info}`}
         >
-          {`Trao đổi, giải đáp thắc mắc sau ngay cả sau khi sự kiện đã kết thúc`}
+          {`Trao đổi, giải đáp thắc mắc sau ngay cả sau khi hội thảo đã kết thúc`}
         </Typography>
       </div>
 

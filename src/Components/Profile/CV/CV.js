@@ -804,7 +804,7 @@ const CV = () => {
                 <CustomTab label="Hồ sơ" value={PROFILE_SECTION.PROFILE} />
                 <CustomTab label="Đánh giá" value={PROFILE_SECTION.RATING} />
                 <CustomTab
-                  label="Sự kiện tham gia"
+                  label="Hội thảo tham gia"
                   value={PROFILE_SECTION.SEMINAR}
                 />
               </Tabs>

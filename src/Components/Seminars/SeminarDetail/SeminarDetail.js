@@ -403,10 +403,10 @@ const SeminarDetail = () => {
 
             <ConfirmationDialog
               open={openRemoveDialog}
-              title="Xóa sự kiện"
+              title="Xóa hội thảo"
               cancelLabel={BUTTON_LABEL.CANCEL}
               confirmLabel={BUTTON_LABEL.CONFIRM}
-              content="Bạn có chắc muốn xóa sự kiện này không? Hành động này không thể hoàn tác"
+              content="Bạn có chắc muốn xóa hội thảo này không? Hành động này không thể hoàn tác"
               handleClose={onCloseRemoveDialog}
               handleSubmit={handleRemoveSeminar}
             />
