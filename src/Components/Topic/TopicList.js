@@ -144,7 +144,7 @@ const TopicList = () => {
             return false;
 
           case CONFIRM_TOPIC_MODAL.REJECT:
-            if (row.translatedStatus === TOPIC_STATUS.WAITING) {
+            if (isAdmin() && row.translatedStatus === TOPIC_STATUS.WAITING) {
               return true;
             }
 
