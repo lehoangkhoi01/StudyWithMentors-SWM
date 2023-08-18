@@ -6,7 +6,10 @@ import {
 } from "../../../Helpers/generalHelper";
 import { bookingService } from "../../../Services/bookingService";
 import CustomizedTable from "../../../shared/components/Table/CustomizedTable";
-import { BOOKING_DETAIL_ACTION, EXTERNAL_ACTION } from "../../../shared/constants/actionType";
+import {
+  BOOKING_DETAIL_ACTION,
+  EXTERNAL_ACTION,
+} from "../../../shared/constants/actionType";
 import {
   ADMIN_BOOKING_TABLE,
   ERROR_MESSAGES,
@@ -64,12 +67,12 @@ const AdminBookingList = () => {
       sortable: true,
       property: "translatedStatus",
       name: ADMIN_BOOKING_TABLE.STATUS,
-    }
+    },
   ];
 
   const actionItems = [
     {
-      imgSrc: require("../../../assets/icons/Edit.png"),
+      imgSrc: require("../../../assets/icons/Detail.png"),
       label: "Xem chi tiết",
       action: EXTERNAL_ACTION,
       functionAction: function (selectedBooking) {
