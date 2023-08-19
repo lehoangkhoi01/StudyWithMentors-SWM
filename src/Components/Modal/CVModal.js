@@ -24,8 +24,8 @@ import { registerFullNameValidation } from "../../shared/constants/validationRul
 const LIST_OPTIONAL_DATE = [
   "learningExps_endDate",
   "certificates_achievingDate",
-  "certificates_expiryDate"
-]
+  "certificates_expiryDate",
+];
 
 const CVModal = (props) => {
   const [registerNamePrefix, setRegisterNamePrefix] = useState();
@@ -63,7 +63,8 @@ const CVModal = (props) => {
   }, [props.openModal]);
 
   const validateEndDate = (val, isOptionalEmptyDate) => {
-    let isSkipValidate = getValues(`${registerNamePrefix}_workingHere`) ||
+    let isSkipValidate =
+      getValues(`${registerNamePrefix}_workingHere`) ||
       getValues(`${registerNamePrefix}_attendingThis`);
     if (!isSkipValidate && !isOptionalEmptyDate) {
       if (val === null || !val || val.length === 0) {
@@ -85,15 +86,14 @@ const CVModal = (props) => {
       if (endDateTimeNumber < startDateTimeNumber) {
         return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
       }
-
     }
   };
 
   const validateDueDate = (val) => {
-    let isSkipValidate = getValues(`${registerNamePrefix}_workingHere`) ||
+    let isSkipValidate =
+      getValues(`${registerNamePrefix}_workingHere`) ||
       getValues(`${registerNamePrefix}_attendingThis`);
     if (!isSkipValidate) {
-
       const formValue = getValues();
       const issuedDateString = formValue[`${registerNamePrefix}_achievingDate`];
 
@@ -122,7 +122,6 @@ const CVModal = (props) => {
   };
 
   const validateStartDate = (val) => {
-    console.log("Validate")
     if (!val || val.length === 0) {
       return ERROR_MESSAGES.REQUIRED_FIELD;
     }
@@ -140,21 +139,25 @@ const CVModal = (props) => {
   const isOptionalEmptyDate = (registerName, value) => {
     let result = false;
 
-    LIST_OPTIONAL_DATE.forEach(optionalDate => {
-      if (registerName.includes(optionalDate) && (!value || value?.length === 0)) {
+    LIST_OPTIONAL_DATE.forEach((optionalDate) => {
+      if (
+        registerName.includes(optionalDate) &&
+        (!value || value?.length === 0)
+      ) {
         result = true;
       }
-    })
+    });
 
     return result;
-  }
+  };
 
   const renderFormOptionForDate = (registerName) => {
     if (registerName.includes("endDate")) {
       return {
         ...register(registerName, {
           validate: {
-            checkEndDate: (val) => validateEndDate(val, isOptionalEmptyDate(registerName, val)),
+            checkEndDate: (val) =>
+              validateEndDate(val, isOptionalEmptyDate(registerName, val)),
           },
         }),
       };
@@ -251,7 +254,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                          getValues(`${registerNamePrefix}_attendingThis`)
+                            getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}

@@ -386,8 +386,10 @@ const CV = () => {
     try {
       setLoading(true);
       const profile = await userAccountService.getUserProfileById(mentorId);
-
-      if (profile.status !== USER_STATUS.ACTIVATED) {
+      if (
+        profile.status !== USER_STATUS.ACTIVATED &&
+        userInfo.role !== SYSTEM_ROLE.ADMIN
+      ) {
         history.push(ROUTES.NOT_FOUND);
       }
 
@@ -410,7 +412,6 @@ const CV = () => {
       let result = await followMentorService.getFollowing(userInfo.accountId);
       result = result.map((mentor) => mentor.accountId);
 
-      console.log(result)
       setFollowingMentors(result);
     } catch (error) {
       setNotification({
@@ -599,7 +600,7 @@ const CV = () => {
     try {
       setLoading(true);
       await followMentorService.follow(mentorId);
-      setFollowingMentors((prevValue) => [...prevValue, mentorId])
+      setFollowingMentors((prevValue) => [...prevValue, mentorId]);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -618,12 +619,14 @@ const CV = () => {
       setFollowingMentors((prevValue) => {
         let newFollowingList = [...prevValue];
 
-        const deletedIndex = newFollowingList.findIndex((id) => id === mentorId);
+        const deletedIndex = newFollowingList.findIndex(
+          (id) => id === mentorId
+        );
 
         newFollowingList.splice(deletedIndex, 1);
 
         return newFollowingList;
-      })
+      });
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -749,7 +752,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
@@ -787,7 +790,12 @@ const CV = () => {
                 }}
               >
                 <div>
-                  <h2>{mentorProfile?.fullName}</h2>
+                  <h2>
+                    {mentorProfile?.fullName}{" "}
+                    {mentorProfile?.status === USER_STATUS.INVALIDATE
+                      ? "(Vô hiệu hóa)"
+                      : null}
+                  </h2>
                   <p>
                     {position &&
                       `${position.position} ${OTHERS.AT} ${position.company}`}
