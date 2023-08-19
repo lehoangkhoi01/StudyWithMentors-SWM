@@ -664,6 +664,7 @@ export const TRANSLATED_TABLE_TYPE = {
 export const USER_STATUS = {
   ACTIVATED: "ACTIVATED",
   WATTING: "WAITING",
+  INVALIDATE: "INVALIDATE",
 };
 
 export const CV_MENTOR = {
