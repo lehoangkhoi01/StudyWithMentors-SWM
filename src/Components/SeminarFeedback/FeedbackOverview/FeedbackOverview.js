@@ -246,7 +246,7 @@ const FeedbackOverview = () => {
                     fontSize={"1rem"}
                     marginTop={"1rem"}
                   >
-                    Chưa có dữ liệu
+                    Chưa có đánh giá nào cho hội thảo này
                   </Typography>}
               </Grid>
             </div>
