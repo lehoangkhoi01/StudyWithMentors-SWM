@@ -7,6 +7,7 @@ import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
   ERROR_MESSAGES,
+  LENGTH,
   TITLE,
 } from "../../../shared/constants/common";
 import { Modal, Typography } from "@mui/material";
@@ -171,6 +172,7 @@ const AddTopicModal = (props) => {
                 }}
                 multiline={true}
                 watch={watch("description")}
+                maxLength={LENGTH.SEMINAR_NAME}
                 error={errors?.description?.message}
                 helperText={errors?.description?.message}
               />
