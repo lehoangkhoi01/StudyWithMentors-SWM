@@ -92,9 +92,7 @@ const AdminBookingList = () => {
   const getBookings = async () => {
     try {
       const resposne = await bookingService.getBookingAdmin();
-
       const bookings = resposne.bookingCards;
-
       const updatedBookings = bookings.map((booking) => ({
         ...booking,
         topicName: booking.topicDetailResponse.name,
@@ -118,8 +116,11 @@ const AdminBookingList = () => {
   };
 
   const onSearchBooking = (currentList, searchTerm) => {
-    return currentList.filter((booking) =>
-      booking.topicName?.toLowerCase().includes(searchTerm.toLowerCase())
+    return currentList.filter(
+      (booking) =>
+        booking.topicName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        booking.mentorName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        booking.ownerName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
