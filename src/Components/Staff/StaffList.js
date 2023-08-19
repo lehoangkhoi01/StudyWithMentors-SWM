@@ -84,9 +84,10 @@ const StaffList = () => {
       let staffs = await accountService.getAllStaffs();
       staffs = sortDataByCreatedDate(staffs);
       const updatedStaffList = staffs.map((staff) => {
-        const { profile } = staff;
+        const { profile, department } = staff;
         return {
           ...profile,
+          departmentName: department.name ?? "Chưa có dữ liệu",
           phone: profile.phone ? profile.phone : "Chưa có dữ liệu",
           translatedStatus: TRANSLATED_STAFF_STATUS[profile.status],
         };
