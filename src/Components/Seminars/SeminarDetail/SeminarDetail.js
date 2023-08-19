@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import {
   BUTTON_LABEL,
   COMMON_MESSAGE,
+  DATE_FORMAT,
   ERROR_MESSAGES,
   SEMINAR,
   TITLE,
@@ -12,7 +13,6 @@ import GlobalBreadcrumbs from "../../../shared/components/Breadcrumbs/GlobalBrea
 import style from "./SeminarDetail.module.scss";
 import { useEffect, useState } from "react";
 import { seminarService } from "../../../Services/seminarService";
-import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
 import { Avatar, Button, Menu, MenuItem, Typography } from "@mui/material";
 import {
   useCustomAppbar,
@@ -35,6 +35,7 @@ import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/Co
 import DiscussionRoom from "../../DiscussionRoom/DiscussionRoom";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import moment from "moment";
+import { format } from "date-fns";
 
 const SeminarDetail = () => {
   const AUTHORIZED_ROLE_ACTION = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
@@ -146,6 +147,15 @@ const SeminarDetail = () => {
         </div>
       );
     }
+  };
+
+  const renderStartEndTime = (startTime, endTime) => {
+    if (startTime && endTime) {
+      return `${format(new Date(startTime), DATE_FORMAT.HH_mm)} - ${format(
+        new Date(endTime),
+        DATE_FORMAT.HH_mm
+      )}, ${format(new Date(startTime), DATE_FORMAT.DD_MM_YYYY)}`;
+    } else return "Chưa có dữ liệu";
   };
 
   useEffect(() => {
@@ -293,10 +303,7 @@ const SeminarDetail = () => {
                   <Typography className={`${style.detail__subTitle}`}>
                     {SEMINAR.TIME}:
                   </Typography>
-                  <div>
-                    {handleTimeToDisplay(data.startTime)} đến{" "}
-                    {handleTimeToDisplay(data.endTime)}
-                  </div>
+                  <div>{renderStartEndTime(data.startTime, data.endTime)}</div>
                 </div>
 
                 <div className={style.detail__section}>

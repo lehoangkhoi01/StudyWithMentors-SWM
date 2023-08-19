@@ -1,15 +1,24 @@
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
-import { handleTimeToDisplay } from "../../../Helpers/dateHelper";
-import { SEMINAR } from "../../../shared/constants/common";
+import { DATE_FORMAT, SEMINAR } from "../../../shared/constants/common";
 import style from "./SeminarCard.module.scss";
 import { ROUTES_STATIC } from "../../../shared/constants/navigation";
 import { Tooltip } from "@mui/material";
+import { format } from "date-fns";
 
 const SeminarCard = ({ data }) => {
   const history = useHistory();
 
   const handleNavigate = () => {
     history.push(`${ROUTES_STATIC.SEMINAR_DETAIL}/${data.id}`);
+  };
+
+  const renderStartEndTime = (startTime, endTime) => {
+    if (startTime && endTime) {
+      return `${format(new Date(startTime), DATE_FORMAT.HH_mm)} - ${format(
+        new Date(endTime),
+        DATE_FORMAT.HH_mm
+      )}, ${format(new Date(startTime), DATE_FORMAT.DD_MM_YYYY)}`;
+    } else return "Chưa có dữ liệu";
   };
 
   return (
@@ -53,7 +62,7 @@ const SeminarCard = ({ data }) => {
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Time_Seminar.png")} />
-          <p>{handleTimeToDisplay(data.startTime)}</p>
+          <p>{renderStartEndTime(data.startTime, data.endTime)}</p>
         </div>
         <div className={style.card__item}>
           <img src={require("../../../assets/icons/Location_Semniar.png")} />
