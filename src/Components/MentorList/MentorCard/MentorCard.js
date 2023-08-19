@@ -116,11 +116,6 @@ const MentorCard = (props) => {
     <div className={style.card__container}>
       {userInfo?.role === SYSTEM_ROLE.STUDENT &&
         renderFollowButton(props.data?.mentorId)}
-      {/* <div className={style.card__follow}>
-        <IconButton size="small" sx={{ color: "white" }}>
-          <AddIcon fontSize="small" /> <span>{FOLLOW.FOLLOW}</span>
-        </IconButton>
-      </div> */}
       <div className={style.card__avatar}>
         <Avatar
           alt={props.data?.name}

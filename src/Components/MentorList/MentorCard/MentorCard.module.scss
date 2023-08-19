@@ -9,7 +9,6 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    // height: 100%;
     background-color: $black000;
     padding-bottom: 1rem;
   }
@@ -39,7 +38,7 @@
   }
 
   &__avatar {
-    margin-bottom: 1rem;
+    margin: 1rem 0;
   }
 
   &__information {
