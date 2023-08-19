@@ -8,6 +8,7 @@ import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   ACTIVE_ACTION,
   DEACTIVATE_ACTION,
+  DELETE_ACTION,
   UPSERT_ACTION,
 } from "../../shared/constants/actionType";
 import {
@@ -73,6 +74,18 @@ const StaffList = () => {
       label: TABLE_ACTION.DEACTIVATE,
       action: DEACTIVATE_ACTION,
     },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.DELETE,
+      action: DELETE_ACTION,
+      rule: (row) => {
+        if (row.translatedStatus === TRANSLATED_STAFF_STATUS.WAITING) {
+          return true;
+        }
+
+        return false;
+      }
+    },
   ];
 
   useEffect(() => {
@@ -109,8 +122,12 @@ const StaffList = () => {
     });
   };
 
-  const onDeleteStaff = async (staffId) => {
-    await accountService.updateAccountStatus(staffId, STAFF_STATUS.INVALIDATE);
+  const onDeleteStaff = async (staffId, translatedStatus) => {
+    if (translatedStatus === TRANSLATED_STAFF_STATUS.WAITING) {
+      await accountService.deleteAccount(staffId);
+    } else {
+      await accountService.updateAccountStatus(staffId, STAFF_STATUS.INVALIDATE);
+    }
   };
 
   const onActiveStaff = async (staffId) => {

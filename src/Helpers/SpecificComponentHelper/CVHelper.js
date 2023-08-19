@@ -82,11 +82,11 @@ export const mapCVSection = (data, indexOfProperty) => {
     case INDEX_OF_CV_PROPERTY.ACHIEVEMENT: {
       return data.map((section) => ({
         title: `${section.name} ${OTHERS.BELONG} ${section.organization
-          } (${convertDateFormat(
+          } ${section.achievingDate ? `(${convertDateFormat(
             section.achievingDate,
             DATE_FORMAT.BACK_END_YYYY_MM_DD,
             DATE_FORMAT.MM_YYYY
-          )})`,
+          )})` : ""} `,
         detail: section.description,
       }));
     }

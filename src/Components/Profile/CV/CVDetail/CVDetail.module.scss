@@ -32,7 +32,6 @@
 
   &__body {
     margin-inline: auto;
-    word-wrap: break-word;
     width: 51vw;
 
     &_header {
@@ -42,6 +41,11 @@
 
       h4 {
         margin-right: auto;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
 
