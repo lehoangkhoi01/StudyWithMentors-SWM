@@ -26,4 +26,5 @@ export const userAccountService = {
     const url = `${UserAccountEndpoints.GET_USER_PROFILE}/mentees`;
     return axiosClient.get(url);
   },
+  
 };

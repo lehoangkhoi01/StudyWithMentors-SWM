@@ -364,7 +364,7 @@ const CustomizedTable = (props) => {
     try {
       setLoading(true);
       if (deletedData) {
-        await props.onDelete([deletedData.id]);
+        await props.onDelete([deletedData.id], deletedData.translatedStatus);
         setDeletedData(null);
       }
 
@@ -385,9 +385,8 @@ const CustomizedTable = (props) => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${
-            TRANSLATED_TABLE_TYPE[props.type]
-          } ${OTHERS.THIS}.`,
+          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]
+            } ${OTHERS.THIS}.`,
         });
       } else {
         setNotification({
@@ -516,6 +515,28 @@ const CustomizedTable = (props) => {
   const handleSuccess = async () => {
     await getData();
   };
+
+  const renderDeleteTitle = () => {
+    if (!deletedData) return null;
+
+    if (
+      props.type === TABLE_TYPE.TOPIC ||
+      props.type === TABLE_TYPE.CATEGORY ||
+      props.type === TABLE_TYPE.FIELD ||
+      props.type === TABLE_TYPE.DEPARTMENT ||
+      (
+        (
+          props.type === TABLE_TYPE.STAFF ||
+          props.type === TABLE_TYPE.MENTOR ||
+          props.type === TABLE_TYPE.STUDENT
+        )
+        && deletedData.translatedStatus === MENTOR_STATUS.WAITING)
+    ) {
+      return MODAL_DELETE_PROPERTY.DELETE
+    }
+
+    return MODAL_DELETE_PROPERTY.DEACTIVATE;
+  }
 
   return (
     <div>
@@ -674,7 +695,7 @@ const CustomizedTable = (props) => {
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.ACTIVATED && (
+                                MENTOR_STATUS.ACTIVATED && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -689,22 +710,26 @@ const CustomizedTable = (props) => {
 
                             case DELETE_ACTION:
                               return (
-                                <MenuItem
-                                  key={`MENU_ITEM_${index}`}
-                                  onClick={() => {
-                                    return openDeleteModalHandler(row);
-                                  }}
-                                >
-                                  <img src={actionItem.imgSrc} />
-                                  <span>{actionItem.label}</span>
-                                </MenuItem>
+                                !actionItem.rule ||
+                                (actionItem.rule(row) && (
+                                  <MenuItem
+                                    key={`MENU_ITEM_${index}`}
+                                    onClick={() => {
+                                      return openDeleteModalHandler(row);
+                                    }}
+                                  >
+                                    <img src={actionItem.imgSrc} />
+                                    <span>{actionItem.label}</span>
+                                  </MenuItem>
+
+                                ))
                               );
 
                             case ACTIVE_ACTION:
                               return (
                                 userInfo?.role === SYSTEM_ROLE.ADMIN &&
                                 row.translatedStatus ===
-                                  MENTOR_STATUS.INVALIDATE && (
+                                MENTOR_STATUS.INVALIDATE && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -818,14 +843,7 @@ const CustomizedTable = (props) => {
         onCloseModal={onCloseModal}
         title={deletedData?.fullName ?? deletedData?.name}
         onDeleteProperty={onDeleteData}
-        type={
-          props.type === TABLE_TYPE.TOPIC ||
-          props.type === TABLE_TYPE.CATEGORY ||
-          props.type === TABLE_TYPE.FIELD ||
-          props.type === TABLE_TYPE.DEPARTMENT
-            ? MODAL_DELETE_PROPERTY.DELETE
-            : MODAL_DELETE_PROPERTY.DEACTIVATE
-        }
+        type={renderDeleteTitle()}
       />
       <ActivePropertyModal
         openModal={openModal.active}

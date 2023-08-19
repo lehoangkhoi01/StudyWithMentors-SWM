@@ -20,6 +20,7 @@ import {
   DEACTIVATE_ACTION,
   UPSERT_ACTION,
   SEND_INVITATION,
+  DELETE_ACTION,
 } from "../../shared/constants/actionType";
 import { APPBAR_TITLES } from "../../shared/constants/appbarTitles";
 import { useState } from "react";
@@ -83,7 +84,7 @@ const AdminMentorList = () => {
       rule: (row) => {
         if (row.translatedStatus === MENTOR_STATUS.WAITING) {
           return true;
-        } 
+        }
         return false;
       }
     },
@@ -96,6 +97,18 @@ const AdminMentorList = () => {
       imgSrc: require("../../assets/icons/Deactive.png"),
       label: TABLE_ACTION.DEACTIVATE,
       action: DEACTIVATE_ACTION,
+    },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.DELETE,
+      action: DELETE_ACTION,
+      rule: (row) => {
+        if (row.translatedStatus === MENTOR_STATUS.WAITING) {
+          return true;
+        }
+
+        return false;
+      }
     },
   ];
 
@@ -138,8 +151,12 @@ const AdminMentorList = () => {
     );
   };
 
-  const onDeleteMentor = async (mentorId) => {
-    await accountService.deleteMentors(mentorId);
+  const onDeleteMentor = async (mentorId, translatedStatus) => {
+    if (translatedStatus === MENTOR_STATUS.WAITING) {
+      await accountService.deleteAccount(mentorId);
+    } else {
+      await accountService.deleteMentors(mentorId);
+    }
   };
 
   const onActiveMentor = async (mentorId, data) => {

@@ -34,6 +34,7 @@ export const AccountEndpoints = {
   CREATE_STAFF: "admin/staffs",
   UPDATE_STAFF: "user-profile/staffs",
   ACCOUNT_STUDENT: "accounts/students",
+  DELETE_ACCOUNT: "accounts"
 };
 
 export const StaticResourceEndpoints = {

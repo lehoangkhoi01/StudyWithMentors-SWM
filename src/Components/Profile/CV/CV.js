@@ -195,6 +195,7 @@ const TEXT_FIELDS = [
         name: TEXTFIELD_LABEL.RECEIVED_DATE,
         registerName: REGISTER_FIELD.ACHIEVEMENT.RECEIVED_TIME,
         disableFuture: true,
+        optional: true,
       },
       {
         type: INPUT_TYPES.TEXT_AREA,

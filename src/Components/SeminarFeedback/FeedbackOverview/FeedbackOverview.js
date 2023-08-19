@@ -9,7 +9,7 @@ import style from "./FeedbackOverview.module.scss";
 import { seminarService } from "../../../Services/seminarService";
 import { useEffect, useState } from "react";
 import DoughnutChart from "../../../shared/components/PieChart/DoughnutChart";
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Pagination, Typography } from "@mui/material";
 import {
   FEEDBACK_LABEL,
   FEEDBACK_OVERVIEW,
@@ -234,11 +234,20 @@ const FeedbackOverview = () => {
             </div>
             <div className={style.overview__charts}>
               <Grid container spacing={2} alignItems={"stretch"}>
-                {feedbackData.map((data, index) => (
+                {feedbackData.length !== 0 && feedbackData.map((data, index) => (
                   <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
                     <DoughnutChart data={data} />
                   </Grid>
                 ))}
+                {feedbackData.length === 0 &&
+                  <Typography
+                    variant="p"
+                    className={`${style.text} ${style.instructions}`}
+                    fontSize={"1rem"}
+                    marginTop={"1rem"}
+                  >
+                    Chưa có dữ liệu
+                  </Typography>}
               </Grid>
             </div>
             <div>

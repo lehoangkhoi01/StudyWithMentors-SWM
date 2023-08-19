@@ -7,10 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo, userAction } from "../../Store/slices/userSlice";
 import { useEffect } from "react";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { userAccountService } from "../../Services/userAccountService";
-import { ROUTES } from "../../shared/constants/navigation";
 
 const Profile = () => {
     const {
@@ -21,7 +19,6 @@ const Profile = () => {
     } = useForm();
     const userInfo = useSelector(selectUserInfo);
 
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const { setLoading } = useCustomLoading();
@@ -30,7 +27,7 @@ const Profile = () => {
 
     useEffect(() => {
         setValue("fullName", userInfo.fullName);
-        setValue("phone", userInfo.phone);
+        setValue("phoneNum", userInfo.phone);
         setValue("email", userInfo.email);
     }, []);
 
@@ -67,7 +64,6 @@ const Profile = () => {
             });
         } finally {
             setLoading(false);
-            history.push(ROUTES.HOME);
         }
     };
 
@@ -100,11 +96,11 @@ const Profile = () => {
             />
             <CustomizedTextField
                 className={style.profile__input}
-                inputId="phone"
+                inputId="phoneNum"
                 name={TITLE.PHONE}
                 type={"text"}
                 options={{
-                    ...register("phone", {
+                    ...register("phoneNum", {
                         validate: (val) => validatePhoneNum(val),
                     }),
                 }}

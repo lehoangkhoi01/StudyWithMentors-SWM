@@ -8,6 +8,7 @@ import CustomizedTable from "../../shared/components/Table/CustomizedTable";
 import {
   ACTIVE_ACTION,
   DEACTIVATE_ACTION,
+  DELETE_ACTION,
 } from "../../shared/constants/actionType";
 import {
   ERROR_MESSAGES,
@@ -56,6 +57,18 @@ const StudentList = () => {
       label: TABLE_ACTION.DEACTIVATE,
       action: DEACTIVATE_ACTION,
     },
+    {
+      imgSrc: require("../../assets/icons/Deactive.png"),
+      label: TABLE_ACTION.DELETE,
+      action: DELETE_ACTION,
+      rule: (row) => {
+        if (row.translatedStatus === TRANSLATED_STUDENT_STATUS.WAITING) {
+          return true;
+        }
+
+        return false;
+      }
+    },
   ];
 
   useEffect(() => {
@@ -91,8 +104,12 @@ const StudentList = () => {
     });
   };
 
-  const onDeleteStudent = async (studentId) => {
-    await accountService.updateAccountStatus(studentId, STUDENT_STATUS.INVALIDATE);
+  const onDeleteStudent = async (studentId, translatedStatus) => {
+    if (translatedStatus === TRANSLATED_STUDENT_STATUS.WAITING) {
+      await accountService.deleteAccount(studentId);
+    } else {
+      await accountService.updateAccountStatus(studentId, STUDENT_STATUS.INVALIDATE);
+    }
   };
 
   const onActiveStudent = async (studentId) => {

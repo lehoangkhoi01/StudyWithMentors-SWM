@@ -55,4 +55,8 @@ export const accountService = {
     const url = AccountEndpoints.ACCOUNT_STUDENT;
     return axiosClient.get(url);
   },
+  deleteAccount: (id) => {
+    const url = `${AccountEndpoints.DELETE_ACCOUNT}/${id}`;
+    return axiosClient.delete(url);
+  }
 };
