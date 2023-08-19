@@ -330,6 +330,11 @@ const Room = () => {
       showAudioVideoSettingsButton: false,
       showLayoutButton: false,
       roomTimerDisplayed: true,
+      showRoomDetailsButton: false,
+      onLeaveRoom: () => {
+        window.open("about:blank", "_self");
+        window.close();
+      },
     });
   };
 

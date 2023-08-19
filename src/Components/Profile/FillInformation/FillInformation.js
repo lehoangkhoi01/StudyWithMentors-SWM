@@ -40,7 +40,7 @@ const FillInformation = () => {
 
   useEffect(() => {
     setValue("fullName", userInfo.fullName);
-    setValue("phone", userInfo.phone);
+    setValue("phoneNum", userInfo.phone);
     setValue("email", userInfo.email);
   }, []);
 
@@ -113,11 +113,11 @@ const FillInformation = () => {
           />
           <CustomizedTextField
             className={style.fillInformation__input}
-            inputId="phone"
+            inputId="phoneNum"
             name={TITLE.PHONE}
             type={"text"}
             options={{
-              ...register("phone", {
+              ...register("phoneNum", {
                 validate: (val) => validatePhoneNum(val),
               }),
             }}
