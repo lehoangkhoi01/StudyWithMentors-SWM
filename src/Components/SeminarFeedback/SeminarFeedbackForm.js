@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import CustomTopTitle from "../../shared/components/CustomTopTitle/CustomTopTitle";
-import { TITLE } from "../../shared/constants/common";
+import { LENGTH, TITLE } from "../../shared/constants/common";
 import style from "./SeminarFeedbackForm.module.scss";
 import RatingInput from "../../shared/components/RatingInput/RatingInput";
 import RadioSelect from "../../shared/components/RadioSelect/RadioSelect";
@@ -16,6 +16,7 @@ import { ROUTES } from "../../shared/constants/navigation";
 import { seminarFeedbackValidationField } from "./seminarFeedbackValidation";
 import { seminarService } from "../../Services/seminarService";
 import { Typography } from "@mui/material";
+import { validateSeminarFeedbackText } from "../../shared/constants/validationRules";
 
 const SeminarFeedbackForm = () => {
   const { id } = useParams();
@@ -84,8 +85,9 @@ const SeminarFeedbackForm = () => {
             inputId={"question" + index}
             name={questionObject.question}
             options={{
-              ...register(`question${index}`),
+              ...register(`question${index}`, validateSeminarFeedbackText),
             }}
+            maxLength={LENGTH.SEMINAR_FEEDBACK_TEXT}
           />
         );
     }
