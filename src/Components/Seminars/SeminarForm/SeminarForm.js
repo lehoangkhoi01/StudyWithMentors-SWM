@@ -159,6 +159,15 @@ const SeminarForm = () => {
     if (value <= watch("seminarTime")) {
       return ERROR_MESSAGES.INVALID_SEMINAR_END_DATE;
     }
+    if (value.toString() === "Invalid Date") {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
+    console.log(value);
+    const startDate = new Date(watch("seminarTime")).setHours(0, 0, 0, 0);
+    const endDate = value.setHours(0, 0, 0, 0);
+    if (startDate !== endDate) {
+      return "Ngày bắt đầu và kết thúc của hội thảo phải cùng 1 ngày.";
+    }
   };
 
   const onFileChange = (newValue) => {
@@ -570,7 +579,7 @@ const SeminarForm = () => {
               control={control}
               name="seminarTime"
               rules={{
-                validate: isFormUpdate ? null : validationSeminarDate,
+                validate: isFormDisabled ? null : validationSeminarDate,
               }}
               defaultValue={seminarDate}
               render={({ field: { onChange, ...restField }, fieldState }) => (
@@ -594,7 +603,7 @@ const SeminarForm = () => {
               control={control}
               name="seminarEndTime"
               rules={{
-                validate: isFormUpdate ? null : validateSeminarEndDate,
+                validate: isFormDisabled ? null : validateSeminarEndDate,
               }}
               defaultValue={seminarEndDate}
               render={({ field: { onChange, ...restField }, fieldState }) => (
@@ -677,7 +686,7 @@ const SeminarForm = () => {
               control={control}
               name="seminarDescription"
               rules={{
-                validate: isFormUpdate ? null : validateSeminarDescription,
+                validate: isFormDisabled ? null : validateSeminarDescription,
               }}
               render={({ fieldState }) => (
                 <CustomizedTextField
