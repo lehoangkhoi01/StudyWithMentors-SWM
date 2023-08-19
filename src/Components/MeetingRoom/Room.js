@@ -80,7 +80,7 @@ const Room = () => {
           .item(0);
 
         if (notFoundMedia && notFoundMedia.innerHTML)
-          notFoundMedia.textContent = "Không thể kết nối micro hoặc camera";
+          notFoundMedia.textContent = "Micro hoặc camera hiện đang tắt";
 
         // CONTENT ==========================================
 
