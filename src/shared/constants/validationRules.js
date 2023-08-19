@@ -101,3 +101,12 @@ export const commonSystemConfigValidation = {
   },
   validate: (val) => validationNumber(val),
 };
+
+// ------------------ Seminar feedback ----------------------
+export const validateSeminarFeedbackText = (val) => {
+  if (val && val.trim().length > 0) {
+    if (val.length > LENGTH.SEMINAR_FEEDBACK_TEXT) {
+      return ERROR_MESSAGES.MAX_LENGTH_FEEDBACK_TEXT;
+    }
+  }
+};

@@ -237,6 +237,7 @@ export const LENGTH = {
   SEMINAR_NAME: 200,
   SEMINAR_PLACE: 200,
   SEMINAR_DESCRIPTION: 2000,
+  SEMINAR_FEEDBACK_TEXT: 2000,
   FILE_MAX_SIZE: 5, //MB
   FILE_MAX_NUM: 5,
   SPEAKERS_MAX: 3,
@@ -261,6 +262,7 @@ export const ERROR_MESSAGES = {
   MAX_PARTICIPANTS: "Chọn tối đa " + LENGTH.PARTICIPANTS_MAX + " bạn tham gia",
   MAX_LENGTH_STUDENT_NOTE:
     "Độ dài tối đa cho ghi chú là " + LENGTH.STUDENT_NOTE_MAX + " kí tự",
+  MAX_LENGTH_FEEDBACK_TEXT: `Độ dài tối đa cho đánh giá là ${LENGTH.SEMINAR_FEEDBACK_TEXT} kí tự.`,
   INVALID_PASSWORD_LENGTH:
     "Chọn mật khẩu có độ dài từ " +
     LENGTH.PASSWORD_MIN +
