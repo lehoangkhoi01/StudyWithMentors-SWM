@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
@@ -54,7 +54,7 @@ const CommentAction = (props) => {
       <div className={`${style.commentAction__upvoteContainer}`}>
         {props.comment.voteList?.includes(userInfo?.accountId) ? (
           <>
-            <ArrowDropUpIcon
+            <FavoriteIcon
               onClick={() => props.handleUpvoteComment(props.comment, "unvote")}
               className={`${style.commentAction__upvoteContainer__icon}`}
             />
@@ -62,7 +62,7 @@ const CommentAction = (props) => {
           </>
         ) : (
           <>
-            <ArrowDropUpIcon
+            <FavoriteIcon
               onClick={() => props.handleUpvoteComment(props.comment, "upvote")}
               className={`${style.commentAction__upvoteContainer__icon} ${style.commentAction__upvoteContainer__icon_clicked}`}
             />
