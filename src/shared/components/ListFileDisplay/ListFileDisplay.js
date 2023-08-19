@@ -94,7 +94,7 @@ const ListFileDisplay = (props) => {
       <List>
         {Object.keys(props.oldItems).map((fileName, index) => (
           <ListItem key={index} className={`${style.filelist__row}`}>
-            <a href={props.oldItems[fileName]}>
+            <a href={props.oldItems[fileName]} target="_blank" rel="noreferrer">
               <LinkIcon />
               {fileName?.replace("*", "")}
             </a>
