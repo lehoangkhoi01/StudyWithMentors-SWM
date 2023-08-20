@@ -150,7 +150,7 @@ export const COMMON_MESSAGE = {
   UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
-  REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
+  REJECT_BOOKING_SUCCESS: "Hủy lịch hẹn thành công",
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
@@ -314,6 +314,9 @@ export const ERROR_MESSAGES = {
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   CATEGORY_FIELD: "Thể loại này đã tồn tại",
   DEPARTMENT_FIELD: "Phòng ban này đã tồn tại",
+  UPDATE_ERROR: "Cập nhật thông tin thất bại. Vui lòng thử lại sau",
+  ADD_CATEGORY_FAIL: "Thêm thể loại thất bại. Vui lòng thử lại sau.",
+  ADD_FIELD_FAIL: "Thêm lĩnh vực thất bại. Vui lòng thử lại sau",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];

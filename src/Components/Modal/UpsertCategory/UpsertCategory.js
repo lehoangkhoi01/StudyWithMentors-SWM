@@ -80,11 +80,19 @@ const UpsertCategory = (props) => {
       if (error.data.includes("Duplicate")) {
         setIsExisted(true);
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (categoryId) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_CATEGORY_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);

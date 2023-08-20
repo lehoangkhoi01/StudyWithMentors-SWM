@@ -81,11 +81,19 @@ const UpsertField = (props) => {
       if (error.data.includes("Duplicate")) {
         setIsExisted(true);
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (fieldId) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_FIELD_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);
