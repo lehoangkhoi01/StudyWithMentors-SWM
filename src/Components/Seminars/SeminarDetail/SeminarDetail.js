@@ -269,17 +269,18 @@ const SeminarDetail = () => {
                         <span>{SEMINAR.EDIT}</span>
                       </MenuItem>
 
-                      {moment(data.startTime) > Date.now() && (
-                        //Not show delete menu for past event
-                        <div>
-                          <MenuItem onClick={onOpenRemoveDialog}>
-                            <img
-                              src={require("../../../assets/icons/Seminar_Delete.png")}
-                            />
-                            <span>{SEMINAR.DELETE}</span>
-                          </MenuItem>
-                        </div>
-                      )}
+                      {moment(data.startTime) > Date.now() &&
+                        userInfo?.role !== SYSTEM_ROLE.MENTOR && (
+                          //Not show delete menu for past event
+                          <div>
+                            <MenuItem onClick={onOpenRemoveDialog}>
+                              <img
+                                src={require("../../../assets/icons/Seminar_Delete.png")}
+                              />
+                              <span>{SEMINAR.DELETE}</span>
+                            </MenuItem>
+                          </div>
+                        )}
                     </Menu>
                   </div>
                 )}
