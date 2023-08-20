@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import CustomizedButton from "../../shared/components/Button/CustomizedButton";
 import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { userAccountService } from "../../Services/userAccountService";
+import { SYSTEM_ROLE } from "../../shared/constants/systemType";
 
 const Profile = () => {
     const {
@@ -29,6 +30,10 @@ const Profile = () => {
         setValue("fullName", userInfo.fullName);
         setValue("phoneNum", userInfo.phone);
         setValue("email", userInfo.email);
+
+        if (userInfo?.role !== SYSTEM_ROLE.STUDENT) {
+            setValue("phoneNum", null);
+        }
     }, []);
 
     const validatePhoneNum = (phoneNum) => {
@@ -94,7 +99,7 @@ const Profile = () => {
                 error={errors.fullname ? true : false}
                 helperText={errors?.fullname?.message}
             />
-            <CustomizedTextField
+            {userInfo?.role !== SYSTEM_ROLE.STUDENT && <CustomizedTextField
                 className={style.profile__input}
                 inputId="phoneNum"
                 name={TITLE.PHONE}
@@ -106,7 +111,8 @@ const Profile = () => {
                 }}
                 error={errors.phone ? true : false}
                 helperText={errors?.phone?.message}
-            />
+            />}
+
             <div className={style.profile__button}>
                 <CustomizedButton
                     type="submit"
