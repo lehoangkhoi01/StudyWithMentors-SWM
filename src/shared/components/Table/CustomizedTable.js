@@ -272,7 +272,7 @@ const CustomizedTable = (props) => {
 
     let copyData = deepCloneArray(originData);
 
-    const filterdData = props.filterData(copyData, searchTerm);
+    const filterdData = props.filterData(copyData, searchTerm, filterItem?.name);
 
     onSortTable(filterdData);
   };
@@ -460,9 +460,10 @@ const CustomizedTable = (props) => {
     } = event;
 
     let copyData = deepCloneArray(originData);
+    const searchTerm = getValues("searchTerm").toLowerCase().trim();
 
     setFilterItem(value);
-    const filteredList = props.onFilterBySelect(copyData, value.name);
+    const filteredList = props.onFilterBySelect(copyData, value.name, searchTerm);
     onSortTable(filteredList);
   };
 
