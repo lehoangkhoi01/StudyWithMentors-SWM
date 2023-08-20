@@ -494,7 +494,10 @@ const SeminarForm = () => {
         departmentList.find((dep) => dep.id === seminarDetail.department.id)
       );
 
-      if (moment(seminarDetail.startTime).toDate() < new Date()) {
+      if (
+        moment(seminarDetail.startTime).toDate() < new Date() ||
+        userInfo?.role === SYSTEM_ROLE.MENTOR
+      ) {
         setFormDisabled(true);
       }
     } else if (!seminarDetail && departmentList.length > 0) {

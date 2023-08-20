@@ -38,7 +38,11 @@ import moment from "moment";
 import { format } from "date-fns";
 
 const SeminarDetail = () => {
-  const AUTHORIZED_ROLE_ACTION = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
+  const AUTHORIZED_ROLE_ACTION = [
+    SYSTEM_ROLE.STAFF,
+    SYSTEM_ROLE.ADMIN,
+    SYSTEM_ROLE.MENTOR,
+  ];
 
   const [data, setData] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,6 +61,7 @@ const SeminarDetail = () => {
   ];
 
   const isAuthorizedEditSeminar = (seminarDetail) => {
+    console.log(seminarDetail);
     if (!AUTHORIZED_ROLE_ACTION.includes(userInfo?.role)) {
       return false;
     }
@@ -68,6 +73,14 @@ const SeminarDetail = () => {
       return false;
     }
 
+    if (
+      userInfo?.role === SYSTEM_ROLE.MENTOR &&
+      !seminarDetail?.mentors
+        .map((mentor) => mentor.id)
+        .includes(userInfo?.accountId)
+    ) {
+      return false;
+    }
     return true;
   };
 
@@ -228,18 +241,21 @@ const SeminarDetail = () => {
                       }}
                       className={style.detail__dropdown}
                     >
-                      <MenuItem
-                        onClick={() =>
-                          handleNavigate(
-                            ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
-                          )
-                        }
-                      >
-                        <img
-                          src={require("../../../assets/icons/Semniar_Report.png")}
-                        />
-                        <span>{SEMINAR.RERORT}</span>
-                      </MenuItem>
+                      {userInfo?.role !== SYSTEM_ROLE.MENTOR && (
+                        <MenuItem
+                          onClick={() =>
+                            handleNavigate(
+                              ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                            )
+                          }
+                        >
+                          <img
+                            src={require("../../../assets/icons/Semniar_Report.png")}
+                          />
+                          <span>{SEMINAR.RERORT}</span>
+                        </MenuItem>
+                      )}
+
                       <MenuItem
                         onClick={() =>
                           handleNavigate(
@@ -253,17 +269,18 @@ const SeminarDetail = () => {
                         <span>{SEMINAR.EDIT}</span>
                       </MenuItem>
 
-                      {moment(data.startTime) > Date.now() && (
-                        //Not show delete menu for past event
-                        <div>
-                          <MenuItem onClick={onOpenRemoveDialog}>
-                            <img
-                              src={require("../../../assets/icons/Seminar_Delete.png")}
-                            />
-                            <span>{SEMINAR.DELETE}</span>
-                          </MenuItem>
-                        </div>
-                      )}
+                      {moment(data.startTime) > Date.now() &&
+                        userInfo?.role !== SYSTEM_ROLE.MENTOR && (
+                          //Not show delete menu for past event
+                          <div>
+                            <MenuItem onClick={onOpenRemoveDialog}>
+                              <img
+                                src={require("../../../assets/icons/Seminar_Delete.png")}
+                              />
+                              <span>{SEMINAR.DELETE}</span>
+                            </MenuItem>
+                          </div>
+                        )}
                     </Menu>
                   </div>
                 )}
