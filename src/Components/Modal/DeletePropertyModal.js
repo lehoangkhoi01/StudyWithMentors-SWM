@@ -18,11 +18,10 @@ const DeletePropertyModal = (props) => {
             textAlign="center"
             color="#283493"
           >
-            {`${
-              type === MODAL_DELETE_PROPERTY.DEACTIVATE
+            {`${type === MODAL_DELETE_PROPERTY.DEACTIVATE
                 ? MODAL_DELETE_PROPERTY.DEACTIVATE
                 : MODAL_DELETE_PROPERTY.DELETE_CONFIRM
-            } ${props.title}?`}
+              } ${props.title}?`}
           </Typography>
           <p>
             {type === MODAL_DELETE_PROPERTY.DEACTIVATE
@@ -43,7 +42,7 @@ const DeletePropertyModal = (props) => {
               type="submit"
               variant="contained"
               color="primary600"
-              onClick={props.onDeleteProperty}
+              onClick={() => props.onDeleteProperty(type === MODAL_DELETE_PROPERTY.DEACTIVATE)}
             >
               {type === MODAL_DELETE_PROPERTY.DEACTIVATE
                 ? MODAL_DELETE_PROPERTY.DEACTIVATE

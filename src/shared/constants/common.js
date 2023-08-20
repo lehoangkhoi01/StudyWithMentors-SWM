@@ -660,6 +660,7 @@ export const TRANSLATED_TABLE_TYPE = {
   DEPARTMENT: "Phòng ban",
   STAFF: "Nhân viên",
   SEMINAR: "Hội thảo",
+  STUDENT: "Tài khoản"
 };
 
 export const USER_STATUS = {
