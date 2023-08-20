@@ -17,10 +17,10 @@ import { useNotification } from "../../../../Helpers/generalHelper";
 import { ERROR_MESSAGES } from "../../../../shared/constants/common";
 
 const Comment = (props) => {
+  console.log(props.comment);
   const [updatedComment, setUpdatedComment] = React.useState(undefined);
 
   const { setNotification } = useNotification();
-
 
   const onUpdateComment = (comment) => {
     setUpdatedComment(comment);
@@ -41,6 +41,7 @@ const Comment = (props) => {
       const updatedCommentObject = {
         message: updatedComment.trim(),
         serverTimeStamp: Timestamp.now(),
+        isUpdated: true,
       };
       try {
         localStorage.setItem("SHOULD_RERENDER_COMMENT", "true");
@@ -134,7 +135,8 @@ const Comment = (props) => {
                     {props.comment.userInfo?.fullName}
                   </Typography>
                   <Typography variant="subtitle2" color="text.secondary">
-                    Gửi lúc {props.comment.createdDate}
+                    Gửi lúc {props.comment.createdDate}{" "}
+                    {props.comment?.isUpdated ? "(Đã chỉnh sửa)" : null}
                   </Typography>
                 </div>
               </div>
