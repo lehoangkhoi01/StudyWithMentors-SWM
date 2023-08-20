@@ -160,13 +160,13 @@ const SeminarForm = () => {
     if (value <= watch("seminarTime")) {
       return ERROR_MESSAGES.INVALID_SEMINAR_END_DATE;
     }
+    if (value.toString() === "Invalid Date") {
+      return ERROR_MESSAGES.REQUIRED_FIELD;
+    }
     const startDate = new Date(watch("seminarTime")).setHours(0, 0, 0, 0);
     const endDate = new Date(value).setHours(0, 0, 0, 0);
     if (startDate !== endDate) {
       return "Ngày bắt đầu và kết thúc của hội thảo phải cùng 1 ngày.";
-    }
-    if (value.toString() === "Invalid Date") {
-      return ERROR_MESSAGES.REQUIRED_FIELD;
     }
   };
 
