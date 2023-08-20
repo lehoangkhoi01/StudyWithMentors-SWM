@@ -86,7 +86,7 @@ const AdminMentorList = () => {
           return true;
         }
         return false;
-      }
+      },
     },
     {
       imgSrc: require("../../assets/icons/Accept.png"),
@@ -108,7 +108,7 @@ const AdminMentorList = () => {
         }
 
         return false;
-      }
+      },
     },
   ];
 
@@ -146,8 +146,10 @@ const AdminMentorList = () => {
   };
 
   const onSearchMentor = (currentList, searchTerm) => {
-    return currentList.filter((mentor) =>
-      mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
+    return currentList.filter(
+      (mentor) =>
+        mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        mentor.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 

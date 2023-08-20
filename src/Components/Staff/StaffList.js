@@ -84,7 +84,7 @@ const StaffList = () => {
         }
 
         return false;
-      }
+      },
     },
   ];
 
@@ -118,7 +118,10 @@ const StaffList = () => {
 
   const onSearchStaff = (currentList, searchTerm) => {
     return currentList.filter((staff) => {
-      return staff.fullName?.toLowerCase().includes(searchTerm.toLowerCase());
+      return (
+        staff.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        staff.email?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     });
   };
 
@@ -126,7 +129,10 @@ const StaffList = () => {
     if (translatedStatus === TRANSLATED_STAFF_STATUS.WAITING) {
       await accountService.deleteAccount(staffId);
     } else {
-      await accountService.updateAccountStatus(staffId, STAFF_STATUS.INVALIDATE);
+      await accountService.updateAccountStatus(
+        staffId,
+        STAFF_STATUS.INVALIDATE
+      );
     }
   };
 
