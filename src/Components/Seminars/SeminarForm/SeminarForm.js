@@ -366,7 +366,7 @@ const SeminarForm = () => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: "Cập nhật hội thảo thất bại",
+          message: "Cập nhật hội thảo thất bại. Vui lòng thử lại sau.",
         });
       }
     } finally {

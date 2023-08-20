@@ -108,11 +108,19 @@ const UpsertMentorModal = (props) => {
           message: ERROR_MESSAGES.CAN_NOT_BE_FPT_STUDENT_MAIL,
         });
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (type === MODAL_TYPE.EDIT) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: `Cập nhật thông tin thất bại. Vui lòng thử lại sau.`,
+          });
+        } else if (type === MODAL_TYPE.ADD) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: `Thêm diễn giả thất bại. Vui lòng thử lại sau.`,
+          });
+        }
       }
     } finally {
       setLoading(false);
@@ -167,7 +175,7 @@ const UpsertMentorModal = (props) => {
             />
 
             <CustomizedTextField
-              name={"Số điện thoại"}
+              name={"Số điện thoại 123"}
               placeholder={PLACE_HOLDER.DEFAULT_PHONE}
               options={{
                 ...register("phoneNum", {
