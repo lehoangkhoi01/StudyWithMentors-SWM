@@ -119,11 +119,19 @@ const UpsertStaff = (props) => {
           message: ERROR_MESSAGES.EXISTED_EMAIL,
         });
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (type === MODAL_TYPE.EDIT) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_STAFF_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);

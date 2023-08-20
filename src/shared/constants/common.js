@@ -269,7 +269,7 @@ export const ERROR_MESSAGES = {
     " đến " +
     LENGTH.PASSWORD_MAX +
     " kí tự.",
-  INVALID_PHONE_NUM: "Số điện thoại từ 10 đến 11 số.",
+  INVALID_PHONE_NUM: "Vui lòng nhập số điện thoại đúng định dạng (10-11 số).",
   WRONG_EMAIL_OR_PASSWORD: "Email hoặc mật khẩu không chính xác.",
   CONFIRM_PASSWORD_NOT_MATCH: "Mật khẩu không trùng khớp.",
   WRONG_PASSWORD_FORMAT:
@@ -314,9 +314,11 @@ export const ERROR_MESSAGES = {
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   CATEGORY_FIELD: "Thể loại này đã tồn tại",
   DEPARTMENT_FIELD: "Phòng ban này đã tồn tại",
-  UPDATE_ERROR: "Cập nhật thông tin thất bại. Vui lòng thử lại sau",
+  UPDATE_ERROR: "Cập nhật thông tin thất bại. Vui lòng thử lại sau.",
   ADD_CATEGORY_FAIL: "Thêm thể loại thất bại. Vui lòng thử lại sau.",
-  ADD_FIELD_FAIL: "Thêm lĩnh vực thất bại. Vui lòng thử lại sau",
+  ADD_FIELD_FAIL: "Thêm lĩnh vực thất bại. Vui lòng thử lại sau.",
+  ADD_DEPARTMENT_FAIL: "Thêm phòng ban thất bại. Vui lòng thử lại sau.",
+  ADD_STAFF_FAIL: "Thêm nhân viên thất bại. Vui lòng thử lại sau.",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
