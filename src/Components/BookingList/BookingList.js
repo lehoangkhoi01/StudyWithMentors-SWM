@@ -42,7 +42,13 @@ const BookingList = () => {
   const fetchBookingList = async () => {
     const result = await bookingService.getBooking();
     if (result.bookingCards && result.bookingCards.length > 0) {
-      const newResult = processData(result.bookingCards);
+      let filteredList = [];
+      if (filterValue !== "ALL") {
+        filteredList = result.bookingCards.filter(
+          (x) => x.status === filterValue
+        );
+      } else filteredList = result.bookingCards;
+      const newResult = processData(filteredList);
       setBookingList(newResult);
     }
   };
