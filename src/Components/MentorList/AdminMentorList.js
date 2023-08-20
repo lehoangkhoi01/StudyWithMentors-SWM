@@ -145,12 +145,19 @@ const AdminMentorList = () => {
     }
   };
 
-  const onSearchMentor = (currentList, searchTerm) => {
-    return currentList.filter(
+  const onSearchMentor = (currentList, searchTerm, status) => {
+    if (status === MENTOR_STATUS.ALL) return currentList.filter(
       (mentor) =>
         mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         mentor.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    return currentList.filter((mentor) => (
+      (mentor.translatedStatus === status &&
+        (mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          mentor.email.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+    ))
   };
 
   const onDeleteMentor = async (mentorId, translatedStatus) => {
@@ -165,12 +172,19 @@ const AdminMentorList = () => {
     await userAccountService.updateUserProfile(mentorId, data);
   };
 
-  const onFilterMentorByStatus = (currentList, status) => {
-    if (status === MENTOR_STATUS.ALL) return currentList;
+  const onFilterMentorByStatus = (currentList, status, searchTerm) => {
+    if (status === MENTOR_STATUS.ALL) return currentList.filter(
+      (mentor) =>
+        mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        mentor.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-    return currentList.filter((mentor) => {
-      return mentor.translatedStatus === status;
-    });
+    return currentList.filter((mentor) => (
+      (mentor.translatedStatus === status &&
+        (mentor.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          mentor.email.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+    ))
   };
 
   const handleSubmitResentInvitation = async () => {
