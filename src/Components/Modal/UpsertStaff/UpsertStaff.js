@@ -124,11 +124,19 @@ const UpsertStaff = (props) => {
           message: ERROR_MESSAGES.CAN_NOT_BE_FPT_STUDENT_MAIL,
         });
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (type === MODAL_TYPE.EDIT) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_STAFF_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);

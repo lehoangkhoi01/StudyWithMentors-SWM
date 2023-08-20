@@ -8,7 +8,7 @@ import { useCustomLoading, useNotification } from "../../Helpers/generalHelper";
 import { ROUTES } from "../../shared/constants/navigation";
 import { Box, Tabs, Typography, Tab } from "@mui/material";
 import { BOOKING_STATUS } from "../../shared/constants/systemType";
-import { COMMON_MESSAGE } from "../../shared/constants/common";
+import { COMMON_MESSAGE, ERROR_MESSAGES } from "../../shared/constants/common";
 import { styled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
@@ -62,9 +62,14 @@ const BookingList = () => {
       setOpenBookingInfo(false);
       await fetchBookingList();
     } catch (error) {
-      if (error?.status === 500) {
-        history.push(ROUTES.SERVER_ERROR);
-      }
+      setNotification({
+        isOpen: true,
+        type: "error",
+        message:
+          status === BOOKING_STATUS.ACCEPTED
+            ? ERROR_MESSAGES.ACCEPT_BOOKING_FAIL
+            : ERROR_MESSAGES.REJECT_BOOKING_FAIL,
+      });
     } finally {
       setLoading(false);
     }

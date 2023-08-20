@@ -81,11 +81,19 @@ const UpsertDepartment = (props) => {
           message: ERROR_MESSAGES.EXISTED_DEPARTMENT,
         });
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (departmentId) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_DEPARTMENT_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);
