@@ -37,6 +37,7 @@ import { ROUTES } from "../../../shared/constants/navigation";
 const hostname = window.location.host;
 
 const BookingInfoDialog = (props) => {
+  console.log(props.bookingInfo);
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);
@@ -509,12 +510,12 @@ const BookingInfoDialog = (props) => {
               Ngày tạo:{" "}
             </span>
             <span>
-              {props.bookingInfo?.convertedCreateDate
+              {props.bookingInfo?.createdDate
                 ? format(
-                    props.bookingInfo?.convertedCreateDate,
+                    new Date(props.bookingInfo?.createdDate),
                     "HH:mm:ss dd-MM-yyyy"
                   )
-                : null}
+                : "(Không có)"}
             </span>
           </div>
 

@@ -81,11 +81,19 @@ const UpsertCategory = (props) => {
           message: ERROR_MESSAGES.EXISTED_CATEGORY,
         });
       } else {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: ERROR_MESSAGES.COMMON_ERROR,
-        });
+        if (categoryId) {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.UPDATE_ERROR,
+          });
+        } else {
+          setNotification({
+            isOpen: true,
+            type: "error",
+            message: ERROR_MESSAGES.ADD_CATEGORY_FAIL,
+          });
+        }
       }
     } finally {
       setLoading(false);

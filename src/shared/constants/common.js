@@ -150,7 +150,7 @@ export const COMMON_MESSAGE = {
   UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
   UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
-  REJECT_BOOKING_SUCCESS: "Hủy lịch thành công",
+  REJECT_BOOKING_SUCCESS: "Hủy lịch hẹn thành công",
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
@@ -269,7 +269,7 @@ export const ERROR_MESSAGES = {
     " đến " +
     LENGTH.PASSWORD_MAX +
     " kí tự.",
-  INVALID_PHONE_NUM: "Số điện thoại từ 10 đến 11 số.",
+  INVALID_PHONE_NUM: "Vui lòng nhập số điện thoại đúng định dạng (10-11 số).",
   WRONG_EMAIL_OR_PASSWORD: "Email hoặc mật khẩu không chính xác.",
   CONFIRM_PASSWORD_NOT_MATCH: "Mật khẩu không trùng khớp.",
   WRONG_PASSWORD_FORMAT:
@@ -314,7 +314,14 @@ export const ERROR_MESSAGES = {
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   EXISTED_CATEGORY: "Thể loại này đã tồn tại",
   EXISTED_DEPARTMENT: "Phòng ban này đã tồn tại",
-  CAN_NOT_BE_FPT_STUDENT_MAIL: "Không được dùng mail sinh viên"
+  CAN_NOT_BE_FPT_STUDENT_MAIL: "Không được dùng mail sinh viên",
+  UPDATE_ERROR: "Cập nhật thông tin thất bại. Vui lòng thử lại sau.",
+  ADD_CATEGORY_FAIL: "Thêm thể loại thất bại. Vui lòng thử lại sau.",
+  ADD_FIELD_FAIL: "Thêm lĩnh vực thất bại. Vui lòng thử lại sau.",
+  ADD_DEPARTMENT_FAIL: "Thêm phòng ban thất bại. Vui lòng thử lại sau.",
+  ADD_STAFF_FAIL: "Thêm nhân viên thất bại. Vui lòng thử lại sau.",
+  ACCEPT_BOOKING_FAIL: "Xác nhận lịch hẹn thất bại. Vui lòng thử lại sau.",
+  REJECT_BOOKING_FAIL: "Hủy lịch hẹn thất bại. Vui lòng thử lại sau",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
