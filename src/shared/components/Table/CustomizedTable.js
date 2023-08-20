@@ -624,7 +624,7 @@ const CustomizedTable = (props) => {
                     >
                       {header.link &&
                         (row.translatedStatus === MENTOR_STATUS.ACTIVATED ||
-                        row.translatedStatus === MENTOR_STATUS.INVALIDATE ? (
+                          row.translatedStatus === MENTOR_STATUS.INVALIDATE ? (
                           <Link to={row.link}>
                             {row.linkName ?? "Hồ sơ diễn giả"}
                           </Link>
@@ -711,8 +711,8 @@ const CustomizedTable = (props) => {
 
                             case DELETE_ACTION:
                               return (
-                                !actionItem.rule ||
-                                (actionItem.rule(row) && (
+                                (!actionItem.rule ||
+                                  actionItem.rule(row)) && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -723,7 +723,7 @@ const CustomizedTable = (props) => {
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
 
-                                ))
+                                )
                               );
 
                             case ACTIVE_ACTION:
