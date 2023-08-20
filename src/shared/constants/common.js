@@ -319,6 +319,8 @@ export const ERROR_MESSAGES = {
   ADD_FIELD_FAIL: "Thêm lĩnh vực thất bại. Vui lòng thử lại sau.",
   ADD_DEPARTMENT_FAIL: "Thêm phòng ban thất bại. Vui lòng thử lại sau.",
   ADD_STAFF_FAIL: "Thêm nhân viên thất bại. Vui lòng thử lại sau.",
+  ACCEPT_BOOKING_FAIL: "Xác nhận lịch hẹn thất bại. Vui lòng thử lại sau.",
+  REJECT_BOOKING_FAIL: "Hủy lịch hẹn thất bại. Vui lòng thử lại sau",
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];
