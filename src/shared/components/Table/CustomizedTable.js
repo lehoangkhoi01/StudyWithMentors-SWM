@@ -272,7 +272,7 @@ const CustomizedTable = (props) => {
 
     let copyData = deepCloneArray(originData);
 
-    const filterdData = props.filterData(copyData, searchTerm);
+    const filterdData = props.filterData(copyData, searchTerm, filterItem?.name);
 
     onSortTable(filterdData);
   };
@@ -460,9 +460,10 @@ const CustomizedTable = (props) => {
     } = event;
 
     let copyData = deepCloneArray(originData);
+    const searchTerm = getValues("searchTerm").toLowerCase().trim();
 
     setFilterItem(value);
-    const filteredList = props.onFilterBySelect(copyData, value.name);
+    const filteredList = props.onFilterBySelect(copyData, value.name, searchTerm);
     onSortTable(filteredList);
   };
 
@@ -624,7 +625,7 @@ const CustomizedTable = (props) => {
                     >
                       {header.link &&
                         (row.translatedStatus === MENTOR_STATUS.ACTIVATED ||
-                        row.translatedStatus === MENTOR_STATUS.INVALIDATE ? (
+                          row.translatedStatus === MENTOR_STATUS.INVALIDATE ? (
                           <Link to={row.link}>
                             {row.linkName ?? "Hồ sơ diễn giả"}
                           </Link>
@@ -711,8 +712,8 @@ const CustomizedTable = (props) => {
 
                             case DELETE_ACTION:
                               return (
-                                !actionItem.rule ||
-                                (actionItem.rule(row) && (
+                                (!actionItem.rule ||
+                                  actionItem.rule(row)) && (
                                   <MenuItem
                                     key={`MENU_ITEM_${index}`}
                                     onClick={() => {
@@ -723,7 +724,7 @@ const CustomizedTable = (props) => {
                                     <span>{actionItem.label}</span>
                                   </MenuItem>
 
-                                ))
+                                )
                               );
 
                             case ACTIVE_ACTION:

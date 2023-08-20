@@ -102,6 +102,11 @@ const UpsertMentorModal = (props) => {
           type: "custom",
           message: ERROR_MESSAGES.EXISTED_EMAIL,
         });
+      } else if (error.data.includes("FPT Student email")) {
+        setError("email", {
+          type: "custom",
+          message: ERROR_MESSAGES.CAN_NOT_BE_FPT_STUDENT_MAIL,
+        });
       } else {
         setNotification({
           isOpen: true,

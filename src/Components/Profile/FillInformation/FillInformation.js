@@ -22,6 +22,7 @@ import { userAccountService } from "../../../Services/userAccountService";
 import { ROUTES } from "../../../shared/constants/navigation";
 import { registerFullNameValidation } from "../../../shared/constants/validationRules";
 import { Modal } from "@mui/material";
+import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 
 const FillInformation = () => {
   const {
@@ -42,6 +43,10 @@ const FillInformation = () => {
     setValue("fullName", userInfo.fullName);
     setValue("phoneNum", userInfo.phone);
     setValue("email", userInfo.email);
+
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
+      setValue("phoneNum", null);
+    }
   }, []);
 
   const validatePhoneNum = (phoneNum) => {
@@ -111,7 +116,7 @@ const FillInformation = () => {
             error={errors.fullname ? true : false}
             helperText={errors?.fullname?.message}
           />
-          <CustomizedTextField
+          {userInfo?.role !== SYSTEM_ROLE.STUDENT && <CustomizedTextField
             className={style.fillInformation__input}
             inputId="phoneNum"
             name={TITLE.PHONE}
@@ -123,7 +128,7 @@ const FillInformation = () => {
             }}
             error={errors.phone ? true : false}
             helperText={errors?.phone?.message}
-          />
+          />}
           <div className={style.fillInformation__button}>
             <CustomizedButton
               type="submit"
