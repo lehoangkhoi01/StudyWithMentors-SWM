@@ -12,7 +12,7 @@ import CustomizedDatePicker from "../../../shared/components/DatePicker/Customiz
 import CustomizedTimePicker from "../../../shared/components/TimePicker/CustomizedTimePicker";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CustomizedSelect from "../../../shared/components/Select/CustomizedSelect";
-import { DATE_FORMAT } from "../../../shared/constants/common";
+import { DATE_FORMAT, ERROR_MESSAGES } from "../../../shared/constants/common";
 import { format } from "date-fns";
 import ConfirmationDialog from "../../../shared/components/ConfirmationDialog/ConfirmationDialog";
 import { useRef } from "react";
@@ -77,7 +77,21 @@ const ScheduleDialog = (props) => {
   const onSubmit = (data) => {
     const newFromDate = convertToDateTime(data.freeTime);
     const newEndDate = convertToDateTime(data.endDateTime);
-
+    console.log(newEndDate);
+    if (!newFromDate) {
+      setError("freeTime", {
+        type: "custom",
+        message: ERROR_MESSAGES.REQUIRED_FIELD,
+      });
+      return;
+    }
+    if (loopOption.value !== loopOptions[0].value && !newEndDate) {
+      setError("endDateTime", {
+        type: "custom",
+        message: ERROR_MESSAGES.REQUIRED_FIELD,
+      });
+      return;
+    }
     if (
       loopOption.value !== loopOptions[0].value &&
       newEndDate.getTime() <= newFromDate.getTime()
