@@ -16,7 +16,6 @@ export const validateSeminarDescription = (val) => {
 };
 
 export const validationSeminarDate = (value) => {
-  console.log(value.toString());
   if (!value || value.length === 0) {
     return ERROR_MESSAGES.REQUIRED_FIELD;
   }
