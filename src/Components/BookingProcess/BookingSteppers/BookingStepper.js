@@ -188,7 +188,7 @@ const BookingStepper = (props) => {
       setNotification({
         isOpen: true,
         type: "success",
-        message: "Đặt lịch thành công",
+        message: "Đặt lịch hẹn thành công",
       });
       props.handleCloseDialog();
       history.push(ROUTES.BOOKING_LIST);
