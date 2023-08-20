@@ -139,8 +139,8 @@ export const COMMON_MESSAGE = {
   SEND_FEEDBACK_SUCCESS: "Gửi khảo sát thành công",
   CREATE_SEMINAR_SUCCESS: "Tạo hội thảo thành công",
   REMOVE_SEMINAR_SUCCESS: "Xóa hội thảo thành công",
-  ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công",
-  UPDATE_MENTOR_SUCCESS: "Cập nhật thông tin thành công",
+  ADD_MENTOR_SUCCESS: "Thêm diễn giả thành công.",
+  UPDATE_MENTOR_SUCCESS: "Cập nhật thông tin thành công.",
   REMOVE_SCHEDULE_SUCCESS: "Xóa lịch thành công",
   REMOVE_SCHEDULE_FAIL: "Xóa lịch thất bại. Xin vui lòng thử lại sau",
   ADD_SCHEDULE_SUCCESS: "Thêm lịch thành công",
@@ -304,7 +304,7 @@ export const ERROR_MESSAGES = {
   DELETE_COMMENT_ERROR:
     "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
   END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE:
-    "Ngày kết thúc không được sớm hơn ngày bắt đầu",
+    "Thời gian kết thúc không thể sớm hơn thời gian bắt đầu.",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Ngày hết hạn không được sớm hơn ngày nhận",
   COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
@@ -667,6 +667,7 @@ export const TRANSLATED_TABLE_TYPE = {
   DEPARTMENT: "Phòng ban",
   STAFF: "Nhân viên",
   SEMINAR: "Hội thảo",
+  STUDENT: "Tài khoản"
 };
 
 export const USER_STATUS = {

@@ -360,7 +360,7 @@ const CustomizedTable = (props) => {
     });
   };
 
-  const onDeleteData = async () => {
+  const onDeleteData = async (isDeactivate) => {
     try {
       setLoading(true);
       if (deletedData) {
@@ -372,7 +372,7 @@ const CustomizedTable = (props) => {
         setNotification({
           isOpen: true,
           type: "success",
-          message: `Xóa ${TRANSLATED_TABLE_TYPE[props.type]} thành công.`,
+          message: `${isDeactivate ? "Vô hiệu hóa" : "Xóa"} ${TRANSLATED_TABLE_TYPE[props.type]?.toLowerCase()} thành công.`,
         });
         handleSuccess();
         setActiveData(null);
@@ -385,8 +385,7 @@ const CustomizedTable = (props) => {
         setNotification({
           isOpen: true,
           type: "error",
-          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]
-            } ${OTHERS.THIS}.`,
+          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]?.toLowerCase()} ${OTHERS.THIS}.`,
         });
       } else {
         setNotification({
@@ -434,6 +433,11 @@ const CustomizedTable = (props) => {
         setActiveData(null);
 
         setLoading(false);
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: `Kích hoạt lại ${TRANSLATED_TABLE_TYPE[props.type]?.toLowerCase()} thành công.`,
+        });
       }, 500);
     } catch (error) {
       setNotification({
