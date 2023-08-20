@@ -44,7 +44,7 @@ const FillInformation = () => {
     setValue("phoneNum", userInfo.phone);
     setValue("email", userInfo.email);
 
-    if (userInfo?.role !== SYSTEM_ROLE.STUDENT) {
+    if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
       setValue("phoneNum", null);
     }
   }, []);
