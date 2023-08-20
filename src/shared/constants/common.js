@@ -312,8 +312,9 @@ export const ERROR_MESSAGES = {
   } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
-  CATEGORY_FIELD: "Thể loại này đã tồn tại",
-  DEPARTMENT_FIELD: "Phòng ban này đã tồn tại",
+  EXISTED_CATEGORY: "Thể loại này đã tồn tại",
+  EXISTED_DEPARTMENT: "Phòng ban này đã tồn tại",
+  CAN_NOT_BE_FPT_STUDENT_MAIL: "Không được dùng mail sinh viên"
 };
 
 export const VALID_IMAGE_FILE_TYPE = ["image/jpg", "image/jpeg", "image/png"];

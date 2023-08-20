@@ -25,17 +25,16 @@ const UpsertDepartment = (props) => {
     getValues,
     reset,
     setValue,
+    setError,
     formState: { errors },
   } = useForm();
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
 
   const [departmentId, setDepartmentId] = useState();
-  const [isExisted, setIsExisted] = useState(false);
 
   useEffect(() => {
     clearData();
-    setIsExisted(false);
 
     if (props.existedData) {
       setValue("name", props.existedData.name);
@@ -58,7 +57,6 @@ const UpsertDepartment = (props) => {
 
     try {
       setLoading(true);
-      setIsExisted(false);
 
       if (departmentId) {
         await departmentService.updateDepartment(department, departmentId);
@@ -78,7 +76,10 @@ const UpsertDepartment = (props) => {
       await props.onSuccess();
     } catch (error) {
       if (error.data.includes("Duplicate")) {
-        setIsExisted(true);
+        setError("name", {
+          type: "custom",
+          message: ERROR_MESSAGES.EXISTED_DEPARTMENT,
+        });
       } else {
         setNotification({
           isOpen: true,
@@ -131,11 +132,6 @@ const UpsertDepartment = (props) => {
                 error={errors.name ? true : false}
                 helperText={errors?.name?.message}
               />
-              {isExisted && (
-                <p className={`${style.modal__error}`}>
-                  {ERROR_MESSAGES.EXISTED_FIELD}
-                </p>
-              )}
               <div className={style.modal__buttons}>
                 <CustomizedButton
                   type="submit"

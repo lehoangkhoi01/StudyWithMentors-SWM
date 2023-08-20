@@ -66,7 +66,7 @@ const UpsertStaff = (props) => {
 
       setValue("fullName", props.existedData.fullName);
       setValue("email", props.existedData.email);
-      setValue("phoneNum", props.existedData.phoneNum);
+      setValue("phoneNum", props.existedData.phone !== "Chưa có dữ liệu" ? props.existedData.phone : null);
 
       setSelectedDepartment(exitedDepartment);
       setType(MODAL_TYPE.EDIT);
@@ -117,6 +117,11 @@ const UpsertStaff = (props) => {
         setError("email", {
           type: "custom",
           message: ERROR_MESSAGES.EXISTED_EMAIL,
+        });
+      } else if (error.data.includes("FPT Student email")) {
+        setError("email", {
+          type: "custom",
+          message: ERROR_MESSAGES.CAN_NOT_BE_FPT_STUDENT_MAIL,
         });
       } else {
         setNotification({
