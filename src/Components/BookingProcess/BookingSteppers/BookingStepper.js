@@ -72,12 +72,14 @@ const BookingStepper = (props) => {
       let isValid = true;
       if (
         systemConfig.maxParticipant &&
-        selectedStudents.length > systemConfig.maxParticipant
+        selectedStudents.length > systemConfig.maxParticipant - 1
       ) {
         isValid = false;
         setError("participants", {
           type: "custom",
-          message: `Chọn tối đa ${systemConfig.maxParticipant} bạn tham gia`,
+          message: `Chọn tối đa ${
+            systemConfig.maxParticipant - 1
+          } bạn tham gia`,
         });
       }
 
