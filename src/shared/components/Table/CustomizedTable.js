@@ -14,7 +14,6 @@ import {
   ERROR_MESSAGES,
   MENTOR_STATUS,
   MODAL_DELETE_PROPERTY,
-  OTHERS,
   SORT_DIRECTION,
   TABLE_TYPE,
   TOPIC_TABLE,
@@ -380,18 +379,17 @@ const CustomizedTable = (props) => {
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.log("ERRROR");
-      if (props.type) {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          message: `${ERROR_MESSAGES.CAN_NOT_DELETE} ${TRANSLATED_TABLE_TYPE[props.type]?.toLowerCase()} ${OTHERS.THIS}.`,
-        });
-      } else {
+      if (error?.status === 500) {
         setNotification({
           isOpen: true,
           type: "error",
           message: ERROR_MESSAGES.COMMON_ERROR,
+        });
+      } else if (props.type) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: `Xóa ${TRANSLATED_TABLE_TYPE[props.type]?.toLowerCase()} thất bại. Vui lòng thử lại sau.`,
         });
       }
       setLoading(false);

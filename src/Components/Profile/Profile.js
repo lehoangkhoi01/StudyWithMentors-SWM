@@ -31,7 +31,7 @@ const Profile = () => {
         setValue("phoneNum", userInfo.phone);
         setValue("email", userInfo.email);
 
-        if (userInfo?.role !== SYSTEM_ROLE.STUDENT) {
+        if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
             setValue("phoneNum", null);
         }
     }, []);
@@ -72,6 +72,7 @@ const Profile = () => {
         }
     };
 
+
     return <div className={style.profile__container}>
         <form
             className={style.profile__formSection}
@@ -109,8 +110,8 @@ const Profile = () => {
                         validate: (val) => validatePhoneNum(val),
                     }),
                 }}
-                error={errors.phone ? true : false}
-                helperText={errors?.phone?.message}
+                error={errors.phoneNum ? true : false}
+                helperText={errors?.phoneNum?.message}
             />}
 
             <div className={style.profile__button}>

@@ -102,10 +102,6 @@ const TopicList = () => {
     return [SYSTEM_ROLE.ADMIN].includes(userInfo?.role);
   };
 
-  const isMentor = () => {
-    return userInfo?.role === SYSTEM_ROLE.MENTOR;
-  };
-
   useEffect(() => {
     let header = [...HEADER_TABLE];
     let actions = [...ACTION_ITEMS];
@@ -122,11 +118,7 @@ const TopicList = () => {
       rule: (row) => {
         switch (action.label) {
           case TABLE_ACTION.EDIT:
-            if (isMentor() && row.translatedStatus === TOPIC_STATUS.ACCEPTED) {
-              return true;
-            }
-
-            return false;
+            return true;
           case CONFIRM_TOPIC_MODAL.ACCEPT:
             if (
               isAdmin() &&
@@ -156,6 +148,9 @@ const TopicList = () => {
             }
 
             return false;
+
+          case CONFIRM_TOPIC_MODAL.DELETE:
+            return true;
           default:
             return false;
         }
