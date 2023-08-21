@@ -175,7 +175,7 @@ const UpsertMentorModal = (props) => {
             />
 
             <CustomizedTextField
-              name={"Số điện thoại 123"}
+              name={"Số điện thoại"}
               placeholder={PLACE_HOLDER.DEFAULT_PHONE}
               options={{
                 ...register("phoneNum", {

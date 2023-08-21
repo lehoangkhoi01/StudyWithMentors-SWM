@@ -49,14 +49,6 @@ const FillInformation = () => {
     }
   }, []);
 
-  const validatePhoneNum = (phoneNum) => {
-    if (phoneNum && (phoneNum.length < 10 || phoneNum.length > 11)) {
-      return ERROR_MESSAGES.INVALID_PHONE_NUM;
-    } else if (phoneNum && /^\d+$/.test(phoneNum) === false) {
-      return ERROR_MESSAGES.INVALID_PHONE_NUM;
-    }
-  };
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
@@ -83,6 +75,14 @@ const FillInformation = () => {
     } finally {
       setLoading(false);
       history.push(ROUTES.HOME);
+    }
+  };
+
+  const validatePhoneNum = (phoneNum) => {
+    if (phoneNum && (phoneNum.length < 10 || phoneNum.length > 11)) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
+    } else if (phoneNum && /^\d+$/.test(phoneNum) === false) {
+      return ERROR_MESSAGES.INVALID_PHONE_NUM;
     }
   };
 
@@ -126,8 +126,8 @@ const FillInformation = () => {
                 validate: (val) => validatePhoneNum(val),
               }),
             }}
-            error={errors.phone ? true : false}
-            helperText={errors?.phone?.message}
+            error={errors.phoneNum ? true : false}
+            helperText={errors?.phoneNum?.message}
           />}
           <div className={style.fillInformation__button}>
             <CustomizedButton
