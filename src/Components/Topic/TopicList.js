@@ -102,10 +102,6 @@ const TopicList = () => {
     return [SYSTEM_ROLE.ADMIN].includes(userInfo?.role);
   };
 
-  const isMentor = () => {
-    return userInfo?.role === SYSTEM_ROLE.MENTOR;
-  };
-
   useEffect(() => {
     let header = [...HEADER_TABLE];
     let actions = [...ACTION_ITEMS];
