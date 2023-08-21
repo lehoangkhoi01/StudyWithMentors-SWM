@@ -5,6 +5,7 @@
   &__container {
     display: flex;
     flex-direction: column;
+    flex: none !important;
     align-items: center;
     padding: 1rem 8vw;
   }

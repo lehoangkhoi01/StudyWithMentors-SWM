@@ -222,84 +222,86 @@ const MentorList = () => {
         setFilterInfo={setFilterInfo}
         onSearch={onUpdateFilter}
       />
-      <div className={style.mentorList__status__filter}>
-        <div className={style.mentorList__status__filter__items}>
-          <p
-            className={
-              statusFilter === FILTER_SEMINAR.ALL
-                ? style.mentorList__status__filter__active
-                : ""
-            }
-            onClick={() => {
-              onChangeStatusFilter(FILTER_SEMINAR.ALL);
-            }}
-          >
-            {FILTER_SEMINAR.ALL}
-          </p>
-          {userInfo?.role === SYSTEM_ROLE.STUDENT && (
-            <>
+      {displayedMentors.length > 0 ? (
+        <>
+          <div className={style.mentorList__status__filter}>
+            <div className={style.mentorList__status__filter__items}>
               <p
                 className={
-                  statusFilter === FILTER_SEMINAR.FOLLOWING
+                  statusFilter === FILTER_SEMINAR.ALL
                     ? style.mentorList__status__filter__active
                     : ""
                 }
                 onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
+                  onChangeStatusFilter(FILTER_SEMINAR.ALL);
                 }}
               >
-                {FILTER_SEMINAR.FOLLOWING}
+                {FILTER_SEMINAR.ALL}
               </p>
-              <p
-                className={
-                  statusFilter === FILTER_SEMINAR.RECOMMEND
-                    ? style.mentorList__status__filter__active
-                    : ""
-                }
-                onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.RECOMMEND);
-                }}
-              >
-                {FILTER_SEMINAR.RECOMMEND}
-              </p>
-            </>
-          )}
-        </div>
-      </div>
-      <Grid className={`${style.mentorList__cards}`} container spacing={3}>
-        {displayedMentors.length > 0 ? (
-          displayedMentors.map((mentor, index) => (
-            <Grid
-              key={`MENTOR_CARD_${index}`}
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              xl={3}
-            >
-              <MentorCard
+              {userInfo?.role === SYSTEM_ROLE.STUDENT && (
+                <>
+                  <p
+                    className={
+                      statusFilter === FILTER_SEMINAR.FOLLOWING
+                        ? style.mentorList__status__filter__active
+                        : ""
+                    }
+                    onClick={() => {
+                      onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
+                    }}
+                  >
+                    {FILTER_SEMINAR.FOLLOWING}
+                  </p>
+                  <p
+                    className={
+                      statusFilter === FILTER_SEMINAR.RECOMMEND
+                        ? style.mentorList__status__filter__active
+                        : ""
+                    }
+                    onClick={() => {
+                      onChangeStatusFilter(FILTER_SEMINAR.RECOMMEND);
+                    }}
+                  >
+                    {FILTER_SEMINAR.RECOMMEND}
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+          <Grid className={`${style.mentorList__cards}`} container spacing={3}>
+            {displayedMentors.map((mentor, index) => (
+              <Grid
                 key={`MENTOR_CARD_${index}`}
-                data={mentor}
-                followingMentors={followingMentors}
-                onFollowSuccessfully={onFollowSuccessfully}
-                onUnfollowSuccessfully={onUnfollowSuccessfully}
-              />
-            </Grid>
-          ))
-        ) : (
-          <Typography textAlign="center">Chưa có dữ liệu</Typography>
-        )}
-      </Grid>
-      <Pagination
-        className={style.list__pagination}
-        count={pagination.totalPage}
-        variant="outlined"
-        shape="rounded"
-        page={pagination.page}
-        onChange={(_, page) => {
-          onPaginate(page);
-        }}
-      />
+                item
+                xs={12}
+                md={6}
+                lg={4}
+                xl={3}
+              >
+                <MentorCard
+                  key={`MENTOR_CARD_${index}`}
+                  data={mentor}
+                  followingMentors={followingMentors}
+                  onFollowSuccessfully={onFollowSuccessfully}
+                  onUnfollowSuccessfully={onUnfollowSuccessfully}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Pagination
+            className={style.list__pagination}
+            count={pagination.totalPage}
+            variant="outlined"
+            shape="rounded"
+            page={pagination.page}
+            onChange={(_, page) => {
+              onPaginate(page);
+            }}
+          />
+        </>
+      ) : (
+        <Typography>Chưa có dữ liệu</Typography>
+      )}
     </div>
   );
 };
