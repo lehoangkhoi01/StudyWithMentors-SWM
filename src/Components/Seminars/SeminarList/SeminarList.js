@@ -2,7 +2,7 @@ import style from "./SeminarList.module.scss";
 import { useEffect, useRef, useState } from "react";
 import SeminarCard from "../SeminarCard/SeminarCard";
 import { seminarService } from "../../../Services/seminarService";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import SeminarFilter from "./SeminarFilter/SeminarFilter";
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import {
@@ -50,8 +50,8 @@ const SeminarList = () => {
       status === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : status === FILTER_SEMINAR.PAST
-          ? "past"
-          : null;
+        ? "past"
+        : null;
 
     let filterDepartmentId = filterInfo?.departmentId;
 
@@ -110,9 +110,10 @@ const SeminarList = () => {
       statusFilter === FILTER_SEMINAR.IS_COMMING
         ? "future"
         : statusFilter === FILTER_SEMINAR.PAST
-          ? "past"
-          : statusFilter === FILTER_SEMINAR.OWN_SEMINAR
-            ? FILTER_SEMINAR.OWN_SEMINAR : null;
+        ? "past"
+        : statusFilter === FILTER_SEMINAR.OWN_SEMINAR
+        ? FILTER_SEMINAR.OWN_SEMINAR
+        : null;
 
     setFilterInfo({
       searchString: seminarName,
@@ -135,111 +136,120 @@ const SeminarList = () => {
   };
 
   return (
-    <div>
+    <div style={{ flex: "none" }}>
       <SeminarFilter
         ref={filterRef}
         onSeminarFilter={onSeminarFilter}
         onChangeStatusFilter={onChangeStatusFilter}
         setFilterInfo={setFilterInfo}
       />
-      <div className={style.seminarList__status__filter}>
-        <div className={style.seminarList__status__filter__items}>
-          <p
-            className={
-              statusFilter === FILTER_SEMINAR.ALL
-                ? style.seminarList__status__filter__active
-                : ""
-            }
-            onClick={() => {
-              onChangeStatusFilter(FILTER_SEMINAR.ALL);
-            }}
-          >
-            {FILTER_SEMINAR.ALL}
-          </p>
-          <p
-            className={
-              statusFilter === FILTER_SEMINAR.IS_COMMING
-                ? style.seminarList__status__filter__active
-                : ""
-            }
-            onClick={() => {
-              onChangeStatusFilter(FILTER_SEMINAR.IS_COMMING);
-            }}
-          >
-            {FILTER_SEMINAR.IS_COMMING}
-          </p>
-          <p
-            className={
-              statusFilter === FILTER_SEMINAR.PAST
-                ? style.seminarList__status__filter__active
-                : ""
-            }
-            onClick={() => {
-              onChangeStatusFilter(FILTER_SEMINAR.PAST);
-            }}
-          >
-            {FILTER_SEMINAR.PAST}
-          </p>
-          {userInfo?.role === SYSTEM_ROLE.STAFF && (
-            <p
-              className={
-                statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
-                  ? style.seminarList__status__filter__active
-                  : ""
-              }
-              onClick={() => {
-                onChangeStatusFilter(FILTER_SEMINAR.DEPARTMENT_SEMINAR);
-              }}
-            >
-              {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
-            </p>
-          )}
-          {userInfo?.role === SYSTEM_ROLE.MENTOR && (
-            <p
-              className={
-                statusFilter === FILTER_SEMINAR.OWN_SEMINAR
-                  ? style.seminarList__status__filter__active
-                  : ""
-              }
-              onClick={() => {
-                onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
-              }}
-            >
-              {FILTER_SEMINAR.OWN_SEMINAR}
-            </p>
-          )}
-        </div>
+      {seminars.length > 0 ? (
+        <>
+          <div className={style.seminarList__status__filter}>
+            <div className={style.seminarList__status__filter__items}>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.ALL
+                    ? style.seminarList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.ALL);
+                }}
+              >
+                {FILTER_SEMINAR.ALL}
+              </p>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.IS_COMMING
+                    ? style.seminarList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.IS_COMMING);
+                }}
+              >
+                {FILTER_SEMINAR.IS_COMMING}
+              </p>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.PAST
+                    ? style.seminarList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.PAST);
+                }}
+              >
+                {FILTER_SEMINAR.PAST}
+              </p>
+              {userInfo?.role === SYSTEM_ROLE.STAFF && (
+                <p
+                  className={
+                    statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
+                      ? style.seminarList__status__filter__active
+                      : ""
+                  }
+                  onClick={() => {
+                    onChangeStatusFilter(FILTER_SEMINAR.DEPARTMENT_SEMINAR);
+                  }}
+                >
+                  {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
+                </p>
+              )}
+              {userInfo?.role === SYSTEM_ROLE.MENTOR && (
+                <p
+                  className={
+                    statusFilter === FILTER_SEMINAR.OWN_SEMINAR
+                      ? style.seminarList__status__filter__active
+                      : ""
+                  }
+                  onClick={() => {
+                    onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
+                  }}
+                >
+                  {FILTER_SEMINAR.OWN_SEMINAR}
+                </p>
+              )}
+            </div>
 
-        {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
-          <CustomizedButton
-            variant="outlined"
-            color="primary600"
-            onClick={navigateToCreatePage}
+            {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
+              <CustomizedButton
+                variant="outlined"
+                color="primary600"
+                onClick={navigateToCreatePage}
+              >
+                <img
+                  className={style.seminarList__add_icon}
+                  src={require("../../../assets/icons/Add_Seminar.png")}
+                />
+                {BUTTON_LABEL.CREATE_SEMINAR}
+              </CustomizedButton>
+            )}
+          </div>
+          <Grid
+            className={style.seminarList__list}
+            container
+            spacing={2}
+            alignItems={"stretch"}
           >
-            <img
-              className={style.seminarList__add_icon}
-              src={require("../../../assets/icons/Add_Seminar.png")}
-            />
-            {BUTTON_LABEL.CREATE_SEMINAR}
-          </CustomizedButton>
-        )}
-      </div>
-      <Grid
-        className={style.seminarList__list}
-        container
-        spacing={2}
-        alignItems={"stretch"}
-      >
-        {seminars.map((data, index) => (
-          <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} xl={4}>
-            <SeminarCard data={data} />
+            {seminars.map((data, index) => (
+              <Grid key={`SEMINAR_CARD_${index}`} item xs={12} md={6} xl={4}>
+                <SeminarCard data={data} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      {!!nextLink && (
-        <p className={style.seminarList__viewMore} onClick={viewMoreSeminar}>
-          {OTHERS.VIEW_MORE}
-        </p>
+          {!!nextLink && (
+            <p
+              className={style.seminarList__viewMore}
+              onClick={viewMoreSeminar}
+            >
+              {OTHERS.VIEW_MORE}
+            </p>
+          )}
+        </>
+      ) : (
+        <Typography textAlign="center">Chưa có dữ liệu</Typography>
       )}
     </div>
   );
