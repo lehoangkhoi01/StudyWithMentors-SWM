@@ -78,7 +78,6 @@ const AdminSeminarList = () => {
       label: CONFIRM_TOPIC_MODAL.DELETE,
       action: EXTERNAL_ACTION,
       functionAction: (row) => {
-        console.log(row);
         setSelectedSeminar(row);
         setOpenDeleteSeminarConfirmation(true);
       },

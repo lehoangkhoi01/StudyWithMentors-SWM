@@ -67,7 +67,6 @@ const DiscussionRoom = (props) => {
     try {
       await updateDocument("Comments", comment.id, updatedData);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",

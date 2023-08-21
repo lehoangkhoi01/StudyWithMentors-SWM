@@ -96,7 +96,6 @@ const MentorList = () => {
       );
       setMentors(mentorsData.mentorCards);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
@@ -113,7 +112,6 @@ const MentorList = () => {
       const fieldsBE = await getTopicFields();
       setFields(fieldsBE);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",
@@ -130,7 +128,6 @@ const MentorList = () => {
       const categoriesBE = await getTopicCategories();
       setCategories(categoriesBE);
     } catch (error) {
-      console.log(error);
       setNotification({
         isOpen: true,
         type: "error",

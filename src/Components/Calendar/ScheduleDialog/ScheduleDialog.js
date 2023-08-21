@@ -77,7 +77,6 @@ const ScheduleDialog = (props) => {
   const onSubmit = (data) => {
     const newFromDate = convertToDateTime(data.freeTime);
     const newEndDate = convertToDateTime(data.endDateTime);
-    console.log(newEndDate);
     if (!newFromDate) {
       setError("freeTime", {
         type: "custom",

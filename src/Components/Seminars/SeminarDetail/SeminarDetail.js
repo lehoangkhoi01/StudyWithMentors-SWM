@@ -61,7 +61,6 @@ const SeminarDetail = () => {
   ];
 
   const isAuthorizedEditSeminar = (seminarDetail) => {
-    console.log(seminarDetail);
     if (!AUTHORIZED_ROLE_ACTION.includes(userInfo?.role)) {
       return false;
     }
