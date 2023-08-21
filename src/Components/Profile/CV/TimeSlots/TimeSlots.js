@@ -9,24 +9,26 @@ import style from "./TimeSlot.module.scss";
 const TimeSlots = (props) => {
   return (
     <Grid2 container rowSpacing={2} spacing={2} marginY={1}>
-      {props.timeSlots.length > 0
-        ? props.timeSlots.map((slot, index) => (
-            <Grid2 xs={6} xl={3} key={`timeslot${index}`}>
-              <Paper className={`${style.timeSlot__paper}`}>
-                <Typography fontWeight={600}>
-                  {getDayOfWeek(new Date(slot.startDate))}
-                </Typography>
-                <Typography>
-                  {format(new Date(slot.startDate), "dd-MM")}
-                </Typography>
-                <Typography color="#1a237e" fontWeight={600}>
-                  {format(new Date(slot.startTime), DATE_FORMAT.HH_mm)} -
-                  {format(new Date(slot.endTime), DATE_FORMAT.HH_mm)}
-                </Typography>
-              </Paper>
-            </Grid2>
-          ))
-        : null}
+      {props.timeSlots.length > 0 ? (
+        props.timeSlots.map((slot, index) => (
+          <Grid2 xs={6} xl={3} key={`timeslot${index}`}>
+            <Paper className={`${style.timeSlot__paper}`}>
+              <Typography fontWeight={600}>
+                {getDayOfWeek(new Date(slot.startDate))}
+              </Typography>
+              <Typography>
+                {format(new Date(slot.startDate), "dd-MM")}
+              </Typography>
+              <Typography color="#1a237e" fontWeight={600}>
+                {format(new Date(slot.startTime), DATE_FORMAT.HH_mm)} -
+                {format(new Date(slot.endTime), DATE_FORMAT.HH_mm)}
+              </Typography>
+            </Paper>
+          </Grid2>
+        ))
+      ) : (
+        <Typography>Chưa có dữ liệu</Typography>
+      )}
     </Grid2>
   );
 };

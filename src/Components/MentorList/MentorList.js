@@ -3,7 +3,7 @@ import ImageSlider from "./ImageSlider/ImageSlider";
 import style from "./MentorList.module.scss";
 import FilterSection from "./FilterSection/FilterSection";
 import MentorCard from "./MentorCard/MentorCard";
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Pagination, Typography } from "@mui/material";
 import { ERROR_MESSAGES, FILTER_SEMINAR } from "../../shared/constants/common";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -267,17 +267,28 @@ const MentorList = () => {
         </div>
       </div>
       <Grid className={`${style.mentorList__cards}`} container spacing={3}>
-        {displayedMentors.map((mentor, index) => (
-          <Grid key={`MENTOR_CARD_${index}`} item xs={12} md={6} lg={4} xl={3}>
-            <MentorCard
+        {displayedMentors.length > 0 ? (
+          displayedMentors.map((mentor, index) => (
+            <Grid
               key={`MENTOR_CARD_${index}`}
-              data={mentor}
-              followingMentors={followingMentors}
-              onFollowSuccessfully={onFollowSuccessfully}
-              onUnfollowSuccessfully={onUnfollowSuccessfully}
-            />
-          </Grid>
-        ))}
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              xl={3}
+            >
+              <MentorCard
+                key={`MENTOR_CARD_${index}`}
+                data={mentor}
+                followingMentors={followingMentors}
+                onFollowSuccessfully={onFollowSuccessfully}
+                onUnfollowSuccessfully={onUnfollowSuccessfully}
+              />
+            </Grid>
+          ))
+        ) : (
+          <Typography textAlign="center">Chưa có dữ liệu</Typography>
+        )}
       </Grid>
       <Pagination
         className={style.list__pagination}
