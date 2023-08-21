@@ -120,10 +120,7 @@ const TopicList = () => {
           case TABLE_ACTION.EDIT:
             return true;
           case CONFIRM_TOPIC_MODAL.ACCEPT:
-            if (
-              isAdmin() &&
-              row.translatedStatus === TOPIC_STATUS.WAITING
-            ) {
+            if (isAdmin() && row.translatedStatus === TOPIC_STATUS.WAITING) {
               return true;
             }
 
@@ -167,7 +164,9 @@ const TopicList = () => {
 
       if (userInfo?.role === SYSTEM_ROLE.MENTOR) {
         topics = await topicService.getTopicsByOwnMentor();
-      } else if ([SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role)) {
+      } else if (
+        [SYSTEM_ROLE.ADMIN, SYSTEM_ROLE.STAFF].includes(userInfo?.role)
+      ) {
         topics = await topicService.getTopics();
       }
 
@@ -177,13 +176,11 @@ const TopicList = () => {
         return {
           ...topic,
           translatedStatus: TOPIC_STATUS[topic.status],
-          mentorName: userInfo?.role === SYSTEM_ROLE.MENTOR ? "" : topic.mentor.fullName,
+          mentorName:
+            userInfo?.role === SYSTEM_ROLE.MENTOR ? "" : topic.mentor.fullName,
           description: topic.description ?? "",
         };
       });
-
-      console.log(updatedTopicList)
-
       return updatedTopicList;
     } catch (error) {
       setNotification({

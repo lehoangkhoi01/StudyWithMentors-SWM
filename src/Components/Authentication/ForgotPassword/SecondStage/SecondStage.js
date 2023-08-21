@@ -26,7 +26,6 @@ const SecondStage = ({ moveBack, email, isEmailNotFound = false }) => {
         const response = await authenticationService.sendResetPasswordEmail(
           requestBody
         );
-        console.log(response);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
       } finally {

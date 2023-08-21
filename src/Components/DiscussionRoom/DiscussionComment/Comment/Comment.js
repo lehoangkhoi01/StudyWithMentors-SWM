@@ -17,7 +17,6 @@ import { useNotification } from "../../../../Helpers/generalHelper";
 import { ERROR_MESSAGES } from "../../../../shared/constants/common";
 
 const Comment = (props) => {
-  console.log(props.comment);
   const [updatedComment, setUpdatedComment] = React.useState(undefined);
 
   const { setNotification } = useNotification();

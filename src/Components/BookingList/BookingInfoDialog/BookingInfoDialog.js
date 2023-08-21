@@ -37,7 +37,6 @@ import { ROUTES } from "../../../shared/constants/navigation";
 const hostname = window.location.host;
 
 const BookingInfoDialog = (props) => {
-  console.log(props.bookingInfo);
   const userInfo = useSelector(selectUserInfo);
   const [openCancelBookingDialog, setOpenCancelBookingDialog] =
     React.useState(false);

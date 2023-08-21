@@ -63,7 +63,6 @@ const SelectSlotUIStep = (props) => {
       let newSchedules = filterAvailableSchedules(schedules);
       setEventList(newSchedules);
     } catch (error) {
-      console.log(error);
       if (error?.status) {
         history.push(ROUTES.SERVER_ERROR);
       }
