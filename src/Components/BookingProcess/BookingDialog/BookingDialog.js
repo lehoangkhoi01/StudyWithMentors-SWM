@@ -108,7 +108,8 @@ const BookingDialog = (props) => {
           />
         ) : (
           <Typography fontSize="1.2rem">
-            Hiện tại bạn không thể đặt lịch hẹn.
+            Bạn đã chạm ngưỡng số lượng lịch hẹn đang chờ tối đa. Hiện tại không
+            thể đặt lịch hẹn.
           </Typography>
         )}
       </DialogContent>
