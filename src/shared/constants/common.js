@@ -147,19 +147,23 @@ export const COMMON_MESSAGE = {
   ADD_SCHEDULE_FAIL: "Thêm lịch thất bại. Xin vui lòng thử lại sau",
   UPDATE_SCHEDULE_SUCCESS: "Cập nhật lịch thành công",
   UPDATE_SCHEDULE_FAIL: "Cập nhật lịch thất bại. Xin vui lòng thử lại sau",
-  UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin thành công",
-  UPDATE_PROFILE_FAIL: "Cập nhật thông tin thất bại",
   ACCEPT_BOOKING_SUCCESS: "Xác nhận lịch thành công",
   REJECT_BOOKING_SUCCESS: "Hủy lịch hẹn thành công",
   ADD_STAFF_SUCCESS: "Thêm nhân viên thành công",
   UPDATE_STAFF_SUCCESS: "Cập nhật thông tin thành công",
   EXISTED_EMAIL: "Email đã tồn tại",
-  UPDATE_SUCCESS: "Cập nhật thông tin thành công",
+  UPDATE_SUCCESS: "Cập nhật thông tin thành công.",
   ADD_FIELD_SUCCESS: "Thêm lĩnh vực thành công",
   ADD_CATEGORY_SUCCESS: "Thêm thể loại thành công",
   ADD_DEPARTMENT_SUCCESS: "Thêm phòng ban thành công",
   ADD_TOPIC_SUCCESS: "Thêm chủ đề thành công",
   CREATE_SUCCESS: "Khởi tạo thành công",
+  ADD_PROFILE_SUCCESS: "Thêm thông tin hồ sơ thành công.",
+  ADD_PROFILE_FAIL: "Thêm thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
+  UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin hồ sơ thành công.",
+  UPDATE_PROFILE_FAIL: "Cập nhật thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
+  DELETE_PROFILE_SUCCESS: "Xoá thông tin hồ sơ thành công.",
+  DELETE_PROFILE_FAIL: "Xoá thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
 };
 
 export const SIGN_UP_STAGE = {
@@ -305,11 +309,12 @@ export const ERROR_MESSAGES = {
     "Có lỗi xảy ra khi xóa bình luận. Xin vui lòng thử lại sau",
   END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE:
     "Thời gian kết thúc không thể sớm hơn thời gian bắt đầu.",
+  COMPLETE_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE:
+    "Thời gian hoàn thành không thể sớm hơn thời gian bắt đầu.",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
-    "Ngày hết hạn không được sớm hơn ngày nhận",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
-    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+    "Thời hạn không thể sớm hơn thời gian cấp chứng chỉ.",
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   EXISTED_CATEGORY: "Thể loại này đã tồn tại",

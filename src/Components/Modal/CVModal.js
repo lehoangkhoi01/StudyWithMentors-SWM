@@ -9,6 +9,7 @@ import {
   ERROR_MESSAGES,
   INPUT_TYPES,
   MODAL_TYPE,
+  REGISTER_FIELD,
 } from "../../shared/constants/common";
 import CustomizedTextField from "../../shared/components/TextField/CustomizedTextField";
 import CustomizedDatePicker from "../../shared/components/DatePicker/CustomizedDatePicker";
@@ -62,7 +63,7 @@ const CVModal = (props) => {
     }
   }, [props.openModal]);
 
-  const validateEndDate = (val, isOptionalEmptyDate) => {
+  const validateEndDate = (val, isOptionalEmptyDate, registerName) => {
     let isSkipValidate =
       getValues(`${registerNamePrefix}_workingHere`) ||
       getValues(`${registerNamePrefix}_attendingThis`);
@@ -84,7 +85,11 @@ const CVModal = (props) => {
       const startDateTimeNumber = startDateTime.getTime();
 
       if (endDateTimeNumber < startDateTimeNumber) {
-        return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
+        if (registerName === REGISTER_FIELD.STUDY_PROGRESS.COMPLETED_TIME) {
+          return ERROR_MESSAGES.COMPLETE_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
+        } else {
+          return ERROR_MESSAGES.END_DATE_CAN_NOT_BE_EALIER_THAN_START_DATE;
+        }
       }
     }
   };
@@ -157,7 +162,7 @@ const CVModal = (props) => {
         ...register(registerName, {
           validate: {
             checkEndDate: (val) =>
-              validateEndDate(val, isOptionalEmptyDate(registerName, val)),
+              validateEndDate(val, isOptionalEmptyDate(registerName, val), registerName),
           },
         }),
       };
@@ -208,7 +213,7 @@ const CVModal = (props) => {
       }
     });
 
-    props.handleSubmit(specificForm, registerNamePrefix);
+    props.handleSubmit(specificForm, registerNamePrefix, !!props.existedData);
   };
 
   return (
@@ -254,7 +259,7 @@ const CVModal = (props) => {
                       disabled={
                         textField.registerName.includes("endDate")
                           ? getValues(`${registerNamePrefix}_workingHere`) ||
-                            getValues(`${registerNamePrefix}_attendingThis`)
+                          getValues(`${registerNamePrefix}_attendingThis`)
                           : false
                       }
                       getValues={getValues}

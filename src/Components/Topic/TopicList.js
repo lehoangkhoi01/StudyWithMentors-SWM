@@ -156,6 +156,9 @@ const TopicList = () => {
             }
 
             return false;
+
+            case CONFIRM_TOPIC_MODAL.DELETE:
+              return true;
           default:
             return false;
         }

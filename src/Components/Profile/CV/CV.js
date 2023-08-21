@@ -1,6 +1,7 @@
 import {
   ADD_TOPIC,
   BUTTON_LABEL,
+  COMMON_MESSAGE,
   CV_MENTOR,
   CV_REGISTER_NAME_PREFIX,
   DATE_FORMAT,
@@ -494,7 +495,7 @@ const CV = () => {
     }
   };
 
-  const upsertHandler = async (data, prefix) => {
+  const upsertHandler = async (data, prefix, isUpdate) => {
     let prevCV = cvData;
 
     if (prefix === CV_REGISTER_NAME_PREFIX.INTRODUCION) {
@@ -505,7 +506,7 @@ const CV = () => {
       prevCV[prefix].push(data);
     }
 
-    updateCVToBE(prevCV);
+    updateCVToBE(prevCV, isUpdate);
   };
 
   const editDetailData = (key, title, indexOfProperty) => {
@@ -530,22 +531,69 @@ const CV = () => {
 
     prevCV[prefix].splice(index, 1);
 
-    updateCVToBE(prevCV);
+    updateCVToBE(prevCV, null, true);
   };
 
-  const updateCVToBE = async (prevCV) => {
-    setIsLoading(true);
-    setLoading(true);
+  const updateCVToBE = async (prevCV, isUpdate, isDelete) => {
+    try {
+      setIsLoading(true);
+      setLoading(true);
 
-    const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
+      const CVDataFromBE = await cvEndpoints.updateUserCV(prevCV);
 
-    delete CVDataFromBE.userProfileId;
+      delete CVDataFromBE.userProfileId;
 
-    convertNullToEmptyArrayProperty(CVDataFromBE);
+      convertNullToEmptyArrayProperty(CVDataFromBE);
 
-    onSetCVData(CVDataFromBE);
-    setIsLoading(false);
-    setLoading(false);
+      onSetCVData(CVDataFromBE);
+      setIsLoading(false);
+      setLoading(false);
+
+      if (isDelete) {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.DELETE_PROFILE_SUCCESS,
+        });
+      } else if (isUpdate) {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_PROFILE_SUCCESS,
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_PROFILE_SUCCESS,
+        });
+      }
+    } catch (error) {
+      console.log(error)
+      if (isDelete) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.DELETE_PROFILE_FAIL,
+        });
+      } else if (isUpdate) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.UPDATE_PROFILE_FAIL,
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: COMMON_MESSAGE.ADD_PROFILE_FAIL,
+        });
+      }
+
+      setIsLoading(false);
+      setLoading(false);
+    }
+
   };
 
   const convertNullToEmptyArrayProperty = (CVData) => {
@@ -753,7 +801,7 @@ const CV = () => {
                   className={style.cv__detail__information_avatar}
                   src={
                     mentorProfile?.avatarUrl &&
-                    mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
+                      mentorProfile.avatarUrl !== "String".toLocaleLowerCase()
                       ? mentorProfile.avatarUrl
                       : require("../../../assets/sbcf-default-avatar.png")
                   }
