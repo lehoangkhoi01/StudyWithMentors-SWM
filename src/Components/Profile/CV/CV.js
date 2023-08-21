@@ -836,27 +836,29 @@ const CV = () => {
         <div className={style.cv__booking}>
           <div className={style.cv__booking__section}>
             <h3>{CV_MENTOR.HOT_TOPIC}</h3>
-
-            {hotTopics.map((topic, index) => (
-              <>
-                {index < 3 && (
-                  <div
-                    key={`TOPIC_${index}`}
-                    className={style.cv__booking__topic}
-                  >
-                    <h4>{topic.name}</h4>
-                    <p>
-                      {ADD_TOPIC.CATEGORY}: {topic.category}
-                    </p>
-                    <p>
-                      {ADD_TOPIC.FIELD}: {topic.field}
-                    </p>
-                  </div>
-                )}
-
-                {index < 2 && <Divider />}
-              </>
-            ))}
+            {hotTopics.length > 0 ? (
+              hotTopics.map((topic, index) => (
+                <>
+                  {index < 3 && (
+                    <div
+                      key={`TOPIC_${index}`}
+                      className={style.cv__booking__topic}
+                    >
+                      <h4>{topic.name}</h4>
+                      <p>
+                        {ADD_TOPIC.CATEGORY}: {topic.category}
+                      </p>
+                      <p>
+                        {ADD_TOPIC.FIELD}: {topic.field}
+                      </p>
+                    </div>
+                  )}
+                  {index < 2 && <Divider />}
+                </>
+              ))
+            ) : (
+              <Typography>Chưa có dữ liệu</Typography>
+            )}
           </div>
 
           {userInfo?.role === SYSTEM_ROLE.STUDENT && (
