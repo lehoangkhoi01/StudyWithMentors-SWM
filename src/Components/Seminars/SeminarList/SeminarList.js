@@ -87,12 +87,16 @@ const SeminarList = () => {
         ? Object.fromEntries(Object.entries(filterInfo).filter(([, v]) => !!v))
         : filterInfo;
 
+      const loop = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       const response = await seminarService.getSemniars(clearedFilterInfo, url);
 
       const data = url ? [...seminars, ...response.content] : response.content;
 
       setSeminars(data);
       setNextLink(response.nextPage);
+      clearTimeout(loop);
     } catch (error) {
       history.push(ROUTES.SERVER_ERROR);
     } finally {

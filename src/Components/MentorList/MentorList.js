@@ -78,7 +78,9 @@ const MentorList = () => {
 
   const getMentors = async (getFollowingMentors) => {
     try {
-      setLoading(true);
+      const loop = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       const mentorsData = await accountService.getAllMoreInfoMentors(
         filterInfo ?? []
       );
@@ -91,6 +93,7 @@ const MentorList = () => {
       } else {
         setMentors(mentorsData.mentorCards);
       }
+      clearTimeout(loop);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -104,11 +107,14 @@ const MentorList = () => {
 
   const getReommendMentors = async () => {
     try {
-      setLoading(true);
+      const loop = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       const mentorsData = await accountService.getRecommendMentors(
         filterInfo ?? []
       );
       setMentors(mentorsData.mentorCards);
+      clearTimeout(loop);
     } catch (error) {
       setNotification({
         isOpen: true,
