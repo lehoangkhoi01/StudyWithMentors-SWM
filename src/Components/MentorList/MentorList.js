@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { SYSTEM_ROLE } from "../../shared/constants/systemType";
 import { selectUserInfo } from "../../Store/slices/userSlice";
 
+const MANAGE_ROLES = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
 const MentorList = () => {
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
@@ -219,52 +220,52 @@ const MentorList = () => {
         setFilterInfo={setFilterInfo}
         onSearch={onUpdateFilter}
       />
-      {displayedMentors.length > 0 ? (
-        <>
-          <div className={style.mentorList__status__filter}>
-            <div className={style.mentorList__status__filter__items}>
+      <div className={style.mentorList__status__filter}>
+        <div className={style.mentorList__status__filter__items}>
+          <p
+            className={
+              statusFilter === FILTER_SEMINAR.ALL
+                ? style.mentorList__status__filter__active
+                : ""
+            }
+            onClick={() => {
+              onChangeStatusFilter(FILTER_SEMINAR.ALL);
+            }}
+          >
+            {FILTER_SEMINAR.ALL}
+          </p>
+          {userInfo?.role === SYSTEM_ROLE.STUDENT && (
+            <>
               <p
                 className={
-                  statusFilter === FILTER_SEMINAR.ALL
+                  statusFilter === FILTER_SEMINAR.FOLLOWING
                     ? style.mentorList__status__filter__active
                     : ""
                 }
                 onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.ALL);
+                  onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
                 }}
               >
-                {FILTER_SEMINAR.ALL}
+                {FILTER_SEMINAR.FOLLOWING}
               </p>
-              {userInfo?.role === SYSTEM_ROLE.STUDENT && (
-                <>
-                  <p
-                    className={
-                      statusFilter === FILTER_SEMINAR.FOLLOWING
-                        ? style.mentorList__status__filter__active
-                        : ""
-                    }
-                    onClick={() => {
-                      onChangeStatusFilter(FILTER_SEMINAR.FOLLOWING);
-                    }}
-                  >
-                    {FILTER_SEMINAR.FOLLOWING}
-                  </p>
-                  <p
-                    className={
-                      statusFilter === FILTER_SEMINAR.RECOMMEND
-                        ? style.mentorList__status__filter__active
-                        : ""
-                    }
-                    onClick={() => {
-                      onChangeStatusFilter(FILTER_SEMINAR.RECOMMEND);
-                    }}
-                  >
-                    {FILTER_SEMINAR.RECOMMEND}
-                  </p>
-                </>
-              )}
-            </div>
-          </div>
+              <p
+                className={
+                  statusFilter === FILTER_SEMINAR.RECOMMEND
+                    ? style.mentorList__status__filter__active
+                    : ""
+                }
+                onClick={() => {
+                  onChangeStatusFilter(FILTER_SEMINAR.RECOMMEND);
+                }}
+              >
+                {FILTER_SEMINAR.RECOMMEND}
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+      {displayedMentors.length > 0 ? (
+        <>
           <Grid className={`${style.mentorList__cards}`} container spacing={3}>
             {displayedMentors.map((mentor, index) => (
               <Grid
@@ -297,7 +298,15 @@ const MentorList = () => {
           />
         </>
       ) : (
-        <Typography>Chưa có dữ liệu</Typography>
+        <div
+          className={
+            MANAGE_ROLES.includes(userInfo?.role)
+              ? `${style.mentorList__emptyText}`
+              : null
+          }
+        >
+          <Typography textAlign="center">Chưa có dữ liệu</Typography>
+        </div>
       )}
     </div>
   );
