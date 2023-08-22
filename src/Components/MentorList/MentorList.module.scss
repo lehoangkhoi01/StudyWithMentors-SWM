@@ -2,6 +2,9 @@
 @import "../../shared/break-point";
 
 .mentorList {
+  &__emptyText {
+    height: 70vh;
+  }
   &__container {
     display: flex;
     flex-direction: column;

@@ -2,6 +2,10 @@
 @import "../../../shared/break-point";
 
 .seminarList {
+  &__emptyText {
+    height: 70vh;
+  }
+
   &__list {
     width: 90%;
     margin: 0 auto 1rem;

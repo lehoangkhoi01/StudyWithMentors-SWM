@@ -404,16 +404,15 @@ const SeminarDetail = () => {
                 </p>
 
                 <div className={style.detail__buttons}>
-                  {userInfo?.role !== SYSTEM_ROLE.STAFF &&
-                    new Date() > new Date(data.startTime) && (
-                      <CustomizedButton
-                        onClick={onOpenModal}
-                        variant="outlined"
-                        color="primary600"
-                      >
-                        {BUTTON_LABEL.FEEDBACK_SEMINAR}
-                      </CustomizedButton>
-                    )}
+                  {new Date() > new Date(data.startTime) && (
+                    <CustomizedButton
+                      onClick={onOpenModal}
+                      variant="outlined"
+                      color="primary600"
+                    >
+                      {BUTTON_LABEL.FEEDBACK_SEMINAR}
+                    </CustomizedButton>
+                  )}
                 </div>
               </div>
             </div>

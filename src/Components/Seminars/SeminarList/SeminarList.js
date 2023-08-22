@@ -21,6 +21,8 @@ import { ROUTES } from "../../../shared/constants/navigation";
 import { APPBAR_TITLES } from "../../../shared/constants/appbarTitles";
 import { SYSTEM_ROLE } from "../../../shared/constants/systemType";
 
+const MANAGE_ROLES = [SYSTEM_ROLE.STAFF, SYSTEM_ROLE.ADMIN];
+
 const SeminarList = () => {
   const [seminars, setSeminars] = useState([]);
   const [statusFilter, setStatusFilter] = useState(FILTER_SEMINAR.ALL);
@@ -143,90 +145,90 @@ const SeminarList = () => {
         onChangeStatusFilter={onChangeStatusFilter}
         setFilterInfo={setFilterInfo}
       />
+      <div className={style.seminarList__status__filter}>
+        <div className={style.seminarList__status__filter__items}>
+          <p
+            className={
+              statusFilter === FILTER_SEMINAR.ALL
+                ? style.seminarList__status__filter__active
+                : ""
+            }
+            onClick={() => {
+              onChangeStatusFilter(FILTER_SEMINAR.ALL);
+            }}
+          >
+            {FILTER_SEMINAR.ALL}
+          </p>
+          <p
+            className={
+              statusFilter === FILTER_SEMINAR.IS_COMMING
+                ? style.seminarList__status__filter__active
+                : ""
+            }
+            onClick={() => {
+              onChangeStatusFilter(FILTER_SEMINAR.IS_COMMING);
+            }}
+          >
+            {FILTER_SEMINAR.IS_COMMING}
+          </p>
+          <p
+            className={
+              statusFilter === FILTER_SEMINAR.PAST
+                ? style.seminarList__status__filter__active
+                : ""
+            }
+            onClick={() => {
+              onChangeStatusFilter(FILTER_SEMINAR.PAST);
+            }}
+          >
+            {FILTER_SEMINAR.PAST}
+          </p>
+          {userInfo?.role === SYSTEM_ROLE.STAFF && (
+            <p
+              className={
+                statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
+                  ? style.seminarList__status__filter__active
+                  : ""
+              }
+              onClick={() => {
+                onChangeStatusFilter(FILTER_SEMINAR.DEPARTMENT_SEMINAR);
+              }}
+            >
+              {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
+            </p>
+          )}
+          {userInfo?.role === SYSTEM_ROLE.MENTOR && (
+            <p
+              className={
+                statusFilter === FILTER_SEMINAR.OWN_SEMINAR
+                  ? style.seminarList__status__filter__active
+                  : ""
+              }
+              onClick={() => {
+                onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
+              }}
+            >
+              {FILTER_SEMINAR.OWN_SEMINAR}
+            </p>
+          )}
+        </div>
+
+        {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
+          <CustomizedButton
+            variant="outlined"
+            color="primary600"
+            onClick={navigateToCreatePage}
+          >
+            <img
+              className={style.seminarList__add_icon}
+              src={require("../../../assets/icons/Add_Seminar.png")}
+            />
+            {BUTTON_LABEL.CREATE_SEMINAR}
+          </CustomizedButton>
+        )}
+      </div>
       {seminars.length > 0 ? (
         <>
-          <div className={style.seminarList__status__filter}>
-            <div className={style.seminarList__status__filter__items}>
-              <p
-                className={
-                  statusFilter === FILTER_SEMINAR.ALL
-                    ? style.seminarList__status__filter__active
-                    : ""
-                }
-                onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.ALL);
-                }}
-              >
-                {FILTER_SEMINAR.ALL}
-              </p>
-              <p
-                className={
-                  statusFilter === FILTER_SEMINAR.IS_COMMING
-                    ? style.seminarList__status__filter__active
-                    : ""
-                }
-                onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.IS_COMMING);
-                }}
-              >
-                {FILTER_SEMINAR.IS_COMMING}
-              </p>
-              <p
-                className={
-                  statusFilter === FILTER_SEMINAR.PAST
-                    ? style.seminarList__status__filter__active
-                    : ""
-                }
-                onClick={() => {
-                  onChangeStatusFilter(FILTER_SEMINAR.PAST);
-                }}
-              >
-                {FILTER_SEMINAR.PAST}
-              </p>
-              {userInfo?.role === SYSTEM_ROLE.STAFF && (
-                <p
-                  className={
-                    statusFilter === FILTER_SEMINAR.DEPARTMENT_SEMINAR
-                      ? style.seminarList__status__filter__active
-                      : ""
-                  }
-                  onClick={() => {
-                    onChangeStatusFilter(FILTER_SEMINAR.DEPARTMENT_SEMINAR);
-                  }}
-                >
-                  {FILTER_SEMINAR.DEPARTMENT_SEMINAR}
-                </p>
-              )}
-              {userInfo?.role === SYSTEM_ROLE.MENTOR && (
-                <p
-                  className={
-                    statusFilter === FILTER_SEMINAR.OWN_SEMINAR
-                      ? style.seminarList__status__filter__active
-                      : ""
-                  }
-                  onClick={() => {
-                    onChangeStatusFilter(FILTER_SEMINAR.OWN_SEMINAR);
-                  }}
-                >
-                  {FILTER_SEMINAR.OWN_SEMINAR}
-                </p>
-              )}
-            </div>
-
-            {AUTHORIZED_ROLE_SEMINAR.includes(userInfo?.role) && (
-              <CustomizedButton
-                variant="outlined"
-                color="primary600"
-                onClick={navigateToCreatePage}
-              >
-                <img
-                  className={style.seminarList__add_icon}
-                  src={require("../../../assets/icons/Add_Seminar.png")}
-                />
-                {BUTTON_LABEL.CREATE_SEMINAR}
-              </CustomizedButton>
-            )}
-          </div>
           <Grid
             className={style.seminarList__list}
             container
@@ -249,7 +251,15 @@ const SeminarList = () => {
           )}
         </>
       ) : (
-        <Typography textAlign="center">Chưa có dữ liệu</Typography>
+        <div
+          className={
+            MANAGE_ROLES.includes(userInfo?.role)
+              ? `${style.seminarList__emptyText}`
+              : null
+          }
+        >
+          <Typography textAlign="center">Chưa có dữ liệu</Typography>
+        </div>
       )}
     </div>
   );
