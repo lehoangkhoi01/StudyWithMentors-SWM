@@ -266,17 +266,17 @@ const Room = () => {
         throw "error";
       }
       const bookingInfo = await bookingService.getBookingById(id);
-      const startDateTime = new Date(
-        `${bookingInfo.startDate} ${bookingInfo.startTime}`
-      );
-      const endDateTime = new Date(
-        `${bookingInfo.startDate} ${bookingInfo.endTime}`
-      );
-      const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
-      const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
-      if (diffStartDateTime > 30 || diffEndDateTime < -120) {
-        throw "error";
-      }
+      // const startDateTime = new Date(
+      //   `${bookingInfo.startDate} ${bookingInfo.startTime}`
+      // );
+      // const endDateTime = new Date(
+      //   `${bookingInfo.startDate} ${bookingInfo.endTime}`
+      // );
+      // const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
+      // const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
+      // if (diffStartDateTime > 30 || diffEndDateTime < -120) {
+      //   throw "error";
+      // }
       const participants = [bookingInfo.mentor, ...bookingInfo.mentees];
       const indexOfUser = participants
         .map((member) => member.accountId)
