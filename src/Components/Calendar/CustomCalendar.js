@@ -59,7 +59,16 @@ const CustomCalendar = () => {
           message:
             "Không thể tạo lịch mới vì đã có lịch trùng trong khung giờ này.",
         });
-      } else {
+      }
+      else if(error?.status === 400 && error?.data === "startTime must be before 23:00:00") {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message:
+            "Không thể tạo lịch từ 23h - 0h. Vui lòng thử lại sau.",
+        });
+      }
+      else {
         setNotification({
           isOpen: true,
           type: "error",
