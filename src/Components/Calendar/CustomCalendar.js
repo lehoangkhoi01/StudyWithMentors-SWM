@@ -65,7 +65,7 @@ const CustomCalendar = () => {
           isOpen: true,
           type: "error",
           message:
-            "Không thể tạo lịch từ 23h - 0h. Vui lòng thử lại sau.",
+            "Không thể tạo lịch từ 23h - 0h.",
         });
       }
       else {
@@ -138,7 +138,7 @@ const CustomCalendar = () => {
           isOpen: true,
           type: "error",
           message:
-            "Không thể tạo lịch từ 23h - 0h. Vui lòng thử lại sau.",
+            "Không thể tạo lịch từ 23h - 0h.",
         });
       } 
       else {
