@@ -67,17 +67,30 @@ const MentorList = () => {
   }, [statusFilter]);
 
   useEffect(() => {
-    getMentors();
+    if (statusFilter === FILTER_SEMINAR.ALL) {
+      getMentors();
+    } else if (statusFilter === FILTER_SEMINAR.FOLLOWING) {
+      getMentors(true);
+    } else if (statusFilter === FILTER_SEMINAR.RECOMMEND) {
+      getReommendMentors();
+    }
   }, [filterInfo]);
 
-  const getMentors = async () => {
+  const getMentors = async (getFollowingMentors) => {
     try {
       setLoading(true);
       const mentorsData = await accountService.getAllMoreInfoMentors(
         filterInfo ?? []
       );
       setAllMentors(mentorsData.mentorCards);
-      setMentors(mentorsData.mentorCards);
+      if (getFollowingMentors) {
+        const newMentorList = mentorsData.mentorCards.filter((mentor) =>
+          followingMentors.includes(mentor.mentorId)
+        );
+        setMentors(newMentorList);
+      } else {
+        setMentors(mentorsData.mentorCards);
+      }
     } catch (error) {
       setNotification({
         isOpen: true,

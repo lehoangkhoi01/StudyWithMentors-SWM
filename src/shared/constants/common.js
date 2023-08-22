@@ -161,7 +161,8 @@ export const COMMON_MESSAGE = {
   ADD_PROFILE_SUCCESS: "Thêm thông tin hồ sơ thành công.",
   ADD_PROFILE_FAIL: "Thêm thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
   UPDATE_PROFILE_SUCCESS: "Cập nhật thông tin hồ sơ thành công.",
-  UPDATE_PROFILE_FAIL: "Cập nhật thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
+  UPDATE_PROFILE_FAIL:
+    "Cập nhật thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
   DELETE_PROFILE_SUCCESS: "Xoá thông tin hồ sơ thành công.",
   DELETE_PROFILE_FAIL: "Xoá thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
 };
@@ -313,8 +314,9 @@ export const ERROR_MESSAGES = {
     "Thời gian hoàn thành không thể sớm hơn thời gian bắt đầu.",
   EXPIRED_DATE_CAN_NOT_BE_EALIER_THAN_ACHIEVING_DATE:
     "Thời hạn không thể sớm hơn thời gian cấp chứng chỉ.",
-  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
-    } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
+  COMMON_SYSTEM_CONFIG_ERROR: `Dữ liệu phải là số lớn hơn ${
+    LENGTH.SYSTEM_CONFIG_NUM_MIN - 1
+  } và bé hơn ${LENGTH.SYSTEM_CONFIG_NUM_MAX + 1}`,
   CAN_NOT_DELETE: "Không thể xóa",
   EXISTED_FIELD: "Lĩnh vực này đã tồn tại",
   EXISTED_CATEGORY: "Thể loại này đã tồn tại",
@@ -672,7 +674,7 @@ export const TRANSLATED_TABLE_TYPE = {
   DEPARTMENT: "Phòng ban",
   STAFF: "Nhân viên",
   SEMINAR: "Hội thảo",
-  STUDENT: "Tài khoản"
+  STUDENT: "Tài khoản",
 };
 
 export const USER_STATUS = {
@@ -786,4 +788,9 @@ export const TRANSLATED_SEMINAR_STATUS = {
   IS_COMMING: "Sắp diễn ra",
   PAST: "Đã diễn ra",
   FUTURE: "Sắp diễn ra",
+};
+
+export const SEARCH_TYPE = {
+  NORMAL_SEARCH: "NORMAL",
+  RECOMMEND_SEARCH: "RECOMMEND",
 };
