@@ -41,11 +41,11 @@ const FillInformation = () => {
 
   useEffect(() => {
     setValue("fullName", userInfo.fullName);
-    setValue("phoneNum", userInfo.phone);
+    setValue("phone", userInfo.phone);
     setValue("email", userInfo.email);
 
     if (userInfo?.role === SYSTEM_ROLE.STUDENT) {
-      setValue("phoneNum", null);
+      setValue("phone", null);
     }
   }, []);
 
@@ -118,16 +118,16 @@ const FillInformation = () => {
           />
           {userInfo?.role !== SYSTEM_ROLE.STUDENT && <CustomizedTextField
             className={style.fillInformation__input}
-            inputId="phoneNum"
+            inputId="phone"
             name={TITLE.PHONE}
             type={"text"}
             options={{
-              ...register("phoneNum", {
+              ...register("phone", {
                 validate: (val) => validatePhoneNum(val),
               }),
             }}
-            error={errors.phoneNum ? true : false}
-            helperText={errors?.phoneNum?.message}
+            error={errors.phone ? true : false}
+            helperText={errors?.phone?.message}
           />}
           <div className={style.fillInformation__button}>
             <CustomizedButton
