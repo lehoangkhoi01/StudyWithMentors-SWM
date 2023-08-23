@@ -9,16 +9,23 @@ import {
 import CustomizedButton from "../../../shared/components/Button/CustomizedButton";
 import CustomizedTextField from "../../../shared/components/TextField/CustomizedTextField";
 import { BOOKING_STATUS } from "../../../shared/constants/systemType";
+import { ERROR_MESSAGES, LENGTH } from "../../../shared/constants/common";
 
 const CancelBookingDialog = (props) => {
   const [cancelReason, setCancelReason] = React.useState(null);
+  const [error, setError] = React.useState(null);
 
   const onReasonChange = (e) => {
+    setError(null);
     setCancelReason(e.target.value);
   };
 
   const handleCancelBooking = async () => {
-    if (!cancelReason.trim()) {
+    if (!cancelReason || !cancelReason?.trim()) {
+      setError(ERROR_MESSAGES.REQUIRED_FIELD);
+      return;
+    } else if (cancelReason?.trim().length > LENGTH.CANCEL_REASON) {
+      setError(`Tối đa ${LENGTH.CANCEL_REASON} kí tự.`);
       return;
     }
     const data = {
@@ -53,6 +60,9 @@ const CancelBookingDialog = (props) => {
           optional={false}
           required={true}
           name="Lý do hủy lịch"
+          error={error}
+          helperText={error}
+          maxLength={LENGTH.CANCEL_REASON}
           onChange={onReasonChange}
         />
       </DialogContent>
