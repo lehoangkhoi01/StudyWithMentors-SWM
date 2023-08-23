@@ -45,6 +45,7 @@ const BookingInfoDialog = (props) => {
     React.useState(false);
   const [feedbacks, setFeedbacks] = React.useState([]);
   const [studentFeedback, setStudentFeedback] = React.useState(null);
+  const [isRoomReady, setRoomReady] = React.useState(true);
 
   const { setLoading } = useCustomLoading();
   const { setNotification } = useNotification();
@@ -433,6 +434,17 @@ const BookingInfoDialog = (props) => {
       }
     };
     fetchFeedbacksByBooking();
+    const startDateTime = new Date(
+      `${props?.bookingInfo?.startDate} ${props?.bookingInfo?.startTime}`
+    );
+    const endDateTime = new Date(
+      `${props?.bookingInfo?.startDate} ${props?.bookingInfo?.endTime}`
+    );
+    const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
+    const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
+    if (diffStartDateTime > 30 || diffEndDateTime < -120) {
+      setRoomReady(false);
+    }
   }, []);
 
   return (
@@ -548,13 +560,17 @@ const BookingInfoDialog = (props) => {
                 Link tham gia:{" "}
               </span>
               <span>
-                <Link
-                  to={`/meeting-room/${props.bookingInfo?.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {hostname}/meeting-room/{props.bookingInfo?.id}
-                </Link>
+                {isRoomReady ? (
+                  <Link
+                    to={`/meeting-room/${props.bookingInfo?.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {hostname}/meeting-room/{props.bookingInfo?.id}
+                  </Link>
+                ) : (
+                  <span>(Không thể vào phòng họp lúc này)</span>
+                )}
               </span>
             </div>
           )}
