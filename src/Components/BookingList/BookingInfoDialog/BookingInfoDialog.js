@@ -443,7 +443,7 @@ const BookingInfoDialog = (props) => {
     const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
     const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
     if (diffStartDateTime > 30 || diffEndDateTime < -120) {
-      setRoomReady(false);
+      setRoomReady(true);
     }
   }, []);
 
