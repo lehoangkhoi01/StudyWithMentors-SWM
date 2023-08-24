@@ -17,6 +17,15 @@ const muiTheme = createTheme({
       fontFamily: `"Inter", sans-serif`,
     },
   },
+  breakpoints: {
+    values: {
+      xl: 1537,
+      lg: 1199,
+      md: 899,
+      sm: 599,
+      xs: 0
+    }
+  }
 });
 
 root.render(
