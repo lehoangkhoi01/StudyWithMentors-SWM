@@ -642,7 +642,7 @@ export const TOPIC_STATUS_BACKEND = {
 
 export const CONFIRM_TOPIC_MODAL = {
   REJECT_CONFIRM: "Bạn có muốn từ chối",
-  ACCEPT_CONFIRM: "Bạn có muốn phể duyệt",
+  ACCEPT_CONFIRM: "Bạn có muốn phê duyệt",
   ARCHIVE_CONFIRM: "Bạn có muốn ẩn",
   DELETE_CONFIRM: "Bạn có muốn xóa",
   REJECT: "Từ chối",
