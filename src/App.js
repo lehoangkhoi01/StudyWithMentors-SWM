@@ -46,6 +46,7 @@ import SeminarCreatePage from "./Pages/Seminars/SeminarCreatePage";
 import AboutUsPage from "./Pages/AboutUs/AboutUsPage";
 import HomePage from "./Pages/Home/HomePage";
 import ProfilePage from "./Pages/Profile/ProfilePage";
+import FeedbackOverviewPage from "./Pages/EventFeedback/FeedbackOverviewPage";
 
 function App() {
   const user = useSelector(selectUser);
@@ -109,7 +110,6 @@ function App() {
                 </>
               )}
               <>
-
                 <Route exact path={ROUTES.HOME} component={HomePage} />
                 <Route path={ROUTES.ABOUT} component={AboutUsPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
@@ -130,6 +130,10 @@ function App() {
                   path={ROUTES.SEMINAR_FEEDBACK}
                   component={SeminarFeedbackPage}
                 />
+                <Route
+                  path={ROUTES.FEEDBACK_OVERVIEW}
+                  component={FeedbackOverviewPage}
+                />
 
                 <Route path={ROUTES.MENTOR_LIST} component={MentorListPage} />
                 <Route path={ROUTES.MEETING} component={MeetingPage} />
@@ -141,10 +145,7 @@ function App() {
                   path={ROUTES.SEMINAR_UPDATE}
                   component={SeminarCreatePage}
                 />
-                <Route
-                  path={ROUTES.PROFILE}
-                  component={ProfilePage}
-                />
+                <Route path={ROUTES.PROFILE} component={ProfilePage} />
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
                 <Route path={ROUTES.SERVER_ERROR} component={ServerError} />
 
