@@ -14,7 +14,7 @@ export const ROUTES = {
   SEMINAR_DETAIL: "/seminars/:id",
   SEMINAR_CREATE: "/seminar-create",
   SEMINAR_UPDATE: "/update-seminar/:id",
-  FEEDBACK_OVERVIEW: "/management/feedback-overview/:id",
+  FEEDBACK_OVERVIEW: "/feedback-overview/:id",
   ADMIN_MENTOR_LIST: "/management/mentors",
   MEETING: "/meeting-room/:id",
   TOPIC_LIST: "/topic/list",
@@ -27,13 +27,13 @@ export const ROUTES = {
   STUDENT_LIST: "/admin/students",
   ADMIN_CONFIG: "/admin/config",
   ADMIN_SEMINAR_LIST: "/admin/seminars",
-  PROFILE: "/profile"
+  PROFILE: "/profile",
 };
 
 export const ROUTES_STATIC = {
   SEMINAR_DETAIL: "/seminars",
   SEMINAR_UPDATE: "/update-seminar",
-  FEEDBACK_OVERVIEW: "/management/feedback-overview",
+  FEEDBACK_OVERVIEW: "/feedback-overview",
 };
 
 export const UNAUTHORIZED_NAVBAR = [
@@ -153,7 +153,7 @@ export const STAFF_NAVBAR = [
 export const ACCOUNT_MENU = [
   {
     TITLE: "Tài khoản",
-    ACTION: "UPDATE_PROFILE"
+    ACTION: "UPDATE_PROFILE",
   },
   {
     TITLE: "Đăng xuất",

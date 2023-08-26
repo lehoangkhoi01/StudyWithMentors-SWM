@@ -69,8 +69,9 @@ const FeedbackOverview = () => {
         setLoading(true);
         const seminar = await seminarService.getSeminarDetail(id);
         if (
-          userInfo?.role === SYSTEM_ROLE.STAFF &&
-          userInfo.departmentId !== seminar.department.id
+          (userInfo?.role === SYSTEM_ROLE.STAFF &&
+            userInfo.departmentId !== seminar.department.id) ||
+          userInfo?.role === SYSTEM_ROLE.STUDENT
         ) {
           history.push(ROUTES.NOT_FOUND);
         }
@@ -234,12 +235,13 @@ const FeedbackOverview = () => {
             </div>
             <div className={style.overview__charts}>
               <Grid container spacing={2} alignItems={"stretch"}>
-                {feedbackData.length !== 0 && feedbackData.map((data, index) => (
-                  <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
-                    <DoughnutChart data={data} />
-                  </Grid>
-                ))}
-                {feedbackData.length === 0 &&
+                {feedbackData.length !== 0 &&
+                  feedbackData.map((data, index) => (
+                    <Grid key={`CHART_${index}`} item xs={12} sm={6} md={4}>
+                      <DoughnutChart data={data} />
+                    </Grid>
+                  ))}
+                {feedbackData.length === 0 && (
                   <Typography
                     variant="p"
                     className={`${style.text} ${style.instructions}`}
@@ -247,7 +249,8 @@ const FeedbackOverview = () => {
                     marginTop={"1rem"}
                   >
                     Chưa có đánh giá nào cho hội thảo này
-                  </Typography>}
+                  </Typography>
+                )}
               </Grid>
             </div>
             <div>

@@ -207,6 +207,25 @@ const BookingStepper = (props) => {
             ", "
           )} đã có lịch hẹn vào khung giờ này. Không thể tiếp tục đặt`,
         });
+      } else if (
+        error.status === 400 &&
+        error.data?.errorMessage === "Slot is not available"
+      ) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message:
+            "Không thể đặt lịch vào khung giờ này. Vui lòng thử lại sau.",
+        });
+      } else if (
+        error.status === 404 &&
+        error.data?.errorMessage === "Cannot find activated topic with id"
+      ) {
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: "Không thể đặt lịch với chủ đề này. Vui lòng thử lại sau.",
+        });
       } else {
         setNotification({
           isOpen: true,

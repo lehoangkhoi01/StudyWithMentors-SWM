@@ -240,20 +240,18 @@ const SeminarDetail = () => {
                       }}
                       className={style.detail__dropdown}
                     >
-                      {userInfo?.role !== SYSTEM_ROLE.MENTOR && (
-                        <MenuItem
-                          onClick={() =>
-                            handleNavigate(
-                              ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
-                            )
-                          }
-                        >
-                          <img
-                            src={require("../../../assets/icons/Semniar_Report.png")}
-                          />
-                          <span>{SEMINAR.RERORT}</span>
-                        </MenuItem>
-                      )}
+                      <MenuItem
+                        onClick={() =>
+                          handleNavigate(
+                            ROUTES_STATIC.FEEDBACK_OVERVIEW + "/" + id
+                          )
+                        }
+                      >
+                        <img
+                          src={require("../../../assets/icons/Semniar_Report.png")}
+                        />
+                        <span>{SEMINAR.RERORT}</span>
+                      </MenuItem>
 
                       <MenuItem
                         onClick={() =>
