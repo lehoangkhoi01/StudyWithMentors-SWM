@@ -161,9 +161,13 @@ const MentorList = () => {
   const getFollowingMentors = async () => {
     try {
       setLoading(true);
+      const loop = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       let result = await followMentorService.getFollowing(userInfo?.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
+      clearTimeout(loop)
     } catch (error) {
       setNotification({
         isOpen: true,
