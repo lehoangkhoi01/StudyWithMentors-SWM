@@ -18,19 +18,21 @@ export const accountService = {
   },
   getAllMoreInfoMentors: (params) => {
     const url = AccountEndpoints.GET_MORE_DETAIL_MENTOR;
-    return axiosClient.get(url, {
-      params: {
-        searchString: ["", ...params],
-      },
-    });
+    // return axiosClient.get(url, {
+    //   params: {
+    //     searchString: ["", ...params],
+    //   },
+    // });
+    return axiosClient.post(url, params)
   },
   getRecommendMentors: (params) => {
     const url = BookingEndpoints.BOOKING + "/mentors-recommend";
-    return axiosClient.get(url, {
-      params: {
-        searchString: ["", ...params],
-      },
-    });
+    // return axiosClient.get(url, {
+    //   params: {
+    //     searchString: ["", ...params],
+    //   },
+    // });
+    return axiosClient.post(url, params)
   },
   getAllStaffs: () => {
     const url = AccountEndpoints.ACCOUNT_STAFF;

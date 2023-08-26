@@ -56,7 +56,7 @@ const FilterSection = (props) => {
       searchTerm: "",
     });
     props.onChangeStatusFilter(FILTER_SEMINAR.ALL);
-    props.setFilterInfo()
+    props.setFilterInfo({})
   };
 
   const onSearch = () => {
@@ -64,11 +64,16 @@ const FilterSection = (props) => {
     const categoryNames = selectedCategories.map((item) => item.name);
     const searchTerm = getValues("searchTerm");
 
-    const params = [searchTerm, ...fieldNames, ...categoryNames];
+    // const params = [searchTerm, ...fieldNames, ...categoryNames];
+    const params = {
+      searchString: searchTerm,
+      fields: fieldNames,
+      categories: categoryNames
+    };
 
-    if (!searchTerm) {
-      params.splice(0, 1)
-    }
+    // if (!searchTerm) {
+    //   params.splice(0, 1)
+    // }
 
     props.onSearch(params);
   };
