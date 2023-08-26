@@ -38,7 +38,7 @@ const MentorList = () => {
   const [followingMentors, setFollowingMentors] = useState([]);
   const [fields, setFields] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [filterInfo, setFilterInfo] = useState([]);
+  const [filterInfo, setFilterInfo] = useState({});
 
   useEffect(() => {
     getMentors();
@@ -78,12 +78,10 @@ const MentorList = () => {
 
   const getMentors = async (getFollowingMentors) => {
     try {
-      const loop = setTimeout(() => {
+      const loopGettingMentopr = setTimeout(() => {
         setLoading(true);
       }, [100]);
-      const mentorsData = await accountService.getAllMoreInfoMentors(
-        filterInfo ?? []
-      );
+      const mentorsData = await accountService.getAllMoreInfoMentors(filterInfo);
       setAllMentors(mentorsData.mentorCards);
       if (getFollowingMentors) {
         const newMentorList = mentorsData.mentorCards.filter((mentor) =>
@@ -93,7 +91,7 @@ const MentorList = () => {
       } else {
         setMentors(mentorsData.mentorCards);
       }
-      clearTimeout(loop);
+      clearTimeout(loopGettingMentopr);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -107,14 +105,13 @@ const MentorList = () => {
 
   const getReommendMentors = async () => {
     try {
-      const loop = setTimeout(() => {
+      const loopGettingRecommend = setTimeout(() => {
         setLoading(true);
       }, [100]);
-      const mentorsData = await accountService.getRecommendMentors(
-        filterInfo ?? []
-      );
+      console.log(filterInfo)
+      const mentorsData = await accountService.getRecommendMentors(filterInfo);
       setMentors(mentorsData.mentorCards);
-      clearTimeout(loop);
+      clearTimeout(loopGettingRecommend);
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -161,13 +158,13 @@ const MentorList = () => {
   const getFollowingMentors = async () => {
     try {
       setLoading(true);
-      const loop = setTimeout(() => {
+      const loopGettingFollowing = setTimeout(() => {
         setLoading(true);
       }, [100]);
       let result = await followMentorService.getFollowing(userInfo?.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
-      clearTimeout(loop)
+      clearTimeout(loopGettingFollowing)
     } catch (error) {
       setNotification({
         isOpen: true,
