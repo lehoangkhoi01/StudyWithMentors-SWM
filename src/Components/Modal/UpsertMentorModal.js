@@ -71,7 +71,6 @@ const UpsertMentorModal = (props) => {
 
     try {
       setLoading(true);
-
       if (type === MODAL_TYPE.EDIT) {
         await userAccountService.updateUserProfile(
           props.existedData.id,
