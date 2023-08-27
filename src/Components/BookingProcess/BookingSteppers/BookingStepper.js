@@ -209,6 +209,18 @@ const BookingStepper = (props) => {
         });
       } else if (
         error.status === 400 &&
+        error.data?.errorMessage === "Over limit booking"
+      ) {
+        const studentList = error.data?.body.map((s) => s.fullName);
+        setNotification({
+          isOpen: true,
+          type: "error",
+          message: `Sinh viên ${studentList.join(
+            ", "
+          )} đã đạt giới hạn lịch hẹn đang chờ. Không thể tiếp tục đặt.`,
+        });
+      } else if (
+        error.status === 400 &&
         error.data?.errorMessage === "Slot is not available"
       ) {
         setNotification({
