@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-import { CLASS_NAME } from "../../shared/constants/common";
+import { CLASS_NAME, TOPIC_STATUS_BACKEND } from "../../shared/constants/common";
 import { bookingService } from "../../Services/bookingService";
 import {
   useHistory,
@@ -282,7 +282,9 @@ const Room = () => {
         .map((member) => member.accountId)
         .indexOf(userInfo.accountId);
 
-      if (userInfo.role !== SYSTEM_ROLE.ADMIN && indexOfUser < 0) {
+      if (
+        bookingInfo.status === TOPIC_STATUS_BACKEND.REJECTED ||
+        (userInfo.role !== SYSTEM_ROLE.ADMIN && indexOfUser < 0)) {
         throw "error";
       } else {
         const data = {
