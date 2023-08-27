@@ -174,6 +174,9 @@ const FeedbackOverview = () => {
       };
     });
 
+    console.log("improvements:")
+    console.log(totalPage)
+
     setPagination((prevValue) => {
       return {
         ...prevValue,
@@ -211,6 +214,8 @@ const FeedbackOverview = () => {
       };
     });
 
+    console.log("others:")
+    console.log(totalPage)
     setPagination((prevValue) => {
       return {
         ...prevValue,
@@ -271,6 +276,7 @@ const FeedbackOverview = () => {
                 variant="outlined"
                 shape="rounded"
                 page={pagination.improvements.page}
+                count={pagination.improvements.totalPage}
                 onChange={(_, page) => {
                   onPaginateImprovments(page);
                 }}
@@ -294,6 +300,7 @@ const FeedbackOverview = () => {
                 variant="outlined"
                 shape="rounded"
                 page={pagination.others.page}
+                count={pagination.others.totalPage}
                 onChange={(_, page) => {
                   onPaginateOthers(page);
                 }}
