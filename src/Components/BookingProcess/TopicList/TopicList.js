@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, ListItemButton, List, Box } from "@mui/material";
+import { Typography, ListItemButton, List, Box, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import style from "./TopicList.module.scss";
 
@@ -16,6 +16,7 @@ const ListItem = styled(ListItemButton)`
 `;
 
 const TopicList = (props) => {
+  console.log(props.topics);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (event, topic, index) => {
@@ -44,12 +45,15 @@ const TopicList = (props) => {
               onClick={(event) => handleListItemClick(event, topic, index)}
             >
               <div>
-                <Typography
-                  className={`${style.booking__topicList__title}`}
-                  variant="h6"
-                >
-                  {topic.name}
-                </Typography>
+                <Tooltip title={topic.description}>
+                  <Typography
+                    className={`${style.booking__topicList__title}`}
+                    variant="h6"
+                  >
+                    {topic.name}
+                  </Typography>
+                </Tooltip>
+
                 <div>
                   <span className={style.booking__topicList__detail}>
                     Nhóm: {topic.field}
