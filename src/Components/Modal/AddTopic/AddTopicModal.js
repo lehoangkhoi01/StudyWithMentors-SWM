@@ -106,11 +106,20 @@ const AddTopicModal = (props) => {
     try {
       setLoading(true);
       await topicService.upsertTopic(topic, topicId);
-      setNotification({
-        isOpen: true,
-        type: "success",
-        message: COMMON_MESSAGE.ADD_TOPIC_SUCCESS,
-      });
+      if (props.existedData) {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.UPDATE_TOPIC_SUCCESS,
+        });
+      } else {
+        setNotification({
+          isOpen: true,
+          type: "success",
+          message: COMMON_MESSAGE.ADD_TOPIC_SUCCESS,
+        });
+      }
+
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -210,7 +219,7 @@ const AddTopicModal = (props) => {
                   type="submit"
                   variant="contained"
                   color="primary600"
-                  //   onClick={props.onDeleteProperty}
+                //   onClick={props.onDeleteProperty}
                 >
                   {topicId ? BUTTON_LABEL.SAVE_EDIT : BUTTON_LABEL.CREATE_TOPIC}
                 </CustomizedButton>

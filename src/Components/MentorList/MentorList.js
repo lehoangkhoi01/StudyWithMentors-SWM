@@ -108,7 +108,6 @@ const MentorList = () => {
       const loopGettingRecommend = setTimeout(() => {
         setLoading(true);
       }, [100]);
-      console.log(filterInfo)
       const mentorsData = await accountService.getRecommendMentors(filterInfo);
       setMentors(mentorsData.mentorCards);
       clearTimeout(loopGettingRecommend);
@@ -126,8 +125,12 @@ const MentorList = () => {
   const getFields = async () => {
     try {
       setLoading(true);
+      const loopGettingFields = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       const fieldsBE = await getTopicFields();
       setFields(fieldsBE);
+      clearTimeout(loopGettingFields)
     } catch (error) {
       setNotification({
         isOpen: true,
@@ -142,7 +145,11 @@ const MentorList = () => {
   const getCategories = async () => {
     try {
       setLoading(true);
+      const loopGettingCategories = setTimeout(() => {
+        setLoading(true);
+      }, [100]);
       const categoriesBE = await getTopicCategories();
+      clearTimeout(loopGettingCategories)
       setCategories(categoriesBE);
     } catch (error) {
       setNotification({

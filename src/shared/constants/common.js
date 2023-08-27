@@ -157,6 +157,7 @@ export const COMMON_MESSAGE = {
   ADD_CATEGORY_SUCCESS: "Thêm thể loại thành công",
   ADD_DEPARTMENT_SUCCESS: "Thêm phòng ban thành công",
   ADD_TOPIC_SUCCESS: "Thêm chủ đề thành công",
+  UPDATE_TOPIC_SUCCESS: "Chỉnh sửa chủ đề thành công",
   CREATE_SUCCESS: "Khởi tạo thành công",
   ADD_PROFILE_SUCCESS: "Thêm thông tin hồ sơ thành công.",
   ADD_PROFILE_FAIL: "Thêm thông tin hồ sơ thất bại. Vui lòng thử lại sau.",
