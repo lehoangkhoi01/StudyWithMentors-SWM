@@ -80,7 +80,7 @@ const MentorList = () => {
     try {
       const loopGettingMentopr = setTimeout(() => {
         setLoading(true);
-      }, [100]);
+      }, 100);
       const mentorsData = await accountService.getAllMoreInfoMentors(filterInfo);
       setAllMentors(mentorsData.mentorCards);
       if (getFollowingMentors) {
@@ -107,7 +107,7 @@ const MentorList = () => {
     try {
       const loopGettingRecommend = setTimeout(() => {
         setLoading(true);
-      }, [100]);
+      }, 100);
       const mentorsData = await accountService.getRecommendMentors(filterInfo);
       setMentors(mentorsData.mentorCards);
       clearTimeout(loopGettingRecommend);
@@ -127,7 +127,7 @@ const MentorList = () => {
       setLoading(true);
       const loopGettingFields = setTimeout(() => {
         setLoading(true);
-      }, [100]);
+      }, 100);
       const fieldsBE = await getTopicFields();
       setFields(fieldsBE);
       clearTimeout(loopGettingFields)
@@ -147,7 +147,7 @@ const MentorList = () => {
       setLoading(true);
       const loopGettingCategories = setTimeout(() => {
         setLoading(true);
-      }, [100]);
+      }, 100);
       const categoriesBE = await getTopicCategories();
       clearTimeout(loopGettingCategories)
       setCategories(categoriesBE);
@@ -167,7 +167,7 @@ const MentorList = () => {
       setLoading(true);
       const loopGettingFollowing = setTimeout(() => {
         setLoading(true);
-      }, [100]);
+      }, 100);
       let result = await followMentorService.getFollowing(userInfo?.accountId);
       result = result.map((mentor) => mentor.accountId);
       setFollowingMentors(result);
