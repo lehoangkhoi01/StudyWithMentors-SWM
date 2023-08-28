@@ -42,8 +42,19 @@ const VideoCall = () => {
   }, [isScreenSharing]);
 
   const handleSendMessage = (message) => {
-    // Send message using ZegoCloud API
-    // Replace this with actual code to send messages
+    const zegoClient = new ZegoClient(); // Initialize ZegoClient instance
+
+    // Assuming there's a method in the ZegoCloud API to send messages
+    zegoClient
+      .sendMessage(message)
+      .then(() => {
+        // Successfully sent the message
+        const formattedMessage = `You: ${message}`;
+        setMessages((prevMessages) => [...prevMessages, formattedMessage]);
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+      });
   };
 
   return (
