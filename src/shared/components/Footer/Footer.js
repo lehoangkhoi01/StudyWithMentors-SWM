@@ -6,6 +6,7 @@ const Footer = () => {
   return (
     <div id="app_footer" className={`${style.footer__container}`}>
       <p>{TITLE.FOOTER}</p>
+      <p>Mọi đóng góp xin liên hệ growthme@gmail.com</p>
     </div>
   );
 };
