@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-import { CLASS_NAME, TOPIC_STATUS_BACKEND } from "../../shared/constants/common";
+import {
+  CLASS_NAME,
+  TOPIC_STATUS_BACKEND,
+} from "../../shared/constants/common";
 import { bookingService } from "../../Services/bookingService";
 import {
   useHistory,
@@ -266,17 +269,17 @@ const Room = () => {
         throw "error";
       }
       const bookingInfo = await bookingService.getBookingById(id);
-      // const startDateTime = new Date(
-      //   `${bookingInfo.startDate} ${bookingInfo.startTime}`
-      // );
-      // const endDateTime = new Date(
-      //   `${bookingInfo.startDate} ${bookingInfo.endTime}`
-      // );
-      // const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
-      // const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
-      // if (diffStartDateTime > 30 || diffEndDateTime < -120) {
-      //   throw "error";
-      // }
+      const startDateTime = new Date(
+        `${bookingInfo.startDate} ${bookingInfo.startTime}`
+      );
+      const endDateTime = new Date(
+        `${bookingInfo.startDate} ${bookingInfo.endTime}`
+      );
+      const diffStartDateTime = (startDateTime - new Date()) / (1000 * 60);
+      const diffEndDateTime = (endDateTime - new Date()) / (1000 * 60);
+      if (diffStartDateTime > 30 || diffEndDateTime < -120) {
+        throw "error";
+      }
       const participants = [bookingInfo.mentor, ...bookingInfo.mentees];
       const indexOfUser = participants
         .map((member) => member.accountId)
@@ -284,7 +287,8 @@ const Room = () => {
 
       if (
         bookingInfo.status === TOPIC_STATUS_BACKEND.REJECTED ||
-        (userInfo.role !== SYSTEM_ROLE.ADMIN && indexOfUser < 0)) {
+        (userInfo.role !== SYSTEM_ROLE.ADMIN && indexOfUser < 0)
+      ) {
         throw "error";
       } else {
         const data = {
