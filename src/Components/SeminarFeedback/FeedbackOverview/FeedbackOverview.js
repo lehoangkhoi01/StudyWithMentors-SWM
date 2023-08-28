@@ -66,7 +66,9 @@ const FeedbackOverview = () => {
   useEffect(() => {
     const getSeminarDetail = async () => {
       try {
-        setLoading(true);
+        const loopGetSeminarDetail = setTimeout(() => {
+          setLoading(true);
+        }, 100)
         const seminar = await seminarService.getSeminarDetail(id);
         if (
           (userInfo?.role === SYSTEM_ROLE.STAFF &&
@@ -76,6 +78,7 @@ const FeedbackOverview = () => {
           history.push(ROUTES.NOT_FOUND);
         }
         setSeminarDetail(seminar);
+        clearTimeout(loopGetSeminarDetail);
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
       } finally {
@@ -85,7 +88,9 @@ const FeedbackOverview = () => {
 
     const getFeedbackReport = async () => {
       try {
-        setLoading(true);
+        const loopGetSeminarReport = setTimeout(() => {
+          setLoading(true);
+        }, 100)
         const seminar = await seminarFeedbackService.getReport(id);
         const { reportStatistic, improvements, others } = seminar;
         convertFeedbackBEToFE(reportStatistic);
@@ -98,8 +103,11 @@ const FeedbackOverview = () => {
 
         onPaginateImprovments(1, improvements);
         onPaginateOthers(1, others);
+        clearTimeout(loopGetSeminarReport)
       } catch (error) {
         history.push(ROUTES.SERVER_ERROR);
+      } finally {
+        setLoading(false);
       }
     };
 
